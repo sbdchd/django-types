@@ -163,6 +163,10 @@ class Comment(models.Model):
         "User", on_delete=models.CASCADE, help_text="owner of the comment"
     )
 
+    auth_token = models.ForeignKey["Optional[User]"](
+        "User", null=True, on_delete=models.CASCADE, help_text=""
+    )
+
     user_type = models.ForeignKey(User, on_delete=models.CASCADE)
     user_str = models.ForeignKey("User", on_delete=models.CASCADE)  # type: ignore [var-annotated]
     nullable_user_type = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -210,6 +214,7 @@ def main() -> None:
     print(post.id)  # type: ignore [attr-defined]
 
     comment = Comment()
+    comment.auth_token = User()
     comment.save()
 
     # Django way to duplicate an instance

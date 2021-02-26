@@ -18,6 +18,7 @@ from django.contrib.postgres.fields import (
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
 from django.db.models.manager import RelatedManager
+from django.http.request import HttpRequest
 from psycopg2 import ProgrammingError
 from psycopg2.extensions import parse_dsn
 
@@ -195,6 +196,13 @@ def process_non_nullable(
 
 
 def main() -> None:
+
+    request = HttpRequest()
+    header = request.headers.get("FOO")
+    if header is not None and not isinstance(header, str):
+        print(header)  # type: ignore [unreachable]
+    else:
+        print(header)
 
     post = Post()
 

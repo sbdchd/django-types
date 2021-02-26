@@ -4,7 +4,6 @@ from datetime import time, timedelta
 from decimal import Decimal
 from io import StringIO
 from typing import Any, Dict, Iterable, List, NamedTuple, Optional, Tuple, Union
-from typing import Any, Dict, List, Optional, Tuple, Union
 from uuid import UUID
 
 import psycopg2
@@ -691,12 +690,12 @@ LINE 1: SELECT * FROM barf
 
 
 @require_POST
-def post_data(request: HttpRequest, id: str) -> None:
+def post_data_view(request: HttpRequest, id: str) -> None:
     return None
 
 
 @require_GET
-def get_data(request: HttpRequest, id: str) -> None:
+def get_data_view(request: HttpRequest, id: str) -> None:
     return None
 
 

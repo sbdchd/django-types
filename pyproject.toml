@@ -10,6 +10,7 @@ keywords = ["django", "types", "mypy", "stubs"]
 
 packages = [
   { include = "psycopg2-stubs" },
+  { include = "django-stubs" },
 ]
 
 [tool.poetry.dependencies]

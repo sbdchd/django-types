@@ -16,7 +16,6 @@ from typing import (
     Union,
     overload,
 )
-from uuid import UUID
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
@@ -96,7 +95,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __set__(self, instance: Any, value: _ST) -> None: ...
     # class access
     @overload
@@ -513,7 +512,7 @@ class DecimalField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: DecimalField[Optional[decimal.Decimal]],
@@ -536,7 +535,7 @@ class DecimalField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(  # type: ignore [override]
         self, instance: Any, value: Union[str, float, Combinable, _C]
@@ -626,7 +625,7 @@ class SlugField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: SlugField[Optional[str]],
@@ -652,7 +651,7 @@ class SlugField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self: SlugField[_C], instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -845,7 +844,7 @@ class BooleanField(Generic[_C], Field[Union[bool, Combinable], bool]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: BooleanField[Optional[bool]],
@@ -870,7 +869,7 @@ class BooleanField(Generic[_C], Field[Union[bool, Combinable], bool]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -899,7 +898,7 @@ class IPAddressField(Generic[_C], Field[Union[str, Combinable], str]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: IPAddressField[Optional[str]],
@@ -924,7 +923,7 @@ class IPAddressField(Generic[_C], Field[Union[str, Combinable], str]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -1009,7 +1008,7 @@ class DateField(DateTimeCheckMixin, Field[Union[str, date, Combinable], date]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
 
 class TimeField(
     Generic[_C],
@@ -1038,7 +1037,7 @@ class TimeField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: TimeField[Optional[time]],
@@ -1061,7 +1060,7 @@ class TimeField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -1207,7 +1206,7 @@ class FilePathField(Generic[_C], Field[str, str]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: FilePathField[Optional[str]],
@@ -1234,7 +1233,7 @@ class FilePathField(Generic[_C], Field[str, str]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -1263,7 +1262,7 @@ class BinaryField(Generic[_C], Field[Union[bytes, bytearray, memoryview], bytes]
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: BinaryField[Optional[bytes]],
@@ -1288,7 +1287,7 @@ class BinaryField(Generic[_C], Field[Union[bytes, bytearray, memoryview], bytes]
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
@@ -1317,7 +1316,7 @@ class DurationField(Generic[_C], Field[timedelta, timedelta]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     @overload
     def __init__(
         self: DurationField[Optional[timedelta]],
@@ -1342,7 +1341,7 @@ class DurationField(Generic[_C], Field[timedelta, timedelta]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ): ...
+    ) -> None: ...
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 

@@ -15,5 +15,7 @@ fi
 # type check code
 ./.venv/bin/mypy tests typings
 
+./node_modules/.bin/pyright typings
+
 # lint
 ./.venv/bin/flake8 tests typings

@@ -31,7 +31,7 @@ class OrderedSet(MutableSet[_K]):
 
 class MultiValueDictKeyError(KeyError): ...
 
-_D = TypeVar("_D", bound="MultiValueDict")
+_D = TypeVar("_D", bound="MultiValueDict[Any, Any]")
 
 class MultiValueDict(MutableMapping[_K, _V]):
     @overload

@@ -14,14 +14,14 @@ class Signal:
     ) -> None: ...
     def connect(
         self,
-        receiver: Callable,
+        receiver: Callable[..., Any],
         sender: Optional[object] = ...,
         weak: bool = ...,
         dispatch_uid: Optional[str] = ...,
     ) -> None: ...
     def disconnect(
         self,
-        receiver: Optional[Callable] = ...,
+        receiver: Optional[Callable[..., Any]] = ...,
         sender: Optional[object] = ...,
         dispatch_uid: Optional[str] = ...,
     ) -> bool: ...
@@ -33,4 +33,6 @@ class Signal:
         self, sender: Any, **named: Any
     ) -> List[Tuple[Callable[..., Any], Union[ValueError, str]]]: ...
 
-def receiver(signal: Union[List[Signal], Signal], **kwargs: Any) -> Callable: ...
+def receiver(
+    signal: Union[List[Signal], Signal], **kwargs: Any
+) -> Callable[..., Any]: ...

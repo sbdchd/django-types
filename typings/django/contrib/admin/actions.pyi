@@ -6,5 +6,5 @@ from django.db.models.query import QuerySet
 from django.template.response import TemplateResponse
 
 def delete_selected(
-    modeladmin: ModelAdmin[Any], request: WSGIRequest, queryset: QuerySet
+    modeladmin: ModelAdmin[Any], request: WSGIRequest, queryset: QuerySet[Any]
 ) -> Optional[TemplateResponse]: ...

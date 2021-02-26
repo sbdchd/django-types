@@ -5,13 +5,13 @@ from django.db.models.base import Model
 
 class GenericInlineModelAdminChecks:
     def _check_exclude_of_parent_model(
-        self, obj: GenericInlineModelAdmin[Any], parent_model: Type[Model]
+        self, obj: GenericInlineModelAdmin, parent_model: Type[Model]
     ) -> List[Any]: ...
     def _check_relation(
-        self, obj: GenericInlineModelAdmin[Any], parent_model: Type[Model]
+        self, obj: GenericInlineModelAdmin, parent_model: Type[Model]
     ) -> List[Any]: ...
 
-class GenericInlineModelAdmin(InlineModelAdmin):
+class GenericInlineModelAdmin(InlineModelAdmin[Any]):
     template: str = ...
 
 class GenericStackedInline(GenericInlineModelAdmin): ...

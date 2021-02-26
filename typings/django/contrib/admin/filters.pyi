@@ -20,7 +20,9 @@ class ListFilter:
     ) -> None: ...
     def has_output(self) -> bool: ...
     def choices(self, changelist: Any) -> Optional[Iterator[Dict[str, Any]]]: ...
-    def queryset(self, request: Any, queryset: QuerySet) -> Optional[QuerySet]: ...
+    def queryset(
+        self, request: Any, queryset: QuerySet[Any]
+    ) -> Optional[QuerySet[Any]]: ...
     def expected_parameters(self) -> Optional[List[str]]: ...
 
 class SimpleListFilter(ListFilter):
@@ -30,12 +32,12 @@ class SimpleListFilter(ListFilter):
     def lookups(self, request: Any, model_admin: Any) -> List[Tuple[Any, str]]: ...
 
 class FieldListFilter(ListFilter):
-    field: Field = ...
+    field: Field[Any, Any] = ...
     field_path: Any = ...
     title: Any = ...
     def __init__(
         self,
-        field: Field,
+        field: Field[Any, Any],
         request: WSGIRequest,
         params: Dict[str, str],
         model: Type[Model],
@@ -45,14 +47,14 @@ class FieldListFilter(ListFilter):
     @classmethod
     def register(
         cls,
-        test: Callable,
+        test: Callable[..., Any],
         list_filter_class: Type[FieldListFilter],
         take_priority: bool = ...,
     ) -> None: ...
     @classmethod
     def create(
         cls,
-        field: Field,
+        field: Field[Any, Any],
         request: WSGIRequest,
         params: Dict[str, str],
         model: Type[Model],
@@ -73,7 +75,10 @@ class RelatedFieldListFilter(FieldListFilter):
     @property
     def include_empty_choice(self) -> bool: ...
     def field_choices(
-        self, field: RelatedField, request: WSGIRequest, model_admin: ModelAdmin
+        self,
+        field: RelatedField[Any, Any],
+        request: WSGIRequest,
+        model_admin: ModelAdmin[Any],
     ) -> List[Tuple[str, str]]: ...
 
 class BooleanFieldListFilter(FieldListFilter):
@@ -107,7 +112,7 @@ class AllValuesFieldListFilter(FieldListFilter):
     lookup_val: None = ...
     lookup_val_isnull: None = ...
     empty_value_display: str = ...
-    lookup_choices: QuerySet = ...
+    lookup_choices: QuerySet[Any] = ...
 
 class RelatedOnlyFieldListFilter(RelatedFieldListFilter):
     lookup_kwarg: str

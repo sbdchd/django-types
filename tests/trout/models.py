@@ -19,6 +19,7 @@ from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
 from django.db.models.manager import RelatedManager
 from django.http.request import HttpRequest
+from django.views.decorators.http import require_GET, require_POST
 from psycopg2 import ProgrammingError
 from psycopg2.extensions import parse_dsn
 
@@ -644,6 +645,19 @@ LINE 1: SELECT * FROM barf
         cursor = connections[name].cursor()
         cursor.execute("SELECT 1;")
         assert cursor.fetchone() is not None
+
+
+# test decorators
+
+
+@require_POST
+def post_data(request: HttpRequest, id: str) -> None:
+    return None
+
+
+@require_GET
+def get_data(request: HttpRequest, id: str) -> None:
+    return None
 
 
 def test_psycopg_top_level_exports() -> None:

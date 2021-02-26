@@ -9,7 +9,6 @@ license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
 
 packages = [
-  { include = "django-stubs" },
   { include = "psycopg2-stubs" },
 ]
 

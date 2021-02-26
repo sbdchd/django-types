@@ -9,8 +9,8 @@ license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
 
 packages = [
-  { include = "psycopg2-stubs" },
   { include = "django-stubs" },
+  { include = "psycopg2-stubs" },
 ]
 
 [tool.poetry.dependencies]

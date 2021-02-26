@@ -8,7 +8,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - django-types-v1-{{ checksum "poetry.lock" }}-{{ checksum "yarn.lock" }}
+            - django-types-v2-{{ checksum "poetry.lock" }}-{{ checksum "yarn.lock" }}
       - run:
           name: install python dependencies
           command: |
@@ -27,7 +27,7 @@ jobs:
           paths:
             - ./.mypy_cache
             - /root/.cache/
-          key: django-types-v1-{{ checksum "poetry.lock" }}-{{ checksum "yarn.lock" }}
+          key: django-types-v2-{{ checksum "poetry.lock" }}-{{ checksum "yarn.lock" }}
       - run:
           name: lint
           command: ./s/lint

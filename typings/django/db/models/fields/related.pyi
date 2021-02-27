@@ -283,7 +283,7 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
     swappable: bool = ...
     def __init__(
         self,
-        to: Union[Type[_T], str],
+        to: Union[Type[Any], str],
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
         limit_choices_to: Optional[Union[Dict[str, Any], Callable[[], Any], Q]] = ...,

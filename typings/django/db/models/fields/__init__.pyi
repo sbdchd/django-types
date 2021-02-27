@@ -145,7 +145,9 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def value_from_object(self, obj: Model) -> _GT: ...
     def get_attname(self) -> str: ...
 
-class IntegerField(Generic[_C], Field[Union[float, int, str, Combinable], int]):
+_I = TypeVar("_I", bound=Optional[int])
+
+class IntegerField(Generic[_I], Field[Union[float, int, str, Combinable], int]):
     @overload
     def __init__(
         self: IntegerField[int],
@@ -196,15 +198,17 @@ class IntegerField(Generic[_C], Field[Union[float, int, str, Combinable], int]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self: IntegerField[_I], instance: Any, owner: Any) -> _I: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self: IntegerField[_I],
+        instance: Any,
+        value: Union[str, float, int, Combinable, _I],
     ) -> None: ...
 
 class PositiveIntegerRelDbTypeMixin:
     def rel_db_type(self, connection: Any) -> Any: ...
 
-class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_C]):
+class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
     def __init__(
         self: PositiveIntegerField[int],
@@ -255,12 +259,14 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self: PositiveIntegerField[_I], instance: Any, owner: Any) -> _I: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self: PositiveIntegerField[_I],
+        instance: Any,
+        value: Union[str, float, int, Combinable, _I],
     ) -> None: ...
 
-class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_C]):
+class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
     def __init__(
         self: PositiveSmallIntegerField[int],
@@ -311,12 +317,14 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_C])
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self: PositiveSmallIntegerField[_I], instance: Any, owner: Any) -> _I: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self: PositiveSmallIntegerField[_I],
+        instance: Any,
+        value: Union[str, float, int, Combinable, _I],
     ) -> None: ...
 
-class SmallIntegerField(IntegerField[_C]):
+class SmallIntegerField(IntegerField[_I]):
     @overload
     def __init__(
         self: SmallIntegerField[int],
@@ -367,12 +375,12 @@ class SmallIntegerField(IntegerField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _I: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self, instance: Any, value: Union[str, float, int, Combinable, _I]
     ) -> None: ...
 
-class BigIntegerField(IntegerField[_C]):
+class BigIntegerField(IntegerField[_I]):
     @overload
     def __init__(
         self: BigIntegerField[int],
@@ -423,12 +431,14 @@ class BigIntegerField(IntegerField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _I: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self, instance: Any, value: Union[str, float, int, Combinable, _I]
     ) -> None: ...
 
-class FloatField(Generic[_C], Field[Union[float, int, str, Combinable], float]):
+_F = TypeVar("_F", bound=Optional[float])
+
+class FloatField(Generic[_F], Field[Union[float, int, str, Combinable], float]):
     @overload
     def __init__(
         self: FloatField[float],
@@ -479,13 +489,16 @@ class FloatField(Generic[_C], Field[Union[float, int, str, Combinable], float]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _F: ...  # type: ignore [override]
     def __set__(
-        self, instance: Any, value: Union[str, float, int, Combinable, _C]
+        self, instance: Any, value: Union[str, float, int, Combinable, _F]
     ) -> None: ...
 
+_DEC = TypeVar("_DEC", bound=Optional[decimal.Decimal])
+
 class DecimalField(
-    Generic[_C], Field[Union[str, float, decimal.Decimal, Combinable], decimal.Decimal]
+    Generic[_DEC],
+    Field[Union[str, float, decimal.Decimal, Combinable], decimal.Decimal],
 ):
     # attributes
     max_digits: int = ...
@@ -536,14 +549,14 @@ class DecimalField(
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _DEC: ...  # type: ignore [override]
     def __set__(  # type: ignore [override]
-        self, instance: Any, value: Union[str, float, Combinable, _C]
+        self, instance: Any, value: Union[str, float, Combinable, _DEC]
     ) -> None: ...
 
 class AutoField(Field[Union[Combinable, int, str, None], int]): ...
 
-_C = TypeVar("_C")
+_C = TypeVar("_C", bound="Optional[str]")
 
 class CharField(Generic[_C], Field[str, str]):
     @overload
@@ -596,8 +609,8 @@ class CharField(Generic[_C], Field[str, str]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self: CharField[_C], instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
+    def __set__(self: CharField[_C], instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
 class SlugField(CharField[_C]):
     @overload
@@ -819,7 +832,9 @@ class TextField(Generic[_C], Field[str, str]):
     def __get__(self: TextField[_C], instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
-class BooleanField(Generic[_C], Field[Union[bool, Combinable], bool]):
+_B = TypeVar("_B", bound=Optional[bool])
+
+class BooleanField(Generic[_B], Field[Union[bool, Combinable], bool]):
     @overload
     def __init__(
         self: BooleanField[bool],
@@ -870,8 +885,8 @@ class BooleanField(Generic[_C], Field[Union[bool, Combinable], bool]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _B: ...  # type: ignore [override]
+    def __set__(self, instance: Any, value: _B) -> None: ...  # type: ignore [override]
 
 class IPAddressField(Generic[_C], Field[Union[str, Combinable], str]):
     @overload
@@ -1010,8 +1025,10 @@ class DateField(DateTimeCheckMixin, Field[Union[str, date, Combinable], date]):
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
 
+_TM = TypeVar("_TM", bound=Optional[time])
+
 class TimeField(
-    Generic[_C],
+    Generic[_TM],
     DateTimeCheckMixin,
     Field[Union[str, time, datetime, Combinable], time],
 ):
@@ -1061,8 +1078,8 @@ class TimeField(
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _TM: ...  # type: ignore [override]
+    def __set__(self, instance: Any, value: _TM) -> None: ...  # type: ignore [override]
 
 _DT = TypeVar("_DT", bound=Optional[datetime])
 
@@ -1120,7 +1137,9 @@ class DateTimeField(
     def __get__(self, instance: Any, owner: Any) -> _DT: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _DT) -> None: ...  # type: ignore [override]
 
-class UUIDField(Generic[_C], Field[Union[str, uuid.UUID], uuid.UUID]):
+_U = TypeVar("_U", bound=Optional[uuid.UUID])
+
+class UUIDField(Generic[_U], Field[Union[str, uuid.UUID], uuid.UUID]):
     @overload
     def __init__(
         self: UUIDField[uuid.UUID],
@@ -1171,8 +1190,8 @@ class UUIDField(Generic[_C], Field[Union[str, uuid.UUID], uuid.UUID]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: Union[str, _C]) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _U: ...  # type: ignore [override]
+    def __set__(self, instance: Any, value: Union[str, _U]) -> None: ...  # type: ignore [override]
 
 class FilePathField(Generic[_C], Field[str, str]):
     path: Any = ...
@@ -1237,7 +1256,9 @@ class FilePathField(Generic[_C], Field[str, str]):
     def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
-class BinaryField(Generic[_C], Field[Union[bytes, bytearray, memoryview], bytes]):
+_BIN = TypeVar("_BIN", bound=Optional[bytes])
+
+class BinaryField(Generic[_BIN], Field[Union[bytes, bytearray, memoryview], bytes]):
     @overload
     def __init__(
         self: BinaryField[bytes],
@@ -1288,10 +1309,12 @@ class BinaryField(Generic[_C], Field[Union[bytes, bytearray, memoryview], bytes]
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _BIN: ...  # type: ignore [override]
+    def __set__(self, instance: Any, value: _BIN) -> None: ...  # type: ignore [override]
 
-class DurationField(Generic[_C], Field[timedelta, timedelta]):
+_TD = TypeVar("_TD", bound=Optional[timedelta])
+
+class DurationField(Generic[_TD], Field[timedelta, timedelta]):
     @overload
     def __init__(
         self: DurationField[timedelta],
@@ -1342,7 +1365,7 @@ class DurationField(Generic[_C], Field[timedelta, timedelta]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
-    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _TD: ...  # type: ignore [override]
+    def __set__(self, instance: Any, value: _TD) -> None: ...  # type: ignore [override]
 
 class BigAutoField(AutoField): ...

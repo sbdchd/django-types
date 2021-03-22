@@ -17,7 +17,7 @@ from django.contrib.postgres.fields import (
 )
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
-from django.db.models.manager import RelatedManager
+from django.db.models.manager import Manager, RelatedManager
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.middleware.cache import CacheMiddleware
@@ -195,6 +195,8 @@ class Comment(models.Model):
     metadata = JSONField()
     other_metadata = models.JSONField()
 
+    objects = Manager["Comment"]()
+
 
 def process_non_nullable(
     x: Union[
@@ -231,6 +233,8 @@ def main() -> None:
     comment = Comment()
     comment.auth_token = User()
     comment.save()
+
+    Comment.objects.filter(foo=True).filter(bar=False).first()
 
     # Django way to duplicate an instance
     comment.id = None

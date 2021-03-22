@@ -193,6 +193,7 @@ class Comment(models.Model):
     )
 
     metadata = JSONField()
+    other_metadata = models.JSONField()
 
 
 def process_non_nullable(

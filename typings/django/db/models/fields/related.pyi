@@ -80,9 +80,9 @@ class RelatedField(FieldCacheMixin, Field[_ST, _GT]):
 
 _M = TypeVar("_M", bound=Optional[Model])
 
-class ForeignObject(RelatedField[_L, _L]):
-    def __init__(
-        self,
+class ForeignObject(RelatedField[_M, _M]):
+    def __new__(
+        cls,
         to: Union[Type[_M], str],
         on_delete: Callable[..., None],
         from_fields: Sequence[str],
@@ -94,7 +94,7 @@ class ForeignObject(RelatedField[_L, _L]):
         parent_link: bool = ...,
         db_constraint: bool = ...,
         swappable: bool = ...,
-        verbose_name: Optional[str] = ...,
+        verbose_name: Optional[Union[str, bytes]] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
         unique: bool = ...,
@@ -111,14 +111,12 @@ class ForeignObject(RelatedField[_L, _L]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> ForeignObject[_M]: ...
 
-_L = TypeVar("_L", bound="Optional[Model]")
-
-class ForeignKey(Generic[_L],ForeignObject[_L]):
+class ForeignKey(Generic[_M],ForeignObject[_M]):
     @overload
-    def __init__(
-        self: ForeignKey[_M],
+    def __new__(
+        cls,
         to: Union[Type[_M], str],
         on_delete: Callable[..., None],
         to_field: Optional[str] = ...,
@@ -148,10 +146,10 @@ class ForeignKey(Generic[_L],ForeignObject[_L]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> ForeignKey[_M]: ...
     @overload
-    def __init__(
-        self: ForeignKey[Optional[_M]],
+    def __new__(
+        cls,
         to: Union[Type[_M], str],
         on_delete: Callable[..., None],
         to_field: Optional[str] = ...,
@@ -181,7 +179,7 @@ class ForeignKey(Generic[_L],ForeignObject[_L]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> ForeignKey[Optional[_M]]: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ForwardManyToOneDescriptor: ...
@@ -196,10 +194,10 @@ class ForeignKey(Generic[_L],ForeignObject[_L]):
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
 
-class OneToOneField(Generic[_L], RelatedField[_L, _L]):
+class OneToOneField(Generic[_M], RelatedField[_M, _M]):
     @overload
-    def __init__(
-        self: OneToOneField[_M],
+    def __new__(
+        cls,
         to: Union[Type[_M], str],
         on_delete: Any,
         to_field: Optional[str] = ...,
@@ -229,10 +227,10 @@ class OneToOneField(Generic[_L], RelatedField[_L, _L]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> OneToOneField[_M]: ...
     @overload
-    def __init__(
-        self: OneToOneField[Optional[_M]],
+    def __new__(
+        cls,
         to: Union[Type[_M], str],
         on_delete: Any,
         to_field: Optional[str] = ...,
@@ -262,7 +260,7 @@ class OneToOneField(Generic[_L], RelatedField[_L, _L]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> OneToOneField[Optional[_M]]: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ForwardOneToOneDescriptor: ...
@@ -283,8 +281,8 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
     description: Any = ...
     has_null_arg: Any = ...
     swappable: bool = ...
-    def __init__(
-        self,
+    def __new__(
+        cls,
         to: Union[Type[Any], str],
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
@@ -316,7 +314,7 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
+    ) -> ManyToManyField: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ManyToManyDescriptor: ...

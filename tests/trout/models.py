@@ -182,10 +182,10 @@ class Comment(models.Model):
     )
 
     user_type = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_str = models.ForeignKey("User", on_delete=models.CASCADE)  # type: ignore [var-annotated]
+    user_str = models.ForeignKey[User]("User", on_delete=models.CASCADE)
     nullable_user_type = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    nullable_user_str = models.ForeignKey("User", on_delete=models.CASCADE, null=True)
-    not_nullable_user_str = models.ForeignKey(  # type: ignore [var-annotated]
+    nullable_user_str = models.ForeignKey[Optional[User]]("User", on_delete=models.CASCADE, null=True)
+    not_nullable_user_str = models.ForeignKey[User](
         "User", on_delete=models.CASCADE, null=False
     )
     null_str_specified = models.ForeignKey["Optional[User]"](
@@ -528,10 +528,10 @@ def main() -> None:
     if isinstance(comment.nullable_user_str, type(None)):
         print(comment.nullable_user_str)
     if comment.nullable_user_str is not None:
-        print(comment.nullable_user_str)  # type: ignore [unreachable]
+        print(comment.nullable_user_str)
 
     if isinstance(comment.not_nullable_user_str, type(None)):
-        print(comment.not_nullable_user_str)
+        print(comment.not_nullable_user_str)  # type: ignore [unreachable]
     if comment.not_nullable_user_str is not None:
         print(comment.not_nullable_user_str)
 

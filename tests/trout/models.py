@@ -821,7 +821,7 @@ def namedtuplefetchall(cursor: CursorWrapper) -> List[Tuple[Any, ...]]:
 def dictfetchall(cursor: CursorWrapper) -> List[Dict[str, Any]]:
     "Return all rows from a cursor as a dict"
     assert cursor.description is not None
-    columns = []
+    columns: List[str] = []
     for col in cursor.description:
         if col.name is not None:
             columns.append(col.name)

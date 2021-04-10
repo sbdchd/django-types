@@ -115,7 +115,7 @@ class ForeignObject(RelatedField[_M, _M]):
 
 class ForeignKey(Generic[_M],ForeignObject[_M]):
     @overload
-    def __new__(
+    def __new__(  # type: ignore [misc]
         cls,
         to: Union[Type[_M], str],
         on_delete: Callable[..., None],
@@ -196,7 +196,7 @@ class ForeignKey(Generic[_M],ForeignObject[_M]):
 
 class OneToOneField(Generic[_M], RelatedField[_M, _M]):
     @overload
-    def __new__(
+    def __new__(  # type: ignore [misc]
         cls,
         to: Union[Type[_M], str],
         on_delete: Any,

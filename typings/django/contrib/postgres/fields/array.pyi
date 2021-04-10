@@ -36,7 +36,7 @@ class ArrayField(
     default_validators: Any = ...
     from_db_value: Any = ...
     @overload
-    def __new__(
+    def __new__(  # type: ignore [misc]
         cls,
         base_field: Field[Any, Any],
         size: Optional[int] = ...,

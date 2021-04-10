@@ -80,7 +80,7 @@ class RelatedField(FieldCacheMixin, Field[_ST, _GT]):
 
 _M = TypeVar("_M", bound=Optional[Model])
 
-class ForeignObject(RelatedField[_M, _M]):
+class ForeignObject(RelatedField[_L, _L]):
     def __init__(
         self,
         to: Union[Type[_M], str],
@@ -113,7 +113,9 @@ class ForeignObject(RelatedField[_M, _M]):
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
 
-class ForeignKey(Generic[_M], ForeignObject[_M]):
+_L = TypeVar("_L", bound="Optional[Model]")
+
+class ForeignKey(Generic[_L],ForeignObject[_L]):
     @overload
     def __init__(
         self: ForeignKey[_M],
@@ -194,7 +196,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
 
-class OneToOneField(Generic[_M], RelatedField[_M, _M]):
+class OneToOneField(Generic[_L], RelatedField[_L, _L]):
     @overload
     def __init__(
         self: OneToOneField[_M],

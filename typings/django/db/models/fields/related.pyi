@@ -113,7 +113,7 @@ class ForeignObject(RelatedField[_M, _M]):
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> ForeignObject[_M]: ...
 
-class ForeignKey(Generic[_M],ForeignObject[_M]):
+class ForeignKey(Generic[_M], ForeignObject[_M]):
     @overload
     def __new__(  # type: ignore [misc]
         cls,

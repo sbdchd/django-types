@@ -184,7 +184,9 @@ class Comment(models.Model):
     user_type = models.ForeignKey(User, on_delete=models.CASCADE)
     user_str = models.ForeignKey[User]("User", on_delete=models.CASCADE)
     nullable_user_type = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    nullable_user_str = models.ForeignKey[Optional[User]]("User", on_delete=models.CASCADE, null=True)
+    nullable_user_str = models.ForeignKey[Optional[User]](
+        "User", on_delete=models.CASCADE, null=True
+    )
     not_nullable_user_str = models.ForeignKey[User](
         "User", on_delete=models.CASCADE, null=False
     )

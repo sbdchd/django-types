@@ -64,8 +64,8 @@ class RequestFactory:
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
-        QUERY_STRING: str = ...,
         *,
+        QUERY_STRING: str = ...,
         **extra: str
     ) -> WSGIRequest: ...
     def head(

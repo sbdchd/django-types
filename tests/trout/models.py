@@ -15,6 +15,7 @@ from django.contrib.postgres.fields import (
     HStoreField,
     JSONField,
 )
+from django.contrib.postgres.search import SearchVectorField
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
 from django.db.models.manager import Manager, RelatedManager
@@ -900,3 +901,17 @@ class Foo(models.Model):
         blank=True,
         max_digits=2,
     )
+
+    search_field = SearchVectorField(null=True, help_text="foo")
+
+
+class HandField(models.Field[Any, Any]):
+    """
+    from: https://docs.djangoproject.com/en/3.2/howto/custom-model-fields/#writing-a-field-subclass
+    """
+
+    description = "A hand of cards (bridge style)"
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        kwargs["max_length"] = 104
+        super().__init__(*args, **kwargs)  # type: ignore [call-arg]

@@ -886,3 +886,17 @@ def dictfetchall(cursor: CursorWrapper) -> List[Dict[str, Any]]:
         if col.name is not None:
             columns.append(col.name)
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+
+class Foo(models.Model):
+    date_field = models.DateTimeField(
+        verbose_name="date field",
+        auto_now=True,
+    )
+    decimal_field = models.DecimalField(
+        verbose_name="decimal field",
+        null=True,
+        default=None,
+        blank=True,
+        max_digits=2,
+    )

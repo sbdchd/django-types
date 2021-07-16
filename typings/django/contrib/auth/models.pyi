@@ -104,7 +104,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     ) -> None: ...
 
 class User(AbstractUser):
-    objects: Manager[User]
+    objects: UserManager[User]
 
 class AnonymousUser:
     id: Any = ...

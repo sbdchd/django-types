@@ -614,10 +614,35 @@ class AutoField(Field[Union[Combinable, int, str, None], int]):
 
 _C = TypeVar("_C", bound="Optional[str]")
 
-class CharField(Generic[_C], Field[str, str]):
+class CharField(Generic[_C], Field[_C, _C]):
     @overload
     def __init__(
         self: CharField[str],
+        verbose_name: Optional[Union[str, bytes]] = ...,
+        name: Optional[str] = ...,
+        primary_key: bool = ...,
+        max_length: Optional[int] = ...,
+        unique: bool = ...,
+        blank: bool = ...,
+        null: Literal[False] = ...,
+        db_index: bool = ...,
+        default: Any = ...,
+        editable: bool = ...,
+        auto_created: bool = ...,
+        serialize: bool = ...,
+        unique_for_date: Optional[str] = ...,
+        unique_for_month: Optional[str] = ...,
+        unique_for_year: Optional[str] = ...,
+        choices: Optional[_FieldChoices] = ...,
+        help_text: str = ...,
+        db_column: Optional[str] = ...,
+        db_tablespace: Optional[str] = ...,
+        validators: Iterable[_ValidatorCallable] = ...,
+        error_messages: Optional[_ErrorMessagesToOverride] = ...,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self: CharField[_C],
         verbose_name: Optional[Union[str, bytes]] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -665,6 +690,32 @@ class CharField(Generic[_C], Field[str, str]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
+    @overload
+    def __init__(
+        self: CharField[Optional[_C]],
+        verbose_name: Optional[Union[str, bytes]] = ...,
+        name: Optional[str] = ...,
+        primary_key: bool = ...,
+        max_length: Optional[int] = ...,
+        unique: bool = ...,
+        blank: bool = ...,
+        null: Literal[True] = ...,
+        db_index: bool = ...,
+        default: Any = ...,
+        editable: bool = ...,
+        auto_created: bool = ...,
+        serialize: bool = ...,
+        unique_for_date: Optional[str] = ...,
+        unique_for_month: Optional[str] = ...,
+        unique_for_year: Optional[str] = ...,
+        choices: Optional[_FieldChoices] = ...,
+        help_text: str = ...,
+        db_column: Optional[str] = ...,
+        db_tablespace: Optional[str] = ...,
+        validators: Iterable[_ValidatorCallable] = ...,
+        error_messages: Optional[_ErrorMessagesToOverride] = ...,
+    ) -> None: ...
+    def __get__(self: CharField[_C], instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __get__(self: CharField[_C], instance: Any, owner: Any) -> _C: ...  # type: ignore [override]
     def __set__(self: CharField[_C], instance: Any, value: _C) -> None: ...  # type: ignore [override]
 

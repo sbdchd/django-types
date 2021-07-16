@@ -3,7 +3,7 @@ from collections import namedtuple
 from datetime import time, timedelta
 from decimal import Decimal
 from io import StringIO
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 from uuid import UUID
 
 import psycopg2
@@ -84,6 +84,12 @@ class Comment(models.Model):
 
     char = models.CharField()
     char_nullable = models.CharField(null=True)
+    char_with_choices = models.CharField[Literal["foo", "bar"]](
+        choices=[
+            ("foo", "Foo"),
+            ("bar", "Bar"),
+        ],
+    )
 
     text = models.TextField()
     text_nullable = models.TextField(null=True)
@@ -154,6 +160,12 @@ class Comment(models.Model):
 
     ci_char = CICharField()
     ci_char_nullable = CICharField(null=True)
+    ci_char_with_choices = CICharField[Literal["foo", "bar"]](
+        choices=[
+            ("foo", "Foo"),
+            ("bar", "Bar"),
+        ],
+    )
 
     ci_email = CIEmailField()
     ci_email_nullable = CIEmailField(null=True)

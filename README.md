@@ -90,7 +90,7 @@ if TYPE_CHECKING:
 
 class User(models.Model):
     team_id: Optional[int]
-    team = models.ForeignKey[Team](
+    team = models.ForeignKey(
         Team,
         null=True,
         on_delete=models.SET_NULL,

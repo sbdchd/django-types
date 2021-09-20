@@ -275,7 +275,7 @@ class OneToOneField(Generic[_M], RelatedField[_M, _M]):
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
 
-class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
+class ManyToManyField(Generic[_M], RelatedField[Sequence[_M], RelatedManager[_M]]):
 
     rel_class: Any = ...
     description: Any = ...
@@ -283,7 +283,7 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
     swappable: bool = ...
     def __new__(
         cls,
-        to: Union[Type[Any], str],
+        to: Union[Type[_M], str],
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
         limit_choices_to: Optional[Union[Dict[str, Any], Callable[[], Any], Q]] = ...,
@@ -314,13 +314,13 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ManyToManyField: ...
+    ) -> ManyToManyField[_M]: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ManyToManyDescriptor: ...
     # Model instance access
     @overload
-    def __get__(self, instance: Model, owner: Any) -> RelatedManager[Any]: ...
+    def __get__(self, instance: Model, owner: Any) -> RelatedManager[_M]: ...
     # non-Model instances
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...

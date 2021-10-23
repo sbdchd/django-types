@@ -11,14 +11,12 @@ from typing import (
     overload,
 )
 
-from django.db.models.base import Model
 from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from typing_extensions import Literal
 
 from .mixins import CheckFieldDefaultMixin
 
-_T = TypeVar("_T", bound=Any)
 _GV = TypeVar("_GV", bound=Optional[Any])
 _SV = TypeVar("_SV", bound=Optional[Any])
 _ST = TypeVar("_ST", bound=Optional[Union[List[Any], Any]])
@@ -129,14 +127,6 @@ class ArrayField(
     ]: ...
     # class access
     def __set__(self, instance: Any, value: _GV) -> None: ...  # type: ignore [override]
-    @overload  # type: ignore [override]
-    def __get__(self: _T, instance: None, owner: Any) -> _T: ...
-    # Model instance access
-    @overload
-    def __get__(self, instance: Model, owner: Any) -> _GV: ...
-    # non-Model instances
-    @overload
-    def __get__(self: _T, instance: Any, owner: Any) -> _T: ...
     @property
     def description(self) -> str: ...  # type: ignore [override]
     def get_transform(self, name: Any) -> Any: ...

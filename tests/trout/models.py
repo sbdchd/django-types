@@ -192,21 +192,6 @@ class Comment(models.Model):
     hstore = HStoreField()
     hstore_nullable = HStoreField(null=True)
 
-    yyy = ArrayField(
-        models.CharField(
-            max_length=10,
-            blank=True,
-        ),
-        size=8,
-    )
-    xxx = ArrayField(
-        models.CharField(
-            max_length=10,
-            blank=True,
-        ),
-        size=8,
-        null=True,
-    )
     array = ArrayField(
         ArrayField(
             models.CharField(max_length=10, blank=True),

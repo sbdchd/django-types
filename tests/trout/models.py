@@ -20,7 +20,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.core.cache import cache
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
-from django.db.models.manager import RelatedManager
+from django.db.models.manager import ManyToManyRelatedManager
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.middleware.cache import CacheMiddleware
@@ -310,12 +310,12 @@ def main() -> None:
     # many to many is complicated so we don't check nullability like we do with other fields
     if comment.post_many_to_many_nullable is not None:
         print(comment.post_many_to_many_nullable)
-    if not isinstance(comment.post_many_to_many, RelatedManager):
-        print()  # type: ignore [unreachable]
+    if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
+        print()
     if not comment.post_many_to_many and not isinstance(
-        comment.post_many_to_many, RelatedManager
+        comment.post_many_to_many, ManyToManyRelatedManager
     ):
-        print()  # type: ignore [unreachable]
+        print()
 
     process_non_nullable(comment.text)
     if isinstance(comment.text_nullable, type(None)):

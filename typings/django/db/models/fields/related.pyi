@@ -42,7 +42,7 @@ from django.db.models.fields.reverse_related import (  # noqa: F401
 from django.db.models.fields.reverse_related import ManyToManyRel as ManyToManyRel
 from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
 from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
-from django.db.models.manager import RelatedManager
+from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
 from typing_extensions import Literal
 
@@ -121,6 +121,10 @@ class RelatedField(FieldCacheMixin, Field[_ST, _GT]):
 _M = TypeVar("_M", bound=Optional[Model])
 
 class ForeignObject(RelatedField[_M, _M]):
+    one_to_many: bool = False
+    one_to_one: bool = False
+    many_to_many: bool = False
+    many_to_one: bool = True
     def __init__(
         self,
         to: Union[Type[_M], str],
@@ -185,6 +189,10 @@ class ForeignObject(RelatedField[_M, _M]):
     ) -> ForeignObject[_M]: ...
 
 class ForeignKey(Generic[_M], ForeignObject[_M]):
+    one_to_many: bool = False
+    one_to_one: bool = False
+    many_to_many: bool = False
+    many_to_one: bool = True
     def __init__(
         self,
         to: Union[Type[_M], str],
@@ -295,6 +303,10 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
 
 class OneToOneField(Generic[_M], RelatedField[_M, _M]):
+    one_to_many: bool = False
+    one_to_one: bool = True
+    many_to_many: bool = False
+    many_to_one: bool = False
     def __init__(
         self,
         to: Union[Type[_M], str],
@@ -404,21 +416,30 @@ class OneToOneField(Generic[_M], RelatedField[_M, _M]):
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
 
-class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
+_MM = TypeVar("_MM", bound=Any)
+_MN = TypeVar("_MN", bound=Any)
 
+class ManyToManyField(
+    Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]
+):
+
+    one_to_many: bool = False
+    one_to_one: bool = False
+    many_to_many: bool = False
+    many_to_one: bool = True
     rel_class: Any = ...
     description: Any = ...
     has_null_arg: Any = ...
     swappable: bool = ...
     def __init__(
         self,
-        to: Union[Type[Any], str],
+        to: Union[Type[_MM], str],
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
         limit_choices_to: Optional[_ChoicesLimit] = ...,
         symmetrical: Optional[bool] = ...,
-        through: Optional[Union[str, Type[Model]]] = ...,
+        through: Optional[Union[str, Type[_MN]]] = ...,
         through_fields: Optional[Tuple[str, str]] = ...,
         db_constraint: bool = ...,
         swappable: bool = ...,
@@ -442,13 +463,13 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
     ) -> None: ...
     def __new__(
         cls,
-        to: Union[Type[Any], str],
+        to: Union[Type[_MM], str],
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
         limit_choices_to: Optional[_ChoicesLimit] = ...,
         symmetrical: Optional[bool] = ...,
-        through: Optional[Union[str, Type[Model]]] = ...,
+        through: Optional[Union[str, Type[_MN]]] = ...,
         through_fields: Optional[Tuple[str, str]] = ...,
         db_constraint: bool = ...,
         db_table: Optional[str] = ...,
@@ -474,13 +495,15 @@ class ManyToManyField(RelatedField[Sequence[Any], RelatedManager[Any]]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ManyToManyField: ...
+    ) -> ManyToManyField[_MM, _MN]: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ManyToManyDescriptor: ...
     # Model instance access
     @overload
-    def __get__(self, instance: Model, owner: Any) -> RelatedManager[Any]: ...
+    def __get__(
+        self, instance: Model, owner: Any
+    ) -> ManyToManyRelatedManager[_MM, _MN]: ...
     # non-Model instances
     @overload
     def __get__(self: _F, instance: Any, owner: Any) -> _F: ...

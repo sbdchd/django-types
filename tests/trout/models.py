@@ -85,6 +85,19 @@ class Comment(models.Model):
 
     char = models.CharField()
     char_nullable = models.CharField(null=True)
+    char_with_choices = models.CharField(
+        choices=[
+            ("a", "A"),
+            ("b", "B"),
+        ],
+    )
+    char_with_choices_nullable = models.CharField(
+        choices=[
+            ("a", "A"),
+            ("b", "B"),
+        ],
+        null=True,
+    )
 
     text = models.TextField()
     text_nullable = models.TextField(null=True)
@@ -98,6 +111,19 @@ class Comment(models.Model):
 
     integer = models.IntegerField()
     integer_nullable = models.IntegerField(null=True)
+    integer_with_choices = models.IntegerField(
+        choices=[
+            (1, "First Option"),
+            (2, "Second Option"),
+        ],
+    )
+    integer_with_choices_nullable = models.IntegerField(
+        choices=[
+            (1, "First Option"),
+            (2, "Second Option"),
+        ],
+        null=True,
+    )
 
     float = models.FloatField()
     float_nullable = models.FloatField(null=True)
@@ -215,7 +241,7 @@ def process_non_nullable(
         str,
         Decimal,
         timedelta,
-        List[object],
+        List[List[str]],
         Dict[str, Optional[str]],
     ]
 ) -> None:
@@ -263,7 +289,7 @@ def main() -> None:
 
     process_non_nullable(comment.post_fk)
     if isinstance(comment.post_fk_nullable, type(None)):
-        print(comment.post_fk_nullable)
+        print(comment.post_fk_nullable)  # type: ignore [unreachable]
     if comment.post_fk_nullable is not None:
         print(comment.post_fk_nullable)
     if not isinstance(comment.post_fk, Post):
@@ -273,7 +299,7 @@ def main() -> None:
 
     process_non_nullable(comment.post_one_to_one)
     if isinstance(comment.post_one_to_one_nullable, type(None)):
-        print(comment.post_one_to_one_nullable)
+        print(comment.post_one_to_one_nullable)  # type: ignore [unreachable]
     if comment.post_one_to_one_nullable is not None:
         print(comment.post_one_to_one_nullable)
     if not isinstance(comment.post_one_to_one, Post):
@@ -527,17 +553,17 @@ def main() -> None:
 
     process_non_nullable(comment.array)
     if isinstance(comment.array_nullable, type(None)):
-        print(comment.array_nullable)
+        print(comment.array_nullable)  # type: ignore [unreachable]
     if comment.array_nullable is not None:
         print(comment.array_nullable)
     if not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
+        print()
     if not comment.array and not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
+        print()
 
     process_non_nullable(comment.user_type)
     if isinstance(comment.nullable_user_type, type(None)):
-        print(comment.nullable_user_type)
+        print(comment.nullable_user_type)  # type: ignore [unreachable]
     if comment.nullable_user_type is not None:
         process_non_nullable(comment.nullable_user_type)
     if not isinstance(comment.user_type, User):
@@ -921,7 +947,7 @@ class HandField(models.Field[Any, Any]):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         kwargs["max_length"] = 104
-        super().__init__(*args, **kwargs)  # type: ignore [call-arg]
+        super().__init__(*args, **kwargs)
 
 
 AuthUser.objects.create_superuser(username="foo", email=None, password=None)

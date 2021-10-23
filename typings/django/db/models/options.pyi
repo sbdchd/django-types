@@ -41,7 +41,7 @@ def make_immutable_fields_list(
     name: str,
     data: Union[
         Iterator[Any],
-        List[Union[ArrayField[Any], CIText]],
+        List[Union[ArrayField[Any, Any], CIText]],
         List[Union[Field[Any, Any], FieldCacheMixin]],
     ],
 ) -> ImmutableList[Any]: ...

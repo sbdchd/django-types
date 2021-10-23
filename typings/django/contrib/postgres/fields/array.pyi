@@ -5,26 +5,29 @@ from typing import (
     Iterable,
     List,
     Optional,
-    Sequence,
     Tuple,
     TypeVar,
     Union,
     overload,
 )
 
+from django.db.models.base import Model
 from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from typing_extensions import Literal
 
 from .mixins import CheckFieldDefaultMixin
 
-_ST = TypeVar("_ST")
-_GT = TypeVar("_GT")
+_T = TypeVar("_T", bound=Any)
+_GV = TypeVar("_GV", bound=Optional[Any])
+_SV = TypeVar("_SV", bound=Optional[Any])
+_ST = TypeVar("_ST", bound=Optional[Union[List[Any], Any]])
+_GT = TypeVar("_GT", bound=Optional[Union[List[Any], Any]])
 
 class ArrayField(
     CheckFieldDefaultMixin,
-    Generic[_ST, _GT],
-    Field[Union[Sequence[_ST], Combinable], List[_GT]],
+    Generic[_SV, _GV, _ST, _GT],
+    Field[Union[_SV, Combinable], _GV],
 ):
 
     empty_strings_allowed: bool = ...
@@ -34,7 +37,7 @@ class ArrayField(
     default_validators: Any = ...
     from_db_value: Any = ...
     def __init__(
-        self,
+        self: ArrayField[List[_ST], List[_GT], List[_ST], List[_GT]],
         base_field: Field[_ST, _GT],
         size: Optional[int] = ...,
         verbose_name: Optional[str] = ...,
@@ -89,7 +92,7 @@ class ArrayField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[_ST, _GT]: ...
+    ) -> ArrayField[List[_ST], List[_GT], List[_ST], List[_GT]]: ...
     @overload
     def __new__(
         cls,
@@ -118,9 +121,22 @@ class ArrayField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[Optional[_ST], Optional[_GT]]: ...
-    # def __get__(self: ArrayField[_T], instance: Any, owner: Any) -> _T: ...  # type: ignore [override]
-    # def __set__(self: ArrayField[_T], instance: Any, value: _T) -> None: ...  # type: ignore [override]
+    ) -> ArrayField[
+        Optional[List[_ST]],
+        Optional[List[_GT]],
+        Optional[List[_ST]],
+        Optional[List[_GT]],
+    ]: ...
+    # class access
+    def __set__(self, instance: Any, value: _GV) -> None: ...  # type: ignore [override]
+    @overload  # type: ignore [override]
+    def __get__(self: _T, instance: None, owner: Any) -> _T: ...
+    # Model instance access
+    @overload
+    def __get__(self, instance: Model, owner: Any) -> _GV: ...
+    # non-Model instances
+    @overload
+    def __get__(self: _T, instance: Any, owner: Any) -> _T: ...
     @property
     def description(self) -> str: ...  # type: ignore [override]
     def get_transform(self, name: Any) -> Any: ...

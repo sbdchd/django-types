@@ -120,15 +120,43 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def cached_col(self) -> Col: ...
     def value_from_object(self, obj: Model) -> _GT: ...
     def get_attname(self) -> str: ...
+    @overload
     def __init__(
-        self,
+        self: Field[_ST, _GT],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
         max_length: Optional[int] = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: bool = ...,
+        null: Literal[False] = ...,
+        db_index: bool = ...,
+        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        editable: bool = ...,
+        auto_created: bool = ...,
+        serialize: bool = ...,
+        unique_for_date: Optional[str] = ...,
+        unique_for_month: Optional[str] = ...,
+        unique_for_year: Optional[str] = ...,
+        choices: Iterable[
+            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+        ] = ...,
+        help_text: str = ...,
+        db_column: Optional[str] = ...,
+        db_tablespace: Optional[str] = ...,
+        validators: Iterable[_ValidatorCallable] = ...,
+        error_messages: Optional[_ErrorMessagesToOverride] = ...,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self: Field[Optional[_ST], Optional[_GT]],
+        verbose_name: Optional[str] = ...,
+        name: Optional[str] = ...,
+        primary_key: bool = ...,
+        max_length: Optional[int] = ...,
+        unique: bool = ...,
+        blank: bool = ...,
+        null: Literal[True] = ...,
         db_index: bool = ...,
         default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
         editable: bool = ...,

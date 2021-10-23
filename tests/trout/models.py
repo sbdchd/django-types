@@ -64,7 +64,10 @@ class Comment(models.Model):
         Post, on_delete=models.CASCADE, help_text="Comment for a post."
     )
     post_fk_nullable = models.ForeignKey(
-        Post, null=True, on_delete=models.CASCADE, help_text="Comment for a post."
+        Post,
+        null=True,
+        on_delete=models.CASCADE,
+        help_text="Comment for a post.",
     )
 
     post_one_to_one = models.OneToOneField(Post, on_delete=models.CASCADE)
@@ -74,7 +77,8 @@ class Comment(models.Model):
 
     post_many_to_many = models.ManyToManyField(Post, through=PostToComment)
     post_many_to_many_nullable = models.ManyToManyField(
-        Post, through=PostToComment, null=True
+        Post,
+        through=PostToComment,
     )
 
     created_at = models.DateTimeField()
@@ -188,6 +192,21 @@ class Comment(models.Model):
     hstore = HStoreField()
     hstore_nullable = HStoreField(null=True)
 
+    yyy = ArrayField(
+        models.CharField(
+            max_length=10,
+            blank=True,
+        ),
+        size=8,
+    )
+    xxx = ArrayField(
+        models.CharField(
+            max_length=10,
+            blank=True,
+        ),
+        size=8,
+        null=True,
+    )
     array = ArrayField(
         ArrayField(
             models.CharField(max_length=10, blank=True),
@@ -289,7 +308,7 @@ def main() -> None:
 
     process_non_nullable(comment.post_fk)
     if isinstance(comment.post_fk_nullable, type(None)):
-        print(comment.post_fk_nullable)  # type: ignore [unreachable]
+        print(comment.post_fk_nullable)
     if comment.post_fk_nullable is not None:
         print(comment.post_fk_nullable)
     if not isinstance(comment.post_fk, Post):
@@ -299,7 +318,7 @@ def main() -> None:
 
     process_non_nullable(comment.post_one_to_one)
     if isinstance(comment.post_one_to_one_nullable, type(None)):
-        print(comment.post_one_to_one_nullable)  # type: ignore [unreachable]
+        print(comment.post_one_to_one_nullable)
     if comment.post_one_to_one_nullable is not None:
         print(comment.post_one_to_one_nullable)
     if not isinstance(comment.post_one_to_one, Post):
@@ -563,7 +582,7 @@ def main() -> None:
 
     process_non_nullable(comment.user_type)
     if isinstance(comment.nullable_user_type, type(None)):
-        print(comment.nullable_user_type)  # type: ignore [unreachable]
+        print(comment.nullable_user_type)
     if comment.nullable_user_type is not None:
         process_non_nullable(comment.nullable_user_type)
     if not isinstance(comment.user_type, User):

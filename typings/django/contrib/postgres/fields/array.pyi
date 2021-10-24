@@ -17,55 +17,42 @@ from typing_extensions import Literal
 
 from .mixins import CheckFieldDefaultMixin
 
-_GV = TypeVar("_GV", bound=Optional[Any])
-_SV = TypeVar("_SV", bound=Optional[Any])
-_ST = TypeVar("_ST", bound=Optional[Union[List[Any], Any]])
-_GT = TypeVar("_GT", bound=Optional[Union[List[Any], Any]])
+_L = TypeVar("_L", bound=Optional[List[Any]])
+_V = TypeVar("_V", bound=Optional[Union[List[Any], Any]])
+_T = TypeVar("_T", bound="ArrayField[List[Any], Any]")
 
 class ArrayField(
     CheckFieldDefaultMixin,
-    Generic[_SV, _GV, _ST, _GT],
-    Field[Union[_SV, Combinable], _GV],
+    Generic[_L, _V],
+    Field[Union[_L, Combinable], _L],
 ):
 
     empty_strings_allowed: bool = ...
     default_error_messages: Any = ...
-    base_field: Field[_ST, _GT] = ...
+    base_field: Field[Any, _V] = ...
     size: Optional[int] = ...
     default_validators: Any = ...
     from_db_value: Any = ...
-    def __init__(
-        self: ArrayField[List[_ST], List[_GT], List[_ST], List[_GT]],
-        base_field: Field[_ST, _GT],
-        size: Optional[int] = ...,
-        verbose_name: Optional[str] = ...,
-        name: Optional[str] = ...,
-        primary_key: bool = ...,
-        max_length: Optional[int] = ...,
-        unique: bool = ...,
-        blank: bool = ...,
-        null: bool = ...,
-        db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
-        editable: bool = ...,
-        auto_created: bool = ...,
-        serialize: bool = ...,
-        unique_for_date: Optional[str] = ...,
-        unique_for_month: Optional[str] = ...,
-        unique_for_year: Optional[str] = ...,
-        choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
-        ] = ...,
-        help_text: str = ...,
-        db_column: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
-        validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> None: ...
     @overload
     def __new__(  # type: ignore [misc]
         cls,
-        base_field: Field[_ST, _GT],
+        base_field: Field[Any, _V],
+        *args: Any,
+        null: Literal[False] = ...,
+        **kwargs: Any,
+    ) -> ArrayField[List[_V], _V]: ...
+    @overload
+    def __new__(
+        cls,
+        base_field: Field[Any, _V],
+        *args: Any,
+        null: Literal[True] = ...,
+        **kwargs: Any,
+    ) -> ArrayField[Optional[List[_V]], _V]: ...
+    @overload
+    def __init__(
+        self: ArrayField[List[_V], _V],
+        base_field: Field[Any, _V],
         size: Optional[int] = ...,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
@@ -75,7 +62,7 @@ class ArrayField(
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[List[_V], Callable[[], List[_V]]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -83,18 +70,18 @@ class ArrayField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[List[_V], str], Tuple[str, Iterable[Tuple[List[_V], str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[List[_ST], List[_GT], List[_ST], List[_GT]]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
-        base_field: Field[_ST, _GT],
+    def __init__(
+        self: ArrayField[Optional[List[_V]], _V],
+        base_field: Field[Any, _V],
         size: Optional[int] = ...,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
@@ -104,7 +91,7 @@ class ArrayField(
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[List[_V], Callable[[], List[_V]]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -112,21 +99,14 @@ class ArrayField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[List[_V], str], Tuple[str, Iterable[Tuple[List[_V], str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[
-        Optional[List[_ST]],
-        Optional[List[_GT]],
-        Optional[List[_ST]],
-        Optional[List[_GT]],
-    ]: ...
-    # class access
-    def __set__(self, instance: Any, value: _GV) -> None: ...  # type: ignore [override]
+    ) -> None: ...
     @property
     def description(self) -> str: ...  # type: ignore [override]
     def get_transform(self, name: Any) -> Any: ...

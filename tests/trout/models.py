@@ -141,8 +141,8 @@ class Comment(models.Model):
     email = models.EmailField()
     email_nullable = models.EmailField(null=True)
 
-    decimal = models.DecimalField()
-    decimal_nullable = models.DecimalField(null=True)
+    decimal = models.DecimalField(max_digits=20, decimal_places=2)
+    decimal_nullable = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     bool = models.BooleanField()
     bool_nullable = models.BooleanField(null=True)
@@ -315,11 +315,11 @@ def main() -> None:
     if comment.post_many_to_many_nullable is not None:
         print(comment.post_many_to_many_nullable)
     if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
-        print()
+        print()  # type: ignore [unreachable]
     if not comment.post_many_to_many and not isinstance(
         comment.post_many_to_many, ManyToManyRelatedManager
     ):
-        print()
+        print()  # type: ignore [unreachable]
 
     process_non_nullable(comment.text)
     if isinstance(comment.text_nullable, type(None)):
@@ -557,13 +557,13 @@ def main() -> None:
 
     process_non_nullable(comment.array)
     if isinstance(comment.array_nullable, type(None)):
-        print(comment.array_nullable)  # type: ignore [unreachable]
+        print(comment.array_nullable)
     if comment.array_nullable is not None:
         print(comment.array_nullable)
     if not isinstance(comment.array, list):
-        print()
+        print()  # type: ignore [unreachable]
     if not comment.array and not isinstance(comment.array, list):
-        print()
+        print()  # type: ignore [unreachable]
 
     process_non_nullable(comment.user_type)
     if isinstance(comment.nullable_user_type, type(None)):
@@ -936,7 +936,8 @@ class Foo(models.Model):
         null=True,
         default=None,
         blank=True,
-        max_digits=2,
+        max_digits=20,
+        decimal_places=2,
     )
 
     search_field = SearchVectorField(null=True, help_text="foo")

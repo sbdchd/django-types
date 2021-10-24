@@ -230,7 +230,11 @@ class Comment(models.Model):
     )
 
     metadata = JSONField()
-    other_metadata = models.JSONField()
+    # There's no way to specify our typing to JSONField if it defaults to any...
+    other_metadata = models.JSONField[Dict[str, List[int]]]()
+    other_metadata_nullable = models.JSONField[Optional[Dict[str, List[int]]]](
+        null=True
+    )
 
 
 def process_non_nullable(
@@ -247,6 +251,7 @@ def process_non_nullable(
         timedelta,
         List[List[str]],
         Dict[str, Optional[str]],
+        Dict[str, List[int]],
     ]
 ) -> None:
     ...
@@ -598,6 +603,16 @@ def main() -> None:
         print(comment.null_str_specified)
     if comment.null_str_specified is not None:
         print(comment.null_str_specified)
+
+    process_non_nullable(comment.other_metadata)
+    if isinstance(comment.other_metadata_nullable, type(None)):
+        print(comment.hstore_nullable)
+    if isinstance(comment.other_metadata, dict):
+        # FIXME: reveal_type(comment.other_metadata) inside this says:
+        # note: Revealed type is 'builtins.dict*[builtins.str, builtins.list[builtins.int]]'
+        # Why isn't mypy considering that this is unreachable?
+        # print()  # type: ignore [unreachable]
+        print()
 
 
 def raw_database_queries() -> None:

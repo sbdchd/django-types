@@ -76,10 +76,12 @@ class Comment(models.Model):
     )
 
     post_many_to_many = models.ManyToManyField(Post, through=PostToComment)
-    post_many_to_many_nullable = models.ManyToManyField(
-        Post,
-        through=PostToComment,
-    )
+    # NOTE: null has no meaning for ManyToMany and django just ignores it and warns about it
+    # post_many_to_many_nullable = models.ManyToManyField(
+    #     Post,
+    #     through=PostToComment,
+    #     null=True,
+    # )
 
     created_at = models.DateTimeField()
     created_at_nullable = models.DateTimeField(null=True)
@@ -316,9 +318,6 @@ def main() -> None:
     if not comment.post_one_to_one and not isinstance(comment.post_one_to_one, Post):
         print()  # type: ignore [unreachable]
 
-    # many to many is complicated so we don't check nullability like we do with other fields
-    if comment.post_many_to_many_nullable is not None:
-        print(comment.post_many_to_many_nullable)
     if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
         print()  # type: ignore [unreachable]
     if not comment.post_many_to_many and not isinstance(

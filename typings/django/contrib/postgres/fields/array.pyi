@@ -18,7 +18,7 @@ from typing_extensions import Literal
 from .mixins import CheckFieldDefaultMixin
 
 _L = TypeVar("_L", bound=Optional[List[Any]])
-_V = TypeVar("_V", bound=Optional[Union[List[Any], Any]])
+_V = TypeVar("_V", bound=Optional[Any])
 _T = TypeVar("_T", bound="ArrayField[List[Any], Any]")
 
 class ArrayField(
@@ -26,13 +26,12 @@ class ArrayField(
     Generic[_L, _V],
     Field[Union[_L, Combinable], _L],
 ):
-
     empty_strings_allowed: bool = ...
     default_error_messages: Any = ...
-    base_field: Field[Any, _V] = ...
     size: Optional[int] = ...
     default_validators: Any = ...
     from_db_value: Any = ...
+    base_field: Field[_L, _L] = ...
     @overload
     def __new__(  # type: ignore [misc]
         cls,
@@ -110,3 +109,13 @@ class ArrayField(
     @property
     def description(self) -> str: ...  # type: ignore [override]
     def get_transform(self, name: Any) -> Any: ...
+    # class access
+    @overload  # type: ignore
+    def __get__(self: _T, instance: None, owner: Any) -> _T: ...
+    # Model instance access
+    @overload
+    def __get__(self: ArrayField[_L, _V], instance: Any, owner: Any) -> _L: ...
+    @overload
+    def __get__(
+        self: ArrayField[Optional[_L], _V], instance: Any, owner: Any
+    ) -> Optional[_L]: ...

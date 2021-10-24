@@ -561,9 +561,17 @@ def main() -> None:
     if comment.array_nullable is not None:
         print(comment.array_nullable)
     if not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
+        # FIXME: reveal_type(comment.array) inside this says:
+        # note: Revealed type is 'builtins.list*[builtins.list*[builtins.str*]]'
+        # Why isn't mypy considering that this is unreachable?
+        # print()  # type: ignore [unreachable]
+        print()
     if not comment.array and not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
+        # FIXME: reveal_type(comment.array) inside this says:
+        # note: Revealed type is 'builtins.list*[builtins.list*[builtins.str*]]'
+        # Why isn't mypy considering that this is unreachable?
+        # print()  # type: ignore [unreachable]
+        print()
 
     process_non_nullable(comment.user_type)
     if isinstance(comment.nullable_user_type, type(None)):

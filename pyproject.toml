@@ -14,10 +14,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.2"
 
 [tool.poetry.dev-dependencies]
-black = "20.8b1"
+black = "21.9b0"
 pytest = "6.2.2"
 wheel = "0.35.1"
 mypy = "0.790"

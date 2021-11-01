@@ -76,7 +76,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A, _A]):
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         *args: Any,
         null: Literal[False] = ...,
@@ -89,7 +89,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A, _A]):
     def __new__(
         cls,
         *args: Any,
-        null: Literal[True] = ...,
+        null: Literal[True],
         choices: Iterable[
             Union[Tuple[_A, str], Tuple[str, Iterable[Tuple[_A, str]]]]
         ] = ...,

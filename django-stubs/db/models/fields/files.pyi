@@ -46,10 +46,10 @@ class FileField(Field[Any, Any]):
     upload_to: Union[str, Callable[..., Any]] = ...
     def __init__(
         self,
-        upload_to: Union[str, Callable[..., Any], Path] = ...,
-        storage: Optional[Union[Storage, Callable[[], Storage]]] = ...,
         verbose_name: Optional[Union[str, bytes]] = ...,
         name: Optional[str] = ...,
+        upload_to: Union[str, Callable[..., Any], Path] = ...,
+        storage: Optional[Union[Storage, Callable[[], Storage]]] = ...,
         max_length: Optional[int] = ...,
         unique: bool = ...,
         blank: bool = ...,

@@ -8,6 +8,7 @@ from uuid import UUID
 
 import psycopg2
 from django.contrib.auth.models import User as AuthUser
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import (
     ArrayField,
     CICharField,
@@ -232,6 +233,12 @@ class Comment(models.Model):
     other_metadata = models.JSONField[Dict[str, List[int]]]()
     other_metadata_nullable = models.JSONField[Optional[Dict[str, List[int]]]](
         null=True
+    )
+
+    generic_relation = GenericRelation(
+        "Post",
+        content_type_field="generic_ct",
+        object_id_field="generic_id",
     )
 
 

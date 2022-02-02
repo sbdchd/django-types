@@ -224,7 +224,10 @@ class RawQuerySet(Iterable[_T], Sized):
     ) -> Tuple[List[str], List[int], List[Tuple[str, int]]]: ...
     def using(self, alias: Optional[str]) -> RawQuerySet[_T]: ...
 
-class Prefetch(object):
+class Prefetch(Generic[_T]):
+    prefetch_through: str
+    prefetch_to: str
+    queryset: QuerySet[_T]
     def __init__(
         self,
         lookup: str,
@@ -238,7 +241,7 @@ class Prefetch(object):
     def get_current_queryset(self, level: int) -> Optional[QuerySet[Any]]: ...
 
 def prefetch_related_objects(
-    model_instances: Iterable[models.Model], *related_lookups: Union[str, Prefetch]
+    model_instances: Iterable[models.Model], *related_lookups: Union[str, Prefetch[Any]]
 ) -> None: ...
 def get_prefetcher(
     instance: Model, through_attr: str, to_attr: str

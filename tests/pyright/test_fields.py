@@ -26,29 +26,14 @@ f.integer_with_choices = 2
     assert results == [
         Result(
             type="info",
-            message='Type of "f.integer_with_choices" is "Literal[1, 2]"',
+            message='Type of "f.integer_with_choices" is "int"',
             line=12,
             column=13,
         ),
         Result(
             type="error",
-            message=(
-                "Condition will always evaluate to False since the types "
-                '"Literal[1, 2]" and "Literal[3]" have no overlap (reportUnnecessaryComparison)'
-            ),
-            line=14,
-            column=1,
-        ),
-        Result(
-            type="error",
             message='Cannot assign member "integer_with_choices" for type "Foo" (reportGeneralTypeIssues)',
             line=15,
-            column=3,
-        ),
-        Result(
-            type="error",
-            message='Cannot assign member "integer_with_choices" for type "Foo" (reportGeneralTypeIssues)',
-            line=16,
             column=3,
         ),
     ]
@@ -80,18 +65,9 @@ f.integer_with_choices_nullable = 2
     assert results == [
         Result(
             type="info",
-            message='Type of "f.integer_with_choices_nullable" is "Literal[1, 2] | None"',
+            message='Type of "f.integer_with_choices_nullable" is "int | None"',
             line=13,
             column=13,
-        ),
-        Result(
-            type="error",
-            message=(
-                'Cannot assign member "integer_with_choices_nullable" for type '
-                '"Foo" (reportGeneralTypeIssues)'
-            ),
-            line=17,
-            column=3,
         ),
     ]
 
@@ -121,26 +97,14 @@ f.char_with_choices = "b"
     assert results == [
         Result(
             type="info",
-            message="Type of \"f.char_with_choices\" is \"Literal['a', 'b']\"",
+            message='Type of "f.char_with_choices" is "str"',
             line=12,
             column=13,
         ),
         Result(
             type="error",
-            message="Condition will always evaluate to False since the types \"Literal['a', 'b']\" and \"Literal['c']\" have no overlap (reportUnnecessaryComparison)",
-            line=13,
-            column=1,
-        ),
-        Result(
-            type="error",
             message='Cannot assign member "char_with_choices" for type "Foo" (reportGeneralTypeIssues)',
             line=15,
-            column=3,
-        ),
-        Result(
-            type="error",
-            message='Cannot assign member "char_with_choices" for type "Foo" (reportGeneralTypeIssues)',
-            line=16,
             column=3,
         ),
     ]
@@ -172,14 +136,8 @@ f.char_with_choices_nullable = "b"
     assert results == [
         Result(
             type="info",
-            message="Type of \"f.char_with_choices_nullable\" is \"Literal['a', 'b'] | None\"",
+            message='Type of "f.char_with_choices_nullable" is "str | None"',
             line=13,
             column=13,
-        ),
-        Result(
-            type="error",
-            message='Cannot assign member "char_with_choices_nullable" for type "Foo" (reportGeneralTypeIssues)',
-            line=17,
-            column=3,
         ),
     ]

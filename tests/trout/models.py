@@ -206,6 +206,14 @@ class Comment(models.Model):
         size=8,
         null=True,
     )
+    simple_array = ArrayField(
+        models.CharField(max_length=10, blank=True),
+    )
+    simple_array_nullable = ArrayField(
+        models.CharField(max_length=10, blank=True),
+        size=8,
+        null=True,
+    )
 
     created_by = models.ForeignKey["User"](
         "User", on_delete=models.CASCADE, help_text="owner of the comment"
@@ -254,7 +262,7 @@ def process_non_nullable(
         str,
         Decimal,
         timedelta,
-        List[object],
+        List[List[str]],
         Dict[str, Optional[str]],
         Dict[str, List[int]],
     ]
@@ -597,10 +605,28 @@ def main() -> None:
         print(comment.array_nullable)
     if comment.array_nullable is not None:
         print(comment.array_nullable)
-    if not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
-    if not comment.array and not isinstance(comment.array, list):
-        print()  # type: ignore [unreachable]
+    # refinement doesn't work
+    # see: https://github.com/python/mypy/issues/9783
+    # if not isinstance(comment.array, list):
+    #     print()  # type: ignore [unreachable]
+    # if not comment.array and not isinstance(comment.array, list):
+    #     print()  # type: ignore [unreachable]
+    # But this does:
+    if isinstance(comment.simple_array_nullable, type(None)):
+        print(comment.simple_array_nullable)
+    if comment.simple_array_nullable is not None:
+        print(comment.simple_array_nullable)
+
+    # refinement doesn't work
+    # see: https://github.com/python/mypy/issues/9783
+    # if not isinstance(comment.array, list):
+    #     print()  # type: ignore [unreachable]
+    # if not comment.array and not isinstance(comment.array, list):
+    #     print()  # type: ignore [unreachable]
+    # But this does:
+    for simple_array_internal in comment.simple_array:
+        if not isinstance(simple_array_internal, str):
+            print()  # type: ignore [unreachable]
 
     process_non_nullable(comment.user_type)
     if isinstance(comment.nullable_user_type, type(None)):

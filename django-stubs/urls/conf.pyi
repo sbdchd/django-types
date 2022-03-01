@@ -1,8 +1,20 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union, overload
+from typing import (
+    Any,
+    Callable,
+    Coroutine,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    Union,
+    overload,
+)
 
 from ..conf.urls import IncludedURLConf
 from ..http.response import HttpResponseBase
 from .resolvers import URLPattern, URLResolver
+
+_ResponseType = Union[HttpResponseBase, Coroutine[Any, Any, HttpResponseBase]]
 
 def include(
     arg: Any, namespace: Optional[str] = ...
@@ -12,7 +24,7 @@ def include(
 @overload
 def path(
     route: str,
-    view: Callable[..., HttpResponseBase],
+    view: Callable[..., _ResponseType],
     kwargs: Dict[str, Any] = ...,
     name: str = ...,
 ) -> URLPattern: ...
@@ -32,7 +44,7 @@ def path(
 @overload
 def re_path(
     route: str,
-    view: Callable[..., HttpResponseBase],
+    view: Callable[..., _ResponseType],
     kwargs: Dict[str, Any] = ...,
     name: str = ...,
 ) -> URLPattern: ...

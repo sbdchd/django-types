@@ -1,8 +1,19 @@
-from typing import Any
+from typing import Any, Dict, Type
 
 from django.contrib.admin import ModelAdmin as ModelAdmin
+from django.contrib.gis.forms.widgets import OSMWidget
 
 spherical_mercator_srid: int
+
+class GeoModelAdminMixin:
+    gis_widget: Type[OSMWidget]
+    gis_widget_kwargs: Dict[Any, Any]
+
+
+class GISModelAdmin(GeoModelAdminMixin, ModelAdmin[Any]):
+    ...
+
+# NOTE: The model admins bellow will be removed in Django 5.0
 
 class GeoModelAdmin(ModelAdmin[Any]):
     default_lon: int = ...

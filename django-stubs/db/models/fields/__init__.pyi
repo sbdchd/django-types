@@ -137,7 +137,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -145,7 +145,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -164,7 +164,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -172,7 +172,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -196,7 +196,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -204,7 +204,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -223,7 +223,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -231,7 +231,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -252,7 +252,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -260,7 +260,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -279,7 +279,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -287,7 +287,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -308,7 +308,7 @@ class SmallIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -316,7 +316,7 @@ class SmallIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -335,7 +335,7 @@ class SmallIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -343,7 +343,7 @@ class SmallIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -364,7 +364,7 @@ class BigIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -372,7 +372,7 @@ class BigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -391,7 +391,7 @@ class BigIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -399,7 +399,7 @@ class BigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -420,7 +420,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_I, Callable[[], _I]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -428,7 +428,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -447,7 +447,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_I, Callable[[], _I]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -455,7 +455,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -478,7 +478,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_F, Callable[[], _F]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -486,7 +486,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_F, str], Tuple[str, Iterable[Tuple[_F, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -505,7 +505,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_F, Callable[[], _F]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -513,7 +513,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_F, str], Tuple[str, Iterable[Tuple[_F, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -541,7 +541,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_DEC, Callable[[], _DEC]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -549,7 +549,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DEC, str], Tuple[str, Iterable[Tuple[_DEC, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -570,7 +570,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_DEC, Callable[[], _DEC]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -578,7 +578,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DEC, str], Tuple[str, Iterable[Tuple[_DEC, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -603,7 +603,7 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         blank: Literal[True] = ...,
         null: bool = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[int, Callable[[], int]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -611,7 +611,7 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -633,7 +633,7 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         blank: Literal[True] = ...,
         null: bool = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[int, Callable[[], int]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -641,7 +641,7 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -663,7 +663,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         blank: Literal[True] = ...,
         null: bool = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[int, Callable[[], int]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -671,7 +671,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -695,7 +695,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -703,7 +703,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -723,7 +723,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -731,7 +731,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -753,7 +753,7 @@ class SlugField(CharField[_C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -761,7 +761,7 @@ class SlugField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -781,7 +781,7 @@ class SlugField(CharField[_C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -789,7 +789,7 @@ class SlugField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -811,7 +811,7 @@ class EmailField(CharField[_C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -819,7 +819,7 @@ class EmailField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -839,7 +839,7 @@ class EmailField(CharField[_C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -847,7 +847,7 @@ class EmailField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -869,7 +869,7 @@ class URLField(CharField[_C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -877,7 +877,7 @@ class URLField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -897,7 +897,7 @@ class URLField(CharField[_C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -905,7 +905,7 @@ class URLField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -927,7 +927,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -935,7 +935,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -955,7 +955,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -963,7 +963,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -987,7 +987,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_B, Callable[[], _B]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -995,7 +995,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_B, str], Tuple[str, Iterable[Tuple[_B, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1015,7 +1015,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_B, Callable[[], _B]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1023,7 +1023,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_B, str], Tuple[str, Iterable[Tuple[_B, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1044,7 +1044,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1052,7 +1052,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1071,7 +1071,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1079,7 +1079,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1105,7 +1105,7 @@ class GenericIPAddressField(
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1113,7 +1113,7 @@ class GenericIPAddressField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1134,7 +1134,7 @@ class GenericIPAddressField(
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1142,7 +1142,7 @@ class GenericIPAddressField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1172,7 +1172,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_DD, Callable[[], _DD]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1180,7 +1180,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DD, str], Tuple[str, Iterable[Tuple[_DD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1201,7 +1201,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_DD, Callable[[], _DD]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1209,7 +1209,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DD, str], Tuple[str, Iterable[Tuple[_DD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1237,7 +1237,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_TM, Callable[[], _TM]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1245,7 +1245,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_TM, str], Tuple[str, Iterable[Tuple[_TM, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1266,7 +1266,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_TM, Callable[[], _TM]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1274,7 +1274,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_TM, str], Tuple[str, Iterable[Tuple[_TM, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1302,7 +1302,7 @@ class DateTimeField(DateField[_DT]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_DT, Callable[[], _DT]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1310,7 +1310,7 @@ class DateTimeField(DateField[_DT]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DT, str], Tuple[str, Iterable[Tuple[_DT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1331,7 +1331,7 @@ class DateTimeField(DateField[_DT]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_DT, Callable[[], _DT]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1339,7 +1339,7 @@ class DateTimeField(DateField[_DT]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_DT, str], Tuple[str, Iterable[Tuple[_DT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1362,7 +1362,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_U, Callable[[], _U]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1370,7 +1370,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_U, str], Tuple[str, Iterable[Tuple[_U, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1389,7 +1389,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_U, Callable[[], _U]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1397,7 +1397,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_U, str], Tuple[str, Iterable[Tuple[_U, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1428,7 +1428,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_C, Callable[[], _C]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1436,7 +1436,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1460,7 +1460,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_C, Callable[[], _C]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1468,7 +1468,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1491,7 +1491,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_BIN, Callable[[], _BIN]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1499,7 +1499,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_BIN, str], Tuple[str, Iterable[Tuple[_BIN, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1518,7 +1518,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_BIN, Callable[[], _BIN]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1526,7 +1526,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_BIN, str], Tuple[str, Iterable[Tuple[_BIN, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1549,7 +1549,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[_GT, Callable[[], _GT]]] = ...,
+        default: Optional[Union[_TD, Callable[[], _TD]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1557,7 +1557,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_TD, str], Tuple[str, Iterable[Tuple[_TD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1576,7 +1576,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Union[_GT, Callable[[], _GT]] = ...,
+        default: Union[_TD, Callable[[], _TD]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -1584,7 +1584,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[Tuple[_TD, str], Tuple[str, Iterable[Tuple[_TD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,

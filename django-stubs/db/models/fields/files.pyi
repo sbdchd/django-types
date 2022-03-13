@@ -52,12 +52,12 @@ _T = TypeVar("_T", bound="Field[Any, Any]")
 
 class FileField(Field[FileDescriptor, FileDescriptor]):
     storage: Any = ...
-    upload_to: Union[str, Callable[[], Any]] = ...
+    upload_to: Union[str, Callable[[Model, str], Any]] = ...
     def __new__(
         cls,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
-        upload_to: Union[str, Callable[[], Any]] = ...,
+        upload_to: Union[str, Callable[[Model, str], Any]] = ...,
         storage: Optional[Union[Storage, Callable[[], Storage]]] = ...,
         primary_key: bool = ...,
         max_length: Optional[int] = ...,
@@ -107,7 +107,7 @@ class ImageField(FileField):
         name: Optional[str] = ...,
         width_field: str = ...,
         height_field: str = ...,
-        upload_to: Union[str, Callable[[], Any]] = ...,
+        upload_to: Union[str, Callable[[Model, str], Any]] = ...,
         storage: Optional[Union[Storage, Callable[[], Storage]]] = ...,
         primary_key: bool = ...,
         max_length: Optional[int] = ...,

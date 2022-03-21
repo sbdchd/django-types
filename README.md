@@ -122,6 +122,33 @@ reveal_type(Role().users)
 # note: Revealed type is 'RelatedManager[User]'
 ```
 
+An alternative is using annotations:
+
+
+
+```python
+from __future__ import annotations  # or just be in python 3.11
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from django.db.models import Manager
+    from user.models import User
+
+
+class Team(models.Model):
+    user_set: Manager[User]
+
+
+class Role(models.Model):
+    users: Manager[User]()
+
+reveal_type(Team().user_set)
+# note: Revealed type is 'Manager[User]'
+reveal_type(Role().users)
+# note: Revealed type is 'Manager[User]'
+```
+
 
 ### `id Field`
 

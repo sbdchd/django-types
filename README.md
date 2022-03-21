@@ -141,7 +141,7 @@ class Team(models.Model):
 
 
 class Role(models.Model):
-    users: Manager[User]()
+    users: Manager[User]
 
 reveal_type(Team().user_set)
 # note: Revealed type is 'Manager[User]'

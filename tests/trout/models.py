@@ -21,6 +21,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.core.cache import cache
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
+from django.db.models.manager import ManyToManyRelatedManager, RelatedManager
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.middleware.cache import CacheMiddleware
@@ -331,12 +332,10 @@ def main() -> None:
 
     # if comment.post_many_to_many_nullable is not None:
     #    print(comment.post_many_to_many_nullable)
-    # refinement doesn't work
-    # see: https://github.com/python/mypy/issues/9783
-    # if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
-    #     print()  # type: ignore [unreachable]
-    # if not isinstance(comment.post_many_to_many.through, RelatedManager):
-    #     print()  # type: ignore [unreachable]
+    if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
+        print()  # type: ignore [unreachable]
+    if not isinstance(comment.post_many_to_many.through, RelatedManager):
+        print()  # type: ignore [unreachable]
     for obj in comment.post_many_to_many.all():
         if not isinstance(obj, Post):
             print()  # type: ignore [unreachable]
@@ -593,37 +592,29 @@ def main() -> None:
         print(comment.hstore_nullable)
     if comment.hstore_nullable is not None:
         print(comment.hstore_nullable)
-    # refinement doesn't work
-    # see: https://github.com/python/mypy/issues/9783
-    # if not isinstance(comment.hstore, dict):
-    #     print()  # type: ignore [unreachable]
-    # if not comment.hstore and not isinstance(comment.hstore, dict):
-    #     print()  # type: ignore [unreachable]
+    if not isinstance(comment.hstore, dict):
+        print()  # type: ignore [unreachable]
+    if not comment.hstore and not isinstance(comment.hstore, dict):
+        print()  # type: ignore [unreachable]
 
     process_non_nullable(comment.array)
     if isinstance(comment.array_nullable, type(None)):
         print(comment.array_nullable)
     if comment.array_nullable is not None:
         print(comment.array_nullable)
-    # refinement doesn't work
-    # see: https://github.com/python/mypy/issues/9783
-    # if not isinstance(comment.array, list):
-    #     print()  # type: ignore [unreachable]
-    # if not comment.array and not isinstance(comment.array, list):
-    #     print()  # type: ignore [unreachable]
-    # But this does:
+    if not isinstance(comment.array, list):
+        print()  # type: ignore [unreachable]
+    if not comment.array and not isinstance(comment.array, list):
+        print()  # type: ignore [unreachable]
     if isinstance(comment.simple_array_nullable, type(None)):
         print(comment.simple_array_nullable)
     if comment.simple_array_nullable is not None:
         print(comment.simple_array_nullable)
 
-    # refinement doesn't work
-    # see: https://github.com/python/mypy/issues/9783
-    # if not isinstance(comment.array, list):
-    #     print()  # type: ignore [unreachable]
-    # if not comment.array and not isinstance(comment.array, list):
-    #     print()  # type: ignore [unreachable]
-    # But this does:
+    if not isinstance(comment.array, list):
+        print()  # type: ignore [unreachable]
+    if not comment.array and not isinstance(comment.array, list):
+        print()  # type: ignore [unreachable]
     for simple_array_internal in comment.simple_array:
         if not isinstance(simple_array_internal, str):
             print()  # type: ignore [unreachable]
@@ -657,13 +648,8 @@ def main() -> None:
     process_non_nullable(comment.other_metadata)
     if isinstance(comment.other_metadata_nullable, type(None)):
         print()
-    # refinement doesn't work
-    # see: https://github.com/python/mypy/issues/9783
-    # still, reveal_type(comment.array) says:
-    #   Revealed type is 'builtins.dict*[builtins.str, builtins.list[builtins.int]]'
-    #   Pyright says it is Dict[str, List[str]] and will also validate its input correctly
-    # if not isinstance(comment.other_metadata, dict):
-    #     print()  # type: ignore [unreachable]
+    if not isinstance(comment.other_metadata, dict):
+        print()  # type: ignore [unreachable]
 
 
 def raw_database_queries() -> None:

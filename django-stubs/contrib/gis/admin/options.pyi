@@ -9,9 +9,7 @@ class GeoModelAdminMixin:
     gis_widget: Type[OSMWidget]
     gis_widget_kwargs: Dict[Any, Any]
 
-
-class GISModelAdmin(GeoModelAdminMixin, ModelAdmin[Any]):
-    ...
+class GISModelAdmin(GeoModelAdminMixin, ModelAdmin[Any]): ...
 
 # NOTE: The model admins bellow will be removed in Django 5.0
 

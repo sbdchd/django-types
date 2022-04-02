@@ -2,5 +2,6 @@
   "typeCheckingMode": "strict",
   "reportPrivateUsage": false,
   "reportMissingModuleSource": false,
-  "reportUnnecessaryIsInstance": false
+  "reportUnnecessaryIsInstance": false,
+  "reportIncompatibleMethodOverride": false
 }

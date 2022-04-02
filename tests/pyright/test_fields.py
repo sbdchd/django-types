@@ -16,8 +16,8 @@ class Foo(models.Model):
 
 f = Foo()
 reveal_type(f.integer_with_choices)
-f.integer_with_choices == 2
-f.integer_with_choices == 3
+res = f.integer_with_choices == 2
+res = f.integer_with_choices == 3
 f.integer_with_choices = None
 f.integer_with_choices = 3
 f.integer_with_choices = 2
@@ -25,14 +25,14 @@ f.integer_with_choices = 2
     )
     assert results == [
         Result(
-            type="info",
+            type="information",
             message='Type of "f.integer_with_choices" is "int"',
             line=12,
             column=13,
         ),
         Result(
             type="error",
-            message='Cannot assign member "integer_with_choices" for type "Foo" (reportGeneralTypeIssues)',
+            message='Cannot assign member "integer_with_choices" for type "Foo"',
             line=15,
             column=3,
         ),
@@ -55,8 +55,8 @@ class Foo(models.Model):
 
 f = Foo()
 reveal_type(f.integer_with_choices_nullable)
-f.integer_with_choices_nullable == 2
-f.integer_with_choices_nullable == 3
+res = f.integer_with_choices_nullable == 2
+res = f.integer_with_choices_nullable == 3
 f.integer_with_choices_nullable = None
 f.integer_with_choices_nullable = 3
 f.integer_with_choices_nullable = 2
@@ -64,7 +64,7 @@ f.integer_with_choices_nullable = 2
     )
     assert results == [
         Result(
-            type="info",
+            type="information",
             message='Type of "f.integer_with_choices_nullable" is "int | None"',
             line=13,
             column=13,
@@ -87,8 +87,8 @@ class Foo(models.Model):
 
 f = Foo()
 reveal_type(f.char_with_choices)
-f.char_with_choices == "c"
-f.char_with_choices == "a"
+res = f.char_with_choices == "c"
+res = f.char_with_choices == "a"
 f.char_with_choices = None
 f.char_with_choices = "c"
 f.char_with_choices = "b"
@@ -96,14 +96,14 @@ f.char_with_choices = "b"
     )
     assert results == [
         Result(
-            type="info",
+            type="information",
             message='Type of "f.char_with_choices" is "str"',
             line=12,
             column=13,
         ),
         Result(
             type="error",
-            message='Cannot assign member "char_with_choices" for type "Foo" (reportGeneralTypeIssues)',
+            message='Cannot assign member "char_with_choices" for type "Foo"',
             line=15,
             column=3,
         ),
@@ -126,8 +126,8 @@ class Foo(models.Model):
 
 f = Foo()
 reveal_type(f.char_with_choices_nullable)
-f.char_with_choices_nullable == "c"
-f.char_with_choices_nullable == "a"
+res = f.char_with_choices_nullable == "c"
+res = f.char_with_choices_nullable == "a"
 f.char_with_choices_nullable = None
 f.char_with_choices_nullable = "c"
 f.char_with_choices_nullable = "b"
@@ -135,7 +135,7 @@ f.char_with_choices_nullable = "b"
     )
     assert results == [
         Result(
-            type="info",
+            type="information",
             message='Type of "f.char_with_choices_nullable" is "str | None"',
             line=13,
             column=13,

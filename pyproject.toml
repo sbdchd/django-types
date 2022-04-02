@@ -8,20 +8,17 @@ authors = ["Steve Dignam <steve@dignam.xyz>"]
 license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
 
-packages = [
-  { include = "django-stubs" },
-  { include = "psycopg2-stubs" },
-]
+packages = [{ include = "django-stubs" }, { include = "psycopg2-stubs" }]
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-black = "21.9b0"
-pytest = "6.2.2"
+black = "22.3.0"
+pytest = "7.1.1"
 wheel = "0.35.1"
-mypy = "0.910"
-isort = "5.9.3"
+mypy = "0.942"
+isort = "5.10.1"
 Django = "3.1.7"
 flake8 = "4.0.1"
 psycopg2 = "2.8.6"
@@ -34,7 +31,7 @@ line-length = 88
 include = '\.pyi?$'
 
 [tool.isort]
-profile="black"
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

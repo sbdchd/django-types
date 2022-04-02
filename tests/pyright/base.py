@@ -14,7 +14,7 @@ _bin = os.path.join(_cwd, "node_modules", ".bin", "pyright")
 
 @dataclass
 class Result:
-    type: Literal["error", "info"]
+    type: Literal["error", "information"]
     message: str
     line: int
     column: int
@@ -26,7 +26,7 @@ class Result:
 
         line, column = [int(value) for value in file_info.split(":")[1:]]
         type_, message = [value.strip() for value in result.split(":", maxsplit=1)]
-        type_ = cast(Literal["error", "info"], type_)
+        type_ = cast(Literal["error", "information"], type_)
 
         return cls(type=type_, message=message, line=line, column=column)
 

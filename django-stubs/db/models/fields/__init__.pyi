@@ -16,6 +16,7 @@ from typing import (
     TypeVar,
     Union,
     overload,
+    Literal,
 )
 
 from django.core.checks import CheckMessage
@@ -25,7 +26,6 @@ from django.db.models.expressions import Col, Combinable
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Field as FormField
 from django.forms import Widget
-from typing_extensions import Literal
 
 BLANK_CHOICE_DASH: List[Tuple[str, str]] = ...
 

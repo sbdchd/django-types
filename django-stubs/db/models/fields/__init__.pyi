@@ -1,6 +1,5 @@
 import decimal
 import ipaddress
-import typing
 import uuid
 from datetime import date, datetime, time, timedelta
 from typing import (
@@ -19,11 +18,6 @@ from typing import (
     overload,
 )
 
-if hasattr(typing, "Literal"):
-    Literal = typing.Literal
-else:
-    from typing_extensions import Literal
-
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
 from django.db.models import Model
@@ -31,6 +25,7 @@ from django.db.models.expressions import Col, Combinable
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Field as FormField
 from django.forms import Widget
+from typing_extensions import Literal
 
 BLANK_CHOICE_DASH: List[Tuple[str, str]] = ...
 

@@ -1,5 +1,6 @@
 import decimal
 import ipaddress
+import typing
 import uuid
 from datetime import date, datetime, time, timedelta
 from typing import (
@@ -18,9 +19,9 @@ from typing import (
     overload,
 )
 
-try:
+if hasattr(typing, "Literal"):
     from typing import Literal
-except:
+else:
     from typing_extensions import Literal
 
 from django.core.checks import CheckMessage

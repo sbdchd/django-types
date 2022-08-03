@@ -20,7 +20,7 @@ from typing import (
 )
 
 if hasattr(typing, "Literal"):
-    from typing import Literal
+    Literal = typing.Literal
 else:
     from typing_extensions import Literal
 

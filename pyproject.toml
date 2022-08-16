@@ -8,7 +8,7 @@ authors = ["Steve Dignam <steve@dignam.xyz>"]
 license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
 
-packages = [{ include = "django-stubs" }, { include = "psycopg2-stubs" }]
+packages = [{ include = "django-stubs" }]
 
 [tool.poetry.dependencies]
 python = "^3.7"

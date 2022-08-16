@@ -25,6 +25,7 @@ flake8-pyi = "^20.10.0"
 types-PyYAML = "^6.0.1"
 types-pytz = "^2021.3.0"
 psycopg2-binary = "^2.9.3"
+types-psycopg2 = "^2.9.19"
 
 [tool.black]
 line-length = 88

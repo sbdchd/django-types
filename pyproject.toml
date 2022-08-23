@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-types"
-version = "0.15.0"
+version = "0.16.0"
 description = "Type stubs for Django"
 repository = "https://github.com/sbdchd/django-types"
 readme = "README.md"
@@ -21,10 +21,10 @@ mypy = "0.942"
 isort = "5.10.1"
 Django = "3.1.7"
 flake8 = "4.0.1"
-psycopg2 = "2.8.6"
 flake8-pyi = "^20.10.0"
 types-PyYAML = "^6.0.1"
 types-pytz = "^2021.3.0"
+psycopg2-binary = "^2.9.3"
 
 [tool.black]
 line-length = 88

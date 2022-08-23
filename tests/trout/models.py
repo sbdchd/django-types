@@ -652,6 +652,20 @@ def main() -> None:
         print()  # type: ignore [unreachable]
 
 
+async def main_async() -> None:
+    comment = await Comment.objects.aget(pk=123)
+    if not isinstance(comment, Comment):
+        print()  # type: ignore [unreachable]
+
+    async for comment in Comment.objects.all():
+        if not isinstance(comment, Comment):
+            print()  # type: ignore [unreachable]
+
+    post = await Post.objects.acreate()
+    if not isinstance(post, Post):
+        print()  # type: ignore [unreachable]
+
+
 def raw_database_queries() -> None:
 
     with connection.cursor() as cursor:

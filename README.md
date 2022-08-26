@@ -57,7 +57,7 @@ class User(models.Model):
 two properties are created, `team` as expected, and `team_id`. Also, a related
 manager called `user_set` is created on `Team` for the reverse access.
 
-In order to properly add typing to the foreing key itself and also for the created ids you can do
+In order to properly add typing to the foreign key itself and also for the created ids you can do
 something like this:
 
 ```python
@@ -66,7 +66,7 @@ from typing import TYPE_CHECKING
 from someapp.models import Team
 if TYPE_CHECKING:
     # In this example Role cannot be imported due to circular import issues,
-    # but doing so inside TYPE_CHECKING will make sure that the typing bellow
+    # but doing so inside TYPE_CHECKING will make sure that the typing below
     # knows what "Role" means
     from anotherapp.models import Role
 
@@ -191,7 +191,7 @@ def activity(request: AuthedHttpRequest, team_id: str) -> HttpResponse:
 ```
 
 You can also get more strict with your `login_required` decorator so that the
-first argument of the fuction it is decorating is `AuthedHttpRequest`:
+first argument of the function it is decorating is `AuthedHttpRequest`:
 
 ```python
 from typing import Any, Union, TypeVar, cast

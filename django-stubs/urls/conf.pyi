@@ -14,7 +14,7 @@ from ..conf.urls import IncludedURLConf
 from ..http.response import HttpResponseBase
 from .resolvers import URLPattern, URLResolver
 
-_ResponseType = Union[HttpResponseBase, Coroutine[Any, Any, HttpResponseBase]]
+_ResponseType = Union[HttpResponseBase, Coroutine[Any, Any, HttpResponseBase], Coroutine[Any, Any, None]]
 
 def include(
     arg: Any, namespace: Optional[str] = ...

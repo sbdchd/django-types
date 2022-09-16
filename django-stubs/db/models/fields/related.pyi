@@ -370,6 +370,7 @@ class ManyToManyField(
     has_null_arg: Any = ...
     swappable: bool = ...
     related_model: Type[_MM] = ...  # type: ignore [assignment]
+    through: Type[_MN]
     def __new__(
         cls,
         to: Union[Type[_MM], str],

@@ -60,7 +60,7 @@ class RelatedManager(Manager[_T]):
     def clear(self) -> None: ...
 
 class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
-    through: RelatedManager[_V]
+    through: Type[_V]
     def add(
         self,
         *objs: Union[QuerySet[_T], _T, _V],

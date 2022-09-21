@@ -21,7 +21,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.core.cache import cache
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
-from django.db.models.manager import ManyToManyRelatedManager, RelatedManager
+from django.db.models.manager import ManyToManyRelatedManager
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.middleware.cache import CacheMiddleware
@@ -334,12 +334,12 @@ def main() -> None:
     #    print(comment.post_many_to_many_nullable)
     if not isinstance(comment.post_many_to_many, ManyToManyRelatedManager):
         print()  # type: ignore [unreachable]
-    if not isinstance(comment.post_many_to_many.through, RelatedManager):
+    if not isinstance(comment.post_many_to_many.through, type):
         print()  # type: ignore [unreachable]
     for obj in comment.post_many_to_many.all():
         if not isinstance(obj, Post):
             print()  # type: ignore [unreachable]
-    for obj2 in comment.post_many_to_many.through.all():
+    for obj2 in comment.post_many_to_many.through.objects.all():
         if not isinstance(obj2, PostToComment):
             print()  # type: ignore [unreachable]
 

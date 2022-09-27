@@ -3,7 +3,6 @@ from typing import Any, List, Optional, Type, Union
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
-from django.db.models.base import Model
 from django.db.models.options import Options
 from django.http.request import HttpRequest
 from django.test.client import Client
@@ -28,7 +27,7 @@ def login(
     backend: Optional[Union[Type[ModelBackend], str]] = ...,
 ) -> None: ...
 def logout(request: HttpRequest) -> None: ...
-def get_user_model() -> Type[Model]: ...
+def get_user_model() -> Type[AbstractBaseUser]: ...
 def get_user(
     request: Union[HttpRequest, Client]
 ) -> Union[AbstractBaseUser, AnonymousUser]: ...

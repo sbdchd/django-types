@@ -90,4 +90,4 @@ class AdminSite:
 
 class DefaultAdminSite(LazyObject): ...
 
-site: Any
+site: AdminSite

@@ -12,14 +12,14 @@ class ModelSignal(Signal):
         receiver: Callable[..., Any],
         sender: Optional[Union[Type[Model], str]] = ...,
         weak: bool = ...,
-        dispatch_uid: None = ...,
+        dispatch_uid: Optional[str] = ...,
         apps: Optional[Apps] = ...,
     ) -> None: ...
     def disconnect(  # type: ignore
         self,
         receiver: Callable[..., Any] = ...,
         sender: Optional[Union[Type[Model], str]] = ...,
-        dispatch_uid: None = ...,
+        dispatch_uid: Optional[str] = ...,
         apps: Optional[Apps] = ...,
     ) -> Optional[bool]: ...
 

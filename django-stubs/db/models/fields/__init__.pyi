@@ -127,8 +127,8 @@ _I = TypeVar("_I", bound=Optional[int])
 
 class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: IntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -152,10 +152,10 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> IntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: IntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -179,15 +179,15 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> IntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 class PositiveIntegerRelDbTypeMixin:
     def rel_db_type(self, connection: Any) -> Any: ...
 
 class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: PositiveIntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -211,10 +211,10 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveIntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: PositiveIntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -238,12 +238,12 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveIntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: PositiveSmallIntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -267,10 +267,10 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveSmallIntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: PositiveSmallIntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -294,12 +294,12 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveSmallIntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 class SmallIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: SmallIntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -323,10 +323,10 @@ class SmallIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SmallIntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: SmallIntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -350,12 +350,12 @@ class SmallIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SmallIntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 class BigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: BigIntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -379,10 +379,10 @@ class BigIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BigIntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: BigIntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -406,12 +406,12 @@ class BigIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BigIntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 class PositiveBigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: PositiveBigIntegerField[int],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -435,10 +435,10 @@ class PositiveBigIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveBigIntegerField[int]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: PositiveBigIntegerField[Optional[int]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -462,14 +462,14 @@ class PositiveBigIntegerField(IntegerField[_I]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> PositiveBigIntegerField[Optional[int]]: ...
+    ) -> None: ...
 
 _F = TypeVar("_F", bound=Optional[float])
 
 class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: FloatField[float],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -493,10 +493,10 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> FloatField[float]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: FloatField[Optional[float]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -520,7 +520,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> FloatField[Optional[float]]: ...
+    ) -> None: ...
 
 _DEC = TypeVar("_DEC", bound=Optional[decimal.Decimal])
 
@@ -529,8 +529,8 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
     max_digits: int = ...
     decimal_places: int = ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: DecimalField[decimal.Decimal],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         max_digits: int = ...,
@@ -556,10 +556,10 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DecimalField[decimal.Decimal]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: DecimalField[Optional[decimal.Decimal]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         max_digits: int = ...,
@@ -585,14 +585,14 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DecimalField[Optional[decimal.Decimal]]: ...
+    ) -> None: ...
 
 class AutoFieldMeta(type): ...
 class AutoFieldMixin: ...
 
 class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
-    def __new__(
-        cls,
+    def __init__(
+        self: AutoField,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         max_digits: int = ...,
@@ -618,11 +618,11 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> AutoField: ...
+    ) -> None: ...
 
 class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
-    def __new__(
-        cls,
+    def __init__(
+        self: BigAutoField,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         max_digits: int = ...,
@@ -648,11 +648,11 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BigAutoField: ...
+    ) -> None: ...
 
 class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
-    def __new__(
-        cls,
+    def __init__(
+        self: SmallAutoField,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         max_digits: int = ...,
@@ -678,14 +678,14 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SmallAutoField: ...
+    ) -> None: ...
 
 _C = TypeVar("_C", bound=Optional[str])
 
 class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: CharField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -710,10 +710,10 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> CharField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: CharField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -738,12 +738,12 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> CharField[Optional[str]]: ...
+    ) -> None: ...
 
 class SlugField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: SlugField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -768,10 +768,10 @@ class SlugField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SlugField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: SlugField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -796,12 +796,12 @@ class SlugField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SlugField[Optional[str]]: ...
+    ) -> None: ...
 
 class EmailField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: EmailField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -826,10 +826,10 @@ class EmailField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> EmailField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: EmailField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -854,12 +854,12 @@ class EmailField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> EmailField[Optional[str]]: ...
+    ) -> None: ...
 
 class URLField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: URLField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -884,10 +884,10 @@ class URLField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> URLField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: URLField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -912,12 +912,12 @@ class URLField(CharField[_C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> URLField[Optional[str]]: ...
+    ) -> None: ...
 
 class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: TextField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -942,10 +942,10 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> TextField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: TextField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -970,14 +970,14 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> TextField[Optional[str]]: ...
+    ) -> None: ...
 
 _B = TypeVar("_B", bound=Optional[bool])
 
 class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: BooleanField[bool],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1002,10 +1002,10 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BooleanField[bool]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: BooleanField[Optional[bool]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1030,12 +1030,12 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BooleanField[Optional[bool]]: ...
+    ) -> None: ...
 
 class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: IPAddressField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1059,10 +1059,10 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> IPAddressField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: IPAddressField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1086,15 +1086,15 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> IPAddressField[Optional[str]]: ...
+    ) -> None: ...
 
 class GenericIPAddressField(
     Generic[_C],
     Field[Union[_C, ipaddress.IPv4Address, ipaddress.IPv6Address, Combinable], _C],
 ):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: GenericIPAddressField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         protocol: str = ...,
@@ -1120,10 +1120,10 @@ class GenericIPAddressField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> GenericIPAddressField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: GenericIPAddressField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         protocol: str = ...,
@@ -1149,7 +1149,7 @@ class GenericIPAddressField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> GenericIPAddressField[Optional[str]]: ...
+    ) -> None: ...
 
 _DD = TypeVar("_DD", bound=Optional[date])
 
@@ -1160,8 +1160,8 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: DateField[date],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1187,10 +1187,10 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DateField[date]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: DateField[Optional[date]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1216,7 +1216,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DateField[Optional[date]]: ...
+    ) -> None: ...
 
 _TM = TypeVar("_TM", bound=Optional[time])
 
@@ -1225,8 +1225,8 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: TimeField[time],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1252,10 +1252,10 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> TimeField[time]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: TimeField[Optional[time]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1281,7 +1281,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> TimeField[Optional[time]]: ...
+    ) -> None: ...
 
 _DT = TypeVar("_DT", bound=Optional[datetime])
 
@@ -1290,8 +1290,8 @@ class DateTimeField(DateField[_DT]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: DateTimeField[datetime],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1317,10 +1317,10 @@ class DateTimeField(DateField[_DT]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DateTimeField[datetime]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: DateTimeField[Optional[datetime]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         auto_now: bool = ...,
@@ -1346,14 +1346,14 @@ class DateTimeField(DateField[_DT]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DateTimeField[Optional[datetime]]: ...
+    ) -> None: ...
 
 _U = TypeVar("_U", bound=Optional[uuid.UUID])
 
 class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: UUIDField[uuid.UUID],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1377,10 +1377,10 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> UUIDField[uuid.UUID]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: UUIDField[Optional[uuid.UUID]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1404,7 +1404,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> UUIDField[Optional[uuid.UUID]]: ...
+    ) -> None: ...
 
 class FilePathField(Generic[_C], Field[_C, _C]):
     path: Union[str, Callable[..., str]] = ...
@@ -1413,8 +1413,8 @@ class FilePathField(Generic[_C], Field[_C, _C]):
     allow_files: bool = ...
     allow_folders: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: FilePathField[str],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         path: Union[str, Callable[..., str]] = ...,
@@ -1443,10 +1443,10 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> FilePathField[str]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: FilePathField[Optional[str]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         path: Union[str, Callable[..., str]] = ...,
@@ -1475,14 +1475,14 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> FilePathField[Optional[str]]: ...
+    ) -> None: ...
 
 _BIN = TypeVar("_BIN", bound=Optional[bytes])
 
 class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: BinaryField[bytes],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1506,10 +1506,10 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BinaryField[bytes]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: BinaryField[Optional[bytes]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1533,14 +1533,14 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BinaryField[Optional[bytes]]: ...
+    ) -> None: ...
 
 _TD = TypeVar("_TD", bound=Optional[timedelta])
 
 class DurationField(Generic[_TD], Field[_TD, _TD]):
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: DurationField[timedelta],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1564,10 +1564,10 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DurationField[timedelta]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: DurationField[Optional[timedelta]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -1591,4 +1591,4 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> DurationField[Optional[timedelta]]: ...
+    ) -> None: ...

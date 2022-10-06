@@ -94,8 +94,8 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
     many_to_one: Literal[True] = ...
     related_model: Type[_M] = ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: ForeignObject[_M],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
@@ -130,10 +130,10 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ForeignObject[_M]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: ForeignObject[Optional[_M]],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
@@ -168,7 +168,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ForeignObject[Optional[_M]]: ...
+    ) -> None: ...
 
 class ForeignKey(Generic[_M], ForeignObject[_M]):
     one_to_many: Literal[False] = ...
@@ -177,8 +177,8 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     many_to_one: Literal[True] = ...
     related_model: Type[_M] = ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: ForeignKey[_M],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
@@ -211,10 +211,10 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ForeignKey[_M]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: ForeignKey[Optional[_M]],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
@@ -247,7 +247,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ForeignKey[Optional[_M]]: ...
+    ) -> None: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ForwardManyToOneDescriptor: ...
@@ -269,8 +269,8 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
     many_to_one: Literal[False] = ...  # type: ignore [assignment]
     related_model: Type[_M] = ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: OneToOneField[_M],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
@@ -303,10 +303,10 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> OneToOneField[_M]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: OneToOneField[Optional[_M]],
         to: Union[Type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
@@ -339,7 +339,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> OneToOneField[Optional[_M]]: ...
+    ) -> None: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ForwardOneToOneDescriptor: ...
@@ -371,8 +371,8 @@ class ManyToManyField(
     swappable: bool = ...
     related_model: Type[_MM] = ...  # type: ignore [assignment]
     through: Type[_MN]
-    def __new__(
-        cls,
+    def __init__(
+        self: ManyToManyField[_MM, _MN],
         to: Union[Type[_MM], str],
         through: Union[Type[_MN], str] = ...,
         to_field: Optional[str] = ...,
@@ -405,7 +405,7 @@ class ManyToManyField(
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ManyToManyField[_MM, _MN]: ...
+    ) -> None: ...
     def get_path_info(self, filtered_relation: None = ...) -> List[PathInfo]: ...
     def get_reverse_path_info(
         self, filtered_relation: None = ...

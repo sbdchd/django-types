@@ -4,6 +4,7 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.backends.ddl_references import Statement
 from django.db.models.base import Model
 from django.db.models.query_utils import Q
+from django.db.models.expressions import BaseExpression, Combinable
 
 class Index:
     model: Type[Model]
@@ -15,15 +16,19 @@ class Index:
     db_tablespace: Optional[str] = ...
     opclasses: Sequence[str] = ...
     condition: Optional[Q] = ...
+    expressions: Sequence[BaseExpression | Combinable] = ...
+
     def __init__(
         self,
-        *,
+        *expressions: BaseExpression | Combinable | str,
         fields: Sequence[str] = ...,
         name: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         opclasses: Sequence[str] = ...,
         condition: Optional[Q] = ...
     ) -> None: ...
+    @property
+    def contains_expressions(self) -> bool: ...
     def check_name(self) -> List[str]: ...
     def create_sql(
         self,

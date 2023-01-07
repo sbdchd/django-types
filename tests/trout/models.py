@@ -1,3 +1,6 @@
+# Disable because pyright is not able to understand the Meta nested class override in models.
+# pyright: reportIncompatibleVariableOverride=false
+
 import sys
 from collections import namedtuple
 from datetime import time, timedelta
@@ -21,6 +24,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.core.cache import cache
 from django.db import connection, connections, models
 from django.db.backends.utils import CursorWrapper
+from django.db.models.functions import Lower, Round
 from django.db.models.manager import ManyToManyRelatedManager
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -1030,3 +1034,24 @@ class HandField(models.Field[Any, Any]):
 
 
 AuthUser.objects.create_superuser(username="foo", email=None, password=None)
+
+
+class IndexModel(models.Model):
+    title = models.TextField()
+    author = models.ForeignKey[Optional[User]](User, on_delete=models.CASCADE, null=True)
+    pub_date = models.DateTimeField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
+
+    class Meta:
+        # from: https://docs.djangoproject.com/en/3.2/ref/models/indexes/#expressions
+        indexes = [
+            models.Index(
+                Lower("title").desc(), "pub_date", name="lower_title_date_idx"
+            ),
+            models.Index(
+                models.F("height") * models.F("weight"),
+                Round("weight"),
+                name="calc_idx",
+            ),
+        ]

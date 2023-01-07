@@ -3,8 +3,8 @@ from typing import Any, List, Optional, Sequence, Tuple, Type
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.backends.ddl_references import Statement
 from django.db.models.base import Model
-from django.db.models.query_utils import Q
 from django.db.models.expressions import BaseExpression, Combinable
+from django.db.models.query_utils import Q
 
 class Index:
     model: Type[Model]

@@ -25,7 +25,8 @@ class Index:
         name: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Optional[Q] = ...,
+        include: Optional[str] = ...,
     ) -> None: ...
     @property
     def contains_expressions(self) -> bool: ...

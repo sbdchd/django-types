@@ -1,12 +1,11 @@
 import threading
 import unittest
-from datetime import date
 from typing import (
     Any,
     Callable,
     ClassVar,
     Dict,
-    Iterator,
+    Iterable,
     List,
     Optional,
     Set,
@@ -21,8 +20,7 @@ from django.core.handlers.wsgi import WSGIHandler
 from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
 from django.db import connections as connections  # noqa: F401
 from django.db.backends.sqlite3.base import DatabaseWrapper
-from django.db.models.base import Model
-from django.db.models.query import QuerySet, RawQuerySet
+from django.db.models.query import _BaseQuerySet
 from django.forms.fields import EmailField
 from django.http.response import HttpResponse, HttpResponseBase
 from django.template.base import Template
@@ -186,16 +184,8 @@ class TransactionTestCase(SimpleTestCase):
     serialized_rollback: bool = ...
     def assertQuerysetEqual(
         self,
-        qs: Union[Iterator[Any], List[Model], QuerySet[Any], RawQuerySet[Any]],
-        values: Union[
-            List[None],
-            List[Tuple[str, str]],
-            List[date],
-            List[int],
-            List[str],
-            Set[str],
-            QuerySet[Any],
-        ],
+        qs: _BaseQuerySet[Any],
+        values: Iterable[Any],
         transform: Union[Callable[..., Any], Type[str]] = ...,
         ordered: bool = ...,
         msg: Optional[str] = ...,

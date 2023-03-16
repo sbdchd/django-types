@@ -1,6 +1,7 @@
 from typing import (
     Any,
     Callable,
+    ClassVar,
     Collection,
     Dict,
     Iterable,
@@ -42,8 +43,8 @@ class ModelBase(type):
     def _default_manager(cls: Type[_M]) -> BaseManager[_M]: ...
 
 class Model(metaclass=ModelBase):
-    class DoesNotExist(ObjectDoesNotExist): ...
-    class MultipleObjectsReturned(BaseMultipleObjectsReturned): ...
+    DoesNotExist: ClassVar[type[ObjectDoesNotExist]]
+    MultipleObjectsReturned: ClassVar[type[BaseMultipleObjectsReturned]]
     class Meta: ...
     pk: Any = ...
     _state: ModelState

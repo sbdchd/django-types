@@ -53,8 +53,8 @@ _T = TypeVar("_T", bound="Field[Any, Any]")
 class FileField(Field[FileDescriptor, FileDescriptor]):
     storage: Any = ...
     upload_to: Union[str, Callable[[Any, str], str]] = ...
-    def __new__(
-        cls,
+    def __init__(
+        self,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         upload_to: Union[str, Callable[[Any, str], str]] = ...,
@@ -80,7 +80,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> FileField: ...
+    ) -> None: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> FileDescriptor: ...
@@ -101,8 +101,8 @@ class ImageFieldFile(ImageFile, FieldFile):
     def delete(self, save: bool = ...) -> None: ...
 
 class ImageField(FileField):
-    def __new__(
-        cls,
+    def __init__(
+        self,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         width_field: str = ...,
@@ -130,7 +130,7 @@ class ImageField(FileField):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ImageField: ...
+    ) -> None: ...
     # class access
     @overload  # type: ignore
     def __get__(self, instance: None, owner: Any) -> ImageFileDescriptor: ...

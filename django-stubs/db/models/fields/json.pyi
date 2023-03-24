@@ -29,8 +29,8 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
     def get_transform(self, name: Any) -> Any: ...
     def value_to_string(self, obj: Any) -> Any: ...
     @overload
-    def __new__(  # type: ignore [misc]
-        cls,
+    def __init__(
+        self: JSONField[_A],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         encoder: Type[json.JSONEncoder] = ...,
@@ -56,10 +56,10 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> JSONField[_A]: ...
+    ) -> None: ...
     @overload
-    def __new__(
-        cls,
+    def __init__(
+        self: JSONField[Optional[_A]],
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
         encoder: Type[json.JSONEncoder] = ...,
@@ -85,7 +85,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> JSONField[Optional[_A]]: ...
+    ) -> None: ...
 
 class DataContains(PostgresOperatorLookup):
     lookup_name: str = ...

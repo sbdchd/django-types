@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Sequence, Tuple, Type
+from typing import Any, List, Optional, Sequence, Tuple, Type, Union
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.backends.ddl_references import Statement
@@ -26,7 +26,7 @@ class Index:
         db_tablespace: Optional[str] = ...,
         opclasses: Sequence[str] = ...,
         condition: Optional[Q] = ...,
-        include: Optional[str] = ...,
+        include: Optional[Union[str, Sequence[str]]] = ...,
     ) -> None: ...
     @property
     def contains_expressions(self) -> bool: ...

@@ -49,7 +49,11 @@ class Manager(BaseManager[_T]): ...
 class RelatedManager(Manager[_T]):
     related_val: Tuple[int, ...]
     def add(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
+    async def aadd(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
     def remove(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
+    async def aremove(
+        self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...
+    ) -> None: ...
     def set(
         self,
         objs: Union[QuerySet[_T], Iterable[_T]],
@@ -57,7 +61,15 @@ class RelatedManager(Manager[_T]):
         bulk: bool = ...,
         clear: bool = ...,
     ) -> None: ...
+    async def aset(
+        self,
+        objs: Union[QuerySet[_T], Iterable[_T]],
+        *,
+        bulk: bool = ...,
+        clear: bool = ...,
+    ) -> None: ...
     def clear(self) -> None: ...
+    async def aclear(self) -> None: ...
 
 class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
     through: Type[_V]
@@ -66,7 +78,13 @@ class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
         *objs: Union[QuerySet[_T], _T, _V],
         through_defaults: MutableMapping[str, Any] = ...,
     ) -> None: ...
+    async def aadd(
+        self,
+        *objs: Union[QuerySet[_T], _T, _V],
+        through_defaults: MutableMapping[str, Any] = ...,
+    ) -> None: ...
     def remove(self, *objs: Union[QuerySet[_T], _T, _V]) -> None: ...
+    async def aremove(self, *objs: Union[QuerySet[_T], _T, _V]) -> None: ...
     def set(
         self,
         objs: Union[QuerySet[_T], Iterable[_T]],
@@ -74,8 +92,22 @@ class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
         clear: bool = ...,
         through_defaults: MutableMapping[str, Any] = ...,
     ) -> None: ...
+    async def aset(
+        self,
+        objs: Union[QuerySet[_T], Iterable[_T]],
+        *,
+        clear: bool = ...,
+        through_defaults: MutableMapping[str, Any] = ...,
+    ) -> None: ...
     def clear(self) -> None: ...
+    async def aclear(self) -> None: ...
     def create(
+        self,
+        defaults: Optional[MutableMapping[str, Any]] = ...,
+        through_defaults: Optional[MutableMapping[str, Any]] = ...,
+        **kwargs: Any,
+    ) -> _T: ...
+    async def acreate(
         self,
         defaults: Optional[MutableMapping[str, Any]] = ...,
         through_defaults: Optional[MutableMapping[str, Any]] = ...,
@@ -88,7 +120,21 @@ class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
         through_defaults: MutableMapping[str, Any] = ...,
         **kwargs: Any,
     ) -> Tuple[_T, bool]: ...
+    async def aget_or_create(
+        self,
+        defaults: Optional[MutableMapping[str, Any]] = ...,
+        *,
+        through_defaults: MutableMapping[str, Any] = ...,
+        **kwargs: Any,
+    ) -> Tuple[_T, bool]: ...
     def update_or_create(
+        self,
+        defaults: Optional[MutableMapping[str, Any]] = ...,
+        *,
+        through_defaults: MutableMapping[str, Any] = ...,
+        **kwargs: Any,
+    ) -> Tuple[_T, bool]: ...
+    async def aupdate_or_create(
         self,
         defaults: Optional[MutableMapping[str, Any]] = ...,
         *,

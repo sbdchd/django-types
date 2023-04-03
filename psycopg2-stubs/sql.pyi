@@ -1,7 +1,6 @@
 import string
 from typing import Any, Iterable, Iterator, List, Optional, Union
 
-from psycopg2 import extensions as ext
 from psycopg2.extensions import _SQLType, connection
 from psycopg2.extras import _CursorLike
 

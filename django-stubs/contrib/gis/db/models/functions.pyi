@@ -3,6 +3,7 @@ from typing import Any, Optional
 from django.contrib.gis.db.models.sql.conversion import DistanceField
 from django.db.models import Func
 from django.db.models import Transform as StandardTransform
+from django.db.models.fields import Field
 
 NUMERIC_TYPES: Any
 
@@ -23,7 +24,8 @@ class GeoFuncMixin:
 class GeoFunc(GeoFuncMixin, Func): ...
 
 class GeomOutputGeoFunc(GeoFunc):
-    def output_field(self) -> Any: ...
+    @property
+    def output_field(self) -> Field[Any, Any]: ...
 
 class SQLiteDecimalToFloatMixin:
     def as_sqlite(
@@ -38,7 +40,8 @@ class OracleToleranceMixin:
 
 class Area(OracleToleranceMixin, GeoFunc):
     arity: int = ...
-    def output_field(self) -> Any: ...
+    @property
+    def output_field(self) -> Field[Any, Any]: ...
     def as_sqlite(
         self, compiler: Any, connection: Any, **extra_context: Any
     ) -> Any: ...

@@ -5,7 +5,7 @@ from django.views.generic.base import View
 
 _T = TypeVar("_T", bound=Union[View, Callable[..., Any]])  # Any callable
 
-class classonlymethod(classmethod[Any]): ...
+class classonlymethod(classmethod[Any, Any, Any]): ...  # type: ignore[type-arg]
 
 def method_decorator(
     decorator: Union[Callable[..., Any], Iterable[Callable[..., Any]]], name: str = ...

@@ -1,11 +1,13 @@
 from typing import Any, Optional
 
 from django.db.models import Aggregate
+from django.db.models.fields import Field
 
 class GeoAggregate(Aggregate):
     function: Any = ...
     is_extent: bool = ...
-    def output_field(self) -> Any: ...
+    @property
+    def output_field(self) -> Field[Any, Any]: ...
     def as_sql(
         self,
         compiler: Any,

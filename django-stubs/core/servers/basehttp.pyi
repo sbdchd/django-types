@@ -26,7 +26,7 @@ class ServerHandler(simple_server.ServerHandler):
 
 class WSGIRequestHandler(simple_server.WSGIRequestHandler):
     close_connection: bool
-    connection: WSGIRequest  # type: ignore [assignment]
+    connection: WSGIRequest
     request: WSGIRequest
     rfile: BytesIO
     wfile: BytesIO

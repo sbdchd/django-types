@@ -4,6 +4,7 @@ from django.contrib.gis.db.backends.base.operations import BaseSpatialOperations
 from django.contrib.gis.db.backends.utils import SpatialOperator
 from django.db.backends.postgresql.operations import DatabaseOperations
 from django.db.models import Func
+from django.db.models.fields import Field
 
 BILATERAL: str
 
@@ -21,7 +22,8 @@ class PostGISOperator(SpatialOperator):
 class ST_Polygon(Func):
     function: str = ...
     def __init__(self, expr: Any) -> None: ...
-    def output_field(self) -> Any: ...
+    @property
+    def output_field(self) -> Field[Any, Any]: ...
 
 class PostGISOperations(BaseSpatialOperations, DatabaseOperations):
     name: str = ...

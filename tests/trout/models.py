@@ -900,12 +900,14 @@ def get_data_view(request: HttpRequest, id: str) -> None:
 
 
 @cache_page(3600)
-def cached_page_view(request: HttpRequest) -> HttpResponse:
+def cached_page_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
     ...
 
 
 @cache_control(private=True)
-def cache_control_view(request: HttpRequest) -> HttpResponse:
+def cache_control_view(  # type: ignore[empty-body]
+    request: HttpRequest,
+) -> HttpResponse:
     ...
 
 
@@ -913,7 +915,9 @@ cache_page_2 = decorator_from_middleware_with_args(CacheMiddleware)
 
 
 @cache_page_2(3600)
-def cached_view_take_2(request: HttpRequest) -> HttpResponse:
+def cached_view_take_2(  # type: ignore[empty-body]
+    request: HttpRequest,
+) -> HttpResponse:
     ...
 
 
@@ -921,37 +925,47 @@ cache_page_3_no_args = decorator_from_middleware(CacheMiddleware)
 
 
 @cache_page_3_no_args
-def cached_view_take_3(request: HttpRequest) -> HttpResponse:
+def cached_view_take_3(  # type: ignore[empty-body]
+    request: HttpRequest,
+) -> HttpResponse:
     ...
 
 
 @never_cache
 @gzip_page
-def compressed_view(request: HttpRequest, id: str) -> HttpResponse:
+def compressed_view(  # type: ignore[empty-body]
+    request: HttpRequest, id: str
+) -> HttpResponse:
     ...
 
 
-def latest_entry(request: HttpRequest, blog_id: str) -> bool:
+def latest_entry(  # type: ignore[empty-body]
+    request: HttpRequest, blog_id: str
+) -> bool:
     ...
 
 
 @condition(last_modified_func=latest_entry)
-def front_page(request: HttpRequest, blog_id: str) -> HttpResponse:
+def front_page(  # type: ignore[empty-body]
+    request: HttpRequest, blog_id: str
+) -> HttpResponse:
     ...
 
 
 @last_modified(latest_entry)
-def front_page_2(request: HttpRequest, blog_id: str) -> HttpResponse:
+def front_page_2(  # type: ignore[empty-body]
+    request: HttpRequest, blog_id: str
+) -> HttpResponse:
     ...
 
 
 @sensitive_post_parameters("password")
-def login_view(request: HttpRequest) -> HttpResponse:
+def login_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
     ...
 
 
 @sensitive_variables("password")
-def signup_view(request: HttpRequest) -> HttpResponse:
+def signup_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
     ...
 
 
@@ -1038,7 +1052,9 @@ AuthUser.objects.create_superuser(username="foo", email=None, password=None)
 
 class IndexModel(models.Model):
     title = models.TextField()
-    author = models.ForeignKey[Optional[User]](User, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey[Optional[User]](
+        User, on_delete=models.CASCADE, null=True
+    )
     pub_date = models.DateTimeField()
     height = models.IntegerField()
     weight = models.IntegerField()

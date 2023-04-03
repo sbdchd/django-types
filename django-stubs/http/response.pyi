@@ -3,6 +3,7 @@ from io import BytesIO
 from json import JSONEncoder
 from typing import (
     Any,
+    AsyncIterable,
     Dict,
     Iterable,
     Iterator,
@@ -103,9 +104,12 @@ class HttpResponse(HttpResponseBase):
 
 class StreamingHttpResponse(HttpResponseBase):
     content: Any
-    streaming_content: Iterator[Any]
+    streaming_content: Union[Iterable[bytes], AsyncIterable[bytes]]
     def __init__(
-        self, streaming_content: Iterable[Any] = ..., *args: Any, **kwargs: Any
+        self,
+        streaming_content: Union[Iterable[bytes], AsyncIterable[bytes]] = ...,
+        *args: Any,
+        **kwargs: Any
     ) -> None: ...
     def getvalue(self) -> bytes: ...
 

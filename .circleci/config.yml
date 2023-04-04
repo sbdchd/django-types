@@ -3,7 +3,7 @@ version: 2
 jobs:
   lint:
     docker:
-      - image: circleci/python:3.7-node
+      - image: circleci/python:3.8-node
     steps:
       - checkout
       - restore_cache:
@@ -15,7 +15,8 @@ jobs:
             # Use our new PATH so we can call poetry from bash
             echo 'export PATH="$PATH":"$HOME"/.local/bin' >> $BASH_ENV
             source $BASH_ENV
-            python -m pip install --user poetry==1.4.2
+            python -m pip install -U pip
+            python -m pip install --user poetry
             poetry config virtualenvs.in-project true
             poetry --version
             poetry install

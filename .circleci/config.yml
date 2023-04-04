@@ -15,7 +15,7 @@ jobs:
             # Use our new PATH so we can call poetry from bash
             echo 'export PATH="$PATH":"$HOME"/.local/bin' >> $BASH_ENV
             source $BASH_ENV
-            python -m pip install --user poetry==1.1.9
+            python -m pip install --user poetry==1.4.2
             poetry config virtualenvs.in-project true
             poetry --version
             poetry install

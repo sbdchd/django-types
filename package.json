@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "pyright": "1.1.301"
+  },
+  "volta": {
+    "node": "18.15.0"
   }
 }

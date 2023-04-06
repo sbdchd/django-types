@@ -13,8 +13,7 @@ class BaseConstraint:
         self,
         *args: BaseExpression | Combinable | str,
         name: Optional[str] = ...,
-        validation_error_code: Optional[str] = ...,
-        validation_error_message: Optional[str] = ...,
+        violation_error_message: Optional[str] = ...,
     ) -> None: ...
     def constraint_sql(
         self,
@@ -41,8 +40,7 @@ class CheckConstraint(BaseConstraint):
         *,
         check: Q,
         name: str,
-        validation_error_code: Optional[str] = ...,
-        validation_error_message: Optional[str] = ...,
+        violation_error_message: Optional[str] = ...,
     ) -> None: ...
 
 class UniqueConstraint(BaseConstraint):
@@ -57,6 +55,5 @@ class UniqueConstraint(BaseConstraint):
         deferrable: Optional[bool] = ...,
         include: Optional[Union[str, Sequence[str]]] = ...,
         opclasses: Sequence[str] = ...,
-        validation_error_code: Optional[str] = ...,
-        validation_error_message: Optional[str] = ...,
+        violation_error_message: Optional[str] = ...,
     ) -> None: ...

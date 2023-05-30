@@ -1,6 +1,8 @@
 from typing import Any, Dict, Optional, Tuple, Type, Union
 
+from django.contrib.auth.models import Permission
 from django.db import models
+from django.db.models import Manager
 from django.db.models.base import Model
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
@@ -21,6 +23,7 @@ class ContentType(models.Model):
     app_label: models.CharField[Any] = ...
     model: models.CharField[Any] = ...
     objects: ContentTypeManager = ...
+    permission_set: Manager[Permission]
     @property
     def name(self) -> str: ...
     def model_class(self) -> Optional[Type[Model]]: ...

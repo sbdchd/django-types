@@ -364,6 +364,13 @@ class ModelAdmin(BaseModelAdmin[_ModelT]):
     def history_view(
         self, request: HttpRequest, object_id: str, extra_context: None = ...
     ) -> HttpResponse: ...
+    def get_formset_kwargs(
+        self,
+        request: HttpRequest,
+        obj: _ModelT,
+        inline: InlineModelAdmin[Any],
+        prefix: str,
+    ) -> Dict[str, Any]: ...
 
 class InlineModelAdmin(BaseModelAdmin[_ModelT]):
     model: Type[_ModelT] = ...

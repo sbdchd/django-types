@@ -15,6 +15,11 @@ if sys.version_info < (3, 8):
 else:
     from typing import Literal
 
+if sys.version_info < (3, 11):
+    from typing_extensions import Self
+else:
+    from typing import Self
+
 _AnyUser = Union[Model, "AnonymousUser"]
 
 def update_last_login(
@@ -104,7 +109,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     ) -> None: ...
 
 class User(AbstractUser):
-    objects: UserManager[User]
+    objects: UserManager[Self]
 
 class AnonymousUser:
     id: Any = ...

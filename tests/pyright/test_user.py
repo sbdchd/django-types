@@ -1,6 +1,6 @@
 from .base import Result, run_pyright
 
-def test_user_manager_specialises_to_self():
+def test_user_manager_specialises_to_self() -> None:
     results = run_pyright(
         """\
 from django.db import models

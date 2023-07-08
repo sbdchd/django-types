@@ -1,5 +1,6 @@
 from .base import Result, run_pyright
 
+
 def test_user_manager_specialises_to_self() -> None:
     results = run_pyright(
         """\
@@ -12,7 +13,7 @@ class MyUser(auth_models.User):
 u = MyUser()
 reveal_type(u.objects)
 """
-        )
+    )
 
     assert results == [
         Result(

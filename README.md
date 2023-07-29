@@ -17,21 +17,31 @@ Type stubs for [Django](https://www.djangoproject.com).
 pip install django-types
 ```
 
-You'll need to monkey patch Django's `QuerySet`, `Manager` (not needed for Django 3.1+) and
-`ForeignKey`  (not needed for Django 4.1+) classes so we can index into them with a generic
-argument. Add this to your settings.py:
+You can get a `TypeError: 'type' object is not subscriptable`
+when you will try to use `QuerySet[MyModel]`, `Manager[MyModel]` or some other Django-based Generic types.
 
-```python
-# in settings.py
-from django.db.models import ForeignKey
-from django.db.models.manager import BaseManager
-from django.db.models.query import QuerySet
+This happens because these Django classes do not support [`__class_getitem__`](https://www.python.org/dev/peps/pep-0560/#class-getitem) magic method in runtime.
 
-# NOTE: there are probably other items you'll need to monkey patch depending on
-# your version.
-for cls in [QuerySet, BaseManager, ForeignKey]:
-    cls.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore [attr-defined]
-```
+1. You can go with [`django_stubs_ext`](https://github.com/typeddjango/django-stubs/tree/master/django_stubs_ext) helper, that patches all the types we use as Generic in django.
+
+   Install it:
+
+   ```bash
+   pip install django-stubs-ext  # as a production dependency
+   ```
+
+   And then place in your top-level settings:
+
+   ```python
+   import django_stubs_ext
+
+   django_stubs_ext.monkeypatch()
+   ```
+
+   You can add extra types to patch with `django_stubs_ext.monkeypatch(extra_classes=[YourDesiredType])`
+
+2. You can use strings instead: `'QuerySet[MyModel]'` and `'Manager[MyModel]'`, this way it will work as a type for type-checking and as a regular `str` in runtime.
+
 
 ## usage
 

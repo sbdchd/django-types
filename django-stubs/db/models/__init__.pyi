@@ -11,9 +11,9 @@ from .aggregates import StdDev as StdDev
 from .aggregates import Sum as Sum
 from .aggregates import Variance as Variance
 from .base import Model as Model
-from .constraints import Deferrable as Deferrable
 from .constraints import BaseConstraint as BaseConstraint
 from .constraints import CheckConstraint as CheckConstraint
+from .constraints import Deferrable as Deferrable
 from .constraints import UniqueConstraint as UniqueConstraint
 from .deletion import CASCADE as CASCADE
 from .deletion import DO_NOTHING as DO_NOTHING

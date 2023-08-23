@@ -1,3 +1,4 @@
+import sys
 from typing import (
     Any,
     Callable,
@@ -22,6 +23,11 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options
 
+if sys.version_info < (3, 11):
+    from typing_extensions import Self
+else:
+    from typing import Self
+
 _M = TypeVar("_M", bound=Any)
 _Self = TypeVar("_Self", bound="Model")
 
@@ -32,24 +38,18 @@ class ModelState:
     adding: bool = ...
     fields_cache: ModelStateFieldsCacheDescriptor = ...
 
-class ModelBase(type):
-    # FIXME: It would be better to use _Self instead of _M here,
-    # but pyright says Type[_Self] cannot be assigned here... Maybe a bug in pyright?
-    @property
-    def objects(cls: Type[_M]) -> BaseManager[_M]: ...
-    @property
-    def _meta(cls: Type[_M]) -> Options[_M]: ...
-    @property
-    def _default_manager(cls: Type[_M]) -> BaseManager[_M]: ...
+class ModelBase(type): ...
 
 class Model(metaclass=ModelBase):
     DoesNotExist: ClassVar[type[ObjectDoesNotExist]]
     MultipleObjectsReturned: ClassVar[type[BaseMultipleObjectsReturned]]
+    _meta: ClassVar[Options[Self]]
+    _default_manager: ClassVar[BaseManager[Self]]
+    objects: ClassVar[BaseManager[Self]]
 
     class Meta: ...
     pk: Any = ...
     _state: ModelState
-    _meta: Options[Any]
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...
     @classmethod
     def add_to_class(cls, name: str, value: Any) -> Any: ...
@@ -67,7 +67,10 @@ class Model(metaclass=ModelBase):
         self, using: Any = ..., keep_parents: bool = ...
     ) -> Tuple[int, Dict[str, int]]: ...
     def full_clean(
-        self, exclude: Optional[Collection[str]] = ..., validate_unique: bool = True, validate_constraints: bool = True
+        self,
+        exclude: Optional[Collection[str]] = ...,
+        validate_unique: bool = True,
+        validate_constraints: bool = True,
     ) -> None: ...
     def clean(self) -> None: ...
     def clean_fields(self, exclude: Optional[Collection[str]] = ...) -> None: ...

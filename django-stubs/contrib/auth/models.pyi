@@ -1,5 +1,5 @@
 import sys
-from typing import Any, Collection, Optional, Set, Tuple, Type, TypeVar, Union
+from typing import Any, ClassVar, Collection, Optional, Set, Tuple, Type, TypeVar, Union
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser as AbstractBaseUser
@@ -15,6 +15,11 @@ if sys.version_info < (3, 8):
 else:
     from typing import Literal
 
+if sys.version_info < (3, 11):
+    from typing_extensions import Self
+else:
+    from typing import Self
+
 _AnyUser = Union[Model, "AnonymousUser"]
 
 def update_last_login(
@@ -28,7 +33,7 @@ class PermissionManager(models.Manager["Permission"]):
 
 class Permission(models.Model):
     content_type_id: int
-    objects: PermissionManager
+    objects: ClassVar[PermissionManager]
 
     name = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -39,7 +44,7 @@ class GroupManager(models.Manager["Group"]):
     def get_by_natural_key(self, name: str) -> Group: ...
 
 class Group(models.Model):
-    objects: GroupManager
+    objects: ClassVar[GroupManager]
 
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
@@ -104,7 +109,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     ) -> None: ...
 
 class User(AbstractUser):
-    objects: UserManager[User]
+    objects: ClassVar[UserManager[Self]]  # type: ignore[assignment]
 
 class AnonymousUser:
     id: Any = ...

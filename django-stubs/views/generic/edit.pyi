@@ -9,6 +9,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from typing_extensions import Literal
 
 from django.forms.forms import BaseForm
 from django.forms.models import BaseModelForm
@@ -19,7 +20,6 @@ from django.views.generic.detail import (
     SingleObjectMixin,
     SingleObjectTemplateResponseMixin,
 )
-from typing_extensions import Literal
 
 _FormT = TypeVar("_FormT", bound=BaseForm)
 

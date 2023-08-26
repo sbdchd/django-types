@@ -13,6 +13,7 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal, Protocol
 
 from psycopg2._psycopg import ReplicationConnection as _replicationConnection
 from psycopg2._psycopg import ReplicationCursor as _replicationCursor
@@ -23,7 +24,6 @@ from psycopg2._range import Range as Range
 from psycopg2.extensions import _SQLType
 from psycopg2.extensions import connection as _connection
 from psycopg2.extensions import cursor as _cursor
-from typing_extensions import Literal, Protocol
 
 class DictCursorBase(_cursor):
     _query_executed: bool

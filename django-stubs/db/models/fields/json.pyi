@@ -10,11 +10,11 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal
 
 from django.db.models import lookups
 from django.db.models.expressions import Combinable
 from django.db.models.lookups import PostgresOperatorLookup, Transform
-from typing_extensions import Literal
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin

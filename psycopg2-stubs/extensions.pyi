@@ -16,9 +16,8 @@ from typing import (
     Tuple,
     Union,
 )
-from uuid import UUID
-
 from typing_extensions import Literal
+from uuid import UUID
 
 ISOLATION_LEVEL_AUTOCOMMIT: Literal[0]
 ISOLATION_LEVEL_READ_UNCOMMITTED: Literal[4]

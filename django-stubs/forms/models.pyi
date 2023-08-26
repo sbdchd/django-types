@@ -16,6 +16,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from typing_extensions import Literal
 from unittest.mock import MagicMock
 from uuid import UUID
 
@@ -31,7 +32,6 @@ from django.forms.forms import BaseForm, DeclarativeFieldsMetaclass
 from django.forms.formsets import BaseFormSet
 from django.forms.utils import ErrorList
 from django.forms.widgets import Input, Widget
-from typing_extensions import Literal
 
 ALL_FIELDS: str
 

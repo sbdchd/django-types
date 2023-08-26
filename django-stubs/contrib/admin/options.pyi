@@ -15,6 +15,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from typing_extensions import Literal, TypedDict
 
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.models import LogEntry
@@ -47,7 +48,6 @@ from django.http.response import (
 from django.template.response import TemplateResponse
 from django.urls.resolvers import URLPattern
 from django.utils.safestring import SafeText
-from typing_extensions import Literal, TypedDict
 
 IS_POPUP_VAR: str
 TO_FIELD_VAR: str

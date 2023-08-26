@@ -10,10 +10,10 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal
 
 from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
-from typing_extensions import Literal
 
 from .mixins import CheckFieldDefaultMixin
 

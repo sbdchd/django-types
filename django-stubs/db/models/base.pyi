@@ -1,4 +1,3 @@
-import sys
 from typing import (
     Any,
     Callable,
@@ -11,9 +10,9 @@ from typing import (
     Set,
     Tuple,
     Type,
-    TypeVar,
     Union,
 )
+from typing_extensions import Self
 
 from django.core.checks.messages import CheckMessage
 from django.core.exceptions import (
@@ -22,14 +21,6 @@ from django.core.exceptions import (
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options
-
-if sys.version_info < (3, 11):
-    from typing_extensions import Self
-else:
-    from typing import Self
-
-_M = TypeVar("_M", bound=Any)
-_Self = TypeVar("_Self", bound="Model")
 
 class ModelStateFieldsCacheDescriptor: ...
 
@@ -55,11 +46,8 @@ class Model(metaclass=ModelBase):
     def add_to_class(cls, name: str, value: Any) -> Any: ...
     @classmethod
     def from_db(
-        cls: Type[_Self],
-        db: Optional[str],
-        field_names: Collection[str],
-        values: Collection[Any],
-    ) -> _Self: ...
+        cls, db: Optional[str], field_names: Collection[str], values: Collection[Any]
+    ) -> Self: ...
     def delete(
         self, using: Any = ..., keep_parents: bool = ...
     ) -> Tuple[int, Dict[str, int]]: ...
@@ -76,8 +64,8 @@ class Model(metaclass=ModelBase):
     def clean_fields(self, exclude: Optional[Collection[str]] = ...) -> None: ...
     def validate_unique(self, exclude: Optional[Collection[str]] = ...) -> None: ...
     def unique_error_message(
-        self: _Self,
-        model_class: Type[_Self],
+        self,
+        model_class: Type[Self],
         unique_check: Collection[Union[Callable[..., Any], str]],
     ) -> ValidationError: ...
     def save(

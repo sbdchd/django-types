@@ -1,5 +1,5 @@
-import sys
 from typing import Any, ClassVar, Collection, Optional, Set, Tuple, Type, TypeVar, Union
+from typing_extensions import Literal, Self
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser as AbstractBaseUser
@@ -9,16 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.manager import EmptyManager
-
-if sys.version_info < (3, 8):
-    from typing_extensions import Literal
-else:
-    from typing import Literal
-
-if sys.version_info < (3, 11):
-    from typing_extensions import Self
-else:
-    from typing import Self
 
 _AnyUser = Union[Model, "AnonymousUser"]
 

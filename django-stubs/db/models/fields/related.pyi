@@ -14,6 +14,7 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal, Self
 from uuid import UUID
 
 from django.db import models
@@ -44,7 +45,6 @@ from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
 from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
 from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
-from typing_extensions import Literal
 
 class _DeleteProtocol(Protocol):
     def __call__(
@@ -253,14 +253,10 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     def __get__(self, instance: None, owner: Any) -> ForwardManyToOneDescriptor: ...
     # Model instance access
     @overload
-    def __get__(self: ForeignKey[_M], instance: Any, owner: Any) -> _M: ...
-    @overload
-    def __get__(
-        self: ForeignKey[Optional[_M]], instance: Any, owner: Any
-    ) -> Optional[_M]: ...
+    def __get__(self, instance: Model, owner: Any) -> _M: ...
     # non-Model instances
     @overload
-    def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
+    def __get__(self, instance: Any, owner: Any) -> Self: ...
 
 class OneToOneField(Generic[_M], ForeignKey[_M]):
     one_to_many: Literal[False] = ...
@@ -345,14 +341,10 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
     def __get__(self, instance: None, owner: Any) -> ForwardOneToOneDescriptor: ...
     # Model instance access
     @overload
-    def __get__(self: OneToOneField[_M], instance: Any, owner: Any) -> _M: ...
-    @overload
-    def __get__(
-        self: OneToOneField[Optional[_M]], instance: Any, owner: Any
-    ) -> Optional[_M]: ...
+    def __get__(self, instance: Model, owner: Any) -> _M: ...
     # non-Model instances
     @overload
-    def __get__(self: _F, instance: Any, owner: Any) -> _F: ...
+    def __get__(self, instance: Any, owner: Any) -> Self: ...
 
 _MM = TypeVar("_MM", bound=Model)
 _MN = TypeVar("_MN", bound=Model)
@@ -360,7 +352,6 @@ _MN = TypeVar("_MN", bound=Model)
 class ManyToManyField(
     Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]
 ):
-
     one_to_many: Literal[False] = ...
     one_to_one: Literal[False] = ...
     many_to_many: Literal[True] = ...

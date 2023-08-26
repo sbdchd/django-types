@@ -32,6 +32,10 @@ include = '\.pyi?$'
 
 [tool.isort]
 profile = "black"
+extra_standard_library = [
+    "typing_extensions",
+    "_typeshed",
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

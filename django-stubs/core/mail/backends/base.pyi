@@ -1,15 +1,14 @@
 import types
-from typing import Any, Iterable, Optional, Type, TypeVar
+from typing import Any, Iterable, Optional, Type
+from typing_extensions import Self
 
 from django.core.mail.message import EmailMessage
-
-_T = TypeVar("_T", bound="BaseEmailBackend")
 
 class BaseEmailBackend:
     def __init__(self, fail_silently: bool = ..., **kwargs: Any) -> None: ...
     def open(self) -> Optional[bool]: ...
     def close(self) -> None: ...
-    def __enter__(self: _T) -> _T: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: Type[BaseException],

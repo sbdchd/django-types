@@ -9,9 +9,9 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal
 
 from django.db.models.fields import CharField, EmailField, TextField
-from typing_extensions import Literal
 
 _Choice = Tuple[Any, Any]
 _ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
@@ -75,8 +75,8 @@ class CICharField(CIText, CharField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self: CICharField[_C], instance: Any, owner: Any) -> _C: ...
-    def __set__(self: CICharField[_C], instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _C: ...
+    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
 class CIEmailField(CIText, EmailField[_C]):
     @overload
@@ -129,7 +129,7 @@ class CIEmailField(CIText, EmailField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self: CIEmailField[_C], instance: Any, owner: Any) -> _C: ...
+    def __get__(self, instance: Any, owner: Any) -> _C: ...
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
 class CITextField(CIText, TextField[_C]):
@@ -183,5 +183,5 @@ class CITextField(CIText, TextField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> None: ...
-    def __get__(self: CITextField[_C], instance: Any, owner: Any) -> _C: ...
-    def __set__(self: CITextField[_C], instance: Any, value: _C) -> None: ...  # type: ignore [override]
+    def __get__(self, instance: Any, owner: Any) -> _C: ...
+    def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]

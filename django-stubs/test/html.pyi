@@ -1,7 +1,5 @@
 from html.parser import HTMLParser
-from typing import Any, List, Optional, Sequence, Tuple, TypeVar, Union
-
-_Self = TypeVar("_Self")
+from typing import Any, List, Optional, Sequence, Tuple, Union
 
 WHITESPACE: Any
 

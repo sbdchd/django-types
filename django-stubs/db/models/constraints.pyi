@@ -1,12 +1,11 @@
 from enum import Enum
-from typing import Any, Optional, Sequence, Tuple, Type, TypeVar, Union
+from typing import Any, Optional, Sequence, Tuple, Type, Union
+from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.models.base import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.db.models.query_utils import Q
-
-_T = TypeVar("_T", bound="BaseConstraint")
 
 class Deferrable(Enum):
     DEFERRED: str
@@ -36,7 +35,7 @@ class BaseConstraint:
         schema_editor: Optional[BaseDatabaseSchemaEditor],
     ) -> str: ...
     def deconstruct(self) -> Any: ...
-    def clone(self: _T) -> _T: ...
+    def clone(self) -> Self: ...
 
 class CheckConstraint(BaseConstraint):
     check: Q

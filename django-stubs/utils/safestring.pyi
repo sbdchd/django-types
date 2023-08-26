@@ -1,9 +1,8 @@
-from typing import Any, TypeVar, overload
-
-_SD = TypeVar("_SD", bound="SafeData")
+from typing import Any, overload
+from typing_extensions import Self
 
 class SafeData:
-    def __html__(self: _SD) -> _SD: ...
+    def __html__(self) -> Self: ...
 
 class SafeText(str, SafeData):
     @overload

@@ -17,6 +17,7 @@ from typing import (
     Union,
     overload,
 )
+from typing_extensions import Literal, Self
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
@@ -24,7 +25,6 @@ from django.db.models import Model
 from django.db.models.expressions import Col, Combinable
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Widget
-from typing_extensions import Literal
 
 BLANK_CHOICE_DASH: List[Tuple[str, str]] = ...
 
@@ -35,7 +35,6 @@ _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
 _ValidatorCallable = Callable[..., None]
 _ErrorMessagesToOverride = Dict[str, Any]
 
-_T = TypeVar("_T", bound="Field[Any, Any]")
 # __set__ value type
 _ST = TypeVar("_ST")
 # __get__ return type
@@ -44,7 +43,6 @@ _GT = TypeVar("_GT")
 class NOT_PROVIDED: ...
 
 class Field(RegisterLookupMixin, Generic[_ST, _GT]):
-
     widget: Widget
     help_text: str
     db_table: str
@@ -75,13 +73,13 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def __set__(self, instance: Any, value: _ST) -> None: ...
     # class access
     @overload
-    def __get__(self: _T, instance: None, owner: Any) -> _T: ...
+    def __get__(self, instance: None, owner: Any) -> Self: ...
     # Model instance access
     @overload
     def __get__(self, instance: Model, owner: Any) -> _GT: ...
     # non-Model instances
     @overload
-    def __get__(self: _T, instance: Any, owner: Any) -> _T: ...
+    def __get__(self, instance: Any, owner: Any) -> Self: ...
     def deconstruct(self) -> Any: ...
     def set_attributes_from_name(self, name: str) -> None: ...
     def db_type(self, connection: Any) -> str: ...

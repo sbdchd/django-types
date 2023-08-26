@@ -10,11 +10,10 @@ from typing import (
     Pattern,
     Set,
     Tuple,
-    Type,
-    TypeVar,
     Union,
     overload,
 )
+from typing_extensions import Self
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
@@ -90,8 +89,6 @@ class HttpRequest(BytesIO):
     def body(self) -> bytes: ...
     def _load_post_and_files(self) -> None: ...
 
-_Q = TypeVar("_Q", bound="QueryDict")
-
 class QueryDict(MultiValueDict[str, str]):
     encoding: str = ...
     _mutable: bool = ...
@@ -109,12 +106,12 @@ class QueryDict(MultiValueDict[str, str]):
     def urlencode(self, safe: Optional[str] = ...) -> str: ...
     @classmethod
     def fromkeys(
-        cls: Type[_Q],
+        cls,
         iterable: Iterable[Union[bytes, str]],
         value: Any = ...,
         mutable: bool = ...,
         encoding: Optional[str] = ...,
-    ) -> _Q: ...
+    ) -> Self: ...
 
 @overload
 def bytes_to_text(s: bytes, encoding: str) -> str: ...

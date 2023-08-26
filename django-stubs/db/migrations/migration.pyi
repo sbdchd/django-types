@@ -1,4 +1,5 @@
 from typing import List, Optional, Tuple
+from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.migrations.operations.base import Operation
@@ -32,6 +33,6 @@ class Migration:
 
 class SwappableTuple(Tuple[str, str]):
     setting: str = ...
-    def __new__(cls, value: Tuple[str, str], setting: str) -> SwappableTuple: ...
+    def __new__(cls, value: Tuple[str, str], setting: str) -> Self: ...
 
 def swappable_dependency(value: str) -> SwappableTuple: ...

@@ -615,7 +615,7 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> AutoField: ...
+    ) -> Self: ...
 
 class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
     def __new__(
@@ -645,7 +645,7 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> BigAutoField: ...
+    ) -> Self: ...
 
 class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
     def __new__(
@@ -675,7 +675,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> SmallAutoField: ...
+    ) -> Self: ...
 
 _C = TypeVar("_C", bound=Optional[str])
 

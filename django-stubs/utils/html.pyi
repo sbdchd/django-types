@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 from html.parser import HTMLParser
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.utils.safestring import SafeText
 
@@ -20,7 +20,7 @@ def format_html(format_string: str, *args: Any, **kwargs: Any) -> SafeText: ...
 def format_html_join(
     sep: str,
     format_string: str,
-    args_generator: Union[Iterable[Any], Iterable[tuple[str]]],
+    args_generator: Iterable[Any] | Iterable[tuple[str]],
 ) -> SafeText: ...
 def linebreaks(value: Any, autoescape: bool = ...) -> str: ...
 
@@ -37,7 +37,7 @@ def strip_spaces_between_tags(value: str) -> str: ...
 def smart_urlquote(url: str) -> str: ...
 def urlize(
     text: str,
-    trim_url_limit: Optional[int] = ...,
+    trim_url_limit: int | None = ...,
     nofollow: bool = ...,
     autoescape: bool = ...,
 ) -> str: ...

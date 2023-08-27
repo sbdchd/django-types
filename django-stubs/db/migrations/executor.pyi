@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db import DefaultConnectionProxy
 from django.db.backends.base.base import BaseDatabaseWrapper
@@ -16,19 +16,19 @@ class MigrationExecutor:
     progress_callback: Callable[..., Any] = ...
     def __init__(
         self,
-        connection: Optional[Union[DefaultConnectionProxy, BaseDatabaseWrapper]],
-        progress_callback: Optional[Callable[..., Any]] = ...,
+        connection: DefaultConnectionProxy | BaseDatabaseWrapper | None,
+        progress_callback: Callable[..., Any] | None = ...,
     ) -> None: ...
     def migration_plan(
         self,
-        targets: Union[list[tuple[str, Optional[str]]], set[tuple[str, str]]],
+        targets: list[tuple[str, str | None]] | set[tuple[str, str]],
         clean_start: bool = ...,
     ) -> list[tuple[Migration, bool]]: ...
     def migrate(
         self,
-        targets: Optional[list[tuple[str, Optional[str]]]],
-        plan: Optional[list[tuple[Migration, bool]]] = ...,
-        state: Optional[ProjectState] = ...,
+        targets: list[tuple[str, str | None]] | None,
+        plan: list[tuple[Migration, bool]] | None = ...,
+        state: ProjectState | None = ...,
         fake: bool = ...,
         fake_initial: bool = ...,
     ) -> ProjectState: ...
@@ -45,5 +45,5 @@ class MigrationExecutor:
     ) -> ProjectState: ...
     def check_replacements(self) -> None: ...
     def detect_soft_applied(
-        self, project_state: Optional[ProjectState], migration: Migration
+        self, project_state: ProjectState | None, migration: Migration
     ) -> tuple[bool, ProjectState]: ...

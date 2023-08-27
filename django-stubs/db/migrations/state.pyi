@@ -1,5 +1,5 @@
 from collections.abc import Iterator, Sequence
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.apps import AppConfig
 from django.apps.registry import Apps
@@ -21,9 +21,9 @@ class ModelState:
         app_label: str,
         name: str,
         fields: list[tuple[str, Field[Any, Any]]],
-        options: Optional[dict[str, Any]] = ...,
-        bases: Optional[Sequence[Union[type[Model], str]]] = ...,
-        managers: Optional[list[tuple[str, Manager[Any]]]] = ...,
+        options: dict[str, Any] | None = ...,
+        bases: Sequence[type[Model] | str] | None = ...,
+        managers: list[tuple[str, Manager[Any]]] | None = ...,
     ) -> None: ...
     def clone(self) -> ModelState: ...
     def construct_managers(self) -> Iterator[tuple[str, Manager[Any]]]: ...
@@ -43,8 +43,8 @@ class ProjectState:
     real_apps: list[str]
     def __init__(
         self,
-        models: Optional[dict[tuple[str, str], ModelState]] = ...,
-        real_apps: Optional[list[str]] = ...,
+        models: dict[tuple[str, str], ModelState] | None = ...,
+        real_apps: list[str] | None = ...,
     ) -> None: ...
     def add_model(self, model_state: ModelState) -> None: ...
     @property

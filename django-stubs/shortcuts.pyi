@@ -1,5 +1,5 @@
 from collections.abc import Callable, Mapping, Sequence
-from typing import Any, Optional, Protocol, TypeVar, Union, overload
+from typing import Any, Protocol, TypeVar, overload
 from typing_extensions import Literal
 
 from django.db.models import Manager, QuerySet
@@ -12,53 +12,53 @@ from django.http.response import (
 from django.http.response import HttpResponseRedirect as HttpResponseRedirect
 
 def render_to_response(
-    template_name: Union[str, Sequence[str]],
-    context: Optional[Mapping[str, Any]] = ...,
-    content_type: Optional[str] = ...,
-    status: Optional[int] = ...,
-    using: Optional[str] = ...,
+    template_name: str | Sequence[str],
+    context: Mapping[str, Any] | None = ...,
+    content_type: str | None = ...,
+    status: int | None = ...,
+    using: str | None = ...,
 ) -> HttpResponse: ...
 def render(
     request: HttpRequest,
-    template_name: Union[str, Sequence[str]],
-    context: Optional[Mapping[str, Any]] = ...,
-    content_type: Optional[str] = ...,
-    status: Optional[int] = ...,
-    using: Optional[str] = ...,
+    template_name: str | Sequence[str],
+    context: Mapping[str, Any] | None = ...,
+    content_type: str | None = ...,
+    status: int | None = ...,
+    using: str | None = ...,
 ) -> HttpResponse: ...
 
 class SupportsGetAbsoluteUrl(Protocol): ...
 
 @overload
 def redirect(
-    to: Union[Callable[..., Any], str, SupportsGetAbsoluteUrl],
+    to: Callable[..., Any] | str | SupportsGetAbsoluteUrl,
     *args: Any,
     permanent: Literal[True],
     **kwargs: Any
 ) -> HttpResponsePermanentRedirect: ...
 @overload
 def redirect(
-    to: Union[Callable[..., Any], str, SupportsGetAbsoluteUrl],
+    to: Callable[..., Any] | str | SupportsGetAbsoluteUrl,
     *args: Any,
     permanent: Literal[False],
     **kwargs: Any
 ) -> HttpResponseRedirect: ...
 @overload
 def redirect(
-    to: Union[Callable[..., Any], str, SupportsGetAbsoluteUrl],
+    to: Callable[..., Any] | str | SupportsGetAbsoluteUrl,
     *args: Any,
     permanent: bool = ...,
     **kwargs: Any
-) -> Union[HttpResponseRedirect, HttpResponsePermanentRedirect]: ...
+) -> HttpResponseRedirect | HttpResponsePermanentRedirect: ...
 
 _T = TypeVar("_T", bound=Model)
 
 def get_object_or_404(
-    klass: Union[type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
+    klass: type[_T] | Manager[_T] | QuerySet[_T], *args: Any, **kwargs: Any
 ) -> _T: ...
 def get_list_or_404(
-    klass: Union[type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
+    klass: type[_T] | Manager[_T] | QuerySet[_T], *args: Any, **kwargs: Any
 ) -> list[_T]: ...
 def resolve_url(
-    to: Union[Callable[..., Any], Model, str], *args: Any, **kwargs: Any
+    to: Callable[..., Any] | Model | str, *args: Any, **kwargs: Any
 ) -> str: ...

@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db.migrations.graph import MigrationGraph
 from django.db.migrations.migration import Migration
@@ -17,33 +17,29 @@ class MigrationAutodetector:
         self,
         from_state: ProjectState,
         to_state: ProjectState,
-        questioner: Optional[MigrationQuestioner] = ...,
+        questioner: MigrationQuestioner | None = ...,
     ) -> None: ...
     def changes(
         self,
         graph: MigrationGraph,
-        trim_to_apps: Optional[set[str]] = ...,
-        convert_apps: Optional[set[str]] = ...,
-        migration_name: Optional[str] = ...,
+        trim_to_apps: set[str] | None = ...,
+        convert_apps: set[str] | None = ...,
+        migration_name: str | None = ...,
     ) -> dict[str, list[Migration]]: ...
     def deep_deconstruct(self, obj: Any) -> Any: ...
     def only_relation_agnostic_fields(
         self, fields: list[tuple[str, Field[Any, Any]]]
-    ) -> list[
-        tuple[str, list[Any], dict[str, Union[Callable[..., Any], int, str]]]
-    ]: ...
+    ) -> list[tuple[str, list[Any], dict[str, Callable[..., Any] | int | str]]]: ...
     def check_dependency(
         self,
         operation: Operation,
-        dependency: tuple[str, str, Optional[str], Union[bool, str]],
+        dependency: tuple[str, str, str | None, bool | str],
     ) -> bool: ...
     def add_operation(
         self,
         app_label: str,
         operation: Operation,
-        dependencies: Optional[
-            list[tuple[str, str, Optional[str], Union[bool, str]]]
-        ] = ...,
+        dependencies: list[tuple[str, str, str | None, bool | str]] | None = ...,
         beginning: bool = ...,
     ) -> None: ...
     def swappable_first_key(self, item: tuple[str, str]) -> tuple[str, str]: ...
@@ -72,7 +68,7 @@ class MigrationAutodetector:
         self,
         changes: dict[str, list[Migration]],
         graph: MigrationGraph,
-        migration_name: Optional[str] = ...,
+        migration_name: str | None = ...,
     ) -> dict[str, list[Migration]]: ...
     @classmethod
     def suggest_name(cls, ops: list[Operation]) -> str: ...

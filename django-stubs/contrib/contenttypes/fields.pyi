@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 from typing_extensions import Self
 
 from django.contrib.contenttypes.models import ContentType
@@ -17,7 +17,7 @@ from django.db.models.sql.where import WhereNode
 
 class GenericForeignKey(FieldCacheMixin):
     # django-stubs implementation only fields
-    _pyi_private_set_type: Union[Any, Combinable]
+    _pyi_private_set_type: Any | Combinable
     _pyi_private_get_type: Any
     # attributes
     auto_created: bool = ...
@@ -46,37 +46,35 @@ class GenericForeignKey(FieldCacheMixin):
     ) -> None: ...
     def get_filter_kwargs_for_object(
         self, obj: Model
-    ) -> dict[str, Optional[ContentType]]: ...
+    ) -> dict[str, ContentType | None]: ...
     def get_forward_related_filter(self, obj: Model) -> dict[str, int]: ...
     def check(self, **kwargs: Any) -> list[CheckMessage]: ...
     def get_cache_name(self) -> str: ...
     def get_content_type(
         self,
-        obj: Optional[Model] = ...,
-        id: Optional[int] = ...,
-        using: Optional[str] = ...,
+        obj: Model | None = ...,
+        id: int | None = ...,
+        using: str | None = ...,
     ) -> ContentType: ...
     def get_prefetch_queryset(
         self,
-        instances: Union[list[Model], QuerySet[Any]],
-        queryset: Optional[QuerySet[Any]] = ...,
+        instances: list[Model] | QuerySet[Any],
+        queryset: QuerySet[Any] | None = ...,
     ) -> tuple[
         list[Model], Callable[..., Any], Callable[..., Any], bool, str, bool
     ]: ...
-    def __get__(
-        self, instance: Optional[Model], cls: type[Model] = ...
-    ) -> Optional[Any]: ...
-    def __set__(self, instance: Model, value: Optional[Any]) -> None: ...
+    def __get__(self, instance: Model | None, cls: type[Model] = ...) -> Any | None: ...
+    def __set__(self, instance: Model, value: Any | None) -> None: ...
 
 class GenericRel(ForeignObjectRel):
     field: GenericRelation
     def __init__(
         self,
         field: GenericRelation,
-        to: Union[type[Model], str],
-        related_name: Optional[str] = ...,
-        related_query_name: Optional[str] = ...,
-        limit_choices_to: Optional[Union[dict[str, Any], Callable[[], Any]]] = ...,
+        to: type[Model] | str,
+        related_name: str | None = ...,
+        related_query_name: str | None = ...,
+        limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...,
     ) -> None: ...
 
 class GenericRelation(ForeignObject[Any]):
@@ -89,19 +87,19 @@ class GenericRelation(ForeignObject[Any]):
     def __new__(cls, *args: Any, **kwargs: Any) -> Self: ...
     def __init__(
         self,
-        to: Union[type[Model], str],
+        to: type[Model] | str,
         object_id_field: str = ...,
         content_type_field: str = ...,
         for_concrete_model: bool = ...,
-        related_query_name: Optional[str] = ...,
-        limit_choices_to: Optional[Union[dict[str, Any], Callable[[], Any]]] = ...,
+        related_query_name: str | None = ...,
+        limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...,
         **kwargs: Any
     ) -> None: ...
     def resolve_related_fields(
         self,
     ) -> list[tuple[PositiveIntegerField[Any], Field[Any, Any]]]: ...
     def get_path_info(
-        self, filtered_relation: Optional[FilteredRelation] = ...
+        self, filtered_relation: FilteredRelation | None = ...
     ) -> list[PathInfo]: ...
     def get_reverse_path_info(
         self, filtered_relation: None = ...
@@ -109,7 +107,7 @@ class GenericRelation(ForeignObject[Any]):
     def value_to_string(self, obj: Model) -> str: ...
     def get_content_type(self) -> ContentType: ...
     def get_extra_restriction(
-        self, where_class: type[WhereNode], alias: Optional[str], remote_alias: str
+        self, where_class: type[WhereNode], alias: str | None, remote_alias: str
     ) -> WhereNode: ...
     def bulk_related_objects(
         self, objs: list[Model], using: str = ...

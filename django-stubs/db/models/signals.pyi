@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.apps.registry import Apps
 from django.db.models.base import Model
@@ -11,18 +11,18 @@ class ModelSignal(Signal):
     def connect(  # type: ignore
         self,
         receiver: Callable[..., Any],
-        sender: Optional[Union[type[Model], str]] = ...,
+        sender: type[Model] | str | None = ...,
         weak: bool = ...,
-        dispatch_uid: Optional[str] = ...,
-        apps: Optional[Apps] = ...,
+        dispatch_uid: str | None = ...,
+        apps: Apps | None = ...,
     ) -> None: ...
     def disconnect(  # type: ignore
         self,
         receiver: Callable[..., Any] = ...,
-        sender: Optional[Union[type[Model], str]] = ...,
-        dispatch_uid: Optional[str] = ...,
-        apps: Optional[Apps] = ...,
-    ) -> Optional[bool]: ...
+        sender: type[Model] | str | None = ...,
+        dispatch_uid: str | None = ...,
+        apps: Apps | None = ...,
+    ) -> bool | None: ...
 
 pre_init: ModelSignal
 post_init: ModelSignal

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 GEOIP_SETTINGS: Any
 
@@ -13,10 +13,10 @@ class GeoIP2:
     cache_options: Any = ...
     def __init__(
         self,
-        path: Optional[Any] = ...,
+        path: Any | None = ...,
         cache: int = ...,
-        country: Optional[Any] = ...,
-        city: Optional[Any] = ...,
+        country: Any | None = ...,
+        city: Any | None = ...,
     ) -> None: ...
     def __del__(self) -> None: ...
     def city(self, query: Any) -> Any: ...

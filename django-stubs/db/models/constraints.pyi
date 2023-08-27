@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from enum import Enum
-from typing import Any, Optional, Union
+from typing import Any
 from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
@@ -17,23 +17,23 @@ class BaseConstraint:
     def __init__(
         self,
         *args: BaseExpression | Combinable | str,
-        name: Optional[str] = ...,
-        violation_error_message: Optional[str] = ...,
+        name: str | None = ...,
+        violation_error_message: str | None = ...,
     ) -> None: ...
     def constraint_sql(
         self,
-        model: Optional[type[Model]],
-        schema_editor: Optional[BaseDatabaseSchemaEditor],
+        model: type[Model] | None,
+        schema_editor: BaseDatabaseSchemaEditor | None,
     ) -> str: ...
     def create_sql(
         self,
-        model: Optional[type[Model]],
-        schema_editor: Optional[BaseDatabaseSchemaEditor],
+        model: type[Model] | None,
+        schema_editor: BaseDatabaseSchemaEditor | None,
     ) -> str: ...
     def remove_sql(
         self,
-        model: Optional[type[Model]],
-        schema_editor: Optional[BaseDatabaseSchemaEditor],
+        model: type[Model] | None,
+        schema_editor: BaseDatabaseSchemaEditor | None,
     ) -> str: ...
     def deconstruct(self) -> Any: ...
     def clone(self) -> Self: ...
@@ -45,20 +45,20 @@ class CheckConstraint(BaseConstraint):
         *,
         check: Q,
         name: str,
-        violation_error_message: Optional[str] = ...,
+        violation_error_message: str | None = ...,
     ) -> None: ...
 
 class UniqueConstraint(BaseConstraint):
     fields: tuple[str]
-    condition: Optional[Q]
+    condition: Q | None
     def __init__(
         self,
         *expressions: BaseExpression | Combinable | str,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        condition: Optional[Q] = ...,
-        deferrable: Optional[Deferrable] = ...,
-        include: Optional[Union[str, Sequence[str]]] = ...,
+        name: str | None = ...,
+        condition: Q | None = ...,
+        deferrable: Deferrable | None = ...,
+        include: str | Sequence[str] | None = ...,
         opclasses: Sequence[str] = ...,
-        violation_error_message: Optional[str] = ...,
+        violation_error_message: str | None = ...,
     ) -> None: ...

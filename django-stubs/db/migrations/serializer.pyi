@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Union
+from typing import Any
 
 class BaseSerializer:
     value: Any = ...
@@ -17,7 +17,7 @@ class DeconstructableSerializer(BaseSerializer):
     def serialize_deconstructed(
         path: str,
         args: list[Any],
-        kwargs: dict[str, Union[Callable[..., Any], int, str]],
+        kwargs: dict[str, Callable[..., Any] | int | str],
     ) -> tuple[str, set[str]]: ...
 
 class DictionarySerializer(BaseSerializer): ...

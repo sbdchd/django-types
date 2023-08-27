@@ -1,5 +1,5 @@
 from collections.abc import Iterable, Mapping
-from typing import Any, Optional
+from typing import Any
 
 from django.core.validators import (
     MaxLengthValidator,
@@ -18,7 +18,7 @@ class KeysValidator:
         self,
         keys: Iterable[str],
         strict: bool = ...,
-        messages: Optional[Mapping[str, str]] = ...,
+        messages: Mapping[str, str] | None = ...,
     ) -> None: ...
     def __call__(self, value: Any) -> None: ...
 

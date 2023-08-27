@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Optional, Union
+from typing import Any, ClassVar
 from uuid import UUID
 
 from django.db import models
@@ -14,7 +14,7 @@ class LogEntryManager(models.Manager["LogEntry"]):
         self,
         user_id: int,
         content_type_id: int,
-        object_id: Union[int, str, UUID],
+        object_id: int | str | UUID,
         object_repr: str,
         action_flag: int,
         change_message: Any = ...,
@@ -34,4 +34,4 @@ class LogEntry(models.Model):
     def is_deletion(self) -> bool: ...
     def get_change_message(self) -> str: ...
     def get_edited_object(self) -> Model: ...
-    def get_admin_url(self) -> Optional[str]: ...
+    def get_admin_url(self) -> str | None: ...

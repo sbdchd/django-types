@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.gis.geometry import hex_regex as hex_regex  # noqa: F401
 from django.contrib.gis.geometry import json_regex as json_regex
@@ -143,4 +143,4 @@ class LinearGeometryMixin:
 
 class GEOSGeometry(GEOSGeometryBase, ListMixin):
     srid: Any = ...
-    def __init__(self, geo_input: Any, srid: Optional[Any] = ...) -> None: ...
+    def __init__(self, geo_input: Any, srid: Any | None = ...) -> None: ...

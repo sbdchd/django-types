@@ -1,5 +1,5 @@
 from collections.abc import Iterable, MutableMapping
-from typing import Any, Generic, Optional, TypeVar, Union
+from typing import Any, Generic, TypeVar
 from typing_extensions import Self
 
 from django.db.models.base import Model
@@ -15,7 +15,7 @@ class BaseManager(QuerySet[_T]):
     name: str = ...
     model: type[_T] = ...
     db: str
-    _db: Optional[str]
+    _db: str | None
     def __init__(self) -> None: ...
     def deconstruct(
         self,
@@ -23,13 +23,13 @@ class BaseManager(QuerySet[_T]):
     def check(self, **kwargs: Any) -> list[Any]: ...
     @classmethod
     def from_queryset(
-        cls, queryset_class: type[QuerySet[Any]], class_name: Optional[str] = ...
+        cls, queryset_class: type[QuerySet[Any]], class_name: str | None = ...
     ) -> Any: ...
     @classmethod
     def _get_queryset_methods(cls, queryset_class: type) -> dict[str, Any]: ...
     def contribute_to_class(self, model: type[Model], name: str) -> None: ...
     def db_manager(
-        self, using: Optional[str] = ..., hints: Optional[dict[str, Model]] = ...
+        self, using: str | None = ..., hints: dict[str, Model] | None = ...
     ) -> Self: ...
     def get_queryset(self) -> QuerySet[_T]: ...
 
@@ -37,22 +37,20 @@ class Manager(BaseManager[_T]): ...
 
 class RelatedManager(Manager[_T]):
     related_val: tuple[int, ...]
-    def add(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
-    async def aadd(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
-    def remove(self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...) -> None: ...
-    async def aremove(
-        self, *objs: Union[QuerySet[_T], _T], bulk: bool = ...
-    ) -> None: ...
+    def add(self, *objs: QuerySet[_T] | _T, bulk: bool = ...) -> None: ...
+    async def aadd(self, *objs: QuerySet[_T] | _T, bulk: bool = ...) -> None: ...
+    def remove(self, *objs: QuerySet[_T] | _T, bulk: bool = ...) -> None: ...
+    async def aremove(self, *objs: QuerySet[_T] | _T, bulk: bool = ...) -> None: ...
     def set(
         self,
-        objs: Union[QuerySet[_T], Iterable[_T]],
+        objs: QuerySet[_T] | Iterable[_T],
         *,
         bulk: bool = ...,
         clear: bool = ...,
     ) -> None: ...
     async def aset(
         self,
-        objs: Union[QuerySet[_T], Iterable[_T]],
+        objs: QuerySet[_T] | Iterable[_T],
         *,
         bulk: bool = ...,
         clear: bool = ...,
@@ -64,26 +62,26 @@ class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
     through: type[_V]
     def add(
         self,
-        *objs: Union[QuerySet[_T], _T, _V],
+        *objs: QuerySet[_T] | _T | _V,
         through_defaults: MutableMapping[str, Any] = ...,
     ) -> None: ...
     async def aadd(
         self,
-        *objs: Union[QuerySet[_T], _T, _V],
+        *objs: QuerySet[_T] | _T | _V,
         through_defaults: MutableMapping[str, Any] = ...,
     ) -> None: ...
-    def remove(self, *objs: Union[QuerySet[_T], _T, _V]) -> None: ...
-    async def aremove(self, *objs: Union[QuerySet[_T], _T, _V]) -> None: ...
+    def remove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
+    async def aremove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
     def set(
         self,
-        objs: Union[QuerySet[_T], Iterable[_T]],
+        objs: QuerySet[_T] | Iterable[_T],
         *,
         clear: bool = ...,
         through_defaults: MutableMapping[str, Any] = ...,
     ) -> None: ...
     async def aset(
         self,
-        objs: Union[QuerySet[_T], Iterable[_T]],
+        objs: QuerySet[_T] | Iterable[_T],
         *,
         clear: bool = ...,
         through_defaults: MutableMapping[str, Any] = ...,
@@ -92,40 +90,40 @@ class ManyToManyRelatedManager(Generic[_T, _V], Manager[_T]):
     async def aclear(self) -> None: ...
     def create(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
-        through_defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
+        through_defaults: MutableMapping[str, Any] | None = ...,
         **kwargs: Any,
     ) -> _T: ...
     async def acreate(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
-        through_defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
+        through_defaults: MutableMapping[str, Any] | None = ...,
         **kwargs: Any,
     ) -> _T: ...
     def get_or_create(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
         *,
         through_defaults: MutableMapping[str, Any] = ...,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     async def aget_or_create(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
         *,
         through_defaults: MutableMapping[str, Any] = ...,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     def update_or_create(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
         *,
         through_defaults: MutableMapping[str, Any] = ...,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     async def aupdate_or_create(
         self,
-        defaults: Optional[MutableMapping[str, Any]] = ...,
+        defaults: MutableMapping[str, Any] | None = ...,
         *,
         through_defaults: MutableMapping[str, Any] = ...,
         **kwargs: Any,
@@ -135,7 +133,7 @@ class ManagerDescriptor:
     manager: Manager[Any] = ...
     def __init__(self, manager: Manager[Any]) -> None: ...
     def __get__(
-        self, instance: Optional[Model], cls: type[Model] = ...
+        self, instance: Model | None, cls: type[Model] = ...
     ) -> Manager[Any]: ...
 
 class EmptyManager(Manager[Any]):

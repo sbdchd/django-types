@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, ClassVar, Optional
+from typing import Any, ClassVar
 
 from django.contrib.sessions.backends.base import SessionBase
 from django.db import models
@@ -16,5 +16,5 @@ class AbstractBaseSession(models.Model):
     session_key: str
     objects: ClassVar[BaseSessionManager] = ...
     @classmethod
-    def get_session_store_class(cls) -> Optional[type[SessionBase]]: ...
+    def get_session_store_class(cls) -> type[SessionBase] | None: ...
     def get_decoded(self) -> dict[str, int]: ...

@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from typing import Any, Optional, Union
+from typing import Any
 from typing_extensions import Self
 
 from django.db.models import Field
@@ -17,17 +17,17 @@ from django.db.models.fields import (
 )
 from django.db.models.lookups import Lookup
 
-_Expression = Union[str, Combinable, "SearchQueryCombinable"]
+_Expression = str | Combinable | SearchQueryCombinable
 
 class SearchVectorExact(Lookup[Any]): ...
 
 class SearchVectorField(Field[Any, Any]):
     def __init__(
         self,
-        verbose_name: Optional[Union[str, bytes]] = ...,
-        name: Optional[str] = ...,
+        verbose_name: str | bytes | None = ...,
+        name: str | None = ...,
         primary_key: bool = ...,
-        max_length: Optional[int] = ...,
+        max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
         null: bool = ...,
@@ -36,24 +36,24 @@ class SearchVectorField(Field[Any, Any]):
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
-        unique_for_date: Optional[str] = ...,
-        unique_for_month: Optional[str] = ...,
-        unique_for_year: Optional[str] = ...,
-        choices: Optional[_FieldChoices] = ...,
+        unique_for_date: str | None = ...,
+        unique_for_month: str | None = ...,
+        unique_for_year: str | None = ...,
+        choices: _FieldChoices | None = ...,
         help_text: str = ...,
-        db_column: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        db_column: str | None = ...,
+        db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: Optional[_ErrorMessagesToOverride] = ...,
+        error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> None: ...
 
 class SearchQueryField(Field[Any, Any]):
     def __init__(
         self,
-        verbose_name: Optional[Union[str, bytes]] = ...,
-        name: Optional[str] = ...,
+        verbose_name: str | bytes | None = ...,
+        name: str | None = ...,
         primary_key: bool = ...,
-        max_length: Optional[int] = ...,
+        max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
         null: bool = ...,
@@ -62,22 +62,22 @@ class SearchQueryField(Field[Any, Any]):
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
-        unique_for_date: Optional[str] = ...,
-        unique_for_month: Optional[str] = ...,
-        unique_for_year: Optional[str] = ...,
-        choices: Optional[_FieldChoices] = ...,
+        unique_for_date: str | None = ...,
+        unique_for_month: str | None = ...,
+        unique_for_year: str | None = ...,
+        choices: _FieldChoices | None = ...,
         help_text: str = ...,
-        db_column: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        db_column: str | None = ...,
+        db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: Optional[_ErrorMessagesToOverride] = ...,
+        error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> None: ...
 
 class SearchVectorCombinable:
     ADD: str = ...
 
 class SearchVector(SearchVectorCombinable, Func):
-    config: Optional[Any] = ...
+    config: Any | None = ...
     def __init__(self, *expressions: _Expression, **extra: Any) -> None: ...
 
 class CombinedSearchVector(SearchVectorCombinable, CombinedExpression):
@@ -86,8 +86,8 @@ class CombinedSearchVector(SearchVectorCombinable, CombinedExpression):
         lhs: Any,
         connector: Any,
         rhs: Any,
-        config: Optional[_Expression] = ...,
-        output_field: Optional[_OutputField] = ...,
+        config: _Expression | None = ...,
+        output_field: _OutputField | None = ...,
     ) -> None: ...
 
 class SearchQueryCombinable:
@@ -103,9 +103,9 @@ class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
     def __init__(
         self,
         value: str,
-        output_field: Optional[_OutputField] = ...,
+        output_field: _OutputField | None = ...,
         *,
-        config: Optional[_Expression] = ...,
+        config: _Expression | None = ...,
         invert: bool = ...,
         search_type: str = ...
     ) -> None: ...
@@ -117,15 +117,15 @@ class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: i
         lhs: Any,
         connector: Any,
         rhs: Any,
-        config: Optional[_Expression] = ...,
-        output_field: Optional[_OutputField] = ...,
+        config: _Expression | None = ...,
+        output_field: _OutputField | None = ...,
     ) -> None: ...
 
 class SearchRank(Func):
     def __init__(
         self,
-        vector: Union[SearchVector, _Expression],
-        query: Union[SearchQuery, _Expression],
+        vector: SearchVector | _Expression,
+        query: SearchQuery | _Expression,
         **extra: Any
     ) -> None: ...
 

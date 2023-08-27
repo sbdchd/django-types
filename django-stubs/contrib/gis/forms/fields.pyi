@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django import forms as forms
 
@@ -8,11 +8,7 @@ class GeometryField(forms.Field):
     default_error_messages: Any = ...
     srid: Any = ...
     def __init__(
-        self,
-        *,
-        srid: Optional[Any] = ...,
-        geom_type: Optional[Any] = ...,
-        **kwargs: Any
+        self, *, srid: Any | None = ..., geom_type: Any | None = ..., **kwargs: Any
     ) -> None: ...
     def to_python(self, value: Any) -> Any: ...
     def clean(self, value: Any) -> Any: ...

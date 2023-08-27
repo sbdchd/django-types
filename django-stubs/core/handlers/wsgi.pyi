@@ -1,13 +1,13 @@
 from collections.abc import Callable
 from io import BytesIO
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.contrib.sessions.backends.base import SessionBase
 from django.core.handlers import base
 from django.http import HttpRequest
 from django.http.response import HttpResponse
 
-_Stream = Union[BytesIO, str]
+_Stream = BytesIO | str
 _WSGIEnviron = dict[str, Any]
 
 class LimitedStream:
@@ -16,8 +16,8 @@ class LimitedStream:
     buffer: bytes = ...
     buf_size: int = ...
     def __init__(self, stream: _Stream, limit: int, buf_size: int = ...) -> None: ...
-    def read(self, size: Optional[int] = ...) -> bytes: ...
-    def readline(self, size: Optional[int] = ...) -> bytes: ...
+    def read(self, size: int | None = ...) -> bytes: ...
+    def readline(self, size: int | None = ...) -> bytes: ...
 
 class WSGIRequest(HttpRequest):
     environ: _WSGIEnviron = ...

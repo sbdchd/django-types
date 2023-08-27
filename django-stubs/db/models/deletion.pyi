@@ -1,5 +1,5 @@
 from collections.abc import Callable, Collection, Iterable, Sequence
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db import IntegrityError
 from django.db.models.base import Model
@@ -43,7 +43,7 @@ def RESTRICT(
     using: str,
 ) -> None: ...
 def SET(
-    value: Union[Any, Callable[[], Any]]
+    value: Any | Callable[[], Any]
 ) -> Callable[["Collector", Field[Any, Any], Sequence[Model], str], None]: ...
 def get_candidate_relations_to_delete(
     opts: Options[Any],
@@ -61,13 +61,13 @@ class Collector:
     def __init__(self, using: str) -> None: ...
     def collect(
         self,
-        objs: Collection[Optional[Model]],
-        source: Optional[type[Model]] = ...,
-        source_attr: Optional[str] = ...,
+        objs: Collection[Model | None],
+        source: type[Model] | None = ...,
+        source_attr: str | None = ...,
         **kwargs: Any
     ) -> None: ...
     def can_fast_delete(
         self,
-        objs: Union[Model, Iterable[Model]],
-        from_field: Optional[Field[Any, Any]] = ...,
+        objs: Model | Iterable[Model],
+        from_field: Field[Any, Any] | None = ...,
     ) -> bool: ...

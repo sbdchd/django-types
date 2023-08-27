@@ -1,5 +1,5 @@
 from ctypes import Structure
-from typing import Any, Optional
+from typing import Any
 
 logger: Any
 
@@ -33,9 +33,9 @@ class GEOSFuncFactory:
         self,
         func_name: Any,
         *,
-        restype: Optional[Any] = ...,
-        errcheck: Optional[Any] = ...,
-        argtypes: Optional[Any] = ...
+        restype: Any | None = ...,
+        errcheck: Any | None = ...,
+        argtypes: Any | None = ...
     ) -> None: ...
     def __call__(self, *args: Any) -> Any: ...
     def func(self) -> Any: ...

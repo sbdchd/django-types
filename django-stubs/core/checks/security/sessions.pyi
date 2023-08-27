@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any, Optional
+from typing import Any
 
 from django.apps.config import AppConfig
 from django.core.checks.messages import Warning
@@ -17,8 +17,8 @@ W014: Any
 W015: Any
 
 def check_session_cookie_secure(
-    app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
+    app_configs: Sequence[AppConfig] | None = ..., **kwargs: Any
 ) -> list[Warning]: ...
 def check_session_cookie_httponly(
-    app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
+    app_configs: Sequence[AppConfig] | None = ..., **kwargs: Any
 ) -> list[Warning]: ...

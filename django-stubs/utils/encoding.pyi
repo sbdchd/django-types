@@ -1,4 +1,4 @@
-from typing import Any, Union, overload
+from typing import Any, overload
 
 from django.utils.functional import Promise
 
@@ -23,7 +23,7 @@ force_str = force_text
 @overload
 def iri_to_uri(iri: None) -> None: ...
 @overload
-def iri_to_uri(iri: Union[str, Promise]) -> str: ...
+def iri_to_uri(iri: str | Promise) -> str: ...
 @overload
 def uri_to_iri(iri: None) -> None: ...
 @overload

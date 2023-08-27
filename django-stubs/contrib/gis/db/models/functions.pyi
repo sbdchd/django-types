@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.gis.db.models.sql.conversion import DistanceField
 from django.db.models import Func
@@ -16,7 +16,7 @@ class GeoFuncMixin:
         self,
         compiler: Any,
         connection: Any,
-        function: Optional[Any] = ...,
+        function: Any | None = ...,
         **extra_context: Any
     ) -> Any: ...
     def resolve_expression(self, *args: Any, **kwargs: Any) -> Any: ...
@@ -115,7 +115,7 @@ class Distance(DistanceResultMixin, OracleToleranceMixin, GeoFunc):
     geom_param_pos: Any = ...
     spheroid: Any = ...
     def __init__(
-        self, expr1: Any, expr2: Any, spheroid: Optional[Any] = ..., **extra: Any
+        self, expr1: Any, expr2: Any, spheroid: Any | None = ..., **extra: Any
     ) -> None: ...
     def as_postgresql(
         self, compiler: Any, connection: Any, **extra_context: Any
@@ -133,7 +133,7 @@ class ForcePolygonCW(GeomOutputGeoFunc):
 class GeoHash(GeoFunc):
     output_field: Any = ...
     def __init__(
-        self, expression: Any, precision: Optional[Any] = ..., **extra: Any
+        self, expression: Any, precision: Any | None = ..., **extra: Any
     ) -> None: ...
     def as_mysql(self, compiler: Any, connection: Any, **extra_context: Any) -> Any: ...
 

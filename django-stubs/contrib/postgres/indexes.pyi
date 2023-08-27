@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any, Optional
+from typing import Any
 
 from django.db.models import Func, Index
 from django.db.models.query_utils import Q
@@ -10,75 +10,75 @@ class BrinIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        autosummarize: Optional[bool] = ...,
-        pages_per_range: Optional[int] = ...,
+        autosummarize: bool | None = ...,
+        pages_per_range: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class BTreeIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        fillfactor: Optional[int] = ...,
+        fillfactor: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class GinIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        fastupdate: Optional[bool] = ...,
-        gin_pending_list_limit: Optional[int] = ...,
+        fastupdate: bool | None = ...,
+        gin_pending_list_limit: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class GistIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        buffering: Optional[bool] = ...,
-        fillfactor: Optional[int] = ...,
+        buffering: bool | None = ...,
+        fillfactor: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class HashIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        fillfactor: Optional[int] = ...,
+        fillfactor: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class SpGistIndex(PostgresIndex):
     def __init__(
         self,
         *expressions: Any,
-        fillfactor: Optional[int] = ...,
+        fillfactor: int | None = ...,
         fields: Sequence[str] = ...,
-        name: Optional[str] = ...,
-        db_tablespace: Optional[str] = ...,
+        name: str | None = ...,
+        db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Optional[Q] = ...
+        condition: Q | None = ...
     ) -> None: ...
 
 class OpClass(Func):

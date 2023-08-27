@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing import Any, Optional, Union
+from typing import Any
 
 color_names: Any
 foreground: Any
@@ -8,7 +8,7 @@ RESET: str
 opt_dict: Any
 
 def colorize(
-    text: Optional[str] = ..., opts: Sequence[str] = ..., **kwargs: Any
+    text: str | None = ..., opts: Sequence[str] = ..., **kwargs: Any
 ) -> str: ...
 def make_style(opts: tuple[Any, ...] = ..., **kwargs: Any) -> Callable[..., Any]: ...
 
@@ -20,4 +20,4 @@ DEFAULT_PALETTE: str = ...
 
 def parse_color_setting(
     config_string: str,
-) -> Optional[dict[str, dict[str, Union[tuple[str], str]]]]: ...
+) -> dict[str, dict[str, tuple[str] | str]] | None: ...

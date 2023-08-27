@@ -1,12 +1,10 @@
-from typing import Optional
-
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.sessions.base_session import AbstractBaseSession
 from django.contrib.sessions.models import Session
 from django.db.models.base import Model
 
 class SessionStore(SessionBase):
-    def __init__(self, session_key: Optional[str] = ...) -> None: ...
+    def __init__(self, session_key: str | None = ...) -> None: ...
     @classmethod
     def get_model_class(cls) -> type[Session]: ...
     def model(self) -> type[AbstractBaseSession]: ...

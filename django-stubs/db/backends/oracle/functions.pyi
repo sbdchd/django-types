@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.db.models import Func as Func
 
@@ -6,12 +6,12 @@ class IntervalToSeconds(Func):
     function: str = ...
     template: str = ...
     def __init__(
-        self, expression: Any, *, output_field: Optional[Any] = ..., **extra: Any
+        self, expression: Any, *, output_field: Any | None = ..., **extra: Any
     ) -> None: ...
 
 class SecondsToInterval(Func):
     function: str = ...
     template: str = ...
     def __init__(
-        self, expression: Any, *, output_field: Optional[Any] = ..., **extra: Any
+        self, expression: Any, *, output_field: Any | None = ..., **extra: Any
     ) -> None: ...

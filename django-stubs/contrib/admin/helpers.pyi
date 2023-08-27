@@ -1,5 +1,5 @@
 from collections.abc import Callable, Iterable, Iterator
-from typing import Any, Optional, Union
+from typing import Any
 
 from django import forms
 from django.db.models.fields import AutoField
@@ -26,7 +26,7 @@ class AdminForm:
         form: BaseForm,
         fieldsets: list[tuple[None, dict[str, list[str]]]],
         prepopulated_fields: dict[Any, Any],
-        readonly_fields: Optional[Iterable[Any]] = ...,
+        readonly_fields: Iterable[Any] | None = ...,
         model_admin: Any = ...,
     ) -> None: ...
     def __iter__(self) -> Iterator[Fieldset]: ...
@@ -46,12 +46,12 @@ class Fieldset:
     def __init__(
         self,
         form: Any,
-        name: Optional[Any] = ...,
-        readonly_fields: Optional[Iterable[Any]] = ...,
+        name: Any | None = ...,
+        readonly_fields: Iterable[Any] | None = ...,
         fields: Any = ...,
         classes: Any = ...,
-        description: Optional[Any] = ...,
-        model_admin: Optional[Any] = ...,
+        description: Any | None = ...,
+        model_admin: Any | None = ...,
     ) -> None: ...
     @property
     def media(self) -> Media: ...
@@ -67,10 +67,10 @@ class Fieldline:
         self,
         form: Any,
         field: Any,
-        readonly_fields: Optional[Iterable[Any]] = ...,
-        model_admin: Optional[Any] = ...,
+        readonly_fields: Iterable[Any] | None = ...,
+        model_admin: Any | None = ...,
     ) -> None: ...
-    def __iter__(self) -> Iterator[Union[AdminField, AdminReadonlyField]]: ...
+    def __iter__(self) -> Iterator[AdminField | AdminReadonlyField]: ...
     def errors(self) -> SafeText: ...
 
 class AdminField:
@@ -91,7 +91,7 @@ class AdminReadonlyField:
     is_readonly: bool = ...
     empty_value_display: Any = ...
     def __init__(
-        self, form: Any, field: Any, is_first: Any, model_admin: Optional[Any] = ...
+        self, form: Any, field: Any, is_first: Any, model_admin: Any | None = ...
     ) -> None: ...
     def label_tag(self) -> SafeText: ...
     def contents(self) -> SafeText: ...
@@ -113,9 +113,9 @@ class InlineAdminFormSet:
         inline: Any,
         formset: Any,
         fieldsets: Any,
-        prepopulated_fields: Optional[Any] = ...,
-        readonly_fields: Optional[Any] = ...,
-        model_admin: Optional[Any] = ...,
+        prepopulated_fields: Any | None = ...,
+        readonly_fields: Any | None = ...,
+        model_admin: Any | None = ...,
         has_add_permission: bool = ...,
         has_change_permission: bool = ...,
         has_delete_permission: bool = ...,
@@ -124,7 +124,7 @@ class InlineAdminFormSet:
     def __iter__(self) -> Iterator[InlineAdminForm]: ...
     def fields(
         self,
-    ) -> Iterator[dict[str, Union[dict[str, bool], bool, Widget, str]]]: ...
+    ) -> Iterator[dict[str, dict[str, bool] | bool | Widget | str]]: ...
     def inline_formset_data(self) -> str: ...
     @property
     def forms(self) -> Any: ...
@@ -145,11 +145,11 @@ class InlineAdminForm(AdminForm):
         fieldsets: Any,
         prepopulated_fields: Any,
         original: Any,
-        readonly_fields: Optional[Any] = ...,
-        model_admin: Optional[Any] = ...,
-        view_on_site_url: Optional[Any] = ...,
+        readonly_fields: Any | None = ...,
+        model_admin: Any | None = ...,
+        view_on_site_url: Any | None = ...,
     ) -> None: ...
-    def needs_explicit_pk_field(self) -> Union[bool, AutoField]: ...
+    def needs_explicit_pk_field(self) -> bool | AutoField: ...
     def pk_field(self) -> AdminField: ...
     def fk_field(self) -> AdminField: ...
     def deletion_field(self) -> AdminField: ...

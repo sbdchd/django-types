@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any, Optional, Protocol, Union
+from typing import Any, Protocol
 
 from django.db.models.base import Model
 from django.db.models.query import QuerySet
@@ -25,14 +25,14 @@ class Paginator:
     allow_empty_first_page: bool = ...
     def __init__(
         self,
-        object_list: Union[_SupportsLen, _SupportsCount, _SupportsOrdered],
-        per_page: Union[int, str],
+        object_list: _SupportsLen | _SupportsCount | _SupportsOrdered,
+        per_page: int | str,
         orphans: int = ...,
         allow_empty_first_page: bool = ...,
     ) -> None: ...
-    def validate_number(self, number: Optional[Union[int, float, str]]) -> int: ...
-    def get_page(self, number: Optional[Union[int, float, str]]) -> Page: ...
-    def page(self, number: Union[int, str]) -> Page: ...
+    def validate_number(self, number: int | float | str | None) -> int: ...
+    def get_page(self, number: int | float | str | None) -> Page: ...
+    def page(self, number: int | str) -> Page: ...
     @property
     def count(self) -> int: ...
     @property
@@ -48,9 +48,9 @@ class Page(Sequence[Any]):
     paginator: Paginator = ...
     def __init__(
         self,
-        object_list: Union[
-            list[dict[str, str]], list[Model], list[int], QuerySet[Any], str
-        ],
+        object_list: (
+            list[dict[str, str]] | list[Model] | list[int] | QuerySet[Any] | str
+        ),
         number: int,
         paginator: Paginator,
     ) -> None: ...

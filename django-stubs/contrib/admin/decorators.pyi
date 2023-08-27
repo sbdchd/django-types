@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, TypeVar
 
 from django.contrib.admin import ModelAdmin
 from django.db.models import Combinable, QuerySet
@@ -10,19 +10,20 @@ from django.http import HttpRequest, HttpResponse
 _M = TypeVar("_M", bound=Model)
 
 def action(
-    function: Optional[
-        Callable[[ModelAdmin[_M], HttpRequest, QuerySet[_M]], Optional[HttpResponse]]
-    ] = ...,
+    function: (
+        Callable[[ModelAdmin[_M], HttpRequest, QuerySet[_M]], HttpResponse | None]
+        | None
+    ) = ...,
     *,
-    permissions: Optional[Sequence[str]] = ...,
-    description: Optional[str] = ...,
+    permissions: Sequence[str] | None = ...,
+    description: str | None = ...,
 ) -> Callable[..., Any]: ...
 def display(
-    function: Optional[Callable[[_M], Any]] = ...,
+    function: Callable[[_M], Any] | None = ...,
     *,
-    boolean: Optional[bool] = ...,
-    ordering: Optional[Union[str, Combinable, BaseExpression]] = ...,
-    description: Optional[str] = ...,
-    empty_value: Optional[str] = ...,
+    boolean: bool | None = ...,
+    ordering: str | Combinable | BaseExpression | None = ...,
+    description: str | None = ...,
+    empty_value: str | None = ...,
 ) -> Callable[..., Any]: ...
-def register(*models: type[Model], site: Optional[Any] = ...) -> Callable[..., Any]: ...
+def register(*models: type[Model], site: Any | None = ...) -> Callable[..., Any]: ...

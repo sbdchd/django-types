@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any
 
 from .base import BaseCommand as BaseCommand
 from .base import CommandError as CommandError
@@ -7,7 +7,7 @@ def find_commands(management_dir: str) -> list[str]: ...
 def load_command_class(app_name: str, name: str) -> BaseCommand: ...
 def get_commands() -> dict[str, str]: ...
 def call_command(
-    command_name: Union[tuple[str], BaseCommand, str], *args: Any, **options: Any
+    command_name: tuple[str] | BaseCommand | str, *args: Any, **options: Any
 ) -> str: ...
 
 class ManagementUtility:

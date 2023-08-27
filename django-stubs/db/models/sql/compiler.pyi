@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterator
 from datetime import date, datetime
 from decimal import Decimal
 from itertools import chain
-from typing import Any, Optional, Union
+from typing import Any
 from uuid import UUID
 
 from django.db.models.base import Model
@@ -21,7 +21,7 @@ class SQLCompiler:
     klass_info: Any = ...
     ordering_parts: Any = ...
     def __init__(
-        self, query: Union[Query, RawQuery], connection: Any, using: Optional[str]
+        self, query: Query | RawQuery, connection: Any, using: str | None
     ) -> None: ...
     col_count: Any = ...
     def setup_query(self) -> None: ...
@@ -29,69 +29,67 @@ class SQLCompiler:
     def pre_sql_setup(
         self,
     ) -> tuple[
-        list[tuple[Expression, tuple[str, Union[list[Any], tuple[str, str]]], None]],
-        list[tuple[Expression, tuple[str, list[Union[int, str]], bool]]],
+        list[tuple[Expression, tuple[str, list[Any] | tuple[str, str]], None]],
+        list[tuple[Expression, tuple[str, list[int | str], bool]]],
         list[tuple[str, list[float]]],
     ]: ...
     def get_group_by(
         self,
-        select: list[tuple[BaseExpression, tuple[str, list[float]], Optional[str]]],
-        order_by: list[tuple[Expression, tuple[str, list[Union[int, str]], bool]]],
+        select: list[tuple[BaseExpression, tuple[str, list[float]], str | None]],
+        order_by: list[tuple[Expression, tuple[str, list[int | str], bool]]],
     ) -> list[tuple[str, list[float]]]: ...
     def collapse_group_by(
         self,
         expressions: list[Expression],
-        having: Union[list[Expression], tuple[Any, ...]],
+        having: list[Expression] | tuple[Any, ...],
     ) -> list[Expression]: ...
     def get_select(
         self,
     ) -> tuple[
-        list[tuple[Expression, tuple[str, list[Union[int, str]]], Optional[str]]],
-        Optional[dict[str, Any]],
+        list[tuple[Expression, tuple[str, list[int | str]], str | None]],
+        dict[str, Any] | None,
         dict[str, int],
     ]: ...
     def get_order_by(self) -> list[tuple[Expression, tuple[str, list[Any], bool]]]: ...
     def get_extra_select(
         self,
         order_by: list[tuple[Expression, tuple[str, list[Any], bool]]],
-        select: list[tuple[Expression, tuple[str, list[float]], Optional[str]]],
+        select: list[tuple[Expression, tuple[str, list[float]], str | None]],
     ) -> list[tuple[Expression, tuple[str, list[Any]], None]]: ...
     def quote_name_unless_alias(self, name: str) -> str: ...
     def compile(
         self, node: Any, select_format: Any = ...
-    ) -> tuple[str, Union[list[Optional[int]], tuple[int, int]]]: ...
+    ) -> tuple[str, list[int | None] | tuple[int, int]]: ...
     def get_combinator_sql(
         self, combinator: str, all: bool
-    ) -> tuple[list[str], Union[list[int], list[str]]]: ...
+    ) -> tuple[list[str], list[int] | list[str]]: ...
     def as_sql(self, with_limits: bool = ..., with_col_aliases: bool = ...) -> Any: ...
     def get_default_columns(
         self,
-        start_alias: Optional[str] = ...,
-        opts: Optional[Any] = ...,
-        from_parent: Optional[type[Model]] = ...,
+        start_alias: str | None = ...,
+        opts: Any | None = ...,
+        from_parent: type[Model] | None = ...,
     ) -> list[Expression]: ...
     def get_distinct(self) -> tuple[list[Any], list[Any]]: ...
     def find_ordering_name(
         self,
         name: str,
         opts: Any,
-        alias: Optional[str] = ...,
+        alias: str | None = ...,
         default_order: str = ...,
-        already_seen: Optional[
-            set[tuple[Optional[tuple[tuple[str, str]]], tuple[tuple[str, str]]]]
-        ] = ...,
+        already_seen: (
+            set[tuple[tuple[tuple[str, str]] | None, tuple[tuple[str, str]]]] | None
+        ) = ...,
     ) -> list[tuple[Expression, bool]]: ...
-    def get_from_clause(self) -> tuple[list[str], list[Union[int, str]]]: ...
+    def get_from_clause(self) -> tuple[list[str], list[int | str]]: ...
     def get_related_selections(
         self,
-        select: list[tuple[Expression, Optional[str]]],
-        opts: Optional[Any] = ...,
-        root_alias: Optional[str] = ...,
+        select: list[tuple[Expression, str | None]],
+        opts: Any | None = ...,
+        root_alias: str | None = ...,
         cur_depth: int = ...,
-        requested: Optional[
-            Union[dict[str, dict[str, dict[str, dict[Any, Any]]]], bool]
-        ] = ...,
-        restricted: Optional[bool] = ...,
+        requested: dict[str, dict[str, dict[str, dict[Any, Any]]]] | bool | None = ...,
+        restricted: bool | None = ...,
     ) -> list[dict[str, Any]]: ...
     def get_select_for_update_of_arguments(self) -> Any: ...
     def deferred_to_columns(self) -> dict[type[Model], set[str]]: ...
@@ -103,17 +101,13 @@ class SQLCompiler:
         rows: chain[Any],
         converters: dict[int, tuple[list[Callable[..., Any]], Expression]],
     ) -> Iterator[
-        Union[
-            list[Optional[Union[bytes, datetime, int, str]]],
-            list[Optional[Union[date, Decimal, float, str]]],
-            list[Optional[Union[datetime, float, str, UUID]]],
-        ]
+        list[bytes | datetime | int | str | None]
+        | list[date | Decimal | float | str | None]
+        | list[datetime | float | str | UUID | None]
     ]: ...
     def results_iter(
         self,
-        results: Optional[
-            Union[Iterator[Any], list[list[tuple[Union[int, str]]]]]
-        ] = ...,
+        results: Iterator[Any] | list[list[tuple[int | str]]] | None = ...,
         tuple_expected: bool = ...,
         chunked_fetch: bool = ...,
         chunk_size: int = ...,
@@ -121,7 +115,7 @@ class SQLCompiler:
     def has_results(self) -> bool: ...
     def execute_sql(
         self, result_type: str = ..., chunked_fetch: bool = ..., chunk_size: int = ...
-    ) -> Optional[Any]: ...
+    ) -> Any | None: ...
     def as_subquery_condition(
         self, alias: str, columns: list[str], compiler: SQLCompiler
     ) -> tuple[str, tuple[Any, ...]]: ...
@@ -148,5 +142,5 @@ class SQLAggregateCompiler(SQLCompiler):
     def as_sql(self) -> Any: ...  # type: ignore [override]
 
 def cursor_iter(
-    cursor: Any, sentinel: Any, col_count: Optional[int], itersize: int
+    cursor: Any, sentinel: Any, col_count: int | None, itersize: int
 ) -> Iterator[Any]: ...

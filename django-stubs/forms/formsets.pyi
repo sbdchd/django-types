@@ -1,5 +1,5 @@
 from collections.abc import Mapping, Sequence, Sized
-from typing import Any, Optional
+from typing import Any
 
 from django.forms import Form
 
@@ -14,7 +14,7 @@ DEFAULT_MIN_NUM: int = ...
 DEFAULT_MAX_NUM: int = ...
 
 class ManagementForm(Form):
-    cleaned_data: dict[str, Optional[int]]
+    cleaned_data: dict[str, int | None]
 
 class BaseFormSet(Sized, Mapping[str, Any]):
     is_bound: Any = ...
@@ -27,13 +27,13 @@ class BaseFormSet(Sized, Mapping[str, Any]):
     error_class: Any = ...
     def __init__(
         self,
-        data: Optional[Any] = ...,
-        files: Optional[Any] = ...,
+        data: Any | None = ...,
+        files: Any | None = ...,
         auto_id: str = ...,
-        prefix: Optional[Any] = ...,
-        initial: Optional[Any] = ...,
+        prefix: Any | None = ...,
+        initial: Any | None = ...,
         error_class: Any = ...,
-        form_kwargs: Optional[Any] = ...,
+        form_kwargs: Any | None = ...,
     ) -> None: ...
     def __iter__(self) -> Any: ...
     def __getitem__(self, index: Any) -> Any: ...
@@ -82,9 +82,9 @@ def formset_factory(
     extra: int = ...,
     can_order: bool = ...,
     can_delete: bool = ...,
-    max_num: Optional[Any] = ...,
+    max_num: Any | None = ...,
     validate_max: bool = ...,
-    min_num: Optional[Any] = ...,
+    min_num: Any | None = ...,
     validate_min: bool = ...,
 ) -> Any: ...
 def all_valid(formsets: Sequence[Any]) -> bool: ...

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from psycopg2 import _psycopg as _psycopg
 from psycopg2 import errors as errors
@@ -11,9 +11,9 @@ paramstyle: str
 threadsafety: int
 
 def connect(
-    dsn: Optional[str] = ...,
-    connection_factory: Optional[Any] = ...,
-    cursor_factor: Optional[Any] = ...,
+    dsn: str | None = ...,
+    connection_factory: Any | None = ...,
+    cursor_factor: Any | None = ...,
     async_: bool = ...,
     dbname: str = ...,
     user: str = ...,
@@ -27,11 +27,11 @@ class Warning(Exception): ...
 
 class Error(Exception):
     @property
-    def pgerror(self) -> Optional[str]: ...
+    def pgerror(self) -> str | None: ...
     @property
-    def pgcode(self) -> Optional[str]: ...
+    def pgcode(self) -> str | None: ...
     @property
-    def cursor(self) -> Optional[extensions.cursor]: ...
+    def cursor(self) -> extensions.cursor | None: ...
     @property
     def diag(self) -> extensions.Diagnostics: ...
 

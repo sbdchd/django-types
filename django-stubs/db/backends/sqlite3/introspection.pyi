@@ -1,10 +1,10 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.db.backends.base.introspection import BaseDatabaseIntrospection
 
 field_size_re: Any
 
-def get_field_size(name: str) -> Optional[int]: ...
+def get_field_size(name: str) -> int | None: ...
 
 class FlexibleFieldLookupDict:
     base_data_types_reverse: Any = ...

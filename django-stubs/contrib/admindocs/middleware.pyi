@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional
+from typing import Any
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.response import HttpResponse
@@ -12,4 +12,4 @@ class XViewMiddleware(MiddlewareMixin):
         view_func: Callable[..., Any],
         view_args: tuple[Any, ...],
         view_kwargs: dict[Any, Any],
-    ) -> Optional[HttpResponse]: ...
+    ) -> HttpResponse | None: ...

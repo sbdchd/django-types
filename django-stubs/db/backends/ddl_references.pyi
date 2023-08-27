@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Union
+from typing import Any
 
 class Reference:
     def references_table(self, table: Any) -> Any: ...
@@ -35,7 +35,7 @@ class Columns(TableColumns):
         table: str,
         columns: list[str],
         quote_name: Callable[..., Any],
-        col_suffixes: Union[list[str], tuple[Any, ...]] = ...,
+        col_suffixes: list[str] | tuple[Any, ...] = ...,
     ) -> None: ...
 
 class IndexName(TableColumns):

@@ -1,7 +1,7 @@
 from argparse import ArgumentParser, HelpFormatter, Namespace
 from collections.abc import Callable
 from io import StringIO, TextIOBase, TextIOWrapper
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.apps.config import AppConfig
 from django.core.management.color import Style
@@ -28,8 +28,8 @@ class OutputWrapper(TextIOBase):
     ending: str = ...
     def __init__(
         self,
-        out: Union[StringIO, TextIOWrapper],
-        style_func: Optional[Callable[[str], str]] = ...,
+        out: StringIO | TextIOWrapper,
+        style_func: Callable[[str], str] | None = ...,
         ending: str = ...,
     ) -> None: ...
     def __getattr__(self, name: str) -> Callable[..., Any]: ...
@@ -37,8 +37,8 @@ class OutputWrapper(TextIOBase):
     def write(  # type: ignore[override]
         self,
         msg: str,
-        style_func: Optional[Callable[[str], str]] = ...,
-        ending: Optional[str] = ...,
+        style_func: Callable[[str], str] | None = ...,
+        ending: str | None = ...,
     ) -> None: ...
 
 class BaseCommand:
@@ -53,8 +53,8 @@ class BaseCommand:
     style: Style = ...
     def __init__(
         self,
-        stdout: Optional[StringIO] = ...,
-        stderr: Optional[StringIO] = ...,
+        stdout: StringIO | None = ...,
+        stderr: StringIO | None = ...,
         no_color: bool = ...,
         force_color: bool = ...,
     ) -> None: ...
@@ -68,14 +68,14 @@ class BaseCommand:
     def execute(self, *args: Any, **options: Any) -> Any: ...
     def check(
         self,
-        app_configs: Optional[list[AppConfig]] = ...,
-        tags: Optional[list[str]] = ...,
+        app_configs: list[AppConfig] | None = ...,
+        tags: list[str] | None = ...,
         display_num_errors: bool = ...,
         include_deployment_checks: bool = ...,
         fail_level: int = ...,
     ) -> None: ...
     def check_migrations(self) -> None: ...
-    def handle(self, *args: Any, **options: Any) -> Optional[str]: ...
+    def handle(self, *args: Any, **options: Any) -> str | None: ...
 
 class AppCommand(BaseCommand):
     missing_args_message: str = ...

@@ -1,9 +1,9 @@
 from collections.abc import Iterable, Sequence
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db.models.sql.where import NothingNode
 
-_NodeChildren = Iterable[Union["Node", NothingNode, Sequence[Any]]]
+_NodeChildren = Iterable[Node | NothingNode | Sequence[Any]]
 
 class Node:
     children: list[Any]
@@ -12,8 +12,8 @@ class Node:
     negated: bool = ...
     def __init__(
         self,
-        children: Optional[_NodeChildren] = ...,
-        connector: Optional[str] = ...,
+        children: _NodeChildren | None = ...,
+        connector: str | None = ...,
         negated: bool = ...,
     ) -> None: ...
     def __deepcopy__(self, memodict: dict[Any, Any]) -> Node: ...

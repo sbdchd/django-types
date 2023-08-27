@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional
+from typing import Any
 
 from django import http
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -28,7 +28,7 @@ class PermissionRequiredMixin(AccessMixin):
     ) -> HttpResponse: ...
 
 class UserPassesTestMixin(AccessMixin):
-    def test_func(self) -> Optional[bool]: ...
+    def test_func(self) -> bool | None: ...
     def get_test_func(self) -> Callable[..., Any]: ...
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any

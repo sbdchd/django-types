@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union
+from typing import Any
 from uuid import UUID
 
 from django import forms
@@ -47,9 +47,7 @@ class ForeignKeyRawIdWidget(forms.TextInput):
     ) -> None: ...
     def base_url_parameters(self) -> dict[str, str]: ...
     def url_parameters(self) -> dict[str, str]: ...
-    def label_and_url_for_value(
-        self, value: Union[int, str, UUID]
-    ) -> tuple[str, str]: ...
+    def label_and_url_for_value(self, value: int | str | UUID) -> tuple[str, str]: ...
 
 class ManyToManyRawIdWidget(ForeignKeyRawIdWidget): ...
 
@@ -68,7 +66,7 @@ class RelatedFieldWidgetWrapper(forms.Widget):
         widget: forms.Widget,
         rel: ForeignObjectRel,
         admin_site: AdminSite,
-        can_add_related: Optional[bool] = ...,
+        can_add_related: bool | None = ...,
         can_change_related: bool = ...,
         can_delete_related: bool = ...,
         can_view_related: bool = ...,
@@ -90,7 +88,7 @@ class AdminIntegerFieldWidget(forms.NumberInput):
 class AdminBigIntegerFieldWidget(AdminIntegerFieldWidget): ...
 
 class AdminUUIDInputWidget(forms.TextInput):
-    def __init__(self, attrs: Optional[dict[str, str]] = ...) -> None: ...
+    def __init__(self, attrs: dict[str, str] | None = ...) -> None: ...
 
 SELECT2_TRANSLATIONS: Any
 
@@ -105,7 +103,7 @@ class AutocompleteMixin:
         self,
         rel: ForeignObjectRel,
         admin_site: AdminSite,
-        attrs: Optional[dict[str, str]] = ...,
+        attrs: dict[str, str] | None = ...,
         choices: tuple[Any, ...] = ...,
         using: None = ...,
     ) -> None: ...

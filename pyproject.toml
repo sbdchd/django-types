@@ -46,7 +46,7 @@ select = [
     "F401",   # Remove unused imports
     "UP004",  # Remove explicit `object` inheritance
     "UP006",  # PEP-585 autofixes
-    # "UP007",  # PEP-604 autofixes
+    "UP007",  # PEP-604 autofixes
     "UP013",  # Class-based syntax for TypedDicts
     "UP014",  # Class-based syntax for NamedTuples
     "UP019",  # Use str over typing.Text

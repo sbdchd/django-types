@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from collections.abc import Iterator
-from typing import Any, Optional
+from typing import Any
 
 from django.core.serializers import base
 from django.core.serializers.base import DeserializedObject
@@ -13,7 +13,7 @@ class Serializer(base.Serializer):
 def Deserializer(
     object_list: list[dict[str, Any]],
     *,
-    using: Optional[str] = ...,
+    using: str | None = ...,
     ignorenonexistent: bool = ...,
     **options: Any
 ) -> Iterator[DeserializedObject]: ...

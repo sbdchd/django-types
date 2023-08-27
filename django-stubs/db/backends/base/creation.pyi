@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db.backends.base.base import BaseDatabaseWrapper
 
@@ -16,7 +16,7 @@ class BaseDatabaseCreation:
     ) -> str: ...
     def set_as_test_mirror(
         self,
-        primary_settings_dict: dict[str, Optional[Union[dict[str, None], int, str]]],
+        primary_settings_dict: dict[str, dict[str, None] | int | str | None],
     ) -> None: ...
     def serialize_db_to_string(self) -> str: ...
     def deserialize_db_from_string(self, data: str) -> None: ...

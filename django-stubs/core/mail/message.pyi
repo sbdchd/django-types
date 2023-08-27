@@ -5,7 +5,7 @@ from email.mime.base import MIMEBase
 from email.mime.message import MIMEMessage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from typing import Any, Optional, Union, overload
+from typing import Any, overload
 
 utf8_charset: Any
 utf8_charset_qp: Any
@@ -20,7 +20,7 @@ def forbid_multi_line_headers(
     name: str, val: str, encoding: str
 ) -> tuple[str, str]: ...
 def split_addr(addr: str, encoding: str) -> tuple[str, str]: ...
-def sanitize_address(addr: Union[tuple[str, str], str], encoding: str) -> str: ...
+def sanitize_address(addr: tuple[str, str] | str, encoding: str) -> str: ...
 
 class MIMEMixin: ...
 
@@ -55,12 +55,12 @@ class SafeMIMEMultipart(MIMEMixin, MIMEMultipart):
         **_params: Any
     ) -> None: ...
 
-_AttachmentContent = Union[bytes, "EmailMessage", Message, SafeMIMEText, str]
-_AttachmentTuple = Union[
-    tuple[str, _AttachmentContent],
-    tuple[Optional[str], _AttachmentContent, str],
-    tuple[str, _AttachmentContent, None],
-]
+_AttachmentContent = bytes | EmailMessage | Message | SafeMIMEText | str
+_AttachmentTuple = (
+    tuple[str, _AttachmentContent]
+    | tuple[str | None, _AttachmentContent, str]
+    | tuple[str, _AttachmentContent, None]
+)
 
 class EmailMessage:
     content_subtype: str = ...
@@ -79,15 +79,15 @@ class EmailMessage:
     def __init__(
         self,
         subject: str = ...,
-        body: Optional[str] = ...,
-        from_email: Optional[str] = ...,
-        to: Optional[Sequence[str]] = ...,
-        bcc: Optional[Sequence[str]] = ...,
-        connection: Optional[Any] = ...,
-        attachments: Optional[Sequence[Union[MIMEBase, _AttachmentTuple]]] = ...,
-        headers: Optional[dict[str, str]] = ...,
-        cc: Optional[Sequence[str]] = ...,
-        reply_to: Optional[Sequence[str]] = ...,
+        body: str | None = ...,
+        from_email: str | None = ...,
+        to: Sequence[str] | None = ...,
+        bcc: Sequence[str] | None = ...,
+        connection: Any | None = ...,
+        attachments: Sequence[MIMEBase | _AttachmentTuple] | None = ...,
+        headers: dict[str, str] | None = ...,
+        cc: Sequence[str] | None = ...,
+        reply_to: Sequence[str] | None = ...,
     ) -> None: ...
     def get_connection(self, fail_silently: bool = ...) -> Any: ...
     # TODO: when typeshed gets more types for email.Message, move it to MIMEMessage, now it has too many false-positives
@@ -108,9 +108,9 @@ class EmailMessage:
         self,
         filename: str = ...,
         content: _AttachmentContent = ...,
-        mimetype: Optional[str] = ...,
+        mimetype: str | None = ...,
     ) -> None: ...
-    def attach_file(self, path: str, mimetype: Optional[str] = ...) -> None: ...
+    def attach_file(self, path: str, mimetype: str | None = ...) -> None: ...
 
 class EmailMultiAlternatives(EmailMessage):
     alternative_subtype: str = ...
@@ -119,15 +119,15 @@ class EmailMultiAlternatives(EmailMessage):
         self,
         subject: str = ...,
         body: str = ...,
-        from_email: Optional[str] = ...,
-        to: Optional[Sequence[str]] = ...,
-        bcc: Optional[Sequence[str]] = ...,
-        connection: Optional[Any] = ...,
-        attachments: Optional[Sequence[Union[MIMEBase, _AttachmentTuple]]] = ...,
-        headers: Optional[dict[str, str]] = ...,
-        alternatives: Optional[Sequence[tuple[_AttachmentContent, str]]] = ...,
-        cc: Optional[Sequence[str]] = ...,
-        reply_to: Optional[Sequence[str]] = ...,
+        from_email: str | None = ...,
+        to: Sequence[str] | None = ...,
+        bcc: Sequence[str] | None = ...,
+        connection: Any | None = ...,
+        attachments: Sequence[MIMEBase | _AttachmentTuple] | None = ...,
+        headers: dict[str, str] | None = ...,
+        alternatives: Sequence[tuple[_AttachmentContent, str]] | None = ...,
+        cc: Sequence[str] | None = ...,
+        reply_to: Sequence[str] | None = ...,
     ) -> None: ...
     def attach_alternative(
         self, content: _AttachmentContent, mimetype: str

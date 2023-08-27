@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.db.models.expressions import Func
 
@@ -10,7 +10,7 @@ class Aggregate(Func):
         self,
         *expressions: Any,
         distinct: bool = ...,
-        filter: Optional[Any] = ...,
+        filter: Any | None = ...,
         **extra: Any
     ) -> None: ...
 

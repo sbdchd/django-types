@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.template.base import FilterExpression, Origin, Parser, Token
 from django.template.context import Context
@@ -15,14 +15,14 @@ class Library:
     def __init__(self) -> None: ...
     def tag(
         self,
-        name: Optional[Union[Callable[..., Any], str]] = ...,
-        compile_function: Optional[Union[Callable[..., Any], str]] = ...,
+        name: Callable[..., Any] | str | None = ...,
+        compile_function: Callable[..., Any] | str | None = ...,
     ) -> Callable[..., Any]: ...
     def tag_function(self, func: Callable[..., Any]) -> Callable[..., Any]: ...
     def filter(
         self,
-        name: Optional[Union[Callable[..., Any], str]] = ...,
-        filter_func: Optional[Union[Callable[..., Any], str]] = ...,
+        name: Callable[..., Any] | str | None = ...,
+        filter_func: Callable[..., Any] | str | None = ...,
         **flags: Any
     ) -> Callable[..., Any]: ...
     def filter_function(
@@ -30,16 +30,16 @@ class Library:
     ) -> Callable[..., Any]: ...
     def simple_tag(
         self,
-        func: Optional[Union[Callable[..., Any], str]] = ...,
-        takes_context: Optional[bool] = ...,
-        name: Optional[str] = ...,
+        func: Callable[..., Any] | str | None = ...,
+        takes_context: bool | None = ...,
+        name: str | None = ...,
     ) -> Callable[..., Any]: ...
     def inclusion_tag(
         self,
-        filename: Union[Template, str],
+        filename: Template | str,
         func: None = ...,
-        takes_context: Optional[bool] = ...,
-        name: Optional[str] = ...,
+        takes_context: bool | None = ...,
+        name: str | None = ...,
     ) -> Callable[..., Any]: ...
 
 class TagHelperNode(Node):
@@ -50,29 +50,29 @@ class TagHelperNode(Node):
     def __init__(
         self,
         func: Callable[..., Any],
-        takes_context: Optional[bool],
+        takes_context: bool | None,
         args: list[FilterExpression],
         kwargs: dict[str, FilterExpression],
     ) -> None: ...
     def get_resolved_arguments(
         self, context: Context
-    ) -> tuple[list[int], dict[str, Union[SafeText, int]]]: ...
+    ) -> tuple[list[int], dict[str, SafeText | int]]: ...
 
 class SimpleNode(TagHelperNode):
     args: list[FilterExpression]
     func: Callable[..., Any]
     kwargs: dict[str, FilterExpression]
     origin: Origin
-    takes_context: Optional[bool]
+    takes_context: bool | None
     token: Token
-    target_var: Optional[str] = ...
+    target_var: str | None = ...
     def __init__(
         self,
         func: Callable[..., Any],
-        takes_context: Optional[bool],
+        takes_context: bool | None,
         args: list[FilterExpression],
         kwargs: dict[str, FilterExpression],
-        target_var: Optional[str],
+        target_var: str | None,
     ) -> None: ...
 
 class InclusionNode(TagHelperNode):
@@ -80,28 +80,28 @@ class InclusionNode(TagHelperNode):
     func: Callable[..., Any]
     kwargs: dict[str, FilterExpression]
     origin: Origin
-    takes_context: Optional[bool]
+    takes_context: bool | None
     token: Token
-    filename: Union[Template, str] = ...
+    filename: Template | str = ...
     def __init__(
         self,
         func: Callable[..., Any],
-        takes_context: Optional[bool],
+        takes_context: bool | None,
         args: list[FilterExpression],
         kwargs: dict[str, FilterExpression],
-        filename: Optional[Union[Template, str]],
+        filename: Template | str | None,
     ) -> None: ...
 
 def parse_bits(
     parser: Parser,
     bits: list[str],
     params: list[str],
-    varargs: Optional[str],
-    varkw: Optional[str],
-    defaults: Optional[tuple[Union[bool, str]]],
+    varargs: str | None,
+    varkw: str | None,
+    defaults: tuple[bool | str] | None,
     kwonly: list[str],
-    kwonly_defaults: Optional[dict[str, int]],
-    takes_context: Optional[bool],
+    kwonly_defaults: dict[str, int] | None,
+    takes_context: bool | None,
     name: str,
 ) -> tuple[list[FilterExpression], dict[str, FilterExpression]]: ...
 def import_library(name: str) -> Library: ...

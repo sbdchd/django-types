@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.db.models import Aggregate
 from django.db.models.fields import Field
@@ -12,7 +12,7 @@ class GeoAggregate(Aggregate):
         self,
         compiler: Any,
         connection: Any,
-        function: Optional[Any] = ...,
+        function: Any | None = ...,
         **extra_context: Any
     ) -> Any: ...
     def as_oracle(
@@ -20,9 +20,9 @@ class GeoAggregate(Aggregate):
     ) -> Any: ...
     def resolve_expression(
         self,
-        query: Optional[Any] = ...,
+        query: Any | None = ...,
         allow_joins: bool = ...,
-        reuse: Optional[Any] = ...,
+        reuse: Any | None = ...,
         summarize: bool = ...,
         for_save: bool = ...,
     ) -> Any: ...

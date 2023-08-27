@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django import template
 from django.template.base import Parser, Token
@@ -13,8 +13,8 @@ class FlatpageNode(template.Node):
     def __init__(
         self,
         context_name: str,
-        starts_with: Optional[str] = ...,
-        user: Optional[str] = ...,
+        starts_with: str | None = ...,
+        user: str | None = ...,
     ) -> None: ...
     def render(self, context: Context) -> str: ...
 

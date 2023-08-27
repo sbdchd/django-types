@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.apps.config import AppConfig
 from django.core.checks.messages import CheckMessage
@@ -23,15 +23,12 @@ class CheckRegistry:
     deployment_checks: set[Callable[..., Any]] = ...
     def __init__(self) -> None: ...
     def register(
-        self,
-        check: Optional[Union[_CheckCallable, str]] = ...,
-        *tags: str,
-        **kwargs: Any
+        self, check: _CheckCallable | str | None = ..., *tags: str, **kwargs: Any
     ) -> Callable[..., Any]: ...
     def run_checks(
         self,
-        app_configs: Optional[list[AppConfig]] = ...,
-        tags: Optional[list[str]] = ...,
+        app_configs: list[AppConfig] | None = ...,
+        tags: list[str] | None = ...,
         include_deployment_checks: bool = ...,
     ) -> list[CheckMessage]: ...
     def tag_exists(self, tag: str, include_deployment_checks: bool = ...) -> bool: ...

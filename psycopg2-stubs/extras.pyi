@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from collections.abc import Iterator, Mapping, Sequence
 from re import Pattern
-from typing import Any, NamedTuple, Optional, Union, overload
+from typing import Any, NamedTuple, overload
 from typing_extensions import Literal, Protocol
 
 from psycopg2._psycopg import ReplicationConnection as _replicationConnection
@@ -18,17 +18,15 @@ class DictCursorBase(_cursor):
     _query_executed: bool
     _prefetch: bool
     row_factory: Any
-    def __init__(
-        self, *args: Any, row_factory: Optional[Any], **kwargs: Any
-    ) -> None: ...
-    def fetchone(self) -> Optional[tuple[Any, ...]]: ...
-    def fetchmany(self, size: Optional[int] = ...) -> list[tuple[Any, ...]]: ...
+    def __init__(self, *args: Any, row_factory: Any | None, **kwargs: Any) -> None: ...
+    def fetchone(self) -> tuple[Any, ...] | None: ...
+    def fetchmany(self, size: int | None = ...) -> list[tuple[Any, ...]]: ...
     def fetchall(self) -> list[tuple[Any, ...]]: ...
     def __iter__(self) -> Iterator[tuple[Any, ...]]: ...
 
 class DictConnection(_connection):
     def cursor(
-        self, *args: Any, cursor_factory: Optional[DictCursorBase] = ..., **kwargs: Any
+        self, *args: Any, cursor_factory: DictCursorBase | None = ..., **kwargs: Any
     ) -> _cursor: ...
 
 class DictCursor(DictCursorBase):
@@ -38,25 +36,23 @@ class DictCursor(DictCursorBase):
     def execute(
         self,
         query: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def callproc(
         self,
         procname: str,
-        parameters: Union[Sequence[_SQLType], Mapping[str, _SQLType]] = ...,
+        parameters: Sequence[_SQLType] | Mapping[str, _SQLType] = ...,
     ) -> None: ...
 
 class DictRow(list[Any]):
     _index: OrderedDict[str, int]
     def __init__(self, cursor: DictCursor) -> None: ...
-    def __getitem__(self, x: Union[str, int, slice]) -> Any: ...  # type: ignore [override]
-    def __setitem__(self, x: Union[str, int, slice], v: Any) -> None: ...  # type: ignore [override]
+    def __getitem__(self, x: str | int | slice) -> Any: ...  # type: ignore [override]
+    def __setitem__(self, x: str | int | slice, v: Any) -> None: ...  # type: ignore [override]
     def items(self) -> Iterator[tuple[str, Any]]: ...
     def keys(self) -> Iterator[str]: ...
     def values(self) -> Iterator[Any]: ...
-    def get(
-        self, x: Union[str, int, slice], default: Optional[Any] = ...
-    ) -> Optional[Any]: ...
+    def get(self, x: str | int | slice, default: Any | None = ...) -> Any | None: ...
     def copy(self) -> OrderedDict[str, Any]: ...  # type: ignore [override]
     def __contains__(self, x: str) -> bool: ...  # type: ignore [override]
     def __getstate__(self) -> tuple[Any, OrderedDict[str, int]]: ...
@@ -74,12 +70,12 @@ class RealDictCursor(DictCursorBase):
     def execute(
         self,
         query: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def callproc(
         self,
         procname: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
 
 class RealDictRow(OrderedDict[Any, Any]):
@@ -90,24 +86,24 @@ class NamedTupleConnection(_connection):
     def cursor(self, *args: Any, **kwargs: Any) -> _cursor: ...
 
 class NamedTupleCursor(_cursor):
-    Record: Optional[NamedTuple] = ...
+    Record: NamedTuple | None = ...
     MAX_CACHE: int = ...
     def execute(
         self,
         query: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def executemany(
         self,
         query: str,
-        vars_list: Sequence[Union[Sequence[_SQLType], Mapping[str, _SQLType]]],
+        vars_list: Sequence[Sequence[_SQLType] | Mapping[str, _SQLType]],
     ) -> None: ...
     def callproc(
         self,
         procname: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
-    def fetchone(self) -> Optional[tuple[Any, ...]]: ...
+    def fetchone(self) -> tuple[Any, ...] | None: ...
     def fetchmany(self, size: int = ...) -> list[tuple[Any, ...]]: ...
     def fetchall(self) -> list[tuple[Any, ...]]: ...
     def __iter__(self) -> Iterator[tuple[Any, ...]]: ...
@@ -121,17 +117,17 @@ class LoggingCursor(_cursor):
     def execute(
         self,
         query: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def callproc(
         self,
         procname: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
 
 class MinTimeLoggingConnection(LoggingConnection):
     def initialize(self, logobj: Any, mintime: int = ...) -> None: ...
-    def filter(self, msg: Any, curs: Any) -> Optional[str]: ...
+    def filter(self, msg: Any, curs: Any) -> str | None: ...
     def cursor(self, *args: Any, **kwargs: Any) -> _cursor: ...
 
 class MinTimeLoggingCursor(LoggingCursor):
@@ -139,12 +135,12 @@ class MinTimeLoggingCursor(LoggingCursor):
     def execute(
         self,
         query: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def callproc(
         self,
         procname: str,
-        vars: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        vars: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
 
 class LogicalReplicationConnection(_replicationConnection):
@@ -159,17 +155,17 @@ class ReplicationCursor(_replicationCursor):
     def create_replication_slot(
         self,
         slot_name: Any,
-        slot_type: Optional[Any] = ...,
-        output_plugin: Optional[Any] = ...,
+        slot_type: Any | None = ...,
+        output_plugin: Any | None = ...,
     ) -> None: ...
     def drop_replication_slot(self, slot_name: Any) -> None: ...
     def start_replication(
         self,
-        slot_name: Optional[Any] = ...,
-        slot_type: Optional[Any] = ...,
+        slot_name: Any | None = ...,
+        slot_type: Any | None = ...,
         start_lsn: int = ...,
         timeline: int = ...,
-        options: Optional[Mapping[Any, Any]] = ...,
+        options: Mapping[Any, Any] | None = ...,
         decode: bool = ...,
     ) -> None: ...
     def fileno(self) -> Any: ...
@@ -177,11 +173,11 @@ class ReplicationCursor(_replicationCursor):
 class UUID_adapter:
     _uuid: Any
     def __init__(self, uuid: Any) -> None: ...
-    def __conform__(self, proto: Any) -> Optional[UUID_adapter]: ...
+    def __conform__(self, proto: Any) -> UUID_adapter | None: ...
     def getquoted(self) -> str: ...
 
 def register_uuid(
-    oids: Optional[Any] = ..., conn_or_curs: Union[_cursor, _connection, None] = ...
+    oids: Any | None = ..., conn_or_curs: _cursor | _connection | None = ...
 ) -> None: ...
 
 class Inet:
@@ -190,10 +186,10 @@ class Inet:
     def __init__(self, addr: Any) -> None: ...
     def prepare(self, conn: _connection) -> None: ...
     def getquoted(self) -> bytes: ...
-    def __conform__(self, proto: Any) -> Optional[Inet]: ...
+    def __conform__(self, proto: Any) -> Inet | None: ...
 
 def register_inet(
-    oid: Optional[int] = ..., conn_or_curs: Optional[Union[_connection, _cursor]] = ...
+    oid: int | None = ..., conn_or_curs: _connection | _cursor | None = ...
 ) -> Inet: ...
 def wait_select(conn: _connection) -> None: ...
 
@@ -206,52 +202,50 @@ class HstoreAdapter:
     getquoted = _getquoted_9
     @classmethod
     def parse(
-        cls, s: Optional[str], cur: _cursor, _bsdec: Pattern[str] = ...
-    ) -> Optional[dict[str, str]]: ...
+        cls, s: str | None, cur: _cursor, _bsdec: Pattern[str] = ...
+    ) -> dict[str, str] | None: ...
     @classmethod
-    def parse_unicode(
-        cls, s: Optional[str], cur: _cursor
-    ) -> Optional[dict[str, str]]: ...
+    def parse_unicode(cls, s: str | None, cur: _cursor) -> dict[str, str] | None: ...
     @classmethod
     def get_oids(
-        cls, conn_or_curs: Union[_connection, _cursor]
+        cls, conn_or_curs: _connection | _cursor
     ) -> tuple[tuple[Any, ...], tuple[Any, ...]]: ...
 
 def register_hstore(
-    conn_or_curs: Union[_connection, _cursor],
+    conn_or_curs: _connection | _cursor,
     globally: bool = ...,
     unicode: bool = ...,
-    oid: Optional[int] = ...,
-    array_oid: Optional[int] = ...,
+    oid: int | None = ...,
+    array_oid: int | None = ...,
 ) -> None: ...
 
 class CompositeCaster:
     name: str
-    schema: Optional[Any]
+    schema: Any | None
     oid: int
-    array_oid: Optional[int]
+    array_oid: int | None
     attrnames: list[Any]
     attrtypes: list[Any]
     typecaster: Any
-    array_typecaster: Optional[Any]
+    array_typecaster: Any | None
     def __init__(
         self,
         name: str,
         oid: int,
         attrs: Any,
-        array_oid: Optional[int] = ...,
-        schema: Optional[Any] = ...,
+        array_oid: int | None = ...,
+        schema: Any | None = ...,
     ) -> None: ...
-    def parse(self, s: Optional[str], curs: Any) -> Any: ...
+    def parse(self, s: str | None, curs: Any) -> Any: ...
     def make(self, values: Any) -> Any: ...
     @classmethod
-    def tokenize(cls, s: str) -> list[Optional[str]]: ...
+    def tokenize(cls, s: str) -> list[str | None]: ...
 
 def register_composite(
     name: str,
-    conn_or_curs: Union[_connection, _cursor],
+    conn_or_curs: _connection | _cursor,
     globally: bool = ...,
-    factory: Optional[CompositeCaster] = ...,
+    factory: CompositeCaster | None = ...,
 ) -> CompositeCaster: ...
 
 class _CursorLike(Protocol):
@@ -260,28 +254,28 @@ class _CursorLike(Protocol):
     def mogrify(
         self,
         operation: str,
-        parameters: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        parameters: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> bytes: ...
     def execute(
         self,
         sql: str,
-        params: Optional[Union[Sequence[_SQLType], Mapping[str, _SQLType]]] = ...,
+        params: Sequence[_SQLType] | Mapping[str, _SQLType] | None = ...,
     ) -> None: ...
     def fetchall(self) -> list[tuple[Any, ...]]: ...
 
 def execute_batch(
     cur: _CursorLike,
     sql: str,
-    argslist: Sequence[Union[Sequence[_SQLType], Mapping[str, _SQLType]]],
+    argslist: Sequence[Sequence[_SQLType] | Mapping[str, _SQLType]],
     page_size: int = ...,
 ) -> None: ...
 @overload
 def execute_values(
     cur: _CursorLike,
     sql: str,
-    argslist: Sequence[Union[Sequence[_SQLType], Mapping[str, _SQLType]]],
+    argslist: Sequence[Sequence[_SQLType] | Mapping[str, _SQLType]],
     *,
-    template: Optional[bytes] = ...,
+    template: bytes | None = ...,
     page_size: int = ...,
     fetch: Literal[True],
 ) -> list[tuple[Any, ...]]: ...
@@ -289,9 +283,9 @@ def execute_values(
 def execute_values(
     cur: _CursorLike,
     sql: str,
-    argslist: Sequence[Union[Sequence[_SQLType], Mapping[str, _SQLType]]],
+    argslist: Sequence[Sequence[_SQLType] | Mapping[str, _SQLType]],
     *,
-    template: Optional[bytes] = ...,
+    template: bytes | None = ...,
     page_size: int = ...,
     fetch: Literal[False] = ...,
 ) -> None: ...

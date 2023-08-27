@@ -9,7 +9,7 @@ from collections.abc import (
     Sequence,
     Sized,
 )
-from typing import Any, Generic, Optional, TypeVar, Union, overload
+from typing import Any, Generic, TypeVar, overload
 from typing_extensions import Self
 
 from django.db import models
@@ -27,10 +27,10 @@ class _BaseQuerySet(Generic[_T], Sized):
     query: Query
     def __init__(
         self,
-        model: Optional[type[models.Model]] = ...,
-        query: Optional[Query] = ...,
-        using: Optional[str] = ...,
-        hints: Optional[dict[str, models.Model]] = ...,
+        model: type[models.Model] | None = ...,
+        query: Query | None = ...,
+        using: str | None = ...,
+        hints: dict[str, models.Model] | None = ...,
     ) -> None: ...
     @classmethod
     def as_manager(cls) -> Manager[_T]: ...
@@ -52,42 +52,42 @@ class _BaseQuerySet(Generic[_T], Sized):
     def bulk_create(
         self,
         objs: Iterable[_T],
-        batch_size: Optional[int] = ...,
+        batch_size: int | None = ...,
         ignore_conflicts: bool = ...,
-        update_conflicts: Optional[Sequence[str]] = ...,
-        update_fields: Optional[Sequence[str]] = ...,
+        update_conflicts: Sequence[str] | None = ...,
+        update_fields: Sequence[str] | None = ...,
     ) -> list[_T]: ...
     async def abulk_create(
         self,
         objs: Iterable[_T],
-        batch_size: Optional[int] = ...,
+        batch_size: int | None = ...,
         ignore_conflicts: bool = ...,
-        update_conflicts: Optional[Sequence[str]] = ...,
-        update_fields: Optional[Sequence[str]] = ...,
+        update_conflicts: Sequence[str] | None = ...,
+        update_fields: Sequence[str] | None = ...,
     ) -> list[_T]: ...
     def bulk_update(
-        self, objs: Iterable[_T], fields: Sequence[str], batch_size: Optional[int] = ...
+        self, objs: Iterable[_T], fields: Sequence[str], batch_size: int | None = ...
     ) -> int: ...
     def get_or_create(
-        self, defaults: Optional[MutableMapping[str, Any]] = ..., **kwargs: Any
+        self, defaults: MutableMapping[str, Any] | None = ..., **kwargs: Any
     ) -> tuple[_T, bool]: ...
     async def aget_or_create(
-        self, defaults: Optional[MutableMapping[str, Any]] = ..., **kwargs: Any
+        self, defaults: MutableMapping[str, Any] | None = ..., **kwargs: Any
     ) -> tuple[_T, bool]: ...
     def update_or_create(
-        self, defaults: Optional[MutableMapping[str, Any]] = ..., **kwargs: Any
+        self, defaults: MutableMapping[str, Any] | None = ..., **kwargs: Any
     ) -> tuple[_T, bool]: ...
     async def aupdate_or_create(
-        self, defaults: Optional[MutableMapping[str, Any]] = ..., **kwargs: Any
+        self, defaults: MutableMapping[str, Any] | None = ..., **kwargs: Any
     ) -> tuple[_T, bool]: ...
-    def earliest(self, *fields: Any, field_name: Optional[Any] = ...) -> _T: ...
-    async def aearliest(self, *fields: Any, field_name: Optional[Any] = ...) -> _T: ...
-    def latest(self, *fields: Any, field_name: Optional[Any] = ...) -> _T: ...
-    async def alatest(self, *fields: Any, field_name: Optional[Any] = ...) -> _T: ...
-    def first(self) -> Optional[_T]: ...
-    async def afirst(self) -> Optional[_T]: ...
-    def last(self) -> Optional[_T]: ...
-    async def alast(self) -> Optional[_T]: ...
+    def earliest(self, *fields: Any, field_name: Any | None = ...) -> _T: ...
+    async def aearliest(self, *fields: Any, field_name: Any | None = ...) -> _T: ...
+    def latest(self, *fields: Any, field_name: Any | None = ...) -> _T: ...
+    async def alatest(self, *fields: Any, field_name: Any | None = ...) -> _T: ...
+    def first(self) -> _T | None: ...
+    async def afirst(self) -> _T | None: ...
+    def last(self) -> _T | None: ...
+    async def alast(self) -> _T | None: ...
     def in_bulk(
         self, id_list: Iterable[Any] = ..., *, field_name: str = ...
     ) -> dict[Any, _T]: ...
@@ -102,22 +102,22 @@ class _BaseQuerySet(Generic[_T], Sized):
     async def aexists(self) -> bool: ...
     def contains(self, obj: _T) -> bool: ...
     async def acontains(self, obj: _T) -> bool: ...
-    def explain(self, *, format: Optional[Any] = ..., **options: Any) -> str: ...
-    async def aexplain(self, *, format: Optional[Any] = ..., **options: Any) -> str: ...
+    def explain(self, *, format: Any | None = ..., **options: Any) -> str: ...
+    async def aexplain(self, *, format: Any | None = ..., **options: Any) -> str: ...
     def raw(
         self,
         raw_query: str,
         params: Any = ...,
-        translations: Optional[dict[str, str]] = ...,
-        using: Optional[str] = ...,
+        translations: dict[str, str] | None = ...,
+        using: str | None = ...,
     ) -> RawQuerySet[Any]: ...
     # The type of values may be overridden to be more specific in the mypy plugin, depending on the fields param
     def values(
-        self, *fields: Union[str, Combinable], **expressions: Any
+        self, *fields: str | Combinable, **expressions: Any
     ) -> ValuesQuerySet[_T, dict[str, Any]]: ...
     # The type of values_list may be overridden to be more specific in the mypy plugin, depending on the fields param
     def values_list(
-        self, *fields: Union[str, Combinable], flat: bool = ..., named: bool = ...
+        self, *fields: str | Combinable, flat: bool = ..., named: bool = ...
     ) -> ValuesQuerySet[_T, Any]: ...
     def dates(
         self, field_name: str, kind: str, order: str = ...
@@ -127,7 +127,7 @@ class _BaseQuerySet(Generic[_T], Sized):
         field_name: str,
         kind: str,
         order: str = ...,
-        tzinfo: Optional[datetime.tzinfo] = ...,
+        tzinfo: datetime.tzinfo | None = ...,
     ) -> ValuesQuerySet[_T, datetime.datetime]: ...
     def none(self) -> Self: ...
     def all(self) -> Self: ...
@@ -155,17 +155,17 @@ class _BaseQuerySet(Generic[_T], Sized):
     # extra() return type won't be supported any time soon
     def extra(
         self,
-        select: Optional[dict[str, Any]] = ...,
-        where: Optional[list[str]] = ...,
-        params: Optional[list[Any]] = ...,
-        tables: Optional[list[str]] = ...,
-        order_by: Optional[Sequence[str]] = ...,
-        select_params: Optional[Sequence[Any]] = ...,
+        select: dict[str, Any] | None = ...,
+        where: list[str] | None = ...,
+        params: list[Any] | None = ...,
+        tables: list[str] | None = ...,
+        order_by: Sequence[str] | None = ...,
+        select_params: Sequence[Any] | None = ...,
     ) -> QuerySet[Any]: ...
     def reverse(self) -> Self: ...
     def defer(self, *fields: Any) -> Self: ...
     def only(self, *fields: Any) -> Self: ...
-    def using(self, alias: Optional[str]) -> Self: ...
+    def using(self, alias: str | None) -> Self: ...
     @property
     def ordered(self) -> bool: ...
     @property
@@ -221,26 +221,26 @@ class ValuesQuerySet(_BaseQuerySet[_T], Collection[_Row], Sized):
     async def aiterator(self, chunk_size: int = ...) -> Iterator[_Row]: ...  # type: ignore
     def get(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore
     async def aget(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore
-    def earliest(self, *fields: Any, field_name: Optional[Any] = ...) -> _Row: ...  # type: ignore
-    async def aearliest(self, *fields: Any, field_name: Optional[Any] = ...) -> _Row: ...  # type: ignore
-    def latest(self, *fields: Any, field_name: Optional[Any] = ...) -> _Row: ...  # type: ignore
-    async def alatest(self, *fields: Any, field_name: Optional[Any] = ...) -> _Row: ...  # type: ignore
-    def first(self) -> Optional[_Row]: ...  # type: ignore
-    async def afirst(self) -> Optional[_Row]: ...  # type: ignore
-    def last(self) -> Optional[_Row]: ...  # type: ignore
-    async def alast(self) -> Optional[_Row]: ...  # type: ignore
+    def earliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
+    async def aearliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
+    def latest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
+    async def alatest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
+    def first(self) -> _Row | None: ...  # type: ignore
+    async def afirst(self) -> _Row | None: ...  # type: ignore
+    def last(self) -> _Row | None: ...  # type: ignore
+    async def alast(self) -> _Row | None: ...  # type: ignore
 
 class RawQuerySet(Iterable[_T], Sized):
     query: RawQuery
     def __init__(
         self,
-        raw_query: Union[RawQuery, str],
-        model: Optional[type[models.Model]] = ...,
-        query: Optional[Query] = ...,
+        raw_query: RawQuery | str,
+        model: type[models.Model] | None = ...,
+        query: Query | None = ...,
         params: tuple[Any] = ...,
-        translations: Optional[dict[str, str]] = ...,
+        translations: dict[str, str] | None = ...,
         using: str = ...,
-        hints: Optional[dict[str, models.Model]] = ...,
+        hints: dict[str, models.Model] | None = ...,
     ) -> None: ...
     def __len__(self) -> int: ...
     def __iter__(self) -> Iterator[_T]: ...
@@ -264,7 +264,7 @@ class RawQuerySet(Iterable[_T], Sized):
     def resolve_model_init_order(
         self,
     ) -> tuple[list[str], list[int], list[tuple[str, int]]]: ...
-    def using(self, alias: Optional[str]) -> RawQuerySet[_T]: ...
+    def using(self, alias: str | None) -> RawQuerySet[_T]: ...
 
 class Prefetch(Generic[_T]):
     prefetch_through: str
@@ -273,17 +273,17 @@ class Prefetch(Generic[_T]):
     def __init__(
         self,
         lookup: str,
-        queryset: Optional[QuerySet[Any]] = ...,
-        to_attr: Optional[str] = ...,
+        queryset: QuerySet[Any] | None = ...,
+        to_attr: str | None = ...,
     ) -> None: ...
     def __getstate__(self) -> dict[str, Any]: ...
     def add_prefix(self, prefix: str) -> None: ...
     def get_current_prefetch_to(self, level: int) -> str: ...
     def get_current_to_attr(self, level: int) -> tuple[str, str]: ...
-    def get_current_queryset(self, level: int) -> Optional[QuerySet[Any]]: ...
+    def get_current_queryset(self, level: int) -> QuerySet[Any] | None: ...
 
 def prefetch_related_objects(
-    model_instances: Iterable[models.Model], *related_lookups: Union[str, Prefetch[Any]]
+    model_instances: Iterable[models.Model], *related_lookups: str | Prefetch[Any]
 ) -> None: ...
 def get_prefetcher(
     instance: Model, through_attr: str, to_attr: str

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.gis.geos.geometry import GEOSGeometry as GEOSGeometry
 
@@ -6,10 +6,10 @@ class Point(GEOSGeometry):
     has_cs: bool = ...
     def __init__(
         self,
-        x: Optional[Any] = ...,
-        y: Optional[Any] = ...,
-        z: Optional[Any] = ...,
-        srid: Optional[Any] = ...,
+        x: Any | None = ...,
+        y: Any | None = ...,
+        z: Any | None = ...,
+        srid: Any | None = ...,
     ) -> None: ...
     def __iter__(self) -> Any: ...
     def __len__(self) -> Any: ...

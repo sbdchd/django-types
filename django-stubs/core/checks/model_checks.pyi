@@ -1,12 +1,12 @@
 from collections.abc import Sequence
-from typing import Any, Optional
+from typing import Any
 
 from django.apps.config import AppConfig
 from django.core.checks.messages import Warning
 
 def check_all_models(
-    app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
+    app_configs: Sequence[AppConfig] | None = ..., **kwargs: Any
 ) -> list[Warning]: ...
 def check_lazy_references(
-    app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
+    app_configs: Sequence[AppConfig] | None = ..., **kwargs: Any
 ) -> list[Any]: ...

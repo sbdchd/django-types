@@ -1,7 +1,7 @@
 from collections import UserList
 from collections.abc import Sequence
 from datetime import datetime
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.core.exceptions import ValidationError
 from django.utils.safestring import SafeText
@@ -17,12 +17,12 @@ class ErrorDict(dict[str, Any]):
     def as_text(self) -> str: ...
 
 class ErrorList(UserList[Any]):
-    data: list[Union[ValidationError, str]]
+    data: list[ValidationError | str]
     error_class: str = ...
     def __init__(
         self,
-        initlist: Optional[Union[ErrorList, Sequence[Union[str, Exception]]]] = ...,
-        error_class: Optional[str] = ...,
+        initlist: ErrorList | Sequence[str | Exception] | None = ...,
+        error_class: str | None = ...,
     ) -> None: ...
     def as_data(self) -> list[ValidationError]: ...
     def get_json_data(self, escape_html: bool = ...) -> list[dict[str, str]]: ...

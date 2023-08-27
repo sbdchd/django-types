@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models import Func, Transform
@@ -14,9 +14,7 @@ class ConcatPair(Func):
 class Concat(Func): ...
 
 class Left(Func):
-    def __init__(
-        self, expression: str, length: Union[Value, int], **extra: Any
-    ) -> None: ...
+    def __init__(self, expression: str, length: Value | int, **extra: Any) -> None: ...
     def get_substr(self) -> Substr: ...
     def use_substr(
         self, compiler: SQLCompiler, connection: DatabaseWrapper, **extra_context: Any
@@ -29,7 +27,7 @@ class LPad(BytesToCharFieldConversionMixin, Func):
     def __init__(
         self,
         expression: str,
-        length: Optional[Union[Length, int]],
+        length: Length | int | None,
         fill_text: Value = ...,
         **extra: Any
     ) -> None: ...
@@ -39,10 +37,7 @@ class Ord(Transform): ...
 
 class Repeat(BytesToCharFieldConversionMixin, Func):
     def __init__(
-        self,
-        expression: Union[Value, str],
-        number: Optional[Union[Length, int]],
-        **extra: Any
+        self, expression: Value | str, number: Length | int | None, **extra: Any
     ) -> None: ...
 
 class Replace(Func):
@@ -62,9 +57,9 @@ class StrIndex(Func): ...
 class Substr(Func):
     def __init__(
         self,
-        expression: Union[Expression, str],
-        pos: Union[Expression, int],
-        length: Optional[Union[Value, int]] = ...,
+        expression: Expression | str,
+        pos: Expression | int,
+        length: Value | int | None = ...,
         **extra: Any
     ) -> None: ...
 

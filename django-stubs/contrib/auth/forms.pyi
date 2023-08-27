@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from typing import Any, Optional
+from typing import Any
 
 from django import forms
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -49,22 +49,22 @@ class PasswordResetForm(forms.Form):
         subject_template_name: str,
         email_template_name: str,
         context: dict[str, Any],
-        from_email: Optional[str],
+        from_email: str | None,
         to_email: str,
-        html_email_template_name: Optional[str] = ...,
+        html_email_template_name: str | None = ...,
     ) -> None: ...
     def get_users(self, email: str) -> Iterator[Any]: ...
     def save(
         self,
-        domain_override: Optional[str] = ...,
+        domain_override: str | None = ...,
         subject_template_name: str = ...,
         email_template_name: str = ...,
         use_https: bool = ...,
         token_generator: PasswordResetTokenGenerator = ...,
-        from_email: Optional[str] = ...,
-        request: Optional[WSGIRequest] = ...,
-        html_email_template_name: Optional[str] = ...,
-        extra_email_context: Optional[dict[str, str]] = ...,
+        from_email: str | None = ...,
+        request: WSGIRequest | None = ...,
+        html_email_template_name: str | None = ...,
+        extra_email_context: dict[str, str] | None = ...,
     ) -> None: ...
 
 class SetPasswordForm(forms.Form):
@@ -73,7 +73,7 @@ class SetPasswordForm(forms.Form):
     new_password2: Any = ...
     user: User = ...
     def __init__(
-        self, user: Optional[AbstractBaseUser], *args: Any, **kwargs: Any
+        self, user: AbstractBaseUser | None, *args: Any, **kwargs: Any
     ) -> None: ...
     def clean_new_password2(self) -> str: ...
     def save(self, commit: bool = ...) -> AbstractBaseUser: ...

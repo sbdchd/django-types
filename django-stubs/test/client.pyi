@@ -2,7 +2,7 @@ from io import BytesIO
 from json import JSONEncoder
 from re import Pattern
 from types import TracebackType
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.sessions.backends.base import SessionBase
@@ -24,10 +24,10 @@ class RedirectCycleError(Exception):
 
 class FakePayload:
     read_started: bool = ...
-    def __init__(self, content: Optional[Union[bytes, str]] = ...) -> None: ...
+    def __init__(self, content: bytes | str | None = ...) -> None: ...
     def __len__(self) -> int: ...
     def read(self, num_bytes: int = ...) -> bytes: ...
-    def write(self, content: Union[bytes, str]) -> None: ...
+    def write(self, content: bytes | str) -> None: ...
 
 class ClientHandler(BaseHandler):
     enforce_csrf_checks: bool = ...
@@ -39,7 +39,7 @@ class ClientHandler(BaseHandler):
 def encode_multipart(boundary: str, data: dict[str, Any]) -> bytes: ...
 def encode_file(boundary: str, key: str, file: Any) -> list[bytes]: ...
 
-_RequestData = Optional[Any]
+_RequestData = Any | None
 
 class RequestFactory:
     json_encoder: type[JSONEncoder]
@@ -126,7 +126,7 @@ class RequestFactory:
         method: str,
         path: str,
         data: _RequestData = ...,
-        content_type: Optional[str] = ...,
+        content_type: str | None = ...,
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
@@ -136,7 +136,7 @@ class RequestFactory:
 class Client(RequestFactory):
     handler: ClientHandler
     raise_request_exception: bool
-    exc_info: Optional[tuple[type[BaseException], BaseException, TracebackType]]
+    exc_info: tuple[type[BaseException], BaseException, TracebackType] | None
     def __init__(
         self,
         enforce_csrf_checks: bool = ...,
@@ -237,7 +237,7 @@ class Client(RequestFactory):
     def session(self) -> SessionBase: ...
     def login(self, **credentials: Any) -> bool: ...
     def force_login(
-        self, user: AbstractBaseUser, backend: Optional[str] = ...
+        self, user: AbstractBaseUser, backend: str | None = ...
     ) -> None: ...
     def logout(self) -> None: ...
 

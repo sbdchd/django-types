@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing import Any, Optional
+from typing import Any
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.migrations.state import StateApps
@@ -24,22 +24,22 @@ class RunSQL(Operation):
     def __init__(
         self,
         sql: Any,
-        reverse_sql: Optional[Any] = ...,
-        state_operations: Optional[Any] = ...,
-        hints: Optional[Any] = ...,
+        reverse_sql: Any | None = ...,
+        state_operations: Any | None = ...,
+        hints: Any | None = ...,
         elidable: bool = ...,
     ) -> None: ...
 
 class RunPython(Operation):
     code: Callable[..., Any] = ...
-    reverse_code: Optional[Callable[..., Any]] = ...
-    hints: Optional[dict[str, Any]] = ...
+    reverse_code: Callable[..., Any] | None = ...
+    hints: dict[str, Any] | None = ...
     def __init__(
         self,
         code: Callable[..., Any],
-        reverse_code: Optional[Callable[..., Any]] = ...,
-        atomic: Optional[bool] = ...,
-        hints: Optional[dict[str, Any]] = ...,
+        reverse_code: Callable[..., Any] | None = ...,
+        atomic: bool | None = ...,
+        hints: dict[str, Any] | None = ...,
         elidable: bool = ...,
     ) -> None: ...
     @staticmethod

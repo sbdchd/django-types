@@ -1,5 +1,5 @@
 from re import Pattern
-from typing import Any, Optional
+from typing import Any
 
 from django.core.management.base import BaseCommand
 
@@ -14,7 +14,7 @@ class TranslatableFile:
     file_name: str
     locale_dir: str
     def __init__(
-        self, dirpath: str, file_name: str, locale_dir: Optional[str]
+        self, dirpath: str, file_name: str, locale_dir: str | None
     ) -> None: ...
 
 class BuildFile:

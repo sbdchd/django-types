@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.db.models import Func
 
@@ -9,9 +9,9 @@ class FirstValue(Func): ...
 class LagLeadFunction(Func):
     def __init__(
         self,
-        expression: Optional[str],
+        expression: str | None,
         offset: int = ...,
-        default: Optional[int] = ...,
+        default: int | None = ...,
         **extra: Any
     ) -> None: ...
 
@@ -21,7 +21,7 @@ class Lead(LagLeadFunction): ...
 
 class NthValue(Func):
     def __init__(
-        self, expression: Optional[str], nth: int = ..., **extra: Any
+        self, expression: str | None, nth: int = ..., **extra: Any
     ) -> None: ...
 
 class Ntile(Func):

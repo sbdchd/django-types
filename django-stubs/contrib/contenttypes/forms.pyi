@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.forms.models import BaseModelFormSet
 
@@ -8,12 +8,12 @@ class BaseGenericInlineFormSet(BaseModelFormSet):
     save_as_new: Any = ...
     def __init__(
         self,
-        data: Optional[Any] = ...,
-        files: Optional[Any] = ...,
-        instance: Optional[Any] = ...,
+        data: Any | None = ...,
+        files: Any | None = ...,
+        instance: Any | None = ...,
         save_as_new: bool = ...,
-        prefix: Optional[Any] = ...,
-        queryset: Optional[Any] = ...,
+        prefix: Any | None = ...,
+        queryset: Any | None = ...,
         **kwargs: Any
     ) -> None: ...
     def initial_form_count(self) -> Any: ...
@@ -27,15 +27,15 @@ def generic_inlineformset_factory(
     formset: Any = ...,
     ct_field: str = ...,
     fk_field: str = ...,
-    fields: Optional[Any] = ...,
-    exclude: Optional[Any] = ...,
+    fields: Any | None = ...,
+    exclude: Any | None = ...,
     extra: int = ...,
     can_order: bool = ...,
     can_delete: bool = ...,
-    max_num: Optional[Any] = ...,
-    formfield_callback: Optional[Any] = ...,
+    max_num: Any | None = ...,
+    formfield_callback: Any | None = ...,
     validate_max: bool = ...,
     for_concrete_model: bool = ...,
-    min_num: Optional[Any] = ...,
+    min_num: Any | None = ...,
     validate_min: bool = ...,
 ) -> Any: ...

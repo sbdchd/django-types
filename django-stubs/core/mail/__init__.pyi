@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from .message import DEFAULT_ATTACHMENT_MIME_TYPE as DEFAULT_ATTACHMENT_MIME_TYPE
 from .message import BadHeaderError as BadHeaderError
@@ -11,39 +11,39 @@ from .utils import DNS_NAME as DNS_NAME
 from .utils import CachedDnsName as CachedDnsName
 
 def get_connection(
-    backend: Optional[str] = ..., fail_silently: bool = ..., **kwds: Any
+    backend: str | None = ..., fail_silently: bool = ..., **kwds: Any
 ) -> Any: ...
 def send_mail(
     subject: str,
     message: str,
-    from_email: Optional[str],
+    from_email: str | None,
     recipient_list: list[str],
     fail_silently: bool = ...,
-    auth_user: Optional[str] = ...,
-    auth_password: Optional[str] = ...,
-    connection: Optional[Any] = ...,
-    html_message: Optional[str] = ...,
+    auth_user: str | None = ...,
+    auth_password: str | None = ...,
+    connection: Any | None = ...,
+    html_message: str | None = ...,
 ) -> int: ...
 def send_mass_mail(
     datatuple: list[tuple[str, str, str, list[str]]],
     fail_silently: bool = ...,
-    auth_user: Optional[str] = ...,
-    auth_password: Optional[str] = ...,
-    connection: Optional[Any] = ...,
+    auth_user: str | None = ...,
+    auth_password: str | None = ...,
+    connection: Any | None = ...,
 ) -> int: ...
 def mail_admins(
     subject: str,
     message: str,
     fail_silently: bool = ...,
-    connection: Optional[Any] = ...,
-    html_message: Optional[str] = ...,
+    connection: Any | None = ...,
+    html_message: str | None = ...,
 ) -> None: ...
 def mail_managers(
     subject: str,
     message: str,
     fail_silently: bool = ...,
-    connection: Optional[Any] = ...,
-    html_message: Optional[str] = ...,
+    connection: Any | None = ...,
+    html_message: str | None = ...,
 ) -> None: ...
 
 outbox: list[EmailMessage] = ...

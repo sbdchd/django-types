@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from sqlite3 import dbapi2 as Database
-from typing import Any, Callable
+from typing import Any
 
 from django.db.backends.base.base import BaseDatabaseWrapper
 

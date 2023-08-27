@@ -1,6 +1,7 @@
 import types
+from collections.abc import Iterator
 from io import StringIO
-from typing import IO, Any, Iterator, Optional, Type, Union
+from typing import IO, Any, Optional, Union
 from typing_extensions import Self
 
 from django.core.files.utils import FileProxyMixin
@@ -22,7 +23,7 @@ class File(FileProxyMixin, IO[Any]):
     def __enter__(self) -> Self: ...
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc_value: Optional[BaseException],
         tb: Optional[types.TracebackType],
     ) -> None: ...

@@ -1,4 +1,5 @@
-from typing import Any, Dict, Iterator, Optional
+from collections.abc import Iterator
+from typing import Any, Optional
 
 from django import forms
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -47,7 +48,7 @@ class PasswordResetForm(forms.Form):
         self,
         subject_template_name: str,
         email_template_name: str,
-        context: Dict[str, Any],
+        context: dict[str, Any],
         from_email: Optional[str],
         to_email: str,
         html_email_template_name: Optional[str] = ...,
@@ -63,7 +64,7 @@ class PasswordResetForm(forms.Form):
         from_email: Optional[str] = ...,
         request: Optional[WSGIRequest] = ...,
         html_email_template_name: Optional[str] = ...,
-        extra_email_context: Optional[Dict[str, str]] = ...,
+        extra_email_context: Optional[dict[str, str]] = ...,
     ) -> None: ...
 
 class SetPasswordForm(forms.Form):

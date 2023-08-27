@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 from django.contrib.gis.gdal.raster.base import GDALRasterBase as GDALRasterBase
 
@@ -37,7 +37,7 @@ class GDALBand(GDALRasterBase):
         as_memoryview: bool = ...,
     ) -> Any: ...
 
-class BandList(List[Any]):
+class BandList(list[Any]):
     source: Any = ...
     def __init__(self, source: Any) -> None: ...
     def __iter__(self) -> Any: ...

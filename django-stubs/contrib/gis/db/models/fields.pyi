@@ -1,4 +1,5 @@
-from typing import Any, Iterable, NamedTuple, Optional, Tuple, TypeVar, Union
+from collections.abc import Iterable
+from typing import Any, NamedTuple, Optional, TypeVar, Union
 
 from django.db.models.fields import (
     Field,
@@ -73,7 +74,7 @@ class GeometryField(BaseSpatialField[Any, Any]):
         verbose_name: Optional[Union[str, bytes]] = ...,
         dim: int = ...,
         geography: bool = ...,
-        extent: Tuple[float, float, float, float] = ...,
+        extent: tuple[float, float, float, float] = ...,
         tolerance: float = ...,
         srid: int = ...,
         spatial_index: bool = ...,

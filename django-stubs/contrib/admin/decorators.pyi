@@ -1,4 +1,5 @@
-from typing import Any, Callable, Optional, Sequence, Type, TypeVar, Union
+from collections.abc import Callable, Sequence
+from typing import Any, Optional, TypeVar, Union
 
 from django.contrib.admin import ModelAdmin
 from django.db.models import Combinable, QuerySet
@@ -24,4 +25,4 @@ def display(
     description: Optional[str] = ...,
     empty_value: Optional[str] = ...,
 ) -> Callable[..., Any]: ...
-def register(*models: Type[Model], site: Optional[Any] = ...) -> Callable[..., Any]: ...
+def register(*models: type[Model], site: Optional[Any] = ...) -> Callable[..., Any]: ...

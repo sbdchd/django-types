@@ -1,33 +1,23 @@
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generic,
-    Iterable,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Iterable
+from typing import Any, Generic, Optional, TypeVar, Union, overload
 from typing_extensions import Literal
 
 from django.db.models import Field, Transform
 
 from .mixins import CheckFieldDefaultMixin
 
-_Choice = Tuple[Any, Any]
-_ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
+_Choice = tuple[Any, Any]
+_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
 _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
 _ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = Dict[str, Any]
+_ErrorMessagesToOverride = dict[str, Any]
 
-_T = TypeVar("_T", bound="Optional[Dict[str, Optional[str]]]")
+_T = TypeVar("_T", bound="Optional[dict[str, Optional[str]]]")
 
 class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
     @overload
     def __init__(
-        self: HStoreField[Dict[str, Optional[str]]],
+        self: HStoreField[dict[str, Optional[str]]],
         verbose_name: Optional[Union[str, bytes]] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,
@@ -52,7 +42,7 @@ class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
     ) -> None: ...
     @overload
     def __init__(
-        self: HStoreField[Optional[Dict[str, Optional[str]]]],
+        self: HStoreField[Optional[dict[str, Optional[str]]]],
         verbose_name: Optional[Union[str, bytes]] = ...,
         name: Optional[str] = ...,
         primary_key: bool = ...,

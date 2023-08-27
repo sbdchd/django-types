@@ -1,6 +1,7 @@
 import logging
+from collections.abc import Callable
 from logging import LogRecord
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from django.core.management.color import Style
 
@@ -8,7 +9,7 @@ request_logger: Any
 DEFAULT_LOGGING: Any
 
 def configure_logging(
-    logging_config: str, logging_settings: Dict[str, Any]
+    logging_config: str, logging_settings: dict[str, Any]
 ) -> None: ...
 
 class AdminEmailHandler(logging.Handler):

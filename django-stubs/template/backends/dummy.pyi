@@ -1,20 +1,20 @@
 import string
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Optional, Union
 
 from django.http.request import HttpRequest
 
 from .base import BaseEngine
 
 class TemplateStrings(BaseEngine):
-    template_dirs: Tuple[str]
+    template_dirs: tuple[str]
     def __init__(
-        self, params: Dict[str, Union[Dict[Any, Any], List[Any], bool, str]]
+        self, params: dict[str, Union[dict[Any, Any], list[Any], bool, str]]
     ) -> None: ...
 
 class Template(string.Template):
     template: str
     def render(
         self,
-        context: Optional[Dict[str, str]] = ...,
+        context: Optional[dict[str, str]] = ...,
         request: Optional[HttpRequest] = ...,
     ) -> str: ...

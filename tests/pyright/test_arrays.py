@@ -22,7 +22,7 @@ f.array = [1, 2]
     assert results == [
         Result(
             type="information",
-            message='Type of "f.array" is "List[str]"',
+            message='Type of "f.array" is "list[str]"',
             line=10,
             column=13,
         ),
@@ -64,7 +64,7 @@ f.array = [1, 2]
     assert results == [
         Result(
             type="information",
-            message='Type of "f.array" is "List[str] | None"',
+            message='Type of "f.array" is "list[str] | None"',
             line=11,
             column=13,
         ),
@@ -115,13 +115,13 @@ f.array = ["a", "b"]
     assert results == [
         Result(
             type="information",
-            message='Type of "f.array" is "List[List[str]]"',
+            message='Type of "f.array" is "list[list[str]]"',
             line=14,
             column=13,
         ),
         Result(
             type="information",
-            message='Type of "f.array[0]" is "List[str]"',
+            message='Type of "f.array[0]" is "list[str]"',
             line=15,
             column=13,
         ),
@@ -167,7 +167,7 @@ f.array = ["a", "b"]
     assert results == [
         Result(
             type="information",
-            message='Type of "f.array" is "List[List[str]] | None"',
+            message='Type of "f.array" is "list[list[str]] | None"',
             line=15,
             column=13,
         ),
@@ -179,7 +179,7 @@ f.array = ["a", "b"]
         ),
         Result(
             type="information",
-            message='Type of "f.array[0]" is "List[str] | Unknown"',
+            message='Type of "f.array[0]" is "list[str] | Unknown"',
             line=16,
             column=13,
         ),

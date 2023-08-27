@@ -1,7 +1,8 @@
 from io import BytesIO
 from json import JSONEncoder
+from re import Pattern
 from types import TracebackType
-from typing import Any, Dict, List, Optional, Pattern, Tuple, Type, Union
+from typing import Any, Optional, Union
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.sessions.backends.base import SessionBase
@@ -18,7 +19,7 @@ JSON_CONTENT_TYPE_RE: Pattern[str] = ...
 
 class RedirectCycleError(Exception):
     last_response: HttpResponseBase = ...
-    redirect_chain: List[Tuple[str, int]] = ...
+    redirect_chain: list[tuple[str, int]] = ...
     def __init__(self, message: str, last_response: HttpResponseBase) -> None: ...
 
 class FakePayload:
@@ -33,20 +34,20 @@ class ClientHandler(BaseHandler):
     def __init__(
         self, enforce_csrf_checks: bool = ..., *args: Any, **kwargs: Any
     ) -> None: ...
-    def __call__(self, environ: Dict[str, Any]) -> HttpResponseBase: ...
+    def __call__(self, environ: dict[str, Any]) -> HttpResponseBase: ...
 
-def encode_multipart(boundary: str, data: Dict[str, Any]) -> bytes: ...
-def encode_file(boundary: str, key: str, file: Any) -> List[bytes]: ...
+def encode_multipart(boundary: str, data: dict[str, Any]) -> bytes: ...
+def encode_file(boundary: str, key: str, file: Any) -> list[bytes]: ...
 
 _RequestData = Optional[Any]
 
 class RequestFactory:
-    json_encoder: Type[JSONEncoder]
-    defaults: Dict[str, str]
+    json_encoder: type[JSONEncoder]
+    defaults: dict[str, str]
     cookies: SimpleCookie[str]
     errors: BytesIO
     def __init__(
-        self, *, json_encoder: Type[JSONEncoder] = ..., **defaults: Any
+        self, *, json_encoder: type[JSONEncoder] = ..., **defaults: Any
     ) -> None: ...
     def request(self, **request: Any) -> WSGIRequest: ...
     def get(
@@ -135,13 +136,13 @@ class RequestFactory:
 class Client(RequestFactory):
     handler: ClientHandler
     raise_request_exception: bool
-    exc_info: Optional[Tuple[Type[BaseException], BaseException, TracebackType]]
+    exc_info: Optional[tuple[type[BaseException], BaseException, TracebackType]]
     def __init__(
         self,
         enforce_csrf_checks: bool = ...,
         raise_request_exception: bool = ...,
         *,
-        json_encoder: Type[JSONEncoder] = ...,
+        json_encoder: type[JSONEncoder] = ...,
         **defaults: Any
     ) -> None: ...
     # Silence type warnings, since this class overrides arguments and return types in an unsafe manner.

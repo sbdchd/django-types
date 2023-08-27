@@ -1,5 +1,6 @@
+from collections.abc import Iterable
 from html.parser import HTMLParser
-from typing import Any, Iterable, Optional, Tuple, Union
+from typing import Any, Optional, Union
 
 from django.utils.safestring import SafeText
 
@@ -19,7 +20,7 @@ def format_html(format_string: str, *args: Any, **kwargs: Any) -> SafeText: ...
 def format_html_join(
     sep: str,
     format_string: str,
-    args_generator: Union[Iterable[Any], Iterable[Tuple[str]]],
+    args_generator: Union[Iterable[Any], Iterable[tuple[str]]],
 ) -> SafeText: ...
 def linebreaks(value: Any, autoescape: bool = ...) -> str: ...
 

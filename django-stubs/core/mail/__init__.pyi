@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Tuple
+from typing import Any, Optional
 
 from .message import DEFAULT_ATTACHMENT_MIME_TYPE as DEFAULT_ATTACHMENT_MIME_TYPE
 from .message import BadHeaderError as BadHeaderError
@@ -17,7 +17,7 @@ def send_mail(
     subject: str,
     message: str,
     from_email: Optional[str],
-    recipient_list: List[str],
+    recipient_list: list[str],
     fail_silently: bool = ...,
     auth_user: Optional[str] = ...,
     auth_password: Optional[str] = ...,
@@ -25,7 +25,7 @@ def send_mail(
     html_message: Optional[str] = ...,
 ) -> int: ...
 def send_mass_mail(
-    datatuple: List[Tuple[str, str, str, List[str]]],
+    datatuple: list[tuple[str, str, str, list[str]]],
     fail_silently: bool = ...,
     auth_user: Optional[str] = ...,
     auth_password: Optional[str] = ...,
@@ -46,4 +46,4 @@ def mail_managers(
     html_message: Optional[str] = ...,
 ) -> None: ...
 
-outbox: List[EmailMessage] = ...
+outbox: list[EmailMessage] = ...

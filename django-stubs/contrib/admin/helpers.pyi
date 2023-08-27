@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Tuple, Union
+from collections.abc import Callable, Iterable, Iterator
+from typing import Any, Optional, Union
 
 from django import forms
 from django.db.models.fields import AutoField
@@ -23,8 +24,8 @@ class AdminForm:
     def __init__(
         self,
         form: BaseForm,
-        fieldsets: List[Tuple[None, Dict[str, List[str]]]],
-        prepopulated_fields: Dict[Any, Any],
+        fieldsets: list[tuple[None, dict[str, list[str]]]],
+        prepopulated_fields: dict[Any, Any],
         readonly_fields: Optional[Iterable[Any]] = ...,
         model_admin: Any = ...,
     ) -> None: ...
@@ -123,7 +124,7 @@ class InlineAdminFormSet:
     def __iter__(self) -> Iterator[InlineAdminForm]: ...
     def fields(
         self,
-    ) -> Iterator[Dict[str, Union[Dict[str, bool], bool, Widget, str]]]: ...
+    ) -> Iterator[dict[str, Union[dict[str, bool], bool, Widget, str]]]: ...
     def inline_formset_data(self) -> str: ...
     @property
     def forms(self) -> Any: ...

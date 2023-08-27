@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from typing import Any, Callable, Dict, Union
+from collections.abc import Callable
+from typing import Any, Union
 
 from .backends.base import BaseCache as BaseCache
 from .backends.base import CacheKeyWarning as CacheKeyWarning
@@ -15,7 +16,7 @@ class CacheHandler:
 class DefaultCacheProxy:
     def __getattr__(
         self, name: str
-    ) -> Union[Callable[..., Any], Dict[str, float], OrderedDict[Any, Any], int]: ...
+    ) -> Union[Callable[..., Any], dict[str, float], OrderedDict[Any, Any], int]: ...
     def __setattr__(self, name: str, value: Callable[..., Any]) -> None: ...
     def __delattr__(self, name: Any) -> Any: ...
     def __contains__(self, key: str) -> bool: ...

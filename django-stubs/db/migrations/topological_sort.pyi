@@ -1,10 +1,10 @@
-from typing import Dict, Iterator, List, Set
+from collections.abc import Iterator
 
 from django.db.migrations.operations.base import Operation
 
 def topological_sort_as_sets(
-    dependency_graph: Dict[Operation, Set[Operation]]
-) -> Iterator[Set[Operation]]: ...
+    dependency_graph: dict[Operation, set[Operation]]
+) -> Iterator[set[Operation]]: ...
 def stable_topological_sort(
-    l: List[Operation], dependency_graph: Dict[Operation, Set[Operation]]  # noqa:E741
-) -> List[Operation]: ...
+    l: list[Operation], dependency_graph: dict[Operation, set[Operation]]  # noqa:E741
+) -> list[Operation]: ...

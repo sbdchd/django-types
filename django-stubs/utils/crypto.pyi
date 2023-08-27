@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from hmac import HMAC
-from typing import Any, Callable, Optional, Union
+from typing import Any, Optional, Union
 
 using_sysrandom: bool
 

@@ -1,4 +1,4 @@
-from typing import Any, Tuple, Union
+from typing import Any, Union
 
 BASE2_ALPHABET: str
 BASE16_ALPHABET: str
@@ -16,7 +16,7 @@ class BaseConverter:
     def decode(self, s: str) -> int: ...
     def convert(
         self, number: Union[int, str], from_digits: str, to_digits: str, sign: str
-    ) -> Tuple[int, str]: ...
+    ) -> tuple[int, str]: ...
 
 base2: Any
 base16: Any

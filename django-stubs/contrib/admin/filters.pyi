@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, Type
+from collections.abc import Callable, Iterator
+from typing import Any, Optional
 
 from django.contrib.admin.options import ModelAdmin
 from django.core.handlers.wsgi import WSGIRequest
@@ -14,22 +15,22 @@ class ListFilter:
     def __init__(
         self,
         request: WSGIRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin[Any],
     ) -> None: ...
     def has_output(self) -> bool: ...
-    def choices(self, changelist: Any) -> Optional[Iterator[Dict[str, Any]]]: ...
+    def choices(self, changelist: Any) -> Optional[Iterator[dict[str, Any]]]: ...
     def queryset(
         self, request: Any, queryset: QuerySet[Any]
     ) -> Optional[QuerySet[Any]]: ...
-    def expected_parameters(self) -> Optional[List[str]]: ...
+    def expected_parameters(self) -> Optional[list[str]]: ...
 
 class SimpleListFilter(ListFilter):
     parameter_name: Any = ...
     lookup_choices: Any = ...
     def value(self) -> Optional[str]: ...
-    def lookups(self, request: Any, model_admin: Any) -> List[Tuple[Any, str]]: ...
+    def lookups(self, request: Any, model_admin: Any) -> list[tuple[Any, str]]: ...
 
 class FieldListFilter(ListFilter):
     field: Field[Any, Any] = ...
@@ -39,8 +40,8 @@ class FieldListFilter(ListFilter):
         self,
         field: Field[Any, Any],
         request: WSGIRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin[Any],
         field_path: str,
     ) -> None: ...
@@ -48,7 +49,7 @@ class FieldListFilter(ListFilter):
     def register(
         cls,
         test: Callable[..., Any],
-        list_filter_class: Type[FieldListFilter],
+        list_filter_class: type[FieldListFilter],
         take_priority: bool = ...,
     ) -> None: ...
     @classmethod
@@ -56,14 +57,14 @@ class FieldListFilter(ListFilter):
         cls,
         field: Field[Any, Any],
         request: WSGIRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin[Any],
         field_path: str,
     ) -> FieldListFilter: ...
 
 class RelatedFieldListFilter(FieldListFilter):
-    used_parameters: Dict[Any, Any]
+    used_parameters: dict[Any, Any]
     lookup_kwarg: str = ...
     lookup_kwarg_isnull: str = ...
     lookup_val: None = ...
@@ -79,7 +80,7 @@ class RelatedFieldListFilter(FieldListFilter):
         field: RelatedField[Any, Any],
         request: WSGIRequest,
         model_admin: ModelAdmin[Any],
-    ) -> List[Tuple[str, str]]: ...
+    ) -> list[tuple[str, str]]: ...
 
 class BooleanFieldListFilter(FieldListFilter):
     lookup_kwarg: Any = ...
@@ -90,7 +91,7 @@ class BooleanFieldListFilter(FieldListFilter):
 
 class ChoicesFieldListFilter(FieldListFilter):
     title: str
-    used_parameters: Dict[Any, Any]
+    used_parameters: dict[Any, Any]
     lookup_kwarg: str = ...
     lookup_kwarg_isnull: str = ...
     lookup_val: None = ...
@@ -106,7 +107,7 @@ class DateFieldListFilter(FieldListFilter):
 
 class AllValuesFieldListFilter(FieldListFilter):
     title: str
-    used_parameters: Dict[Any, Any]
+    used_parameters: dict[Any, Any]
     lookup_kwarg: str = ...
     lookup_kwarg_isnull: str = ...
     lookup_val: None = ...
@@ -120,7 +121,7 @@ class RelatedOnlyFieldListFilter(RelatedFieldListFilter):
     lookup_val: None
     lookup_val_isnull: None
     title: str
-    used_parameters: Dict[Any, Any]
+    used_parameters: dict[Any, Any]
 
 class EmptyFieldListFilter(FieldListFilter):
     lookup_kwarg: str

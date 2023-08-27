@@ -1,4 +1,5 @@
-from typing import Any, List, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any, Optional
 
 from django.apps.config import AppConfig
 from django.core.checks.messages import Error
@@ -8,7 +9,7 @@ E002: Any
 
 def check_setting_app_dirs_loaders(
     app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
-) -> List[Error]: ...
+) -> list[Error]: ...
 def check_string_if_invalid_is_string(
     app_configs: Optional[Sequence[AppConfig]] = ..., **kwargs: Any
-) -> List[Error]: ...
+) -> list[Error]: ...

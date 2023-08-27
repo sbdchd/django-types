@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Optional, Protocol, Sequence, Union
+from collections.abc import Sequence
+from typing import Any, Optional, Protocol, Union
 
 from django.db.models.base import Model
 from django.db.models.query import QuerySet
@@ -48,7 +49,7 @@ class Page(Sequence[Any]):
     def __init__(
         self,
         object_list: Union[
-            List[Dict[str, str]], List[Model], List[int], QuerySet[Any], str
+            list[dict[str, str]], list[Model], list[int], QuerySet[Any], str
         ],
         number: int,
         paginator: Paginator,

@@ -1,11 +1,11 @@
-from typing import IO, Any, Dict, Optional, Union
+from typing import IO, Any, Optional, Union
 
 from django.core.files.base import File
 
 class UploadedFile(File):
     content_type: Optional[str] = ...
     charset: Optional[str] = ...
-    content_type_extra: Optional[Dict[str, str]] = ...
+    content_type_extra: Optional[dict[str, str]] = ...
     def __init__(
         self,
         file: Optional[IO[Any]] = ...,
@@ -13,7 +13,7 @@ class UploadedFile(File):
         content_type: Optional[str] = ...,
         size: Optional[int] = ...,
         charset: Optional[str] = ...,
-        content_type_extra: Optional[Dict[str, str]] = ...,
+        content_type_extra: Optional[dict[str, str]] = ...,
     ) -> None: ...
 
 class TemporaryUploadedFile(UploadedFile):
@@ -23,7 +23,7 @@ class TemporaryUploadedFile(UploadedFile):
         content_type: Optional[str],
         size: Optional[int],
         charset: Optional[str],
-        content_type_extra: Optional[Dict[str, str]] = ...,
+        content_type_extra: Optional[dict[str, str]] = ...,
     ) -> None: ...
     def temporary_file_path(self) -> str: ...
 
@@ -37,7 +37,7 @@ class InMemoryUploadedFile(UploadedFile):
         content_type: Optional[str],
         size: Optional[int],
         charset: Optional[str],
-        content_type_extra: Dict[str, str] = ...,
+        content_type_extra: dict[str, str] = ...,
     ) -> None: ...
 
 class SimpleUploadedFile(InMemoryUploadedFile):
@@ -45,4 +45,4 @@ class SimpleUploadedFile(InMemoryUploadedFile):
         self, name: str, content: Optional[Union[bytes, str]], content_type: str = ...
     ) -> None: ...
     @classmethod
-    def from_dict(cls, file_dict: Dict[str, Union[str, bytes]]) -> None: ...
+    def from_dict(cls, file_dict: dict[str, Union[str, bytes]]) -> None: ...

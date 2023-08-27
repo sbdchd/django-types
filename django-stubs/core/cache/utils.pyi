@@ -1,4 +1,5 @@
-from typing import Any, Iterable, Optional
+from collections.abc import Iterable
+from typing import Any, Optional
 
 TEMPLATE_FRAGMENT_KEY_TEMPLATE: str
 

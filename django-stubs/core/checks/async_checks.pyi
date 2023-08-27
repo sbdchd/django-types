@@ -1,4 +1,5 @@
-from typing import Any, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any, Optional
 
 from django.apps.config import AppConfig
 

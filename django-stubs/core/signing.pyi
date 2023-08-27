@@ -1,5 +1,5 @@
 from datetime import timedelta
-from typing import Any, Dict, Optional, Protocol, Type, Union
+from typing import Any, Optional, Protocol, Union
 
 class BadSignature(Exception): ...
 class SignatureExpired(BadSignature): ...
@@ -15,20 +15,20 @@ class Serializer(Protocol):
 
 class JSONSerializer:
     def dumps(self, obj: Any) -> bytes: ...
-    def loads(self, data: bytes) -> Dict[str, Union[int, str]]: ...
+    def loads(self, data: bytes) -> dict[str, Union[int, str]]: ...
 
 def dumps(
     obj: Any,
     key: None = ...,
     salt: str = ...,
-    serializer: Type[Serializer] = ...,
+    serializer: type[Serializer] = ...,
     compress: bool = ...,
 ) -> str: ...
 def loads(
     s: str,
     key: None = ...,
     salt: str = ...,
-    serializer: Type[Serializer] = ...,
+    serializer: type[Serializer] = ...,
     max_age: Optional[Union[int, timedelta]] = ...,
 ) -> Any: ...
 

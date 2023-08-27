@@ -1,19 +1,8 @@
 import datetime
+from collections.abc import AsyncIterable, Iterable, Iterator
 from io import BytesIO
 from json import JSONEncoder
-from typing import (
-    Any,
-    AsyncIterable,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    Union,
-    overload,
-)
+from typing import Any, Optional, Union, overload
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.cookie import SimpleCookie
@@ -43,7 +32,7 @@ class HttpResponseBase(Iterable[Any]):
     def __delitem__(self, header: Union[str, bytes]) -> None: ...
     def __getitem__(self, header: Union[str, bytes]) -> str: ...
     def has_header(self, header: str) -> bool: ...
-    def items(self) -> Iterable[Tuple[str, str]]: ...
+    def items(self) -> Iterable[tuple[str, str]]: ...
     @overload
     def get(self, header: Union[str, bytes], alternate: Optional[str]) -> str: ...
     @overload
@@ -81,7 +70,7 @@ class HttpResponseBase(Iterable[Any]):
 class HttpResponse(HttpResponseBase):
     content: Any
     csrf_cookie_set: bool
-    redirect_chain: List[Tuple[str, int]]
+    redirect_chain: list[tuple[str, int]]
     sameorigin: bool
     test_server_port: str
     test_was_secure_request: bool
@@ -95,8 +84,8 @@ class HttpResponse(HttpResponseBase):
     wsgi_request: WSGIRequest
     # Attributes assigned by monkey-patching in test client Client.request()
     client: Client
-    request: Dict[str, Any]
-    templates: List[Template]
+    request: dict[str, Any]
+    templates: list[Template]
     context: Context
     resolver_match: ResolverMatch
     def json(self) -> Any: ...
@@ -117,9 +106,9 @@ class FileResponse(StreamingHttpResponse):
     client: Client
     context: None
     file_to_stream: Optional[BytesIO]
-    request: Dict[str, str]
+    request: dict[str, str]
     resolver_match: ResolverMatch
-    templates: List[Any]
+    templates: list[Any]
     wsgi_request: WSGIRequest
     block_size: int = ...
     as_attachment: bool = ...
@@ -128,10 +117,10 @@ class FileResponse(StreamingHttpResponse):
         self, *args: Any, as_attachment: bool = ..., filename: str = ..., **kwargs: Any
     ) -> None: ...
     def set_headers(self, filelike: BytesIO) -> None: ...
-    def json(self) -> Dict[str, Any]: ...
+    def json(self) -> dict[str, Any]: ...
 
 class HttpResponseRedirectBase(HttpResponse):
-    allowed_schemes: List[str] = ...
+    allowed_schemes: list[str] = ...
     def __init__(self, redirect_to: str, *args: Any, **kwargs: Any) -> None: ...
 
 class HttpResponseRedirect(HttpResponseRedirectBase): ...
@@ -157,8 +146,8 @@ class JsonResponse(HttpResponse):
     def __init__(
         self,
         data: Any,
-        encoder: Type[JSONEncoder] = ...,
+        encoder: type[JSONEncoder] = ...,
         safe: bool = ...,
-        json_dumps_params: Optional[Dict[str, Any]] = ...,
+        json_dumps_params: Optional[dict[str, Any]] = ...,
         **kwargs: Any
     ) -> None: ...

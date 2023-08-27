@@ -1,6 +1,7 @@
 import functools
+from collections.abc import Callable, Sequence
 from http.cookies import SimpleCookie
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Optional, Union
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
@@ -17,13 +18,13 @@ class SimpleTemplateResponse(HttpResponse):
     cookies: SimpleCookie[Any]
     status_code: int
     rendering_attrs: Any = ...
-    template_name: Union[List[str], Template, str] = ...
-    context_data: Optional[Dict[str, Any]] = ...
+    template_name: Union[list[str], Template, str] = ...
+    context_data: Optional[dict[str, Any]] = ...
     using: Optional[str] = ...
     def __init__(
         self,
-        template: Union[List[str], Template, str],
-        context: Optional[Dict[str, Any]] = ...,
+        template: Union[list[str], Template, str],
+        context: Optional[dict[str, Any]] = ...,
         content_type: Optional[str] = ...,
         status: Optional[int] = ...,
         charset: Optional[str] = ...,
@@ -33,8 +34,8 @@ class SimpleTemplateResponse(HttpResponse):
         self, template: Union[Sequence[str], Template, str]
     ) -> Template: ...
     def resolve_context(
-        self, context: Optional[Dict[str, Any]]
-    ) -> Optional[Dict[str, Any]]: ...
+        self, context: Optional[dict[str, Any]]
+    ) -> Optional[dict[str, Any]]: ...
     @property
     def rendered_content(self) -> str: ...
     def add_post_render_callback(self, callback: Callable[..., Any]) -> None: ...
@@ -47,23 +48,23 @@ class TemplateResponse(SimpleTemplateResponse):
     client: Client
     closed: bool
     context: RequestContext
-    context_data: Optional[Dict[str, Any]]
+    context_data: Optional[dict[str, Any]]
     cookies: SimpleCookie[Any]
     csrf_cookie_set: bool
     json: functools.partial[Any]
-    redirect_chain: List[Tuple[str, int]]
-    request: Dict[str, Union[int, str]]
+    redirect_chain: list[tuple[str, int]]
+    request: dict[str, Union[int, str]]
     status_code: int
-    template_name: Union[List[str], Template, str]
-    templates: List[Template]
+    template_name: Union[list[str], Template, str]
+    templates: list[Template]
     using: Optional[str]
     wsgi_request: WSGIRequest
     rendering_attrs: Any = ...
     def __init__(
         self,
         request: HttpRequest,
-        template: Union[List[str], Template, str],
-        context: Optional[Dict[str, Any]] = ...,
+        template: Union[list[str], Template, str],
+        context: Optional[dict[str, Any]] = ...,
         content_type: Optional[str] = ...,
         status: Optional[int] = ...,
         charset: None = ...,

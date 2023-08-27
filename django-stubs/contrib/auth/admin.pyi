@@ -1,4 +1,5 @@
-from typing import Any, Callable, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from django.contrib import admin
 from django.core.handlers.wsgi import WSGIRequest

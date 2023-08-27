@@ -1,31 +1,22 @@
+from collections.abc import Callable, Iterable, Sequence
 from datetime import datetime, timedelta
-from typing import (
-    Any,
-    Callable,
-    Iterable,
-    List,
-    Optional,
-    Pattern,
-    Sequence,
-    Tuple,
-    Type,
-    Union,
-)
+from re import Pattern
+from typing import Any, Optional, Union
 
 from django.core.validators import BaseValidator
 from django.forms.boundfield import BoundField
 from django.forms.forms import BaseForm
 from django.forms.widgets import Widget
 
-_Choice = Tuple[Any, str]
-_ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
+_Choice = tuple[Any, str]
+_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
 _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
 
 class Field:
     initial: Any
     label: Optional[str]
     required: bool
-    widget: Union[Type[Widget], Widget] = ...
+    widget: Union[type[Widget], Widget] = ...
     hidden_widget: Any = ...
     default_validators: Any = ...
     default_error_messages: Any = ...
@@ -36,7 +27,7 @@ class Field:
     label_suffix: Optional[Any] = ...
     localize: bool = ...
     error_messages: Any = ...
-    validators: List[BaseValidator] = ...
+    validators: list[BaseValidator] = ...
     max_length: Optional[Union[int, str]] = ...
     choices: _FieldChoices = ...
     base_field: Field
@@ -44,7 +35,7 @@ class Field:
         self,
         *,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -77,7 +68,7 @@ class CharField(Field):
         strip: bool = ...,
         empty_value: Optional[str] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -98,7 +89,7 @@ class IntegerField(Field):
         max_value: Optional[Any] = ...,
         min_value: Optional[Any] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -123,7 +114,7 @@ class DecimalField(IntegerField):
         max_digits: Optional[Any] = ...,
         decimal_places: Optional[Any] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -141,7 +132,7 @@ class BaseTemporalField(Field):
         self,
         input_formats: Optional[Any] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -173,7 +164,7 @@ class RegexField(CharField):
         strip: bool = ...,
         empty_value: Optional[str] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -194,7 +185,7 @@ class FileField(Field):
         max_length: Optional[Any] = ...,
         allow_empty_file: bool = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -222,7 +213,7 @@ class ChoiceField(Field):
         self,
         choices: Union[_FieldChoices, Callable[[], _FieldChoices]] = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -236,7 +227,7 @@ class ChoiceField(Field):
     def valid_value(self, value: str) -> bool: ...
 
 class TypedChoiceField(ChoiceField):
-    coerce: Union[Callable[..., Any], Type[Any]] = ...
+    coerce: Union[Callable[..., Any], type[Any]] = ...
     empty_value: Optional[str] = ...
     def __init__(
         self,
@@ -244,7 +235,7 @@ class TypedChoiceField(ChoiceField):
         empty_value: Optional[str] = ...,
         choices: Any = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -259,15 +250,15 @@ class TypedChoiceField(ChoiceField):
 class MultipleChoiceField(ChoiceField): ...
 
 class TypedMultipleChoiceField(MultipleChoiceField):
-    coerce: Union[Callable[..., Any], Type[float]] = ...
-    empty_value: Optional[List[Any]] = ...
+    coerce: Union[Callable[..., Any], type[float]] = ...
+    empty_value: Optional[list[Any]] = ...
     def __init__(
         self,
         coerce: Any = ...,
         empty_value: Optional[str] = ...,
         choices: Any = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -285,7 +276,7 @@ class ComboField(Field):
         self,
         fields: Sequence[Field],
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -305,7 +296,7 @@ class MultiValueField(Field):
         fields: Sequence[Field],
         require_all_fields: bool = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -334,7 +325,7 @@ class FilePathField(ChoiceField):
         allow_folders: bool = ...,
         choices: Any = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -354,7 +345,7 @@ class SplitDateTimeField(MultiValueField):
         fields: Sequence[Field] = ...,
         require_all_fields: bool = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -365,7 +356,7 @@ class SplitDateTimeField(MultiValueField):
         disabled: bool = ...,
         label_suffix: Optional[Any] = ...,
     ) -> None: ...
-    def compress(self, data_list: List[Optional[datetime]]) -> Optional[datetime]: ...
+    def compress(self, data_list: list[Optional[datetime]]) -> Optional[datetime]: ...
 
 class GenericIPAddressField(CharField):
     unpack_ipv4: bool = ...
@@ -374,7 +365,7 @@ class GenericIPAddressField(CharField):
         protocol: str = ...,
         unpack_ipv4: bool = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,
@@ -392,7 +383,7 @@ class SlugField(CharField):
         self,
         allow_unicode: bool = ...,
         required: bool = ...,
-        widget: Optional[Union[Widget, Type[Widget]]] = ...,
+        widget: Optional[Union[Widget, type[Widget]]] = ...,
         label: Optional[Any] = ...,
         initial: Optional[Any] = ...,
         help_text: str = ...,

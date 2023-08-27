@@ -1,4 +1,5 @@
-from typing import Any, Dict, Mapping, Optional, Sequence, Sized
+from collections.abc import Mapping, Sequence, Sized
+from typing import Any, Optional
 
 from django.forms import Form
 
@@ -13,7 +14,7 @@ DEFAULT_MIN_NUM: int = ...
 DEFAULT_MAX_NUM: int = ...
 
 class ManagementForm(Form):
-    cleaned_data: Dict[str, Optional[int]]
+    cleaned_data: dict[str, Optional[int]]
 
 class BaseFormSet(Sized, Mapping[str, Any]):
     is_bound: Any = ...

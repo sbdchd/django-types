@@ -1,19 +1,5 @@
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    Protocol,
-    Sequence,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Iterable, Sequence
+from typing import Any, Generic, Optional, Protocol, TypeVar, Union, overload
 from typing_extensions import Literal, Self
 from uuid import UUID
 
@@ -56,14 +42,14 @@ class _DeleteProtocol(Protocol):
     ) -> None: ...
 
 _F = TypeVar("_F", bound=models.Field[Any, Any])
-_Choice = Tuple[Any, str]
-_ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
+_Choice = tuple[Any, str]
+_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
 _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
-_ChoicesLimit = Union[Dict[str, Any], Q, Callable[[], Q]]
+_ChoicesLimit = Union[dict[str, Any], Q, Callable[[], Q]]
 _OnDeleteOptions = Union[_DeleteProtocol, Callable[[Any], _DeleteProtocol]]
 
 _ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = Dict[str, Any]
+_ErrorMessagesToOverride = dict[str, Any]
 
 RECURSIVE_RELATIONSHIP_CONSTANT: str = ...
 
@@ -72,15 +58,15 @@ class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
     one_to_one: bool = ...
     many_to_many: bool = ...
     many_to_one: bool = ...
-    related_model: Type[_GT] = ...
+    related_model: type[_GT] = ...
     opts: Any = ...
-    def get_forward_related_filter(self, obj: Model) -> Dict[str, Union[int, UUID]]: ...
+    def get_forward_related_filter(self, obj: Model) -> dict[str, Union[int, UUID]]: ...
     def get_reverse_related_filter(self, obj: Model) -> Q: ...
     @property
     def swappable_setting(self) -> Optional[str]: ...
     def set_attributes_from_rel(self) -> None: ...
-    def do_related_class(self, other: Type[Model], cls: Type[Model]) -> None: ...
-    def get_limit_choices_to(self) -> Dict[str, int]: ...
+    def do_related_class(self, other: type[Model], cls: type[Model]) -> None: ...
+    def get_limit_choices_to(self) -> dict[str, int]: ...
     def related_query_name(self) -> str: ...
     @property
     def target_field(self) -> Field[Any, Any]: ...
@@ -92,11 +78,11 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
     one_to_one: Literal[False] = ...
     many_to_many: Literal[False] = ...
     many_to_one: Literal[True] = ...
-    related_model: Type[_M] = ...
+    related_model: type[_M] = ...
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
         to_fields: Sequence[str],
@@ -123,7 +109,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -134,7 +120,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
         to_fields: Sequence[str],
@@ -161,7 +147,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -175,11 +161,11 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     one_to_one: Literal[False] = ...
     many_to_many: Literal[False] = ...
     many_to_one: Literal[True] = ...
-    related_model: Type[_M] = ...
+    related_model: type[_M] = ...
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
@@ -204,7 +190,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -215,7 +201,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
@@ -240,7 +226,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -263,11 +249,11 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
     one_to_one: Literal[True] = ...  # type: ignore [assignment]
     many_to_many: Literal[False] = ...
     many_to_one: Literal[False] = ...  # type: ignore [assignment]
-    related_model: Type[_M] = ...
+    related_model: type[_M] = ...
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
@@ -292,7 +278,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -303,7 +289,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
     @overload
     def __new__(
         cls,
-        to: Union[Type[_M], str],
+        to: Union[type[_M], str],
         on_delete: _OnDeleteOptions,
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
@@ -328,7 +314,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_M, str], Tuple[str, Iterable[Tuple[_M, str]]]]
+            Union[tuple[_M, str], tuple[str, Iterable[tuple[_M, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -360,18 +346,18 @@ class ManyToManyField(
     description: Any = ...
     has_null_arg: Any = ...
     swappable: bool = ...
-    related_model: Type[_MM] = ...  # type: ignore [assignment]
-    through: Type[_MN]
+    related_model: type[_MM] = ...  # type: ignore [assignment]
+    through: type[_MN]
     def __new__(
         cls,
-        to: Union[Type[_MM], str],
-        through: Union[Type[_MN], str] = ...,
+        to: Union[type[_MM], str],
+        through: Union[type[_MN], str] = ...,
         to_field: Optional[str] = ...,
         related_name: Optional[str] = ...,
         related_query_name: Optional[str] = ...,
         limit_choices_to: Optional[_ChoicesLimit] = ...,
         symmetrical: Optional[bool] = ...,
-        through_fields: Optional[Tuple[str, str]] = ...,
+        through_fields: Optional[tuple[str, str]] = ...,
         db_constraint: bool = ...,
         swappable: bool = ...,
         verbose_name: Optional[str] = ...,
@@ -397,12 +383,12 @@ class ManyToManyField(
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
     ) -> Self: ...
-    def get_path_info(self, filtered_relation: None = ...) -> List[PathInfo]: ...
+    def get_path_info(self, filtered_relation: None = ...) -> list[PathInfo]: ...
     def get_reverse_path_info(
         self, filtered_relation: None = ...
-    ) -> List[PathInfo]: ...
+    ) -> list[PathInfo]: ...
     def contribute_to_related_class(
-        self, cls: Type[Model], related: RelatedField[Any, Any]
+        self, cls: type[Model], related: RelatedField[Any, Any]
     ) -> None: ...
     def m2m_db_table(self) -> str: ...
     def m2m_column_name(self) -> str: ...
@@ -412,5 +398,5 @@ class ManyToManyField(
     def m2m_reverse_target_field_name(self) -> str: ...
 
 def create_many_to_many_intermediary_model(
-    field: Type[Field[Any, Any]], klass: Type[Model]
-) -> Type[Model]: ...
+    field: type[Field[Any, Any]], klass: type[Model]
+) -> type[Model]: ...

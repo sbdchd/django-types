@@ -1,4 +1,5 @@
-from typing import Any, Callable, Iterable, Optional, Tuple, Type, Union, overload
+from collections.abc import Callable, Iterable
+from typing import Any, Optional, Union, overload
 from typing_extensions import Self
 
 from django.core.files.base import File
@@ -36,7 +37,7 @@ class FileDescriptor:
     def __init__(self, field: FileField) -> None: ...
     def __set__(self, instance: Model, value: Optional[Any]) -> None: ...
     def __get__(
-        self, instance: Optional[Model], cls: Type[Model] = ...
+        self, instance: Optional[Model], cls: type[Model] = ...
     ) -> Union[FieldFile, FileDescriptor]: ...
 
 class FileField(Field[FileDescriptor, FileDescriptor]):
@@ -62,7 +63,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[tuple[_GT, str], tuple[str, Iterable[tuple[_GT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -112,7 +113,7 @@ class ImageField(FileField):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_GT, str], Tuple[str, Iterable[Tuple[_GT, str]]]]
+            Union[tuple[_GT, str], tuple[str, Iterable[tuple[_GT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,

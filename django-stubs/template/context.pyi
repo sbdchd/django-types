@@ -1,15 +1,16 @@
-from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Type, Union
+from collections.abc import Callable, Iterable, Iterator
+from typing import Any, Optional, Union
 
 from django.http.request import HttpRequest
 from django.template.base import Node, Origin, Template
 from django.template.defaulttags import IfChangedNode
 from django.template.loader_tags import IncludeNode
 
-_ContextValues = Union[Dict[str, Any], "Context"]
+_ContextValues = Union[dict[str, Any], "Context"]
 
 class ContextPopException(Exception): ...
 
-class ContextDict(Dict[Any, Any]):
+class ContextDict(dict[Any, Any]):
     context: BaseContext = ...
     def __init__(self, context: BaseContext, *args: Any, **kwargs: Any) -> None: ...
     def __enter__(self) -> ContextDict: ...
@@ -30,12 +31,12 @@ class BaseContext(Iterable[Any]):
     def setdefault(
         self,
         key: Union[IfChangedNode, str],
-        default: Optional[Union[List[Origin], int]] = ...,
-    ) -> Optional[Union[List[Origin], int]]: ...
+        default: Optional[Union[list[Origin], int]] = ...,
+    ) -> Optional[Union[list[Origin], int]]: ...
     def new(self, values: Optional[_ContextValues] = ...) -> Context: ...
     def flatten(
         self,
-    ) -> Dict[str, Optional[Union[Dict[str, Union[Type[Any], str]], int, str]]]: ...
+    ) -> dict[str, Optional[Union[dict[str, Union[type[Any], str]], int, str]]]: ...
 
 class Context(BaseContext):
     dicts: Any
@@ -53,10 +54,10 @@ class Context(BaseContext):
         use_tz: None = ...,
     ) -> None: ...
     def bind_template(self, template: Template) -> Iterator[None]: ...
-    def update(self, other_dict: Union[Dict[str, Any], Context]) -> ContextDict: ...
+    def update(self, other_dict: Union[dict[str, Any], Context]) -> ContextDict: ...
 
 class RenderContext(BaseContext):
-    dicts: List[Dict[Union[IncludeNode, str], str]]
+    dicts: list[dict[Union[IncludeNode, str], str]]
     template: Optional[Template] = ...
     def push_state(
         self, template: Template, isolated_context: bool = ...
@@ -64,7 +65,7 @@ class RenderContext(BaseContext):
 
 class RequestContext(Context):
     autoescape: bool
-    dicts: List[Dict[str, str]]
+    dicts: list[dict[str, str]]
     render_context: RenderContext
     template_name: Optional[str]
     use_l10n: None
@@ -73,8 +74,8 @@ class RequestContext(Context):
     def __init__(
         self,
         request: HttpRequest,
-        dict_: Optional[Dict[str, Any]] = ...,
-        processors: Optional[List[Callable[..., Any]]] = ...,
+        dict_: Optional[dict[str, Any]] = ...,
+        processors: Optional[list[Callable[..., Any]]] = ...,
         use_l10n: None = ...,
         use_tz: None = ...,
         autoescape: bool = ...,

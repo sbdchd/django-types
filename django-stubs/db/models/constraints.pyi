@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from enum import Enum
-from typing import Any, Optional, Sequence, Tuple, Type, Union
+from typing import Any, Optional, Union
 from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
@@ -21,17 +22,17 @@ class BaseConstraint:
     ) -> None: ...
     def constraint_sql(
         self,
-        model: Optional[Type[Model]],
+        model: Optional[type[Model]],
         schema_editor: Optional[BaseDatabaseSchemaEditor],
     ) -> str: ...
     def create_sql(
         self,
-        model: Optional[Type[Model]],
+        model: Optional[type[Model]],
         schema_editor: Optional[BaseDatabaseSchemaEditor],
     ) -> str: ...
     def remove_sql(
         self,
-        model: Optional[Type[Model]],
+        model: Optional[type[Model]],
         schema_editor: Optional[BaseDatabaseSchemaEditor],
     ) -> str: ...
     def deconstruct(self) -> Any: ...
@@ -48,7 +49,7 @@ class CheckConstraint(BaseConstraint):
     ) -> None: ...
 
 class UniqueConstraint(BaseConstraint):
-    fields: Tuple[str]
+    fields: tuple[str]
     condition: Optional[Q]
     def __init__(
         self,

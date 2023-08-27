@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Type
+from typing import Any
 
 from django.apps.config import AppConfig
 from django.apps.registry import Apps
@@ -22,14 +22,14 @@ class RenameContentType(migrations.RunPython):
     ) -> None: ...
 
 def inject_rename_contenttypes_operations(
-    plan: List[Tuple[Migration, bool]] = ...,
+    plan: list[tuple[Migration, bool]] = ...,
     apps: StateApps = ...,
     using: str = ...,
     **kwargs: Any
 ) -> None: ...
 def get_contenttypes_and_models(
-    app_config: AppConfig, using: str, ContentType: Type[ContentType]
-) -> Tuple[Dict[str, ContentType], Dict[str, Type[Model]]]: ...
+    app_config: AppConfig, using: str, ContentType: type[ContentType]
+) -> tuple[dict[str, ContentType], dict[str, type[Model]]]: ...
 def create_contenttypes(
     app_config: AppConfig,
     verbosity: int = ...,

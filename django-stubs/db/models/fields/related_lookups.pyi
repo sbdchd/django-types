@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from typing import Any, Iterable, List, Tuple, Type
+from collections.abc import Iterable
+from typing import Any
 
 from django.db.models.expressions import Expression
 from django.db.models.fields import Field
@@ -17,24 +18,24 @@ from django.db.models.lookups import (
 class MultiColSource:
     alias: str
     field: Field[Any, Any]
-    sources: Tuple[Field[Any, Any], Field[Any, Any]]
-    targets: Tuple[Field[Any, Any], Field[Any, Any]]
+    sources: tuple[Field[Any, Any], Field[Any, Any]]
+    targets: tuple[Field[Any, Any], Field[Any, Any]]
     contains_aggregate: bool = ...
     output_field: Field[Any, Any] = ...
     def __init__(
         self,
         alias: str,
-        targets: Tuple[Field[Any, Any], Field[Any, Any]],
-        sources: Tuple[Field[Any, Any], Field[Any, Any]],
+        targets: tuple[Field[Any, Any], Field[Any, Any]],
+        sources: tuple[Field[Any, Any], Field[Any, Any]],
         field: Field[Any, Any],
     ) -> None: ...
     def relabeled_clone(self, relabels: OrderedDict[Any, Any]) -> MultiColSource: ...
-    def get_lookup(self, lookup: str) -> Type[BuiltinLookup[Any]]: ...
+    def get_lookup(self, lookup: str) -> type[BuiltinLookup[Any]]: ...
 
-def get_normalized_value(value: Any, lhs: Expression) -> Tuple[None]: ...
+def get_normalized_value(value: Any, lhs: Expression) -> tuple[None]: ...
 
 class RelatedIn(In):
-    bilateral_transforms: List[Any]
+    bilateral_transforms: list[Any]
     lhs: Expression
     rhs: Any = ...
     def get_prep_lookup(self) -> Iterable[Any]: ...

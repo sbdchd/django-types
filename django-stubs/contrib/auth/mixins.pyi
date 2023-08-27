@@ -1,4 +1,5 @@
-from typing import Any, Callable, List, Optional
+from collections.abc import Callable
+from typing import Any, Optional
 
 from django import http
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -20,7 +21,7 @@ class LoginRequiredMixin(AccessMixin):
 
 class PermissionRequiredMixin(AccessMixin):
     permission_required: Any = ...
-    def get_permission_required(self) -> List[str]: ...
+    def get_permission_required(self) -> list[str]: ...
     def has_permission(self) -> bool: ...
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any

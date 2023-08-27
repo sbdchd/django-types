@@ -1,4 +1,5 @@
-from typing import Any, Callable, Optional, Type
+from collections.abc import Callable
+from typing import Any, Optional
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -12,13 +13,13 @@ class warn_about_renamed_method:
     class_name: str = ...
     old_method_name: str = ...
     new_method_name: str = ...
-    deprecation_warning: Type[DeprecationWarning] = ...
+    deprecation_warning: type[DeprecationWarning] = ...
     def __init__(
         self,
         class_name: str,
         old_method_name: str,
         new_method_name: str,
-        deprecation_warning: Type[DeprecationWarning],
+        deprecation_warning: type[DeprecationWarning],
     ) -> None: ...
     def __call__(self, f: Callable[..., Any]) -> Callable[..., Any]: ...
 
@@ -28,7 +29,7 @@ class RenameMethodsBase(type):
 
 class DeprecationInstanceCheck(type):
     alternative: str
-    deprecation_warning: Type[Warning]
+    deprecation_warning: type[Warning]
     def __instancecheck__(self, instance: Any) -> Any: ...
 
 GetResponseCallable = Callable[[HttpRequest], HttpResponse]

@@ -1,4 +1,5 @@
-from typing import Any, Dict, Iterable, Optional, Union
+from collections.abc import Iterable
+from typing import Any, Optional, Union
 from typing_extensions import Self
 
 from django.db.models import Field
@@ -98,7 +99,7 @@ class SearchQueryCombinable:
     def __rand__(self, other: SearchQueryCombinable) -> Self: ...
 
 class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
-    SEARCH_TYPES: Dict[str, str] = ...
+    SEARCH_TYPES: dict[str, str] = ...
     def __init__(
         self,
         value: str,

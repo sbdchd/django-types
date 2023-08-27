@@ -1,4 +1,5 @@
-from typing import Callable, List, Optional, Set, TypeVar, Union, overload
+from collections.abc import Callable
+from typing import Optional, TypeVar, Union, overload
 
 from django.contrib.auth import REDIRECT_FIELD_NAME as REDIRECT_FIELD_NAME  # noqa: F401
 from django.contrib.auth.models import AbstractUser
@@ -22,7 +23,7 @@ def login_required(
     function: _VIEW, redirect_field_name: str = ..., login_url: Optional[str] = ...
 ) -> _VIEW: ...
 def permission_required(
-    perm: Union[List[str], Set[str], str],
+    perm: Union[list[str], set[str], str],
     login_url: None = ...,
     raise_exception: bool = ...,
 ) -> Callable[[_VIEW], _VIEW]: ...

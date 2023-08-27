@@ -1,24 +1,15 @@
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Iterable
+from typing import Any, Optional, TypeVar, Union, overload
 from typing_extensions import Literal
 
 from django.db.models.fields import CharField, EmailField, TextField
 
-_Choice = Tuple[Any, Any]
-_ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
+_Choice = tuple[Any, Any]
+_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
 _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
 
 _ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = Dict[str, Any]
+_ErrorMessagesToOverride = dict[str, Any]
 
 _C = TypeVar("_C", bound="Optional[str]")
 

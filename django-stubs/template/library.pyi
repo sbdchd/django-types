@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from collections.abc import Callable
+from typing import Any, Optional, Union
 
 from django.template.base import FilterExpression, Origin, Parser, Token
 from django.template.context import Context
@@ -9,8 +10,8 @@ from .base import Node, Template
 class InvalidTemplateLibrary(Exception): ...
 
 class Library:
-    filters: Dict[str, Callable[..., Any]] = ...
-    tags: Dict[str, Callable[..., Any]] = ...
+    filters: dict[str, Callable[..., Any]] = ...
+    tags: dict[str, Callable[..., Any]] = ...
     def __init__(self) -> None: ...
     def tag(
         self,
@@ -50,17 +51,17 @@ class TagHelperNode(Node):
         self,
         func: Callable[..., Any],
         takes_context: Optional[bool],
-        args: List[FilterExpression],
-        kwargs: Dict[str, FilterExpression],
+        args: list[FilterExpression],
+        kwargs: dict[str, FilterExpression],
     ) -> None: ...
     def get_resolved_arguments(
         self, context: Context
-    ) -> Tuple[List[int], Dict[str, Union[SafeText, int]]]: ...
+    ) -> tuple[list[int], dict[str, Union[SafeText, int]]]: ...
 
 class SimpleNode(TagHelperNode):
-    args: List[FilterExpression]
+    args: list[FilterExpression]
     func: Callable[..., Any]
-    kwargs: Dict[str, FilterExpression]
+    kwargs: dict[str, FilterExpression]
     origin: Origin
     takes_context: Optional[bool]
     token: Token
@@ -69,15 +70,15 @@ class SimpleNode(TagHelperNode):
         self,
         func: Callable[..., Any],
         takes_context: Optional[bool],
-        args: List[FilterExpression],
-        kwargs: Dict[str, FilterExpression],
+        args: list[FilterExpression],
+        kwargs: dict[str, FilterExpression],
         target_var: Optional[str],
     ) -> None: ...
 
 class InclusionNode(TagHelperNode):
-    args: List[FilterExpression]
+    args: list[FilterExpression]
     func: Callable[..., Any]
-    kwargs: Dict[str, FilterExpression]
+    kwargs: dict[str, FilterExpression]
     origin: Origin
     takes_context: Optional[bool]
     token: Token
@@ -86,21 +87,21 @@ class InclusionNode(TagHelperNode):
         self,
         func: Callable[..., Any],
         takes_context: Optional[bool],
-        args: List[FilterExpression],
-        kwargs: Dict[str, FilterExpression],
+        args: list[FilterExpression],
+        kwargs: dict[str, FilterExpression],
         filename: Optional[Union[Template, str]],
     ) -> None: ...
 
 def parse_bits(
     parser: Parser,
-    bits: List[str],
-    params: List[str],
+    bits: list[str],
+    params: list[str],
     varargs: Optional[str],
     varkw: Optional[str],
-    defaults: Optional[Tuple[Union[bool, str]]],
-    kwonly: List[str],
-    kwonly_defaults: Optional[Dict[str, int]],
+    defaults: Optional[tuple[Union[bool, str]]],
+    kwonly: list[str],
+    kwonly_defaults: Optional[dict[str, int]],
     takes_context: Optional[bool],
     name: str,
-) -> Tuple[List[FilterExpression], Dict[str, FilterExpression]]: ...
+) -> tuple[list[FilterExpression], dict[str, FilterExpression]]: ...
 def import_library(name: str) -> Library: ...

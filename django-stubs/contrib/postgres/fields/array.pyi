@@ -1,15 +1,5 @@
-from typing import (
-    Any,
-    Callable,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Iterable
+from typing import Any, Generic, Optional, TypeVar, Union, overload
 from typing_extensions import Literal
 
 from django.db.models.expressions import Combinable
@@ -43,7 +33,7 @@ class ArrayField(
         blank: bool = ...,
         null: Literal[False] = ...,
         db_index: bool = ...,
-        default: Optional[Union[List[_V], Callable[[], List[_V]]]] = ...,
+        default: Optional[Union[list[_V], Callable[[], list[_V]]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -51,14 +41,14 @@ class ArrayField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[List[_V], str], Tuple[str, Iterable[Tuple[List[_V], str]]]]
+            Union[tuple[list[_V], str], tuple[str, Iterable[tuple[list[_V], str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[List[_V]]: ...
+    ) -> ArrayField[list[_V]]: ...
     @overload
     def __new__(
         cls,
@@ -72,7 +62,7 @@ class ArrayField(
         blank: bool = ...,
         null: Literal[True] = ...,
         db_index: bool = ...,
-        default: Optional[Union[List[_V], Callable[[], List[_V]]]] = ...,
+        default: Optional[Union[list[_V], Callable[[], list[_V]]]] = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -80,14 +70,14 @@ class ArrayField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[List[_V], str], Tuple[str, Iterable[Tuple[List[_V], str]]]]
+            Union[tuple[list[_V], str], tuple[str, Iterable[tuple[list[_V], str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
         db_tablespace: Optional[str] = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: Optional[_ErrorMessagesToOverride] = ...,
-    ) -> ArrayField[Optional[List[_V]]]: ...
+    ) -> ArrayField[Optional[list[_V]]]: ...
     @property
     def description(self) -> str: ...  # type: ignore [override]
     def get_transform(self, name: Any) -> Any: ...

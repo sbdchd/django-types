@@ -1,5 +1,6 @@
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Any, Callable, Iterator, Optional, TypeVar, overload
+from typing import Any, Optional, TypeVar, overload
 
 from django.db import ProgrammingError
 

@@ -1,22 +1,9 @@
 import decimal
 import ipaddress
 import uuid
+from collections.abc import Callable, Iterable, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import Any, Generic, Optional, TypeVar, Union, overload
 from typing_extensions import Literal, Self
 
 from django.core.checks import CheckMessage
@@ -26,14 +13,14 @@ from django.db.models.expressions import Col, Combinable
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Widget
 
-BLANK_CHOICE_DASH: List[Tuple[str, str]] = ...
+BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 
-_Choice = Tuple[Any, str]
-_ChoiceNamedGroup = Tuple[str, Iterable[_Choice]]
+_Choice = tuple[Any, str]
+_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
 _FieldChoices = Iterable[Union[_Choice, _ChoiceNamedGroup]]
 
 _ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = Dict[str, Any]
+_ErrorMessagesToOverride = dict[str, Any]
 
 # __set__ value type
 _ST = TypeVar("_ST")
@@ -57,7 +44,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     many_to_many: Optional[bool] = ...
     many_to_one: Optional[bool] = ...
     max_length: int
-    model: Type[Model]
+    model: type[Model]
     name: str
     verbose_name: str
     description: str
@@ -83,7 +70,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def deconstruct(self) -> Any: ...
     def set_attributes_from_name(self, name: str) -> None: ...
     def db_type(self, connection: Any) -> str: ...
-    def db_parameters(self, connection: Any) -> Dict[str, str]: ...
+    def db_parameters(self, connection: Any) -> dict[str, str]: ...
     def pre_save(self, model_instance: Model, add: bool) -> Any: ...
     def get_prep_value(self, value: Any) -> Any: ...
     def get_db_prep_value(self, value: Any, connection: Any, prepared: bool) -> Any: ...
@@ -93,7 +80,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def formfield(self, **kwargs: Any) -> Any: ...
     def save_form_data(self, instance: Model, data: Any) -> None: ...
     def contribute_to_class(
-        self, cls: Type[Model], name: str, private_only: bool = ...
+        self, cls: type[Model], name: str, private_only: bool = ...
     ) -> None: ...
     def to_python(self, value: Any) -> Any: ...
     def clean(self, value: Any, model_instance: Optional[Model]) -> Any: ...
@@ -106,9 +93,9 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     ) -> Sequence[Union[_Choice, _ChoiceNamedGroup]]: ...
     def has_default(self) -> bool: ...
     def get_default(self) -> Any: ...
-    def check(self, **kwargs: Any) -> List[CheckMessage]: ...
+    def check(self, **kwargs: Any) -> list[CheckMessage]: ...
     @property
-    def validators(self) -> List[_ValidatorCallable]: ...
+    def validators(self) -> list[_ValidatorCallable]: ...
     def validate(self, value: Any, model_instance: Model) -> None: ...
     def run_validators(self, value: Any) -> None: ...
     def get_col(
@@ -142,7 +129,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -169,7 +156,7 @@ class IntegerField(Generic[_I], Field[Union[_I, Combinable], _I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -201,7 +188,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -228,7 +215,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -257,7 +244,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -284,7 +271,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -313,7 +300,7 @@ class SmallIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -340,7 +327,7 @@ class SmallIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -369,7 +356,7 @@ class BigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -396,7 +383,7 @@ class BigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -425,7 +412,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -452,7 +439,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_I, str], Tuple[str, Iterable[Tuple[_I, str]]]]
+            Union[tuple[_I, str], tuple[str, Iterable[tuple[_I, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -483,7 +470,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_F, str], Tuple[str, Iterable[Tuple[_F, str]]]]
+            Union[tuple[_F, str], tuple[str, Iterable[tuple[_F, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -510,7 +497,7 @@ class FloatField(Generic[_F], Field[Union[_F, Combinable], _F]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_F, str], Tuple[str, Iterable[Tuple[_F, str]]]]
+            Union[tuple[_F, str], tuple[str, Iterable[tuple[_F, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -546,7 +533,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DEC, str], Tuple[str, Iterable[Tuple[_DEC, str]]]]
+            Union[tuple[_DEC, str], tuple[str, Iterable[tuple[_DEC, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -575,7 +562,7 @@ class DecimalField(Generic[_DEC], Field[Union[_DEC, Combinable], _DEC]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DEC, str], Tuple[str, Iterable[Tuple[_DEC, str]]]]
+            Union[tuple[_DEC, str], tuple[str, Iterable[tuple[_DEC, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -608,7 +595,7 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
+            Union[tuple[int, str], tuple[str, Iterable[tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -638,7 +625,7 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
+            Union[tuple[int, str], tuple[str, Iterable[tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -668,7 +655,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[int, str], Tuple[str, Iterable[Tuple[int, str]]]]
+            Union[tuple[int, str], tuple[str, Iterable[tuple[int, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -700,7 +687,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -728,7 +715,7 @@ class CharField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -758,7 +745,7 @@ class SlugField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -786,7 +773,7 @@ class SlugField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -816,7 +803,7 @@ class EmailField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -844,7 +831,7 @@ class EmailField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -874,7 +861,7 @@ class URLField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -902,7 +889,7 @@ class URLField(CharField[_C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -932,7 +919,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -960,7 +947,7 @@ class TextField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -992,7 +979,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_B, str], Tuple[str, Iterable[Tuple[_B, str]]]]
+            Union[tuple[_B, str], tuple[str, Iterable[tuple[_B, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1020,7 +1007,7 @@ class BooleanField(Generic[_B], Field[Union[_B, Combinable], _B]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_B, str], Tuple[str, Iterable[Tuple[_B, str]]]]
+            Union[tuple[_B, str], tuple[str, Iterable[tuple[_B, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1049,7 +1036,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1076,7 +1063,7 @@ class IPAddressField(Generic[_C], Field[Union[_C, Combinable], _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1110,7 +1097,7 @@ class GenericIPAddressField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1139,7 +1126,7 @@ class GenericIPAddressField(
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1177,7 +1164,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DD, str], Tuple[str, Iterable[Tuple[_DD, str]]]]
+            Union[tuple[_DD, str], tuple[str, Iterable[tuple[_DD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1206,7 +1193,7 @@ class DateField(DateTimeCheckMixin, Field[Union[_DD, Combinable], _DD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DD, str], Tuple[str, Iterable[Tuple[_DD, str]]]]
+            Union[tuple[_DD, str], tuple[str, Iterable[tuple[_DD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1242,7 +1229,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_TM, str], Tuple[str, Iterable[Tuple[_TM, str]]]]
+            Union[tuple[_TM, str], tuple[str, Iterable[tuple[_TM, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1271,7 +1258,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[Union[_TM, Combinable], 
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_TM, str], Tuple[str, Iterable[Tuple[_TM, str]]]]
+            Union[tuple[_TM, str], tuple[str, Iterable[tuple[_TM, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1307,7 +1294,7 @@ class DateTimeField(DateField[_DT]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DT, str], Tuple[str, Iterable[Tuple[_DT, str]]]]
+            Union[tuple[_DT, str], tuple[str, Iterable[tuple[_DT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1336,7 +1323,7 @@ class DateTimeField(DateField[_DT]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_DT, str], Tuple[str, Iterable[Tuple[_DT, str]]]]
+            Union[tuple[_DT, str], tuple[str, Iterable[tuple[_DT, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1367,7 +1354,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_U, str], Tuple[str, Iterable[Tuple[_U, str]]]]
+            Union[tuple[_U, str], tuple[str, Iterable[tuple[_U, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1394,7 +1381,7 @@ class UUIDField(Generic[_U], Field[Union[str, _U], _U]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_U, str], Tuple[str, Iterable[Tuple[_U, str]]]]
+            Union[tuple[_U, str], tuple[str, Iterable[tuple[_U, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1433,7 +1420,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1465,7 +1452,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_C, str], Tuple[str, Iterable[Tuple[_C, str]]]]
+            Union[tuple[_C, str], tuple[str, Iterable[tuple[_C, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1496,7 +1483,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_BIN, str], Tuple[str, Iterable[Tuple[_BIN, str]]]]
+            Union[tuple[_BIN, str], tuple[str, Iterable[tuple[_BIN, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1523,7 +1510,7 @@ class BinaryField(Generic[_BIN], Field[Union[_BIN, bytearray, memoryview], _BIN]
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_BIN, str], Tuple[str, Iterable[Tuple[_BIN, str]]]]
+            Union[tuple[_BIN, str], tuple[str, Iterable[tuple[_BIN, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1554,7 +1541,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_TD, str], Tuple[str, Iterable[Tuple[_TD, str]]]]
+            Union[tuple[_TD, str], tuple[str, Iterable[tuple[_TD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -1581,7 +1568,7 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[_TD, str], Tuple[str, Iterable[Tuple[_TD, str]]]]
+            Union[tuple[_TD, str], tuple[str, Iterable[tuple[_TD, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,

@@ -25,6 +25,7 @@ flake8-pyi = "^20.10.0"
 types-PyYAML = "^6.0.1"
 types-pytz = "^2021.3.0"
 psycopg2-binary = "^2.9.3"
+ruff = "^0.0.286"
 
 [tool.black]
 line-length = 88
@@ -35,6 +36,29 @@ profile = "black"
 extra_standard_library = [
     "typing_extensions",
     "_typeshed",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+exclude = ["*.py"]  # only autofix stubs
+select = [
+    "F401",   # Remove unused imports
+    "UP004",  # Remove explicit `object` inheritance
+    "UP006",  # PEP-585 autofixes
+    # "UP007",  # PEP-604 autofixes
+    "UP013",  # Class-based syntax for TypedDicts
+    "UP014",  # Class-based syntax for NamedTuples
+    "UP019",  # Use str over typing.Text
+    "UP035",  # import from typing, not typing_extensions, wherever possible
+    "UP039",  # don't use parens after a class definition with no bases
+    "PYI009",  # use `...`, not `pass`, in empty class bodies
+    "PYI010",  # function bodies must be empty
+    "PYI012",  # class bodies must not contain `pass`
+    "PYI013",  # non-empty class bodies must not contain `...`
+    # "PYI020",  # quoted annotations are always unnecessary in stubs
+    "PYI025",  # always alias `collections.abc.Set` as `AbstractSet` when importing it
+    # "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
 ]
 
 [build-system]

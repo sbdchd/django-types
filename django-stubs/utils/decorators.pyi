@@ -1,4 +1,5 @@
-from typing import Any, Callable, Iterable, Optional, Type, TypeVar, Union
+from collections.abc import Callable, Iterable
+from typing import Any, Optional, TypeVar, Union
 
 from django.utils.deprecation import MiddlewareMixin
 from django.views.generic.base import View
@@ -16,7 +17,7 @@ def decorator_from_middleware_with_args(
 def decorator_from_middleware(middleware_class: type) -> Callable[[_T], _T]: ...
 def available_attrs(fn: Callable[..., Any]) -> Any: ...
 def make_middleware_decorator(
-    middleware_class: Type[MiddlewareMixin],
+    middleware_class: type[MiddlewareMixin],
 ) -> Callable[..., Any]: ...
 
 class classproperty:

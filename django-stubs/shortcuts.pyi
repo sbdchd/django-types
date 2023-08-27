@@ -1,16 +1,5 @@
-from typing import (
-    Any,
-    Callable,
-    List,
-    Mapping,
-    Optional,
-    Protocol,
-    Sequence,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Mapping, Sequence
+from typing import Any, Optional, Protocol, TypeVar, Union, overload
 from typing_extensions import Literal
 
 from django.db.models import Manager, QuerySet
@@ -65,11 +54,11 @@ def redirect(
 _T = TypeVar("_T", bound=Model)
 
 def get_object_or_404(
-    klass: Union[Type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
+    klass: Union[type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
 ) -> _T: ...
 def get_list_or_404(
-    klass: Union[Type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
-) -> List[_T]: ...
+    klass: Union[type[_T], Manager[_T], QuerySet[_T]], *args: Any, **kwargs: Any
+) -> list[_T]: ...
 def resolve_url(
     to: Union[Callable[..., Any], Model, str], *args: Any, **kwargs: Any
 ) -> str: ...

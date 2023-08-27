@@ -1,5 +1,6 @@
+from collections.abc import Iterator
 from io import BytesIO, StringIO
-from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
+from typing import Any, Optional, Union
 
 from django.http.request import QueryDict
 from django.utils.datastructures import ImmutableList, MultiValueDict
@@ -10,14 +11,14 @@ class InputStreamExhausted(Exception): ...
 class MultiPartParser:
     def __init__(
         self,
-        META: Dict[str, Any],
+        META: dict[str, Any],
         input_data: Union[StringIO, BytesIO],
-        upload_handlers: Union[List[Any], ImmutableList[Any]],
+        upload_handlers: Union[list[Any], ImmutableList[Any]],
         encoding: Optional[str] = ...,
     ) -> None: ...
-    def parse(self) -> Tuple[QueryDict, MultiValueDict[Any, Any]]: ...
+    def parse(self) -> tuple[QueryDict, MultiValueDict[Any, Any]]: ...
     def handle_file_complete(
-        self, old_field_name: str, counters: List[int]
+        self, old_field_name: str, counters: list[int]
     ) -> None: ...
     def IE_sanitize(self, filename: str) -> str: ...
 
@@ -56,7 +57,7 @@ class Parser:
     def __iter__(
         self,
     ) -> Iterator[
-        Tuple[str, Dict[str, Tuple[str, Dict[str, Union[bytes, str]]]], LazyStream]
+        tuple[str, dict[str, tuple[str, dict[str, Union[bytes, str]]]], LazyStream]
     ]: ...
 
-def parse_header(line: bytes) -> Tuple[str, Dict[str, Any]]: ...
+def parse_header(line: bytes) -> tuple[str, dict[str, Any]]: ...

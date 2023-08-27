@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, List
+from collections.abc import Callable
+from typing import Any
 
 from django.template.base import Parser, Token
 from django.template.context import Context
@@ -6,9 +7,9 @@ from django.template.library import InclusionNode
 from django.utils.safestring import SafeText
 
 class InclusionAdminNode(InclusionNode):
-    args: List[Any]
+    args: list[Any]
     func: Callable[..., Any]
-    kwargs: Dict[Any, Any]
+    kwargs: dict[Any, Any]
     takes_context: bool
     template_name: str = ...
     def __init__(

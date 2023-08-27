@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Optional, Sequence
+from collections.abc import Callable, Sequence
+from typing import Any, Optional
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.migrations.state import StateApps
@@ -32,13 +33,13 @@ class RunSQL(Operation):
 class RunPython(Operation):
     code: Callable[..., Any] = ...
     reverse_code: Optional[Callable[..., Any]] = ...
-    hints: Optional[Dict[str, Any]] = ...
+    hints: Optional[dict[str, Any]] = ...
     def __init__(
         self,
         code: Callable[..., Any],
         reverse_code: Optional[Callable[..., Any]] = ...,
         atomic: Optional[bool] = ...,
-        hints: Optional[Dict[str, Any]] = ...,
+        hints: Optional[dict[str, Any]] = ...,
         elidable: bool = ...,
     ) -> None: ...
     @staticmethod

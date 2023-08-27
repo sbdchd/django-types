@@ -1,8 +1,8 @@
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 from django.contrib.gis.gdal.raster.base import GDALRasterBase as GDALRasterBase
 
-class TransformPoint(List[Any]):
+class TransformPoint(list[Any]):
     indices: Any = ...
     def __init__(self, raster: Any, prop: Any) -> None: ...
     @property

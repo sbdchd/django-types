@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 
 from django.core.management.color import Style
 
@@ -8,7 +8,7 @@ def sql_flush(
     only_django: bool = ...,
     reset_sequences: bool = ...,
     allow_cascade: bool = ...,
-) -> List[str]: ...
+) -> list[str]: ...
 def emit_pre_migrate_signal(
     verbosity: int, interactive: bool, db: str, **kwargs: Any
 ) -> None: ...

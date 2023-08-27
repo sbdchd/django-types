@@ -1,5 +1,5 @@
 from json import JSONEncoder
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from django.db.models import Field
 from django.db.models.lookups import Transform
@@ -22,7 +22,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Any, Any]):
         self,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
-        encoder: Optional[Type[JSONEncoder]] = ...,
+        encoder: Optional[type[JSONEncoder]] = ...,
         **kwargs: Any
     ) -> None: ...
     def value_to_string(self, obj: Any) -> Any: ...

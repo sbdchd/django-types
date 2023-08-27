@@ -7,9 +7,11 @@ set -ex
 if [[ $CI ]]; then
   black --check tests typings
   isort --check-only tests typings
+  ruff check typings/*
 else
   black tests typings
   isort tests typings
+  ruff check --fix --exit-non-zero-on-fix typings/*
 fi
 
 # type check code

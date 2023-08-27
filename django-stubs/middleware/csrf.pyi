@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Optional, Tuple
+from collections.abc import Callable
+from typing import Any, Optional
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseBase, HttpResponseForbidden
@@ -25,8 +26,8 @@ class CsrfViewMiddleware(MiddlewareMixin):
         self,
         request: HttpRequest,
         callback: Optional[Callable[..., Any]],
-        callback_args: Tuple[Any, ...],
-        callback_kwargs: Dict[str, Any],
+        callback_args: tuple[Any, ...],
+        callback_kwargs: dict[str, Any],
     ) -> Optional[HttpResponseForbidden]: ...
     def process_response(
         self, request: HttpRequest, response: HttpResponseBase

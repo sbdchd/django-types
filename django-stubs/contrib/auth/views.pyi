@@ -1,4 +1,4 @@
-from typing import Any, Optional, Set
+from typing import Any, Optional
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,7 +13,7 @@ UserModel: Any
 
 class SuccessURLAllowedHostsMixin:
     success_url_allowed_hosts: Any = ...
-    def get_success_url_allowed_hosts(self) -> Set[str]: ...
+    def get_success_url_allowed_hosts(self) -> set[str]: ...
 
 class LoginView(SuccessURLAllowedHostsMixin, FormView[AuthenticationForm]):
     authentication_form: Any = ...

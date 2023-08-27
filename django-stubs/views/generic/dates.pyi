@@ -1,5 +1,6 @@
 import datetime
-from typing import Any, Dict, Optional, Sequence, Tuple
+from collections.abc import Sequence
+from typing import Any, Optional
 
 from django.db import models
 from django.http import HttpRequest, HttpResponse
@@ -52,12 +53,12 @@ class DateMixin:
     def get_allow_future(self) -> bool: ...
     def uses_datetime_field(self) -> bool: ...
 
-DatedItems = Tuple[Optional[Sequence[datetime.date]], Sequence[object], Dict[str, Any]]
+DatedItems = tuple[Optional[Sequence[datetime.date]], Sequence[object], dict[str, Any]]
 
 class BaseDateListView(MultipleObjectMixin, DateMixin, View):
     date_list_period: str = ...
     def render_to_response(
-        self, context: Dict[str, Any], **response_kwargs: Any
+        self, context: dict[str, Any], **response_kwargs: Any
     ) -> HttpResponse: ...
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse: ...
     def get_dated_items(self) -> DatedItems: ...

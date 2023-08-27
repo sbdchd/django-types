@@ -1,18 +1,8 @@
+from collections.abc import Callable, Iterator
 from datetime import date, datetime
 from decimal import Decimal
 from itertools import chain
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Iterator,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    Type,
-    Union,
-)
+from typing import Any, Optional, Union
 from uuid import UUID
 
 from django.db.models.base import Model
@@ -38,49 +28,49 @@ class SQLCompiler:
     has_extra_select: Any = ...
     def pre_sql_setup(
         self,
-    ) -> Tuple[
-        List[Tuple[Expression, Tuple[str, Union[List[Any], Tuple[str, str]]], None]],
-        List[Tuple[Expression, Tuple[str, List[Union[int, str]], bool]]],
-        List[Tuple[str, List[float]]],
+    ) -> tuple[
+        list[tuple[Expression, tuple[str, Union[list[Any], tuple[str, str]]], None]],
+        list[tuple[Expression, tuple[str, list[Union[int, str]], bool]]],
+        list[tuple[str, list[float]]],
     ]: ...
     def get_group_by(
         self,
-        select: List[Tuple[BaseExpression, Tuple[str, List[float]], Optional[str]]],
-        order_by: List[Tuple[Expression, Tuple[str, List[Union[int, str]], bool]]],
-    ) -> List[Tuple[str, List[float]]]: ...
+        select: list[tuple[BaseExpression, tuple[str, list[float]], Optional[str]]],
+        order_by: list[tuple[Expression, tuple[str, list[Union[int, str]], bool]]],
+    ) -> list[tuple[str, list[float]]]: ...
     def collapse_group_by(
         self,
-        expressions: List[Expression],
-        having: Union[List[Expression], Tuple[Any, ...]],
-    ) -> List[Expression]: ...
+        expressions: list[Expression],
+        having: Union[list[Expression], tuple[Any, ...]],
+    ) -> list[Expression]: ...
     def get_select(
         self,
-    ) -> Tuple[
-        List[Tuple[Expression, Tuple[str, List[Union[int, str]]], Optional[str]]],
-        Optional[Dict[str, Any]],
-        Dict[str, int],
+    ) -> tuple[
+        list[tuple[Expression, tuple[str, list[Union[int, str]]], Optional[str]]],
+        Optional[dict[str, Any]],
+        dict[str, int],
     ]: ...
-    def get_order_by(self) -> List[Tuple[Expression, Tuple[str, List[Any], bool]]]: ...
+    def get_order_by(self) -> list[tuple[Expression, tuple[str, list[Any], bool]]]: ...
     def get_extra_select(
         self,
-        order_by: List[Tuple[Expression, Tuple[str, List[Any], bool]]],
-        select: List[Tuple[Expression, Tuple[str, List[float]], Optional[str]]],
-    ) -> List[Tuple[Expression, Tuple[str, List[Any]], None]]: ...
+        order_by: list[tuple[Expression, tuple[str, list[Any], bool]]],
+        select: list[tuple[Expression, tuple[str, list[float]], Optional[str]]],
+    ) -> list[tuple[Expression, tuple[str, list[Any]], None]]: ...
     def quote_name_unless_alias(self, name: str) -> str: ...
     def compile(
         self, node: Any, select_format: Any = ...
-    ) -> Tuple[str, Union[List[Optional[int]], Tuple[int, int]]]: ...
+    ) -> tuple[str, Union[list[Optional[int]], tuple[int, int]]]: ...
     def get_combinator_sql(
         self, combinator: str, all: bool
-    ) -> Tuple[List[str], Union[List[int], List[str]]]: ...
+    ) -> tuple[list[str], Union[list[int], list[str]]]: ...
     def as_sql(self, with_limits: bool = ..., with_col_aliases: bool = ...) -> Any: ...
     def get_default_columns(
         self,
         start_alias: Optional[str] = ...,
         opts: Optional[Any] = ...,
-        from_parent: Optional[Type[Model]] = ...,
-    ) -> List[Expression]: ...
-    def get_distinct(self) -> Tuple[List[Any], List[Any]]: ...
+        from_parent: Optional[type[Model]] = ...,
+    ) -> list[Expression]: ...
+    def get_distinct(self) -> tuple[list[Any], list[Any]]: ...
     def find_ordering_name(
         self,
         name: str,
@@ -88,41 +78,41 @@ class SQLCompiler:
         alias: Optional[str] = ...,
         default_order: str = ...,
         already_seen: Optional[
-            Set[Tuple[Optional[Tuple[Tuple[str, str]]], Tuple[Tuple[str, str]]]]
+            set[tuple[Optional[tuple[tuple[str, str]]], tuple[tuple[str, str]]]]
         ] = ...,
-    ) -> List[Tuple[Expression, bool]]: ...
-    def get_from_clause(self) -> Tuple[List[str], List[Union[int, str]]]: ...
+    ) -> list[tuple[Expression, bool]]: ...
+    def get_from_clause(self) -> tuple[list[str], list[Union[int, str]]]: ...
     def get_related_selections(
         self,
-        select: List[Tuple[Expression, Optional[str]]],
+        select: list[tuple[Expression, Optional[str]]],
         opts: Optional[Any] = ...,
         root_alias: Optional[str] = ...,
         cur_depth: int = ...,
         requested: Optional[
-            Union[Dict[str, Dict[str, Dict[str, Dict[Any, Any]]]], bool]
+            Union[dict[str, dict[str, dict[str, dict[Any, Any]]]], bool]
         ] = ...,
         restricted: Optional[bool] = ...,
-    ) -> List[Dict[str, Any]]: ...
+    ) -> list[dict[str, Any]]: ...
     def get_select_for_update_of_arguments(self) -> Any: ...
-    def deferred_to_columns(self) -> Dict[Type[Model], Set[str]]: ...
+    def deferred_to_columns(self) -> dict[type[Model], set[str]]: ...
     def get_converters(
-        self, expressions: List[Expression]
-    ) -> Dict[int, Tuple[List[Callable[..., Any]], Expression]]: ...
+        self, expressions: list[Expression]
+    ) -> dict[int, tuple[list[Callable[..., Any]], Expression]]: ...
     def apply_converters(
         self,
         rows: chain[Any],
-        converters: Dict[int, Tuple[List[Callable[..., Any]], Expression]],
+        converters: dict[int, tuple[list[Callable[..., Any]], Expression]],
     ) -> Iterator[
         Union[
-            List[Optional[Union[bytes, datetime, int, str]]],
-            List[Optional[Union[date, Decimal, float, str]]],
-            List[Optional[Union[datetime, float, str, UUID]]],
+            list[Optional[Union[bytes, datetime, int, str]]],
+            list[Optional[Union[date, Decimal, float, str]]],
+            list[Optional[Union[datetime, float, str, UUID]]],
         ]
     ]: ...
     def results_iter(
         self,
         results: Optional[
-            Union[Iterator[Any], List[List[Tuple[Union[int, str]]]]]
+            Union[Iterator[Any], list[list[tuple[Union[int, str]]]]]
         ] = ...,
         tuple_expected: bool = ...,
         chunked_fetch: bool = ...,
@@ -133,8 +123,8 @@ class SQLCompiler:
         self, result_type: str = ..., chunked_fetch: bool = ..., chunk_size: int = ...
     ) -> Optional[Any]: ...
     def as_subquery_condition(
-        self, alias: str, columns: List[str], compiler: SQLCompiler
-    ) -> Tuple[str, Tuple[Any, ...]]: ...
+        self, alias: str, columns: list[str], compiler: SQLCompiler
+    ) -> tuple[str, tuple[Any, ...]]: ...
     def explain_query(self) -> Iterator[str]: ...
 
 class SQLInsertCompiler(SQLCompiler):

@@ -1,4 +1,5 @@
-from typing import Any, Callable, List, Optional, Set, Tuple, Union
+from collections.abc import Callable
+from typing import Any, Optional, Union
 
 from django.db import DefaultConnectionProxy
 from django.db.backends.base.base import BaseDatabaseWrapper
@@ -20,18 +21,18 @@ class MigrationExecutor:
     ) -> None: ...
     def migration_plan(
         self,
-        targets: Union[List[Tuple[str, Optional[str]]], Set[Tuple[str, str]]],
+        targets: Union[list[tuple[str, Optional[str]]], set[tuple[str, str]]],
         clean_start: bool = ...,
-    ) -> List[Tuple[Migration, bool]]: ...
+    ) -> list[tuple[Migration, bool]]: ...
     def migrate(
         self,
-        targets: Optional[List[Tuple[str, Optional[str]]]],
-        plan: Optional[List[Tuple[Migration, bool]]] = ...,
+        targets: Optional[list[tuple[str, Optional[str]]]],
+        plan: Optional[list[tuple[Migration, bool]]] = ...,
         state: Optional[ProjectState] = ...,
         fake: bool = ...,
         fake_initial: bool = ...,
     ) -> ProjectState: ...
-    def collect_sql(self, plan: List[Tuple[Migration, bool]]) -> List[str]: ...
+    def collect_sql(self, plan: list[tuple[Migration, bool]]) -> list[str]: ...
     def apply_migration(
         self,
         state: ProjectState,
@@ -45,4 +46,4 @@ class MigrationExecutor:
     def check_replacements(self) -> None: ...
     def detect_soft_applied(
         self, project_state: Optional[ProjectState], migration: Migration
-    ) -> Tuple[bool, ProjectState]: ...
+    ) -> tuple[bool, ProjectState]: ...

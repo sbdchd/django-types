@@ -1,4 +1,5 @@
-from typing import Any, List, Optional, Sequence, Union
+from collections.abc import Sequence
+from typing import Any, Optional, Union
 
 from django.contrib.messages.storage.base import BaseStorage
 from django.http.request import HttpRequest
@@ -8,5 +9,5 @@ class SessionStorage(BaseStorage):
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None: ...
     def serialize_messages(self, messages: Sequence[Any]) -> str: ...
     def deserialize_messages(
-        self, data: Optional[Union[List[Any], str]]
-    ) -> Optional[List[Any]]: ...
+        self, data: Optional[Union[list[Any], str]]
+    ) -> Optional[list[Any]]: ...

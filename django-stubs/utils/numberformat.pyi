@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from decimal import Decimal
-from typing import Optional, Sequence, Union
+from typing import Optional, Union
 
 def format(
     number: Union[Decimal, float, str],

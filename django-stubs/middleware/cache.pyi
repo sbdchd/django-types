@@ -1,4 +1,5 @@
-from typing import Any, Callable, Optional, Union
+from collections.abc import Callable
+from typing import Any, Optional, Union
 
 from django.core.cache import BaseCache
 from django.http.request import HttpRequest

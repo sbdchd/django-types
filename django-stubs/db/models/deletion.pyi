@@ -1,14 +1,5 @@
-from typing import (
-    Any,
-    Callable,
-    Collection,
-    Iterable,
-    Optional,
-    Sequence,
-    Set,
-    Type,
-    Union,
-)
+from collections.abc import Callable, Collection, Iterable, Sequence
+from typing import Any, Optional, Union
 
 from django.db import IntegrityError
 from django.db.models.base import Model
@@ -59,19 +50,19 @@ def get_candidate_relations_to_delete(
 ) -> Iterable[Field[Any, Any]]: ...
 
 class ProtectedError(IntegrityError):
-    protected_objects: Set[Model]
-    def __init__(self, msg: str, protected_objects: Set[Model]) -> None: ...
+    protected_objects: set[Model]
+    def __init__(self, msg: str, protected_objects: set[Model]) -> None: ...
 
 class RestrictedError(IntegrityError):
-    restricted_objects: Set[Model]
-    def __init__(self, msg: str, restricted_objects: Set[Model]) -> None: ...
+    restricted_objects: set[Model]
+    def __init__(self, msg: str, restricted_objects: set[Model]) -> None: ...
 
 class Collector:
     def __init__(self, using: str) -> None: ...
     def collect(
         self,
         objs: Collection[Optional[Model]],
-        source: Optional[Type[Model]] = ...,
+        source: Optional[type[Model]] = ...,
         source_attr: Optional[str] = ...,
         **kwargs: Any
     ) -> None: ...

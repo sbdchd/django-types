@@ -1,4 +1,5 @@
-from typing import Any, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any, Optional
 
 from django.db.models import Func, Index
 from django.db.models.query_utils import Q

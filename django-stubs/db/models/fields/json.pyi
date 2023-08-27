@@ -1,15 +1,6 @@
 import json
-from typing import (
-    Any,
-    Callable,
-    Iterable,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from collections.abc import Callable, Iterable
+from typing import Any, Optional, TypeVar, Union, overload
 from typing_extensions import Literal
 
 from django.db.models import lookups
@@ -23,8 +14,8 @@ _A = TypeVar("_A", bound=Optional[Any])
 
 class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
     default_error_messages: Any = ...
-    encoder: Type[json.JSONEncoder] = ...
-    decoder: Type[json.JSONEncoder] = ...
+    encoder: type[json.JSONEncoder] = ...
+    decoder: type[json.JSONEncoder] = ...
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any: ...
     def get_transform(self, name: Any) -> Any: ...
     def value_to_string(self, obj: Any) -> Any: ...
@@ -33,8 +24,8 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         cls,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
-        encoder: Type[json.JSONEncoder] = ...,
-        decoder: Type[json.JSONDecoder] = ...,
+        encoder: type[json.JSONEncoder] = ...,
+        decoder: type[json.JSONDecoder] = ...,
         primary_key: bool = ...,
         max_length: Optional[int] = ...,
         unique: bool = ...,
@@ -49,7 +40,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[Any, str], Tuple[str, Iterable[Tuple[Any, str]]]]
+            Union[tuple[Any, str], tuple[str, Iterable[tuple[Any, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,
@@ -62,8 +53,8 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         cls,
         verbose_name: Optional[str] = ...,
         name: Optional[str] = ...,
-        encoder: Type[json.JSONEncoder] = ...,
-        decoder: Type[json.JSONDecoder] = ...,
+        encoder: type[json.JSONEncoder] = ...,
+        decoder: type[json.JSONDecoder] = ...,
         primary_key: bool = ...,
         max_length: Optional[int] = ...,
         unique: bool = ...,
@@ -78,7 +69,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Union[_A, Combinable], _A]):
         unique_for_month: Optional[str] = ...,
         unique_for_year: Optional[str] = ...,
         choices: Iterable[
-            Union[Tuple[Any, str], Tuple[str, Iterable[Tuple[Any, str]]]]
+            Union[tuple[Any, str], tuple[str, Iterable[tuple[Any, str]]]]
         ] = ...,
         help_text: str = ...,
         db_column: Optional[str] = ...,

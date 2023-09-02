@@ -11,7 +11,7 @@ _FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
 _ValidatorCallable = Callable[..., None]
 _ErrorMessagesToOverride = dict[str, Any]
 
-_C = TypeVar("_C", bound="str | None")
+_C = TypeVar("_C", bound=str | None)
 
 class CIText: ...
 

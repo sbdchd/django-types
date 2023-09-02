@@ -7,44 +7,44 @@ from django.db.models.fields import Field
 from django.db.models.options import Options
 
 def CASCADE(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def SET_NULL(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def SET_DEFAULT(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def DO_NOTHING(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def PROTECT(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def RESTRICT(
-    collector: "Collector",
+    collector: Collector,
     field: Field[Any, Any],
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
 def SET(
     value: Any | Callable[[], Any]
-) -> Callable[["Collector", Field[Any, Any], Sequence[Model], str], None]: ...
+) -> Callable[[Collector, Field[Any, Any], Sequence[Model], str], None]: ...
 def get_candidate_relations_to_delete(
     opts: Options[Any],
 ) -> Iterable[Field[Any, Any]]: ...

@@ -12,7 +12,7 @@ _FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
 _ValidatorCallable = Callable[..., None]
 _ErrorMessagesToOverride = dict[str, Any]
 
-_T = TypeVar("_T", bound="dict[str, str | None] | None")
+_T = TypeVar("_T", bound=dict[str, str | None] | None)
 
 class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
     @overload

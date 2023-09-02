@@ -56,9 +56,9 @@ select = [
     "PYI010",  # function bodies must be empty
     "PYI012",  # class bodies must not contain `pass`
     "PYI013",  # non-empty class bodies must not contain `...`
-    # "PYI020",  # quoted annotations are always unnecessary in stubs
+    "PYI020",  # quoted annotations are always unnecessary in stubs
     "PYI025",  # always alias `collections.abc.Set` as `AbstractSet` when importing it
-    # "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
+    "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
 ]
 
 [build-system]

@@ -9,7 +9,7 @@ CHANGE: int
 DELETION: int
 ACTION_FLAG_CHOICES: Any
 
-class LogEntryManager(models.Manager["LogEntry"]):
+class LogEntryManager(models.Manager[LogEntry]):
     def log_action(
         self,
         user_id: int,

@@ -1,13 +1,14 @@
 import threading
 import unittest
 from collections.abc import Callable, Iterable
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
 from django.db import connections as connections  # noqa: F401
 from django.db.backends.sqlite3.base import DatabaseWrapper
+from django.db.models import Model
 from django.db.models.query import _BaseQuerySet
 from django.forms.fields import EmailField
 from django.http.response import HttpResponse, HttpResponseBase
@@ -162,17 +163,29 @@ class SimpleTestCase(unittest.TestCase):
         self, xml1: str, xml2: str, msg: str | None = ...
     ) -> None: ...
 
+_T = TypeVar("_T")
+_M = TypeVar("_M", bound=Model)
+
 class TransactionTestCase(SimpleTestCase):
     reset_sequences: bool = ...
     available_apps: Any = ...
     fixtures: Any = ...
     multi_db: bool = ...
     serialized_rollback: bool = ...
+    def assertQuerySetEqual(
+        self,
+        qs: _BaseQuerySet[_M],
+        values: Iterable[_T],
+        transform: Callable[[_M], _T] = ...,
+        ordered: bool = ...,
+        msg: str | None = ...,
+    ) -> None: ...
+    # Deprecated alias to assertQuerySetEqual
     def assertQuerysetEqual(
         self,
-        qs: _BaseQuerySet[Any],
-        values: Iterable[Any],
-        transform: Callable[..., Any] | type[str] = ...,
+        qs: _BaseQuerySet[_M],
+        values: Iterable[_T],
+        transform: Callable[[_M], _T] = ...,
         ordered: bool = ...,
         msg: str | None = ...,
     ) -> None: ...

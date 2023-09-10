@@ -1,19 +1,20 @@
-from typing import Any, TypeVar, overload
+from typing import Any, TypeVar
 from typing_extensions import Literal
 
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.fields import BooleanField
 
-_T = TypeVar("_T", bound=Model)
+_T = TypeVar("_T")
+_ModelT = TypeVar("_ModelT", bound=Model)
 
-class BaseUserManager(models.Manager[_T]):
+class BaseUserManager(models.Manager[_ModelT]):
     @classmethod
     def normalize_email(cls, email: str | None) -> str: ...
     def make_random_password(
         self, length: int = ..., allowed_chars: str = ...
     ) -> str: ...
-    def get_by_natural_key(self, username: str | None) -> _T: ...
+    def get_by_natural_key(self, username: str | None) -> _ModelT: ...
 
 class AbstractBaseUser(models.Model):
     REQUIRED_FIELDS: list[str] = ...
@@ -35,8 +36,4 @@ class AbstractBaseUser(models.Model):
     @classmethod
     def get_email_field_name(cls) -> str: ...
     @classmethod
-    @overload
-    def normalize_username(cls, username: str) -> str: ...
-    @classmethod
-    @overload
-    def normalize_username(cls, username: Any) -> Any: ...
+    def normalize_username(cls, username: _T) -> _T: ...

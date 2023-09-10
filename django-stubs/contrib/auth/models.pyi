@@ -13,35 +13,39 @@ from django.db.models.manager import EmptyManager
 
 _AnyUser = Model | AnonymousUser
 
+_T = TypeVar("_T", bound=Model)
+
 def update_last_login(
     sender: type[AbstractBaseUser], user: AbstractBaseUser, **kwargs: Any
 ) -> None: ...
 
-class PermissionManager(models.Manager[Permission]):
+_PermissionT = TypeVar("_PermissionT", bound=Permission)
+
+class PermissionManager(models.Manager[_PermissionT]):
     def get_by_natural_key(
         self, codename: str, app_label: str, model: str
-    ) -> Permission: ...
+    ) -> _PermissionT: ...
 
 class Permission(models.Model):
     content_type_id: int
-    objects: ClassVar[PermissionManager]
+    objects: ClassVar[PermissionManager[Self]]  # type: ignore[assignment]
 
     name = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     codename = models.CharField(max_length=100)
     def natural_key(self) -> tuple[str, str, str]: ...
 
-class GroupManager(models.Manager[Group]):
-    def get_by_natural_key(self, name: str) -> Group: ...
+_GroupT = TypeVar("_GroupT", bound=Group)
+
+class GroupManager(models.Manager[_GroupT]):
+    def get_by_natural_key(self, name: str) -> _GroupT: ...
 
 class Group(models.Model):
-    objects: ClassVar[GroupManager]
+    objects: ClassVar[GroupManager[Self]]  # type: ignore[assignment]
 
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
-    def natural_key(self) -> Any: ...
-
-_T = TypeVar("_T", bound=Model)
+    def natural_key(self) -> tuple[str, ...]: ...
 
 class UserManager(BaseUserManager[_T]):
     def create_user(
@@ -114,9 +118,9 @@ class AnonymousUser:
     def set_password(self, raw_password: str) -> Any: ...
     def check_password(self, raw_password: str) -> Any: ...
     @property
-    def groups(self) -> EmptyManager: ...
+    def groups(self) -> EmptyManager[Group]: ...
     @property
-    def user_permissions(self) -> EmptyManager: ...
+    def user_permissions(self) -> EmptyManager[Permission]: ...
     def get_user_permissions(self, obj: _AnyUser | None = ...) -> set[str]: ...
     def get_group_permissions(self, obj: _AnyUser | None = ...) -> set[Any]: ...
     def get_all_permissions(self, obj: _AnyUser | None = ...) -> set[str]: ...

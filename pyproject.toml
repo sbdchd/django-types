@@ -12,7 +12,7 @@ packages = [{ include = "django-stubs" }]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-types-psycopg2 = "^2.9.19"
+types-psycopg2 = ">=2.9.21.13"
 
 [tool.poetry.dev-dependencies]
 black = "22.3.0"

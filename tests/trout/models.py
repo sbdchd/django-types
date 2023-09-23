@@ -1,15 +1,12 @@
 # Disable because pyright is not able to understand the Meta nested class override in models.
 # pyright: reportIncompatibleVariableOverride=false
 
-import sys
 from collections import namedtuple
 from datetime import time, timedelta
 from decimal import Decimal
-from io import StringIO
 from typing import Any, Dict, List, Optional, Tuple, Union
 from uuid import UUID
 
-import psycopg2
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import (
@@ -43,18 +40,14 @@ from django.views.decorators.http import (
     require_GET,
     require_POST,
 )
-from psycopg2 import ProgrammingError, sql
-from psycopg2.extensions import parse_dsn
 from psycopg2.extras import execute_values
 
 
 class User(models.Model):
-
     pass
 
 
 class Post(models.Model):
-
     pass
 
 
@@ -276,7 +269,6 @@ def process_non_nullable(
 
 
 def main() -> None:
-
     client = Client()
 
     res = client.post(
@@ -671,7 +663,6 @@ async def main_async() -> None:
 
 
 def raw_database_queries() -> None:
-
     with connection.cursor() as cursor:
         cursor.execute("select 1;")
         results = cursor.fetchall()
@@ -758,134 +749,6 @@ def get_data() -> Dict[str, Dict[str, str]]:
         return dict(cursor.fetchall())  # type: ignore [arg-type]
 
 
-def test_psycopg2() -> None:
-    with connection.cursor() as cursor:
-        comp = sql.Composed([sql.SQL("insert into "), sql.Identifier("table")])
-        print(comp.as_string(cursor))
-
-        query = sql.SQL("select {0} from {1}").format(
-            sql.SQL(", ").join([sql.Identifier("foo"), sql.Identifier("bar")]),
-            sql.Identifier("table"),
-        )
-        print(query.as_string(cursor))
-
-        snip = sql.SQL(", ").join(sql.Identifier(n) for n in ["foo", "bar", "baz"])
-        print(snip.as_string(cursor))
-
-        query = sql.SQL("select {} from {}").format(
-            sql.Identifier("table", "field"), sql.Identifier("schema", "table")
-        )
-        print(query.as_string(cursor))
-
-        t1 = sql.Identifier("foo")
-        t2 = sql.Identifier("ba'r")
-        t3 = sql.Identifier('ba"z')
-        print(sql.SQL(", ").join([t1, t2, t3]).as_string(cursor))
-
-        s1 = sql.Literal("foo")
-        s2 = sql.Literal("ba'r")
-        s3 = sql.Literal(42)
-        print(sql.SQL(", ").join([s1, s2, s3]).as_string(cursor))
-
-        query = sql.SQL("select {} from {}").format(
-            sql.Identifier("table", "field"), sql.Identifier("schema", "table")
-        )
-        print(query.as_string(cursor))
-
-        names = ["foo", "bar", "baz"]
-
-        q1 = sql.SQL("insert into table ({}) values ({})").format(
-            sql.SQL(", ").join(map(sql.Identifier, names)),
-            sql.SQL(", ").join(sql.Placeholder() * len(names)),
-        )
-        print(q1.as_string(cursor))
-
-        q2 = sql.SQL("insert into table ({}) values ({})").format(
-            sql.SQL(", ").join(map(sql.Identifier, names)),
-            sql.SQL(", ").join(map(sql.Placeholder, names)),
-        )
-        print(q2.as_string(cursor))
-
-        cur = cursor.cursor
-        cur.execute("SELECT * FROM test;")
-        for record in cur:
-            print(record)
-
-        cur.execute("SELECT * FROM test WHERE id = %s", (3,))
-        assert cur.fetchone() == (3, 42, "bar")
-
-        cur.execute("SELECT * FROM test;")
-        assert cur.fetchmany(2) == [(1, 100, "abc'def"), (2, None, "dada")]
-        assert cur.fetchmany(2) == [(3, 42, "bar")]
-        assert cur.fetchmany(2) == []
-
-        cur.execute("SELECT * FROM test;")
-        assert cur.fetchall() == [
-            (1, 100, "abc'def"),
-            (2, None, "dada"),
-            (3, 42, "bar"),
-        ]
-
-        try:
-            cur.scroll(1000 * 1000)
-        except (ProgrammingError, IndexError) as exc:
-            print(exc)
-
-        cur.arraysize = 10
-        cur.itersize = 100
-
-        try:
-            cur.execute("SELECT * FROM barf")
-        except psycopg2.Error as e:
-            assert e.pgcode == "42P01"
-            assert e.pgerror == (
-                """
-ERROR:  relation "barf" does not exist
-LINE 1: SELECT * FROM barf
-"""
-            )
-
-        f = StringIO("42\tfoo\n74\tbar\n")
-        cur.copy_from(f, "test", columns=("num", "data"))
-        cur.execute("select * from test where id > 5;")
-        cur.fetchall()
-        cur.copy_from(f, '"TABLE"')
-        cur.copy_to(sys.stdout, "test", sep="|")
-
-        cur.copy_expert("COPY test TO STDOUT WITH CSV HEADER", sys.stdout)
-
-    conn = psycopg2.connect("dbname=test user=postgres password=secret")
-    conn = psycopg2.connect(dbname="test", user="postgres", password="secret")
-
-    print(conn.isolation_level)
-
-    with conn:
-        with conn.cursor() as curs:
-            curs.execute("select 1")
-
-    with conn:
-        with conn.cursor() as curs:
-            curs.execute("select 2")
-    conn.close()
-
-    assert parse_dsn("dbname=test user=postgres password=secret") == {
-        "password": "secret",
-        "user": "postgres",
-        "dbname": "test",
-    }
-    assert parse_dsn("postgresql://someone@example.com/somedb?connect_timeout=10") == {
-        "host": "example.com",
-        "user": "someone",
-        "dbname": "somedb",
-        "connect_timeout": "10",
-    }
-
-    for name in connections:
-        cursor = connections[name].cursor()
-        cursor.execute("SELECT 1;")
-        assert cursor.fetchone() is not None
-
-
 # test decorators
 
 
@@ -967,37 +830,6 @@ def login_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body
 @sensitive_variables("password")
 def signup_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
     ...
-
-
-def test_psycopg_top_level_exports() -> None:
-    psycopg2.BINARY
-    psycopg2.Binary
-    psycopg2.DATETIME
-    psycopg2.DataError
-    psycopg2.DatabaseError
-    psycopg2.Date
-    psycopg2.DateFromTicks
-    psycopg2.Error
-    psycopg2.IntegrityError
-    psycopg2.InterfaceError
-    psycopg2.InternalError
-    psycopg2.NUMBER
-    psycopg2.NotSupportedError
-    psycopg2.OperationalError
-    psycopg2.ProgrammingError
-    psycopg2.ROWID
-    psycopg2.STRING
-    psycopg2.Time
-    psycopg2.TimeFromTicks
-    psycopg2.Timestamp
-    psycopg2.TimestampFromTicks
-    psycopg2.Warning
-    psycopg2.connect
-    psycopg2.errors
-    psycopg2.extensions
-    psycopg2.paramstyle
-    psycopg2.threadsafety
-    psycopg2.tz
 
 
 def namedtuplefetchall(cursor: CursorWrapper) -> List[Tuple[Any, ...]]:

@@ -275,8 +275,6 @@ dmypy = ["psutil (>=4.0)"]
 install-types = ["pip"]
 python2 = ["typed-ast (>=1.4.0,<2)"]
 reports = ["lxml"]
-python2 = ["typed-ast (>=1.4.0,<2)"]
-dmypy = ["psutil (>=4.0)"]
 
 [[package]]
 name = "mypy-extensions"
@@ -569,6 +567,17 @@ files = [
 ]
 
 [[package]]
+name = "types-psycopg2"
+version = "2.9.21.13"
+description = "Typing stubs for psycopg2"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-psycopg2-2.9.21.13.tar.gz", hash = "sha256:662e6d7b03d89e3bac6aaf2892a97f2cca287f861e693dcefc96ca2e996642c5"},
+    {file = "types_psycopg2-2.9.21.13-py3-none-any.whl", hash = "sha256:3ee7c32918d18c133bd0b4d92db7e1bd4c5f78a2ff217d74d4e3b6a09c95d506"},
+]
+
+[[package]]
 name = "types-pytz"
 version = "2021.3.8"
 description = "Typing stubs for pytz"
@@ -633,4 +642,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "52fb8b5bbef796fb426395df7d591d06ef51edd2a5133e6b02710f9895278e07"
+content-hash = "71293af57fb7853bb135fb07b16a2d1c509fa23de7fd19bc5e7d862e1bf5dc64"

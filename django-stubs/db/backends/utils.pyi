@@ -6,7 +6,7 @@ from typing import IO, Any
 from typing_extensions import Literal
 from uuid import UUID
 
-import psycopg2
+import psycopg2.extensions
 from django.db.backends.postgresql.base import DatabaseWrapper
 from psycopg2.extensions import Column
 

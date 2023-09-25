@@ -9,7 +9,7 @@ from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
 from django.db import connections as connections  # noqa: F401
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models import Model
-from django.db.models.query import _BaseQuerySet
+from django.db.models.query import _BaseQuerySet, ValuesQuerySet
 from django.forms.fields import EmailField
 from django.http.response import HttpResponse, HttpResponseBase
 from django.template.base import Template
@@ -165,6 +165,7 @@ class SimpleTestCase(unittest.TestCase):
 
 _T = TypeVar("_T")
 _M = TypeVar("_M", bound=Model)
+_R = TypeVar("_R")
 
 class TransactionTestCase(SimpleTestCase):
     reset_sequences: bool = ...
@@ -172,6 +173,7 @@ class TransactionTestCase(SimpleTestCase):
     fixtures: Any = ...
     multi_db: bool = ...
     serialized_rollback: bool = ...
+    @overload
     def assertQuerySetEqual(
         self,
         qs: _BaseQuerySet[_M],
@@ -180,12 +182,31 @@ class TransactionTestCase(SimpleTestCase):
         ordered: bool = ...,
         msg: str | None = ...,
     ) -> None: ...
+    @overload
+    def assertQuerySetEqual(  # pyright: ignore[reportOverlappingOverload]
+        self,
+        qs: ValuesQuerySet[_M, _R],
+        values: Iterable[_T],
+        transform: Callable[[_R], _T] = ...,
+        ordered: bool = ...,
+        msg: str | None = ...,
+    ) -> None: ...
     # Deprecated alias to assertQuerySetEqual
+    @overload
     def assertQuerysetEqual(
         self,
         qs: _BaseQuerySet[_M],
         values: Iterable[_T],
         transform: Callable[[_M], _T] = ...,
+        ordered: bool = ...,
+        msg: str | None = ...,
+    ) -> None: ...
+    @overload
+    def assertQuerysetEqual(  # pyright: ignore[reportOverlappingOverload]
+        self,
+        qs: ValuesQuerySet[_M, _R],
+        values: Iterable[_T],
+        transform: Callable[[_R], _T] = ...,
         ordered: bool = ...,
         msg: str | None = ...,
     ) -> None: ...

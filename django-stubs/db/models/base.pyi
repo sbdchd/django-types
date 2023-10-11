@@ -45,8 +45,8 @@ class Model(metaclass=ModelBase):
     def full_clean(
         self,
         exclude: Collection[str] | None = ...,
-        validate_unique: bool = True,
-        validate_constraints: bool = True,
+        validate_unique: bool = ...,
+        validate_constraints: bool = ...,
     ) -> None: ...
     def clean(self) -> None: ...
     def clean_fields(self, exclude: Collection[str] | None = ...) -> None: ...

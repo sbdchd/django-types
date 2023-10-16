@@ -54,8 +54,9 @@ class _BaseQuerySet(Generic[_T], Sized):
         objs: Iterable[_T],
         batch_size: int | None = ...,
         ignore_conflicts: bool = ...,
-        update_conflicts: Sequence[str] | None = ...,
+        update_conflicts: bool | None = ...,
         update_fields: Sequence[str] | None = ...,
+        unique_fields: Sequence[str] | None = ...,
     ) -> list[_T]: ...
     async def abulk_create(
         self,
@@ -64,6 +65,7 @@ class _BaseQuerySet(Generic[_T], Sized):
         ignore_conflicts: bool = ...,
         update_conflicts: Sequence[str] | None = ...,
         update_fields: Sequence[str] | None = ...,
+        unique_fields: Sequence[str] | None = ...,
     ) -> list[_T]: ...
     def bulk_update(
         self, objs: Iterable[_T], fields: Sequence[str], batch_size: int | None = ...

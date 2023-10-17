@@ -36,7 +36,7 @@ jobs:
         run: poetry install --no-interaction
 
       - name: Update version
-        run: ./s/update-version ${{ inputs.version }}
+        run: poetry run python ./s/update-version ${{ inputs.version }}
 
       - name: Build
         run: poetry build

@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+# This script requires fastmod to be installed
+# fastmod: https://github.com/facebookincubator/fastmod
+
+from pathlib import Path
+import re
+import argparse
+import tomllib
+
+
+def find_version() -> str:
+    pyproject = Path(".").parent.parent / "pyproject.toml"
+    pyproject_toml = tomllib.loads(pyproject)
+    return pyproject_toml["tool"]["poetry"]["version"]
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("version_increment", choices=["major", "minor", "patch"])
+    args = parser.parse_args()
+
+    pyproject_path = Path(".").parent.parent / "pyproject.toml"
+    pyproject = pyproject_path.read_text()
+
+    current_version = tomllib.loads(pyproject)["tool"]["poetry"]["version"]
+
+    major, minor, patch = [int(x) for x in current_version.split(".")]
+    match args.version_increment:
+        case "major":
+            major += 1
+            minor = 0
+            patch = 0
+        case "minor":
+            minor += 1
+            patch = 0
+        case "patch":
+            patch += 1
+        case _:
+            raise ValueError("Unexpected value")
+
+    new_version = f"{major}.{minor}.{patch}"
+
+    updated_pyproject = re.sub(
+        r'^version = ".*"', f'version = "{new_version}"', pyproject, flags=re.MULTILINE
+    )
+    pyproject_path.write_text(updated_pyproject)
+
+
+if __name__ == "__main__":
+    main()

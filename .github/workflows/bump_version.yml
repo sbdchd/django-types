@@ -1,0 +1,49 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version level to increase"
+        required: true
+        default: "minor"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  # https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
+  update-version:
+    name: "Publish Python 🐍 distribution 📦 to PyPI"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install poetry
+        run: |
+          pipx install poetry
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.7"
+          cache: "poetry"
+
+      - name: Update version
+        run: ./s/update-version ${{ inputs.version }}
+
+      - name: Build
+        run: poetry build
+
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am 'Increment version: ${{ inputs.version }}'
+          git push

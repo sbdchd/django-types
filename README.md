@@ -253,3 +253,7 @@ def activity(request: HttpRequest, team_id: str) -> HttpResponse:
 - <https://github.com/sbdchd/celery-types>
 - <https://github.com/sbdchd/mongo-types>
 - <https://github.com/sbdchd/msgpack-types>
+
+## Releasing a new version
+1. Navigate to https://github.com/sbdchd/django-types/actions/workflows/bump_version.yml and click "Run workflow".
+2. Select the version level you wish to increase and click "Run workflow" to bump the version and publish to PyPI.

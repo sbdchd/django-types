@@ -5,14 +5,7 @@
 from pathlib import Path
 import re
 import argparse
-import tomllib
-
-
-def find_version() -> str:
-    pyproject = Path(".").parent.parent / "pyproject.toml"
-    pyproject_toml = tomllib.loads(pyproject)
-    return pyproject_toml["tool"]["poetry"]["version"]
-
+import tomlkit
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,9 +15,11 @@ def main():
     pyproject_path = Path(".").parent.parent / "pyproject.toml"
     pyproject = pyproject_path.read_text()
 
-    current_version = tomllib.loads(pyproject)["tool"]["poetry"]["version"]
+    current_version = tomlkit.loads(pyproject)["tool"]["poetry"]["version"]
 
     major, minor, patch = [int(x) for x in current_version.split(".")]
+
+
     match args.version_increment:
         case "major":
             major += 1

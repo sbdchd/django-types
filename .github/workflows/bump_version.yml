@@ -32,6 +32,9 @@ jobs:
           python-version: "3.7"
           cache: "poetry"
 
+      - name: Install python dependencies
+        run: poetry install --no-interaction
+
       - name: Update version
         run: ./s/update-version ${{ inputs.version }}
 

@@ -7,6 +7,7 @@ import re
 import argparse
 import tomlkit
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("version_increment", choices=["major", "minor", "patch"])
@@ -19,19 +20,17 @@ def main():
 
     major, minor, patch = [int(x) for x in current_version.split(".")]
 
-
-    match args.version_increment:
-        case "major":
-            major += 1
-            minor = 0
-            patch = 0
-        case "minor":
-            minor += 1
-            patch = 0
-        case "patch":
-            patch += 1
-        case _:
-            raise ValueError("Unexpected value")
+    if args.version_increment == "major":
+        major += 1
+        minor = 0
+        patch = 0
+    elif args.version_increment == "minor":
+        minor += 1
+        patch = 0
+    elif args.version_increment == "patch":
+        patch += 1
+    else:
+        raise ValueError("Unexpected value")
 
     new_version = f"{major}.{minor}.{patch}"
 

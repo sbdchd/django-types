@@ -35,7 +35,8 @@ class BaseManager(QuerySet[_T]):
     ) -> Self: ...
     def get_queryset(self) -> QuerySet[_T]: ...
 
-class Manager(BaseManager[_T]): ...
+class Manager(BaseManager[_T]):
+    _queryset_class: type[QuerySet[_T]]
 
 class RelatedManager(Manager[_T]):
     related_val: tuple[int, ...]

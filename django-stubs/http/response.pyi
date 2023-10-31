@@ -9,6 +9,11 @@ from django.http.cookie import SimpleCookie
 from django.template import Context, Template
 from django.test.client import Client
 from django.urls import ResolverMatch
+from django.utils.datastructures import CaseInsensitiveMapping
+
+class ResponseHeaders(CaseInsensitiveMapping[str]):
+    def pop(self, key: str, default: str | None = ...)-> str: ...
+    def setdefault(self, key: str, value: str): ...
 
 class BadHeaderError(ValueError): ...
 

@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Mapping
 from io import BytesIO
 from re import Pattern
-from typing import Any, BinaryIO, overload
+from typing import Any, BinaryIO, TypeVar, overload
 from typing_extensions import Self
 
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -27,12 +27,22 @@ UploadHandlerList = (
     | ImmutableList[uploadhandler.FileUploadHandler]
 )
 
+T = TypeVar("T")
+
 class HttpHeaders(CaseInsensitiveMapping[str]):
     HTTP_PREFIX: str = ...
     UNPREFIXED_HEADERS: set[str] = ...
     def __init__(self, environ: Mapping[str, Any]) -> None: ...
     @classmethod
     def parse_header_name(cls, header: str) -> str | None: ...
+    @classmethod
+    def to_wsgi_name(cls, header: str) -> str: ...
+    @classmethod
+    def to_asgi_name(cls, header: str) -> str: ...
+    @classmethod
+    def to_wsgi_names(cls, headers: Mapping[str, T]) -> Mapping[str, T]: ...
+    @classmethod
+    def to_asgi_names(cls, headers: Mapping[str, T]) -> Mapping[str, T]: ...
 
 class HttpRequest(BytesIO):
     GET: QueryDict = ...

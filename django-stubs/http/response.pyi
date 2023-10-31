@@ -71,7 +71,7 @@ class HttpResponseBase:
     def writelines(self, lines: Iterable[object]) -> Any: ...
     def __iter__(self) -> Iterator[Any]: ...
 
-class HttpResponse(HttpResponseBase):
+class HttpResponse(HttpResponseBase, Iterable[bytes]):
     content: Any
     csrf_cookie_set: bool
     redirect_chain: list[tuple[str, int]]

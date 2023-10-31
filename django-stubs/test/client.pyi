@@ -44,7 +44,7 @@ _RequestData = Any | None
 class RequestFactory:
     json_encoder: type[JSONEncoder]
     defaults: dict[str, str]
-    cookies: SimpleCookie[str]
+    cookies: SimpleCookie
     errors: BytesIO
     def __init__(
         self, *, json_encoder: type[JSONEncoder] = ..., **defaults: Any

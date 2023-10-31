@@ -17,12 +17,13 @@ class ResponseHeaders(CaseInsensitiveMapping[str]):
 
 class BadHeaderError(ValueError): ...
 
-class HttpResponseBase(Iterable[Any]):
-    status_code: int = ...
-    cookies: SimpleCookie = ...
-    reason_phrase: str = ...
-    charset: str = ...
-    closed: bool = ...
+class HttpResponseBase:
+    cookies: SimpleCookie
+    headers: ResponseHeaders
+    charset: str
+    status_code: int
+    reason_phrase: str
+    closed: bool
     def __init__(
         self,
         content_type: str | None = ...,

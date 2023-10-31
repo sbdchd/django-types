@@ -103,6 +103,7 @@ class HttpResponse(HttpResponseBase, Iterable[bytes]):
     def json(self) -> Any: ...
 
 class StreamingHttpResponse(HttpResponseBase):
+    streaming: bool
     streaming_content: Iterable[bytes] | AsyncIterable[bytes]
     def __init__(
         self,

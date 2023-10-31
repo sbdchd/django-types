@@ -3,6 +3,7 @@ from collections.abc import AsyncIterable, AsyncIterator, Iterable, Iterator
 from io import BytesIO
 from json import JSONEncoder
 from typing import Any, overload
+from typing_extensions import Never
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.cookie import SimpleCookie
@@ -10,7 +11,6 @@ from django.template import Context, Template
 from django.test.client import Client
 from django.urls import ResolverMatch
 from django.utils.datastructures import CaseInsensitiveMapping
-from typing_extensions import Never
 
 class ResponseHeaders(CaseInsensitiveMapping[str]):
     def pop(self, key: str, default: str | None = ...) -> str: ...

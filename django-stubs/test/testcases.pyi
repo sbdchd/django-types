@@ -9,7 +9,7 @@ from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
 from django.db import connections as connections  # noqa: F401
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models import Model
-from django.db.models.query import _BaseQuerySet, ValuesQuerySet
+from django.db.models.query import ValuesQuerySet, _BaseQuerySet
 from django.forms.fields import EmailField
 from django.http.response import HttpResponse, HttpResponseBase
 from django.template.base import Template

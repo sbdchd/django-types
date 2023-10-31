@@ -75,7 +75,6 @@ class HttpResponseBase:
     def __iter__(self) -> Iterator[Any]: ...
 
 class HttpResponse(HttpResponseBase, Iterable[bytes]):
-    content: bytes
     csrf_cookie_set: bool
     redirect_chain: list[tuple[str, int]]
     sameorigin: bool
@@ -86,6 +85,7 @@ class HttpResponse(HttpResponseBase, Iterable[bytes]):
     def __init__(self, content: bytes = ..., *args: Any, **kwargs: Any) -> None: ...
     def serialize(self) -> bytes: ...
     @property
+    def content(self) -> bytes: ...
     # Attributes assigned by monkey-patching in test client ClientHandler.__call__()
     wsgi_request: WSGIRequest
     # Attributes assigned by monkey-patching in test client Client.request()

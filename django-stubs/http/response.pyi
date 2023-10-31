@@ -1,5 +1,5 @@
 import datetime
-from collections.abc import AsyncIterable, Iterable, Iterator
+from collections.abc import AsyncIterable, AsyncIterator, Iterable, Iterator
 from io import BytesIO
 from json import JSONEncoder
 from typing import Any, overload
@@ -102,7 +102,7 @@ class HttpResponse(HttpResponseBase, Iterable[bytes]):
     resolver_match: ResolverMatch
     def json(self) -> Any: ...
 
-class StreamingHttpResponse(HttpResponseBase):
+class StreamingHttpResponse(HttpResponseBase, Iterable[bytes], AsyncIterable[bytes]):
     streaming: bool
     streaming_content: Iterable[bytes] | AsyncIterable[bytes]
     def __init__(
@@ -114,6 +114,8 @@ class StreamingHttpResponse(HttpResponseBase):
     def getvalue(self) -> bytes: ...
     @property
     def content(self) -> Never: ...
+    def __iter__(self) -> Iterator[bytes]: ...
+    def __aiter__(self) -> AsyncIterator[bytes]: ...
 
 class FileResponse(StreamingHttpResponse):
     client: Client

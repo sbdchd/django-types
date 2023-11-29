@@ -1,17 +1,14 @@
 import decimal
 from collections.abc import Callable, Iterable, Iterator, Mapping
-from contextlib import AbstractContextManager, contextmanager
+from contextlib import AbstractContextManager
 from decimal import Decimal
 from types import TracebackType
-from io import StringIO
 from typing import Any, TypeVar, overload
 from typing_extensions import Self
 
 from django.apps.registry import Apps
 from django.conf import LazySettings, Settings
 from django.core.checks.registry import CheckRegistry
-from django.db.models.lookups import Lookup, Transform
-from django.db.models.query_utils import RegisterLookupMixin
 from django.db import DefaultConnectionProxy
 from django.test.runner import DiscoverRunner
 from django.test.testcases import SimpleTestCase
@@ -142,40 +139,4 @@ class isolate_apps(TestContextDecorator):
     def __init__(self, *installed_apps: Any, **kwargs: Any) -> None: ...
     old_apps: Apps = ...
 
-@contextmanager
-def extend_sys_path(*paths: str) -> Iterator[None]: ...
-@contextmanager
-def captured_output(stream_name: Any) -> Iterator[StringIO]: ...
-@contextmanager
-def captured_stdin() -> Iterator[StringIO]: ...
-@contextmanager
-def captured_stdout() -> Iterator[StringIO]: ...
-@contextmanager
-def captured_stderr() -> Iterator[StringIO]: ...
-@contextmanager
-def freeze_time(t: float) -> Iterator[None]: ...
 def tag(*tags: str) -> Callable[[_T], _T]: ...
-
-_Signature = str
-_TestDatabase = tuple[str, list[str]]
-
-def dependency_ordered(
-    test_databases: Iterable[tuple[_Signature, _TestDatabase]],
-    dependencies: Mapping[str, list[str]],
-) -> list[tuple[_Signature, _TestDatabase]]: ...
-def get_unique_databases_and_mirrors() -> (
-    tuple[dict[_Signature, _TestDatabase], dict[str, Any]]
-): ...
-def teardown_databases(
-    old_config: Iterable[tuple[Any, str, bool]],
-    verbosity: int,
-    parallel: int = ...,
-    keepdb: bool = ...,
-) -> None: ...
-def require_jinja2(test_func: _C) -> _C: ...
-@contextmanager
-def register_lookup(
-    field: type[RegisterLookupMixin],
-    *lookups: type[Lookup[Any] | Transform],
-    lookup_name: str | None = ...
-) -> Iterator[None]: ...

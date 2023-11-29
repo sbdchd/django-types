@@ -10,6 +10,7 @@ from django.conf import LazySettings, Settings
 from django.core.checks.registry import CheckRegistry
 from django.db.models.lookups import Lookup, Transform
 from django.db.models.query_utils import RegisterLookupMixin
+from django.db import DefaultConnectionProxy
 from django.test.runner import DiscoverRunner
 from django.test.testcases import SimpleTestCase
 
@@ -34,6 +35,17 @@ class _TestState: ...
 
 def setup_test_environment(debug: bool | None = ...) -> None: ...
 def teardown_test_environment() -> None: ...
+def setup_databases(
+    verbosity: int,
+    interactive: bool,
+    *,
+    time_keeper: Any | None = ...,
+    keepdb: bool = ...,
+    debug_sql: bool = ...,
+    parallel: int = ...,
+    aliases: Iterable[str] | None = ...,
+    **kwargs: Any
+) -> list[tuple[DefaultConnectionProxy, str, bool]]: ...
 def get_runner(
     settings: LazySettings, test_runner_class: str | None = ...
 ) -> type[DiscoverRunner]: ...

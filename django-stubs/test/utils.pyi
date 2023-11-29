@@ -5,6 +5,7 @@ from decimal import Decimal
 from types import TracebackType
 from io import StringIO
 from typing import Any, TypeVar, overload
+from typing_extensions import Self
 
 from django.apps.registry import Apps
 from django.conf import LazySettings, Settings
@@ -111,7 +112,7 @@ class CaptureQueriesContext:
     def __len__(self) -> int: ...
     @property
     def captured_queries(self) -> list[dict[str, str]]: ...
-    def __enter__(self) -> CaptureQueriesContext: ...
+    def __enter__(self) -> Self: ...
     def __exit__(self, exc_type: None, exc_value: None, traceback: None) -> None: ...
 
 class ignore_warnings(TestContextDecorator):

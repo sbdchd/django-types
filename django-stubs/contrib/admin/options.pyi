@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from collections.abc import Callable, Iterator, Mapping, Sequence
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, Iterable, TypeVar
 from typing_extensions import Literal, TypedDict
 
 from django.contrib.admin.filters import ListFilter
@@ -126,6 +126,9 @@ class BaseModelAdmin(Generic[_ModelT]):
     def get_sortable_by(
         self, request: HttpRequest
     ) -> list[Callable[..., Any]] | list[str] | tuple[Any, ...]: ...
+    def get_inlines(
+        self, request: HttpRequest, obj: _ModelT | None
+    ) -> Iterable[type[InlineModelAdmin[Any]]]: ...
     def lookup_allowed(self, lookup: str, value: str) -> bool: ...
     def to_field_allowed(self, request: HttpRequest, to_field: str) -> bool: ...
     def has_add_permission(self, request: HttpRequest) -> bool: ...

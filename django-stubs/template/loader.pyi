@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.http.request import HttpRequest
-from django.template.base import Template
+from django.template.backends.django import Template
 from django.template.exceptions import (  # noqa: F401
     TemplateDoesNotExist as TemplateDoesNotExist,
 )

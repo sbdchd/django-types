@@ -1,6 +1,7 @@
 from collections.abc import Iterator
 from typing import Any
 
+from django.template import base
 from django.template.engine import Engine
 from django.template.exceptions import TemplateDoesNotExist
 
@@ -12,6 +13,14 @@ class DjangoTemplates(BaseEngine):
     def get_templatetag_libraries(
         self, custom_libraries: dict[str, str]
     ) -> dict[str, str]: ...
+
+class Template:
+    template: base.Template
+    backend: BaseEngine
+    def __init__(self, template: base.Template, backend: BaseEngine) -> None: ...
+    @property
+    def origin(self) -> base.Origin: ...
+    def render(self, context: Any = ..., request: Any = ...) -> str: ...
 
 def copy_exception(
     exc: TemplateDoesNotExist, backend: DjangoTemplates | None = ...

@@ -1,4 +1,4 @@
-from collections.abc import Iterator, Mapping, Sequence
+from collections.abc import Iterator, Mapping
 from typing import Any
 
 from django.core.exceptions import ValidationError as ValidationError

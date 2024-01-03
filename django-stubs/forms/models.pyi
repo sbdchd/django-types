@@ -280,7 +280,6 @@ class ModelChoiceField(ChoiceField):
 
 class ModelMultipleChoiceField(ModelChoiceField):
     disabled: bool
-    empty_label: None
     help_text: str
     required: bool
     show_hidden_initial: bool

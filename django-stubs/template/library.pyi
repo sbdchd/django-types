@@ -81,12 +81,23 @@ class Library:
         **flags: Any,
     ) -> Callable[P, T]: ...
     def filter_function(self, func: Callable[P, T], **flags: Any) -> Callable[P, T]: ...
+
+    # func is None
+    @overload
     def simple_tag(
         self,
-        func: Callable[..., Any] | str | None = ...,
+        func: None = ...,
         takes_context: bool | None = ...,
         name: str | None = ...,
-    ) -> Callable[..., Any]: ...
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+    # func is callable
+    @overload
+    def simple_tag(
+        self,
+        func: Callable[P, T],
+        takes_context: bool | None = ...,
+        name: str | None = ...,
+    ) -> Callable[P, T]: ...
     def inclusion_tag(
         self,
         filename: Template | str,

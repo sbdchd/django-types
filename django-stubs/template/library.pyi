@@ -80,9 +80,7 @@ class Library:
         filter_func: Callable[P, T],
         **flags: Any,
     ) -> Callable[P, T]: ...
-    def filter_function(
-        self, func: Callable[..., Any], **flags: Any
-    ) -> Callable[..., Any]: ...
+    def filter_function(self, func: Callable[P, T], **flags: Any) -> Callable[P, T]: ...
     def simple_tag(
         self,
         func: Callable[..., Any] | str | None = ...,

@@ -47,12 +47,39 @@ class Library:
         compile_function: Callable[P, T],
     ) -> Callable[P, T]: ...
     def tag_function(self, func: Callable[P, T]) -> Callable[P, T]: ...
+
+    # Both arguments None
+    @overload
     def filter(
         self,
-        name: Callable[..., Any] | str | None = ...,
-        filter_func: Callable[..., Any] | str | None = ...,
-        **flags: Any
-    ) -> Callable[..., Any]: ...
+        name: None = ...,
+        filter_func: None = ...,
+        **flags: Any,
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+    # Only name as string
+    @overload
+    def filter(
+        self,
+        name: str = ...,
+        filter_func: None = ...,
+        **flags: Any,
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+    # Only name as callable
+    @overload
+    def filter(
+        self,
+        name: Callable[P, T],
+        filter_func: None = ...,
+        **flags: Any,
+    ) -> Callable[P, T]: ...
+    # Both arguments
+    @overload
+    def filter(
+        self,
+        name: str,
+        filter_func: Callable[P, T],
+        **flags: Any,
+    ) -> Callable[P, T]: ...
     def filter_function(
         self, func: Callable[..., Any], **flags: Any
     ) -> Callable[..., Any]: ...

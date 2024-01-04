@@ -1,5 +1,6 @@
 from collections.abc import Callable
-from typing import Any
+from typing import Any, TypeVar, overload
+from typing_extensions import ParamSpec
 
 from django.template.base import FilterExpression, Origin, Parser, Token
 from django.template.context import Context
@@ -7,17 +8,44 @@ from django.utils.safestring import SafeText
 
 from .base import Node, Template
 
+T = TypeVar("T")
+P = ParamSpec("P")
+
 class InvalidTemplateLibrary(Exception): ...
 
 class Library:
     filters: dict[str, Callable[..., Any]] = ...
     tags: dict[str, Callable[..., Any]] = ...
     def __init__(self) -> None: ...
+
+    # Both arguments None
+    @overload
     def tag(
         self,
-        name: Callable[..., Any] | str | None = ...,
-        compile_function: Callable[..., Any] | str | None = ...,
-    ) -> Callable[..., Any]: ...
+        name: None = ...,
+        compile_function: None = ...,
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+    # Only name as function
+    @overload
+    def tag(
+        self,
+        name: Callable[P, T],
+        compile_function: None = ...,
+    ) -> Callable[P, T]: ...
+    # Only name as string
+    @overload
+    def tag(
+        self,
+        name: str,
+        compile_function: None = ...,
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+    # Both arguments specified
+    @overload
+    def tag(
+        self,
+        name: str,
+        compile_function: Callable[P, T],
+    ) -> Callable[P, T]: ...
     def tag_function(self, func: Callable[..., Any]) -> Callable[..., Any]: ...
     def filter(
         self,

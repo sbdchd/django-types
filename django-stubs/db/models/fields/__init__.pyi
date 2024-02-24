@@ -3,7 +3,7 @@ import ipaddress
 import uuid
 from collections.abc import Callable, Iterable, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any, Generic, TypeVar, overload
+from typing import Any, Generic, Mapping, TypeVar, overload
 from typing_extensions import Literal, Self
 
 from django.core.checks import CheckMessage
@@ -17,7 +17,9 @@ BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 
 _Choice = tuple[Any, str]
 _ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
+_ChoicesMapping = Mapping[Any, str | Mapping[Any, str]]
+_LiteralFieldChoices = Iterable[_Choice | _ChoiceNamedGroup] | _ChoicesMapping
+_FieldChoices = _LiteralFieldChoices | Callable[[], _LiteralFieldChoices]
 
 _ValidatorCallable = Callable[..., None]
 _ErrorMessagesToOverride = dict[str, Any]

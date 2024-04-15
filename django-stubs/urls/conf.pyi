@@ -32,6 +32,13 @@ def path(
     kwargs: dict[str, Any] = ...,
     name: str = ...,
 ) -> URLResolver: ...
+@overload
+def path(
+    route: str,
+    view: tuple[list[URLResolver | URLPattern], str, str],
+    kwargs: dict[str, Any] = ...,
+    name: str = ...,
+) -> URLResolver: ...
 
 # re_path()
 @overload

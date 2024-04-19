@@ -9,7 +9,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.base import Model
-from django.db.models.manager import EmptyManager
+from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
 
 _AnyUser = Model | AnonymousUser
 
@@ -34,6 +34,7 @@ class Permission(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     codename = models.CharField(max_length=100)
     def natural_key(self) -> tuple[str, str, str]: ...
+    group_set = ManyToManyRelatedManager["Group", "Permission"]()
 
 _GroupT = TypeVar("_GroupT", bound=Group)
 
@@ -46,6 +47,7 @@ class Group(models.Model):
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
     def natural_key(self) -> tuple[str, ...]: ...
+    user_set = ManyToManyRelatedManager["PermissionsMixin", "Group"]()
 
 class UserManager(BaseUserManager[_T]):
     def create_user(

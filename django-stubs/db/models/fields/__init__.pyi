@@ -720,7 +720,7 @@ class SlugField(CharField[_C]):
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
-        allow_unicode: bool = ...
+        allow_unicode: bool = ...,
     ) -> SlugField[str]: ...
     @overload
     def __new__(
@@ -747,7 +747,7 @@ class SlugField(CharField[_C]):
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
-        allow_unicode: bool = ...
+        allow_unicode: bool = ...,
     ) -> SlugField[str | None]: ...
 
 class EmailField(CharField[_C]):

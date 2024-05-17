@@ -61,4 +61,5 @@ class UniqueConstraint(BaseConstraint):
         include: str | Sequence[str] | None = ...,
         opclasses: Sequence[str] = ...,
         violation_error_message: str | None = ...,
+        nulls_distinct: bool | None = ...,
     ) -> None: ...

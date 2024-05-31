@@ -91,7 +91,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     username_validator: UnicodeUsernameValidator = ...
 
     username = models.CharField(max_length=150)
-    first_name = models.CharField(max_length=30, blank=True)
+    first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(blank=True)
     is_staff = models.BooleanField()

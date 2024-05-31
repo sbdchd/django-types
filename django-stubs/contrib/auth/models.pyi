@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models.base import Model
 from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
 
-_AnyUser = Model | AnonymousUser
+_AnyUser = AbstractUser | AnonymousUser
 
 _T = TypeVar("_T", bound=Model)
 

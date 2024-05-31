@@ -46,7 +46,7 @@ class Group(models.Model):
 
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
-    def natural_key(self) -> tuple[str, ...]: ...
+    def natural_key(self) -> tuple[str]: ...
     user_set = ManyToManyRelatedManager["PermissionsMixin", "Group"]()
 
 class UserManager(BaseUserManager[_T]):

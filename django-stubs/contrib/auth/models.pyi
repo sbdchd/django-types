@@ -106,8 +106,9 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         self, subject: str, message: str, from_email: str | None = ..., **kwargs: Any
     ) -> None: ...
 
-class User(AbstractUser):
     objects: ClassVar[UserManager[Self]]  # type: ignore[assignment]
+
+class User(AbstractUser): ...
 
 class AnonymousUser:
     id: Any = ...

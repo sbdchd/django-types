@@ -50,6 +50,7 @@ class Group(models.Model):
     user_set = ManyToManyRelatedManager["PermissionsMixin", "Group"]()
 
 class UserManager(BaseUserManager[_T]):
+    use_in_migrations: bool = ...
     def create_user(
         self,
         username: str,

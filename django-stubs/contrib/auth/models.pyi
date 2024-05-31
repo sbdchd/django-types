@@ -72,7 +72,7 @@ class UserManager(BaseUserManager[_T]):
         include_superusers: bool = ...,
         backend: type[ModelBackend] | str | None = ...,
         obj: Model | None = ...,
-    ) -> Any: ...
+    ) -> Self | UserManager[_T]: ...
 
 class PermissionsMixin(models.Model):
     is_superuser = models.BooleanField()

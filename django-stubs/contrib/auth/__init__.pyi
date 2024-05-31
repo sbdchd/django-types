@@ -2,7 +2,7 @@ from typing import Any
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models.options import Options
 from django.http.request import HttpRequest
 from django.test.client import Client
@@ -18,7 +18,9 @@ REDIRECT_FIELD_NAME: str
 
 def load_backend(path: str) -> ModelBackend: ...
 def get_backends() -> list[ModelBackend]: ...
-def authenticate(request: HttpRequest = ..., **credentials: Any) -> AbstractBaseUser | None: ...
+def authenticate(
+    request: HttpRequest | None = ..., **credentials: Any
+) -> AbstractUser | None: ...
 def login(
     request: HttpRequest,
     user: AbstractBaseUser | None,

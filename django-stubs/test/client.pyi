@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from io import BytesIO
 from json import JSONEncoder
 from re import Pattern
@@ -36,6 +37,13 @@ class ClientHandler(BaseHandler):
     ) -> None: ...
     def __call__(self, environ: dict[str, Any]) -> HttpResponseBase: ...
 
+class AsyncClientHandler(BaseHandler):
+    enforce_csrf_checks: bool = ...
+    def __init__(
+        self, enforce_csrf_checks: bool = ..., *args: Any, **kwargs: Any
+    ) -> None: ...
+    async def __call__(self, scope: dict[str, Any]) -> HttpResponseBase: ...
+
 def encode_multipart(boundary: str, data: dict[str, Any]) -> bytes: ...
 def encode_file(boundary: str, key: str, file: Any) -> list[bytes]: ...
 
@@ -47,7 +55,11 @@ class RequestFactory:
     cookies: SimpleCookie
     errors: BytesIO
     def __init__(
-        self, *, json_encoder: type[JSONEncoder] = ..., **defaults: Any
+        self,
+        *,
+        json_encoder: type[JSONEncoder] = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **defaults: Any,
     ) -> None: ...
     def request(self, **request: Any) -> WSGIRequest: ...
     def get(
@@ -57,7 +69,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def post(
         self,
@@ -67,7 +80,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def head(
         self,
@@ -76,10 +90,17 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def trace(
-        self, path: str, secure: bool = ..., *, QUERY_STRING: str = ..., **extra: str
+        self,
+        path: str,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def options(
         self,
@@ -89,7 +110,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def put(
         self,
@@ -99,7 +121,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def patch(
         self,
@@ -109,7 +132,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def delete(
         self,
@@ -119,7 +143,8 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
     def generic(
         self,
@@ -130,20 +155,23 @@ class RequestFactory:
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> WSGIRequest: ...
 
 class Client(RequestFactory):
     handler: ClientHandler
     raise_request_exception: bool
     exc_info: tuple[type[BaseException], BaseException, TracebackType] | None
+    headers: dict[str, Any]
     def __init__(
         self,
         enforce_csrf_checks: bool = ...,
         raise_request_exception: bool = ...,
         *,
         json_encoder: type[JSONEncoder] = ...,
-        **defaults: Any
+        headers: Mapping[str, Any] | None = ...,
+        **defaults: Any,
     ) -> None: ...
     # Silence type warnings, since this class overrides arguments and return types in an unsafe manner.
     def request(self, **request: Any) -> HttpResponse: ...  # type: ignore [override]
@@ -155,7 +183,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def post(  # type: ignore [override]
         self,
@@ -166,7 +195,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def head(  # type: ignore [override]
         self,
@@ -176,7 +206,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def trace(  # type: ignore [override]
         self,
@@ -186,7 +217,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def options(  # type: ignore [override]
         self,
@@ -197,7 +229,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def put(  # type: ignore [override]
         self,
@@ -208,7 +241,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def patch(  # type: ignore [override]
         self,
@@ -219,7 +253,8 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def delete(  # type: ignore [override]
         self,
@@ -230,7 +265,128 @@ class Client(RequestFactory):
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
-        **extra: str
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    def store_exc_info(self, **kwargs: Any) -> None: ...
+    @property
+    def session(self) -> SessionBase: ...
+    def login(self, **credentials: Any) -> bool: ...
+    def force_login(
+        self, user: AbstractBaseUser, backend: str | None = ...
+    ) -> None: ...
+    def logout(self) -> None: ...
+
+class AsyncRequestFactory(RequestFactory): ...
+
+class AsyncClient(AsyncRequestFactory):
+    handler: AsyncClientHandler
+    raise_request_exception: bool
+    exc_info: tuple[type[BaseException], BaseException, TracebackType] | None
+    headers: dict[str, Any]
+    def __init__(
+        self,
+        enforce_csrf_checks: bool = ...,
+        raise_request_exception: bool = ...,
+        *,
+        json_encoder: type[JSONEncoder] = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **defaults: Any,
+    ) -> None: ...
+    # Silence type warnings, since this class overrides arguments and return types in an unsafe manner.
+    async def request(self, **request: Any) -> HttpResponse: ...  # type: ignore [override]
+    async def get(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def post(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def head(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def trace(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def options(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def put(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def patch(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    async def delete(  # type: ignore [override]
+        self,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        headers: Mapping[str, Any] | None = ...,
+        **extra: str,
     ) -> HttpResponse: ...
     def store_exc_info(self, **kwargs: Any) -> None: ...
     @property

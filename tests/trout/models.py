@@ -43,6 +43,28 @@ from django.views.decorators.http import (
 from psycopg2.extras import execute_values
 
 
+class CustomChoices(models.enums.Choices):
+    A = "B", "A"
+
+    def go(self) -> None:
+        pass
+
+
+CustomChoices.values[0].go()
+CustomChoices.choices[0][0].go()
+
+
+class CustomIntegerChoices(models.enums.IntegerChoices):
+    A = 1, "A"
+
+    def go(self) -> None:
+        pass
+
+
+CustomIntegerChoices.values[0].go()
+CustomIntegerChoices.choices[0][0].go()
+
+
 class User(models.Model):
     pass
 

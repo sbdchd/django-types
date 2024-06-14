@@ -1,3 +1,11 @@
-from typing import Any
+from collections.abc import Callable
+from typing import Any, TypeVar, overload
 
-def deconstructible(*args: Any, path: Any | None = ...) -> Any: ...
+T = TypeVar("T")
+
+@overload
+def deconstructible(klass: type[T]) -> type[T]: ...
+@overload
+def deconstructible(
+    *args: Any, path: str | None = ...
+) -> Callable[[type[T]], type[T]]: ...

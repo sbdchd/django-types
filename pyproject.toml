@@ -11,7 +11,7 @@ keywords = ["django", "types", "mypy", "stubs"]
 packages = [{ include = "django-stubs" }]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 types-psycopg2 = ">=2.9.21.13"
 
 [tool.poetry.dev-dependencies]

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Dropped support for Python < 3.8 ([Python 3.7 reached end-of-life on 2023-06-06](https://peps.python.org/pep-0537/#schedule-last-security-only-release))
+- Dropped support for Django < 4.2 LTS ([Django 3.2 LTS left extended support on 2024-04-01](https://www.djangoproject.com/download/#unsupported-versions))
+
 ## 0.5.2 - 2021-04-13
 
 ### Fixed

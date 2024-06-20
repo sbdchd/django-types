@@ -225,7 +225,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
 
 class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         name: str | None = ...,
@@ -945,7 +945,7 @@ _B = TypeVar("_B", bound=bool | None)
 
 class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         name: str | None = ...,

@@ -3,7 +3,7 @@ from typing import Any
 from typing_extensions import override
 
 from django.http.request import HttpRequest
-from django.template.backends.base import BaseEngine, BaseTemplate
+from django.template.backends.base import BaseEngine, _BaseTemplate
 from django.template.backends.django import Template as DjangoTemplate
 from django.template.backends.jinja2 import Template as Jinja2Template
 from django.utils.safestring import SafeText
@@ -13,7 +13,7 @@ def get_default_renderer() -> BaseRenderer: ...
 class BaseRenderer:
     form_template_name: str
     formset_template_name: str
-    def get_template(self, template_name: str) -> BaseTemplate: ...
+    def get_template(self, template_name: str) -> _BaseTemplate: ...
     def render(
         self,
         template_name: str,
@@ -23,7 +23,7 @@ class BaseRenderer:
 
 class EngineMixin:
     backend: BaseEngine
-    def get_template(self, template_name: str) -> BaseTemplate: ...
+    def get_template(self, template_name: str) -> _BaseTemplate: ...
     @property
     def engine(self) -> BaseEngine: ...
 

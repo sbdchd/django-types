@@ -3,7 +3,6 @@ from typing import Any, ClassVar
 
 from django.core.exceptions import ValidationError as ValidationError
 from django.core.files import uploadedfile
-from django.db.models.options import Options
 from django.forms.boundfield import BoundField
 from django.forms.fields import Field
 from django.forms.renderers import BaseRenderer
@@ -15,7 +14,6 @@ from django.utils.safestring import SafeText
 class DeclarativeFieldsMetaclass(MediaDefiningClass): ...
 
 class BaseForm(RenderableFormMixin):
-    _meta: Options[Any]
     default_renderer: type[BaseRenderer] = ...
     field_order: list[str] | None = ...
     use_required_attribute: bool = ...

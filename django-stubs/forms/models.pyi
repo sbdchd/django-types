@@ -99,7 +99,7 @@ class BaseModelForm(BaseForm):
     def save(self, commit: bool = ...) -> Any: ...
 
 class ModelForm(BaseModelForm, metaclass=ModelFormMetaclass):
-    base_fields: ClassVar[dict[str, Field]] = ...
+    _meta: ClassVar[ModelFormOptions]
 
 def modelform_factory(
     model: type[Model],

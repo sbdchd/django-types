@@ -7,7 +7,7 @@ from collections.abc import (
     Sequence,
 )
 from datetime import datetime
-from typing import Any, ClassVar, TypeVar
+from typing import Any, ClassVar, Protocol, TypeVar
 from typing_extensions import Literal
 from unittest.mock import MagicMock
 from uuid import UUID
@@ -33,6 +33,11 @@ _ErrorMessages = dict[str, dict[str, str]]
 
 _M = TypeVar("_M", bound=Model)
 
+# Modeled from example:
+# https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/#overriding-the-default-fields
+class FormFieldCallback(Protocol):
+    def __call__(self, db_field: models.Field[Any, Any], **kwargs: Any) -> Field: ...
+
 def construct_instance(
     form: BaseForm,
     instance: _M,
@@ -47,7 +52,7 @@ def fields_for_model(
     fields: _Fields | None = ...,
     exclude: _Fields | None = ...,
     widgets: dict[str, type[Input]] | dict[str, Widget] | None = ...,
-    formfield_callback: Callable[..., Any] | str | None = ...,
+    formfield_callback: FormFieldCallback | None = ...,
     localized_fields: tuple[str] | str | None = ...,
     labels: _Labels | None = ...,
     help_texts: dict[str, str] | None = ...,
@@ -67,6 +72,7 @@ class ModelFormOptions:
     help_texts: dict[str, str] | None = ...
     error_messages: _ErrorMessages | None = ...
     field_classes: dict[str, type[Field]] | None = ...
+    formfield_callback: FormFieldCallback | None = ...
     def __init__(self, options: type | None = ...) -> None: ...
 
 class ModelFormMetaclass(DeclarativeFieldsMetaclass): ...

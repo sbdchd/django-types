@@ -7,7 +7,7 @@ from collections.abc import (
     Sequence,
 )
 from datetime import datetime
-from typing import Any, ClassVar, TypeVar
+from typing import Any, ClassVar, Protocol, TypeVar
 from typing_extensions import Literal
 from unittest.mock import MagicMock
 from uuid import UUID
@@ -33,6 +33,11 @@ _ErrorMessages = dict[str, dict[str, str]]
 
 _M = TypeVar("_M", bound=Model)
 
+# Modeled from example:
+# https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/#overriding-the-default-fields
+class FormFieldCallback(Protocol):
+    def __call__(self, db_field: models.Field[Any, Any], **kwargs: Any) -> Field: ...
+
 def construct_instance(
     form: BaseForm,
     instance: _M,
@@ -42,12 +47,13 @@ def construct_instance(
 def model_to_dict(
     instance: Model, fields: _Fields | None = ..., exclude: _Fields | None = ...
 ) -> dict[str, Any]: ...
+def apply_limit_choices_to_to_formfield(formfield: Field) -> None: ...
 def fields_for_model(
     model: type[Model],
     fields: _Fields | None = ...,
     exclude: _Fields | None = ...,
     widgets: dict[str, type[Input]] | dict[str, Widget] | None = ...,
-    formfield_callback: Callable[..., Any] | str | None = ...,
+    formfield_callback: FormFieldCallback | None = ...,
     localized_fields: tuple[str] | str | None = ...,
     labels: _Labels | None = ...,
     help_texts: dict[str, str] | None = ...,
@@ -58,15 +64,16 @@ def fields_for_model(
 ) -> dict[str, Any]: ...
 
 class ModelFormOptions:
-    model: type[Model] | None = ...
-    fields: _Fields | None = ...
-    exclude: _Fields | None = ...
-    widgets: dict[str, Widget | Input] | None = ...
-    localized_fields: tuple[str] | str | None = ...
-    labels: _Labels | None = ...
-    help_texts: dict[str, str] | None = ...
-    error_messages: _ErrorMessages | None = ...
-    field_classes: dict[str, type[Field]] | None = ...
+    model: type[Model] | None
+    fields: _Fields | None
+    exclude: _Fields | None
+    widgets: dict[str, Widget | Input] | None
+    localized_fields: tuple[str] | str | None
+    labels: _Labels | None
+    help_texts: dict[str, str] | None
+    error_messages: _ErrorMessages | None
+    field_classes: dict[str, type[Field]] | None
+    formfield_callback: FormFieldCallback | None
     def __init__(self, options: type | None = ...) -> None: ...
 
 class ModelFormMetaclass(DeclarativeFieldsMetaclass): ...
@@ -92,7 +99,7 @@ class BaseModelForm(BaseForm):
     def save(self, commit: bool = ...) -> Any: ...
 
 class ModelForm(BaseModelForm, metaclass=ModelFormMetaclass):
-    base_fields: ClassVar[dict[str, Field]] = ...
+    _meta: ClassVar[ModelFormOptions]
 
 def modelform_factory(
     model: type[Model],

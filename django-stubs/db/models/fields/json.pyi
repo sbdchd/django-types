@@ -1,7 +1,7 @@
 import json
 from collections.abc import Callable, Iterable
 from typing import Any, TypeVar, overload
-from typing_extensions import Literal
+from typing_extensions import Literal, Self
 
 from django.db.models import lookups
 from django.db.models.expressions import Combinable
@@ -135,6 +135,8 @@ class KeyTransform(Transform):
 class KeyTextTransform(KeyTransform):
     postgres_operator: str = ...
     postgres_nested_operator: str = ...
+    @classmethod
+    def from_lookup(cls, lookup: str) -> Self: ...
 
 class KeyTransformTextLookupMixin:
     def __init__(self, key_transform: Any, *args: Any, **kwargs: Any) -> None: ...
@@ -187,4 +189,4 @@ class KeyTransformFactory:
     def __init__(self, key_name: Any) -> None: ...
     def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
 
-KT: KeyTextTransform = ...
+KT = KeyTextTransform.from_lookup

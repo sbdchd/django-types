@@ -20,7 +20,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
     def get_transform(self, name: Any) -> Any: ...
     def value_to_string(self, obj: Any) -> Any: ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,

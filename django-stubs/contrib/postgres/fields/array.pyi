@@ -17,7 +17,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
     from_db_value: Any = ...
     base_field: Field[_V, _V] = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         base_field: Field[Any, _V],
         size: int | None = ...,

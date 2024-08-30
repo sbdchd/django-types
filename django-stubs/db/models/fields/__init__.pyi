@@ -114,7 +114,7 @@ _I = TypeVar("_I", bound=int | None)
 
 class IntegerField(Generic[_I], Field[_I | Combinable, _I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -173,7 +173,7 @@ class PositiveIntegerRelDbTypeMixin:
 
 class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -284,7 +284,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
 
 class SmallIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -340,7 +340,7 @@ class SmallIntegerField(IntegerField[_I]):
 
 class BigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -396,7 +396,7 @@ class BigIntegerField(IntegerField[_I]):
 
 class PositiveBigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -454,7 +454,7 @@ _F = TypeVar("_F", bound=float | None)
 
 class FloatField(Generic[_F], Field[_F | Combinable, _F]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -515,7 +515,7 @@ class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
     max_digits: int = ...
     decimal_places: int = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -677,7 +677,7 @@ _C = TypeVar("_C", bound=str | None)
 
 class CharField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -737,7 +737,7 @@ class CharField(Generic[_C], Field[_C | Combinable, _C]):
 
 class SlugField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -797,7 +797,7 @@ class SlugField(CharField[_C]):
 
 class EmailField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -855,7 +855,7 @@ class EmailField(CharField[_C]):
 
 class URLField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -913,7 +913,7 @@ class URLField(CharField[_C]):
 
 class TextField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1030,7 +1030,7 @@ class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
 
 class IPAddressField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1089,7 +1089,7 @@ class GenericIPAddressField(
     Field[_C | ipaddress.IPv4Address | ipaddress.IPv6Address | Combinable, _C],
 ):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1156,7 +1156,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1225,7 +1225,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1294,7 +1294,7 @@ class DateTimeField(DateField[_DT]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1360,7 +1360,7 @@ _U = TypeVar("_U", bound=uuid.UUID | None)
 
 class UUIDField(Generic[_U], Field[str | _U, _U]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1421,7 +1421,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
     allow_files: bool = ...
     allow_folders: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1489,7 +1489,7 @@ _BIN = TypeVar("_BIN", bound=bytes | None)
 
 class BinaryField(Generic[_BIN], Field[_BIN | bytearray | memoryview, _BIN]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,
@@ -1551,7 +1551,7 @@ _TD = TypeVar("_TD", bound=timedelta | None)
 
 class DurationField(Generic[_TD], Field[_TD, _TD]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
         *,

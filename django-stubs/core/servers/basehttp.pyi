@@ -28,8 +28,8 @@ class WSGIRequestHandler(simple_server.WSGIRequestHandler):
     close_connection: bool
     connection: WSGIRequest
     request: WSGIRequest
-    rfile: BytesIO
-    wfile: BytesIO
+    rfile: BytesIO  # pyright: ignore[reportIncompatibleVariableOverride]
+    wfile: BytesIO  # pyright: ignore[reportIncompatibleVariableOverride]
     protocol_version: str = ...
     def address_string(self) -> str: ...
     def log_message(self, format: str, *args: Any) -> None: ...

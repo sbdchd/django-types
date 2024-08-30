@@ -67,7 +67,7 @@ class GenericForeignKey(FieldCacheMixin):
     def __set__(self, instance: Model, value: Any | None) -> None: ...
 
 class GenericRel(ForeignObjectRel):
-    field: GenericRelation
+    field: GenericRelation  # pyright: ignore[reportIncompatibleVariableOverride]
     def __init__(
         self,
         field: GenericRelation,

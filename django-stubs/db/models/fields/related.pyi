@@ -54,10 +54,10 @@ _ErrorMessagesToOverride = dict[str, Any]
 RECURSIVE_RELATIONSHIP_CONSTANT: str = ...
 
 class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
-    one_to_many: bool = ...
-    one_to_one: bool = ...
-    many_to_many: bool = ...
-    many_to_one: bool = ...
+    one_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
+    one_to_one: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
+    many_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
+    many_to_one: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     related_model: type[_GT] = ...
     opts: Any = ...
     def get_forward_related_filter(self, obj: Model) -> dict[str, int | UUID]: ...
@@ -74,10 +74,18 @@ class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
 _M = TypeVar("_M", bound=Model | None)
 
 class ForeignObject(Generic[_M], RelatedField[_M, _M]):
-    one_to_many: Literal[False] = ...
-    one_to_one: Literal[False] = ...
-    many_to_many: Literal[False] = ...
-    many_to_one: Literal[True] = ...
+    one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
+    one_to_one: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
+    many_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
+    many_to_one: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        True
+    ] = ...
     related_model: type[_M] = ...
     @overload
     def __new__(
@@ -86,6 +94,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
         to_fields: Sequence[str],
+        *,
         rel: ForeignObjectRel | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -99,7 +108,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _M | Callable[[], _M] | None = ...,
         editable: bool = ...,
@@ -122,6 +131,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         on_delete: _OnDeleteOptions,
         from_fields: Sequence[str],
         to_fields: Sequence[str],
+        *,
         rel: ForeignObjectRel | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -135,7 +145,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _M | Callable[[], _M] = ...,
         editable: bool = ...,
@@ -163,6 +173,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         cls,
         to: type[_M] | str,
         on_delete: _OnDeleteOptions,
+        *,
         to_field: str | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -176,7 +187,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _M | Callable[[], _M] | None = ...,
         editable: bool = ...,
@@ -197,6 +208,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         cls,
         to: type[_M] | str,
         on_delete: _OnDeleteOptions,
+        *,
         to_field: str | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -210,7 +222,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _M | Callable[[], _M] = ...,
         editable: bool = ...,
@@ -247,6 +259,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         cls,
         to: type[_M] | str,
         on_delete: _OnDeleteOptions,
+        *,
         to_field: str | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -260,7 +273,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         max_length: int | None = ...,
         unique: Literal[True] = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _M | Callable[[], _M] | None = ...,
         editable: bool = ...,
@@ -281,6 +294,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         cls,
         to: type[_M] | str,
         on_delete: _OnDeleteOptions,
+        *,
         to_field: str | None = ...,
         related_name: str | None = ...,
         related_query_name: str | None = ...,
@@ -294,7 +308,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         max_length: int | None = ...,
         unique: Literal[True] = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _M | Callable[[], _M] = ...,
         editable: bool = ...,
@@ -326,10 +340,18 @@ _MN = TypeVar("_MN", bound=Model)
 class ManyToManyField(
     Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]
 ):
-    one_to_many: Literal[False] = ...
-    one_to_one: Literal[False] = ...
-    many_to_many: Literal[True] = ...
-    many_to_one: Literal[False] = ...
+    one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
+    one_to_one: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
+    many_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        True
+    ] = ...
+    many_to_one: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
+        False
+    ] = ...
     rel_class: Any = ...
     description: Any = ...
     has_null_arg: Any = ...

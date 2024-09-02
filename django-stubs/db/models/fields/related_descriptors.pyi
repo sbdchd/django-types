@@ -31,7 +31,7 @@ class ForwardManyToOneDescriptor:
 
 class ForwardOneToOneDescriptor(ForwardManyToOneDescriptor):
     RelatedObjectDoesNotExist: type[ObjectDoesNotExist]
-    field: OneToOneField[Any]
+    field: OneToOneField[Any]  # pyright: ignore[reportIncompatibleVariableOverride]
     def get_object(self, instance: Model) -> Model: ...
 
 class ReverseOneToOneDescriptor:
@@ -64,8 +64,8 @@ class ReverseManyToOneDescriptor:
 def create_reverse_many_to_one_manager(superclass: Any, rel: Any) -> Any: ...
 
 class ManyToManyDescriptor(ReverseManyToOneDescriptor):
-    field: RelatedField[Any, Any]
-    rel: ManyToManyRel
+    field: RelatedField[Any, Any]  # pyright: ignore[reportIncompatibleVariableOverride]
+    rel: ManyToManyRel  # pyright: ignore[reportIncompatibleVariableOverride]
     reverse: bool = ...
     def __init__(self, rel: ManyToManyRel, reverse: bool = ...) -> None: ...
     @property

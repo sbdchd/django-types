@@ -12,6 +12,6 @@ class DjangoJSONEncoder(json.JSONEncoder):
     allow_nan: bool
     check_circular: bool
     ensure_ascii: bool
-    indent: int
+    indent: int  # pyright: ignore[reportIncompatibleVariableOverride]
     skipkeys: bool
     sort_keys: bool

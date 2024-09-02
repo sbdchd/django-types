@@ -68,8 +68,8 @@ class RequestContext(Context):
     dicts: list[dict[str, str]]
     render_context: RenderContext
     template_name: str | None
-    use_l10n: None
-    use_tz: None
+    use_l10n: None  # pyright: ignore[reportIncompatibleVariableOverride]
+    use_tz: None  # pyright: ignore[reportIncompatibleVariableOverride]
     request: HttpRequest = ...
     def __init__(
         self,

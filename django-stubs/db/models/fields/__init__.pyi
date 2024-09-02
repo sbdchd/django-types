@@ -115,15 +115,16 @@ _I = TypeVar("_I", bound=int | None)
 
 class IntegerField(Generic[_I], Field[_I | Combinable, _I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -145,12 +146,13 @@ class IntegerField(Generic[_I], Field[_I | Combinable, _I]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -174,15 +176,16 @@ class PositiveIntegerRelDbTypeMixin:
 
 class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -204,12 +207,13 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -233,12 +237,13 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -259,12 +264,13 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -285,15 +291,16 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
 
 class SmallIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -315,12 +322,13 @@ class SmallIntegerField(IntegerField[_I]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -341,15 +349,16 @@ class SmallIntegerField(IntegerField[_I]):
 
 class BigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -371,12 +380,13 @@ class BigIntegerField(IntegerField[_I]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -397,15 +407,16 @@ class BigIntegerField(IntegerField[_I]):
 
 class PositiveBigIntegerField(IntegerField[_I]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _I | Callable[[], _I] | None = ...,
         db_default: _I | Func | None = ...,
@@ -427,12 +438,13 @@ class PositiveBigIntegerField(IntegerField[_I]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _I | Callable[[], _I] = ...,
         db_default: _I | Func = ...,
@@ -455,15 +467,16 @@ _F = TypeVar("_F", bound=float | None)
 
 class FloatField(Generic[_F], Field[_F | Combinable, _F]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _F | Callable[[], _F] | None = ...,
         db_default: _F | Func | None = ...,
@@ -485,12 +498,13 @@ class FloatField(Generic[_F], Field[_F | Combinable, _F]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _F | Callable[[], _F] = ...,
         db_default: _F | Func = ...,
@@ -516,9 +530,10 @@ class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
     max_digits: int = ...
     decimal_places: int = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         max_digits: int = ...,
         decimal_places: int = ...,
@@ -526,7 +541,7 @@ class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _DEC | Callable[[], _DEC] | None = ...,
         db_default: _DEC | Func | None = ...,
@@ -550,6 +565,7 @@ class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         max_digits: int = ...,
         decimal_places: int = ...,
@@ -557,7 +573,7 @@ class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _DEC | Callable[[], _DEC] = ...,
         db_default: _DEC | Func = ...,
@@ -681,16 +697,17 @@ _C = TypeVar("_C", bound=str | None)
 
 class CharField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -713,13 +730,14 @@ class CharField(Generic[_C], Field[_C | Combinable, _C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -741,16 +759,17 @@ class CharField(Generic[_C], Field[_C | Combinable, _C]):
 
 class SlugField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -773,13 +792,14 @@ class SlugField(CharField[_C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -801,16 +821,17 @@ class SlugField(CharField[_C]):
 
 class EmailField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -832,13 +853,14 @@ class EmailField(CharField[_C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -859,16 +881,17 @@ class EmailField(CharField[_C]):
 
 class URLField(CharField[_C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -890,13 +913,14 @@ class URLField(CharField[_C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -917,16 +941,17 @@ class URLField(CharField[_C]):
 
 class TextField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -948,13 +973,14 @@ class TextField(Generic[_C], Field[_C | Combinable, _C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -980,13 +1006,14 @@ class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _B | Callable[[], _B] | None = ...,
         db_default: _B | Func | None = ...,
@@ -1008,13 +1035,14 @@ class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         db_collation: str | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _B | Callable[[], _B] = ...,
         db_default: _B | Func = ...,
@@ -1034,15 +1062,16 @@ class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
 
 class IPAddressField(Generic[_C], Field[_C | Combinable, _C]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -1064,12 +1093,13 @@ class IPAddressField(Generic[_C], Field[_C | Combinable, _C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -1093,9 +1123,10 @@ class GenericIPAddressField(
     Field[_C | ipaddress.IPv4Address | ipaddress.IPv6Address | Combinable, _C],
 ):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         protocol: str = ...,
         unpack_ipv4: bool = ...,
@@ -1103,7 +1134,7 @@ class GenericIPAddressField(
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -1125,6 +1156,7 @@ class GenericIPAddressField(
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         protocol: str = ...,
         unpack_ipv4: bool = ...,
@@ -1132,7 +1164,7 @@ class GenericIPAddressField(
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -1160,9 +1192,10 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1170,7 +1203,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _DD | Callable[[], _DD] | None = ...,
         db_default: _DD | Func | None = ...,
@@ -1194,6 +1227,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1201,7 +1235,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _DD | Callable[[], _DD] = ...,
         db_default: _DD | Func = ...,
@@ -1229,9 +1263,10 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1239,7 +1274,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _TM | Callable[[], _TM] | None = ...,
         db_default: _TM | Func | None = ...,
@@ -1263,6 +1298,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1270,7 +1306,7 @@ class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _TM | Callable[[], _TM] = ...,
         db_default: _TM | Func = ...,
@@ -1298,9 +1334,10 @@ class DateTimeField(DateField[_DT]):
     auto_now: bool = ...
     auto_now_add: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1308,7 +1345,7 @@ class DateTimeField(DateField[_DT]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _DT | Callable[[], _DT] | None = ...,
         db_default: _DT | Func | None = ...,
@@ -1332,6 +1369,7 @@ class DateTimeField(DateField[_DT]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         auto_now: bool = ...,
         auto_now_add: bool = ...,
@@ -1339,7 +1377,7 @@ class DateTimeField(DateField[_DT]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _DT | Callable[[], _DT] = ...,
         db_default: _DT | Func = ...,
@@ -1364,15 +1402,16 @@ _U = TypeVar("_U", bound=uuid.UUID | None)
 
 class UUIDField(Generic[_U], Field[str | _U, _U]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _U | Callable[[], _U] | None = ...,
         db_default: _U | Func | None = ...,
@@ -1394,12 +1433,13 @@ class UUIDField(Generic[_U], Field[str | _U, _U]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _U | Callable[[], _U] = ...,
         db_default: _U | Func = ...,
@@ -1425,9 +1465,10 @@ class FilePathField(Generic[_C], Field[_C, _C]):
     allow_files: bool = ...
     allow_folders: bool = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         path: str | Callable[..., str] = ...,
         match: str | None = ...,
@@ -1438,7 +1479,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _C | Callable[[], _C] | None = ...,
         db_default: _C | Func | None = ...,
@@ -1460,6 +1501,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         path: str | Callable[..., str] = ...,
         match: str | None = ...,
@@ -1470,7 +1512,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _C | Callable[[], _C] = ...,
         db_default: _C | Func = ...,
@@ -1493,15 +1535,16 @@ _BIN = TypeVar("_BIN", bound=bytes | None)
 
 class BinaryField(Generic[_BIN], Field[_BIN | bytearray | memoryview, _BIN]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _BIN | Callable[[], _BIN] | None = ...,
         db_default: _BIN | Func | None = ...,
@@ -1525,12 +1568,13 @@ class BinaryField(Generic[_BIN], Field[_BIN | bytearray | memoryview, _BIN]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _BIN | Callable[[], _BIN] = ...,
         db_default: _BIN | Func = ...,
@@ -1555,15 +1599,16 @@ _TD = TypeVar("_TD", bound=timedelta | None)
 
 class DurationField(Generic[_TD], Field[_TD, _TD]):
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: _TD | Callable[[], _TD] | None = ...,
         db_default: _TD | Func | None = ...,
@@ -1587,12 +1632,13 @@ class DurationField(Generic[_TD], Field[_TD, _TD]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: _TD | Callable[[], _TD] = ...,
         db_default: _TD | Func = ...,

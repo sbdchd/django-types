@@ -15,7 +15,7 @@ class ContentNotRenderedError(Exception): ...
 class SimpleTemplateResponse(HttpResponse):
     content: Any = ...
     closed: bool
-    cookies: SimpleCookie[Any]
+    cookies: SimpleCookie  # type: ignore [type-arg]
     status_code: int
     rendering_attrs: Any = ...
     template_name: list[str] | Template | str = ...
@@ -47,9 +47,9 @@ class SimpleTemplateResponse(HttpResponse):
 class TemplateResponse(SimpleTemplateResponse):
     client: Client
     closed: bool
-    context: RequestContext
+    context: RequestContext  # pyright: ignore[reportIncompatibleVariableOverride]
     context_data: dict[str, Any] | None
-    cookies: SimpleCookie[Any]
+    cookies: SimpleCookie  # type: ignore [type-arg]
     csrf_cookie_set: bool
     json: functools.partial[Any]
     redirect_chain: list[tuple[str, int]]

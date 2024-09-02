@@ -32,7 +32,7 @@ f.integer_with_choices = 2
         ),
         Result(
             type="error",
-            message='Cannot assign member "integer_with_choices" for type "Foo"',
+            message='Cannot assign to attribute "integer_with_choices" for class "Foo"',
             line=15,
             column=3,
         ),
@@ -103,7 +103,7 @@ f.char_with_choices = "b"
         ),
         Result(
             type="error",
-            message='Cannot assign member "char_with_choices" for type "Foo"',
+            message='Cannot assign to attribute "char_with_choices" for class "Foo"',
             line=15,
             column=3,
         ),

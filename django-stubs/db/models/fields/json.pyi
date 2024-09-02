@@ -20,9 +20,10 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
     def get_transform(self, name: Any) -> Any: ...
     def value_to_string(self, obj: Any) -> Any: ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         encoder: type[json.JSONEncoder] = ...,
         decoder: type[json.JSONDecoder] = ...,
@@ -30,7 +31,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: Any | Callable[[], Any] | None = ...,
         editable: bool = ...,
@@ -52,6 +53,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
     def __new__(
         cls,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         encoder: type[json.JSONEncoder] = ...,
         decoder: type[json.JSONDecoder] = ...,
@@ -59,7 +61,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: Any | Callable[[], Any] = ...,
         editable: bool = ...,

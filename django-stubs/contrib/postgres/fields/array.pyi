@@ -17,17 +17,18 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
     from_db_value: Any = ...
     base_field: Field[_V, _V] = ...
     @overload
-    def __new__(  # type: ignore [misc]
+    def __new__(
         cls,
         base_field: Field[Any, _V],
         size: int | None = ...,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[False] = ...,
+        null: Literal[False] = False,
         db_index: bool = ...,
         default: list[_V] | Callable[[], list[_V]] | None = ...,
         editable: bool = ...,
@@ -51,12 +52,13 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         base_field: Field[Any, _V],
         size: int | None = ...,
         verbose_name: str | None = ...,
+        *,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
         unique: bool = ...,
         blank: bool = ...,
-        null: Literal[True] = ...,
+        null: Literal[True],
         db_index: bool = ...,
         default: list[_V] | Callable[[], list[_V]] | None = ...,
         editable: bool = ...,

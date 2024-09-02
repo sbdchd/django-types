@@ -10,7 +10,7 @@ class InclusionAdminNode(InclusionNode):
     args: list[Any]
     func: Callable[..., Any]
     kwargs: dict[Any, Any]
-    takes_context: bool
+    takes_context: bool  # pyright: ignore[reportIncompatibleVariableOverride]
     template_name: str = ...
     def __init__(
         self,

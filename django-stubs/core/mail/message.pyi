@@ -26,15 +26,15 @@ class MIMEMixin: ...
 
 class SafeMIMEMessage(MIMEMixin, MIMEMessage):
     defects: list[Any]
-    epilogue: None
+    epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
     policy: Policy  # type: ignore [no-any-unimported]
-    preamble: None
+    preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
 
 class SafeMIMEText(MIMEMixin, MIMEText):
     defects: list[Any]
-    epilogue: None
+    epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
     policy: Policy  # type: ignore [no-any-unimported]
-    preamble: None
+    preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
     def __init__(
         self, _text: str, _subtype: str = ..., _charset: str = ...
@@ -42,9 +42,9 @@ class SafeMIMEText(MIMEMixin, MIMEText):
 
 class SafeMIMEMultipart(MIMEMixin, MIMEMultipart):
     defects: list[Any]
-    epilogue: None
+    epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
     policy: Policy  # type: ignore [no-any-unimported]
-    preamble: None
+    preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
     def __init__(
         self,

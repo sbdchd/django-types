@@ -81,11 +81,11 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
     def generate_filename(self, instance: Model | None, filename: str) -> str: ...
 
 class ImageFileDescriptor(FileDescriptor):
-    field: ImageField
+    field: ImageField  # pyright: ignore[reportIncompatibleVariableOverride]
     def __set__(self, instance: Model, value: str | None) -> None: ...
 
 class ImageFieldFile(ImageFile, FieldFile):
-    field: ImageField
+    field: ImageField  # pyright: ignore[reportIncompatibleVariableOverride]
     def delete(self, save: bool = ...) -> None: ...
 
 class ImageField(FileField):

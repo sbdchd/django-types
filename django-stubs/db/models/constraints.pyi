@@ -14,10 +14,13 @@ class Deferrable(Enum):
 
 class BaseConstraint:
     name: str
+    violation_error_code: str | None
+    violation_error_message: str | None
     def __init__(
         self,
         *args: BaseExpression | Combinable | str,
         name: str | None = ...,
+        violation_error_code: str | None = ...,
         violation_error_message: str | None = ...,
     ) -> None: ...
     def constraint_sql(
@@ -39,12 +42,15 @@ class BaseConstraint:
     def clone(self) -> Self: ...
 
 class CheckConstraint(BaseConstraint):
-    check: Q
+    condition: Q
+    check: Q | None
     def __init__(
         self,
         *,
-        check: Q,
         name: str,
+        condition: Q | None = ...,
+        check: Q | None = ...,
+        violation_error_code: str | None = ...,
         violation_error_message: str | None = ...,
     ) -> None: ...
 
@@ -60,6 +66,7 @@ class UniqueConstraint(BaseConstraint):
         deferrable: Deferrable | None = ...,
         include: str | Sequence[str] | None = ...,
         opclasses: Sequence[str] = ...,
-        violation_error_message: str | None = ...,
         nulls_distinct: bool | None = ...,
+        violation_error_code: str | None = ...,
+        violation_error_message: str | None = ...,
     ) -> None: ...

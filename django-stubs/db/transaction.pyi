@@ -2,6 +2,7 @@ from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from typing import Any, TypeVar, overload
 
+from types import TracebackType
 from django.db import ProgrammingError
 
 class TransactionManagementError(ProgrammingError): ...
@@ -35,8 +36,12 @@ class Atomic:
     # When decorating, return the decorated function as-is, rather than clobbering it as ContextDecorator does.
     def __call__(self, func: _C) -> _C: ...
     def __enter__(self) -> None: ...
-    def __exit__(self, exc_type: None, exc_value: None, traceback: None) -> None: ...
-
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None, /
+    ) -> None: ...
 # Bare decorator
 @overload
 def atomic(using: _C) -> _C: ...

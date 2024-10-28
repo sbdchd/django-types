@@ -34,7 +34,7 @@ f.array = [1, 2]
         ),
         Result(
             type="error",
-            message='Cannot assign member "array" for type "Foo"',
+            message='Cannot assign to attribute "array" for class "Foo"',
             line=13,
             column=3,
         ),
@@ -82,7 +82,7 @@ f.array = [1, 2]
         ),
         Result(
             type="error",
-            message='Cannot assign member "array" for type "Foo"',
+            message='Cannot assign to attribute "array" for class "Foo"',
             line=15,
             column=3,
         ),
@@ -133,7 +133,7 @@ f.array = ["a", "b"]
         ),
         Result(
             type="error",
-            message='Cannot assign member "array" for type "Foo"',
+            message='Cannot assign to attribute "array" for class "Foo"',
             line=18,
             column=3,
         ),
@@ -197,7 +197,7 @@ f.array = ["a", "b"]
         ),
         Result(
             type="error",
-            message='Cannot assign member "array" for type "Foo"',
+            message='Cannot assign to attribute "array" for class "Foo"',
             line=19,
             column=3,
         ),

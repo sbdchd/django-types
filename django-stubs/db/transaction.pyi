@@ -1,8 +1,8 @@
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
+from types import TracebackType
 from typing import Any, TypeVar, overload
 
-from types import TracebackType
 from django.db import ProgrammingError
 
 class TransactionManagementError(ProgrammingError): ...
@@ -40,8 +40,9 @@ class Atomic:
         self,
         exc_type: type[BaseException] | None,
         exc_value: BaseException | None,
-        traceback: TracebackType | None, /
+        traceback: TracebackType | None,
     ) -> None: ...
+
 # Bare decorator
 @overload
 def atomic(using: _C) -> _C: ...

@@ -148,13 +148,13 @@ class SimpleTestCase(unittest.TestCase):
     ) -> None: ...
     def assertJSONEqual(
         self,
-        raw: str,
+        raw: str | bytes | bytearray,
         expected_data: dict[str, Any] | list[Any] | str | int | float | bool | None,
         msg: str | None = ...,
     ) -> None: ...
     def assertJSONNotEqual(
         self,
-        raw: str,
+        raw: str | bytes | bytearray,
         expected_data: dict[str, Any] | list[Any] | str | int | float | bool | None,
         msg: str | None = ...,
     ) -> None: ...

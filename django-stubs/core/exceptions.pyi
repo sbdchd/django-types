@@ -26,6 +26,15 @@ class FieldError(Exception): ...
 
 NON_FIELD_ERRORS: str
 
+
+ValidationErrorMessageArg = (
+    str
+    | ValidationError
+    | dict[str, ValidationErrorMessageArg]
+    | list[ValidationErrorMessageArg]
+)
+
+
 class ValidationError(Exception):
     error_dict: dict[str, list[ValidationError]] | None
     error_list: list[ValidationError] | None
@@ -34,12 +43,7 @@ class ValidationError(Exception):
     params: Mapping[str, Any] | None
     def __init__(
         self,
-        message: (
-            ValidationError
-            | dict[str, ValidationError | list[str]]
-            | list[ValidationError | str]
-            | str
-        ),
+        message: ValidationErrorMessageArg,
         code: str | None = ...,
         params: Mapping[str, Any] | None = ...,
     ) -> None: ...

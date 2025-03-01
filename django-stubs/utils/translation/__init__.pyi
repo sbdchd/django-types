@@ -46,7 +46,9 @@ gettext_lazy = gettext
 ugettext_lazy = ugettext
 pgettext_lazy = pgettext
 
-def ngettext_lazy(singular: str, plural: str, number: int | str | None) -> str: ...
+def ngettext_lazy(
+    singular: str, plural: str, number: int | str | None = ...
+) -> str: ...
 
 ungettext_lazy = ngettext_lazy
 

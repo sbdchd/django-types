@@ -14,7 +14,7 @@ packages = [{ include = "django-stubs" }]
 python = "^3.8"
 types-psycopg2 = ">=2.9.21.13"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "22.3.0"
 pytest = "7.1.1"
 wheel = "0.35.1"

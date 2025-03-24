@@ -17,7 +17,7 @@ from django.db.models.fields import Field
 from django.db.models.fields.related import ForeignKey, ManyToManyField, RelatedField
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
-from django.forms.fields import TypedChoiceField
+from django.forms.fields import Field as FormField, TypedChoiceField
 from django.forms.forms import BaseForm
 from django.forms.models import (
     BaseInlineFormSet,
@@ -92,7 +92,7 @@ class BaseModelAdmin(Generic[_ModelT]):
     def check(self, **kwargs: Any) -> list[CheckMessage]: ...
     def formfield_for_dbfield(
         self, db_field: Field[Any, Any], request: HttpRequest | None, **kwargs: Any
-    ) -> Field[Any, Any] | None: ...
+    ) -> FormField | None: ...
     def formfield_for_choice_field(
         self, db_field: Field[Any, Any], request: HttpRequest | None, **kwargs: Any
     ) -> TypedChoiceField: ...

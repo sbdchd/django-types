@@ -2,11 +2,11 @@ from collections.abc import Callable, Iterator
 from typing import Any
 
 from django.contrib.admin.options import ModelAdmin
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.models.base import Model
 from django.db.models.fields import Field
 from django.db.models.fields.related import RelatedField
 from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 
 class ListFilter:
     title: Any = ...
@@ -14,7 +14,7 @@ class ListFilter:
     used_parameters: Any = ...
     def __init__(
         self,
-        request: WSGIRequest,
+        request: HttpRequest,
         params: dict[str, str],
         model: type[Model],
         model_admin: ModelAdmin[Any],
@@ -39,7 +39,7 @@ class FieldListFilter(ListFilter):
     def __init__(
         self,
         field: Field[Any, Any],
-        request: WSGIRequest,
+        request: HttpRequest,
         params: dict[str, str],
         model: type[Model],
         model_admin: ModelAdmin[Any],
@@ -56,7 +56,7 @@ class FieldListFilter(ListFilter):
     def create(
         cls,
         field: Field[Any, Any],
-        request: WSGIRequest,
+        request: HttpRequest,
         params: dict[str, str],
         model: type[Model],
         model_admin: ModelAdmin[Any],
@@ -78,7 +78,7 @@ class RelatedFieldListFilter(FieldListFilter):
     def field_choices(
         self,
         field: RelatedField[Any, Any],
-        request: WSGIRequest,
+        request: HttpRequest,
         model_admin: ModelAdmin[Any],
     ) -> list[tuple[str, str]]: ...
 

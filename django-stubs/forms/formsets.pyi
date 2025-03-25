@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from typing import Any, Generic, TypeVar
 
 from django.forms import BaseForm, Form
@@ -34,18 +34,18 @@ class BaseFormSet(Generic[_BaseFormT], RenderableFormMixin):
     auto_id: str
     data: dict[str, Any]
     files: dict[str, Any]
-    initial: dict[str, Any] | None
+    initial: list[dict[str, Any]] | None
     form_kwargs: dict[str, Any]
     error_class: type[ErrorList]
     error_messages: dict[str, Any]
 
     def __init__(
         self,
-        data: dict[str, Any] | None = ...,
-        files: dict[str, Any] | None = ...,
+        data: Mapping[str, Any] | None = ...,
+        files: Mapping[str, Any] | None = ...,
         auto_id: str = ...,
         prefix: str | None = ...,
-        initial: dict[str, Any] | None = ...,
+        initial: list[dict[str, Any]] | None = ...,
         error_class: type[ErrorList] = ...,
         form_kwargs: dict[str, Any] | None = ...,
         error_messages: dict[str, Any] | None = ...,
@@ -109,7 +109,7 @@ class _FormSet(BaseFormSet[_BaseFormT]):
     renderer: BaseRenderer
 
 def formset_factory(
-    form: _BaseFormT,
+    form: type[_BaseFormT],
     formset: type[BaseFormSet[_BaseFormT]] = ...,
     extra: int = ...,
     can_order: bool = ...,

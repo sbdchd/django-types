@@ -9,6 +9,7 @@ from django.core.exceptions import (
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options
+from django.db.models.query import QuerySet
 
 class ModelStateFieldsCacheDescriptor: ...
 

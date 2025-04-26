@@ -9,6 +9,7 @@ from django.core.exceptions import (
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options
+from django.db.models.query import QuerySet
 
 class ModelStateFieldsCacheDescriptor: ...
 
@@ -79,10 +80,16 @@ class Model(metaclass=ModelBase):
         update_fields: Iterable[str] | None = ...,
     ) -> Any: ...
     def refresh_from_db(
-        self, using: str | None = ..., fields: list[str] | None = ...
+        self,
+        using: str | None = ...,
+        fields: list[str] | None = ...,
+        from_queryset: QuerySet[Self] | None = ...,
     ) -> None: ...
     async def arefresh_from_db(
-        self, using: str | None = ..., fields: list[str] | None = ...
+        self,
+        using: str | None = ...,
+        fields: list[str] | None = ...,
+        from_queryset: QuerySet[Self] | None = ...,
     ) -> None: ...
     def get_deferred_fields(self) -> set[str]: ...
     @classmethod

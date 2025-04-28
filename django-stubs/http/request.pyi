@@ -3,8 +3,7 @@ from re import Pattern
 from typing import Any, BinaryIO, TypeVar, overload
 from typing_extensions import Self
 
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import _AnyUser
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.sites.models import Site
 from django.core.files import uploadedfile, uploadhandler
@@ -96,9 +95,14 @@ class HttpRequest:
     def __iter__(self) -> Iterable[bytes]: ...
     def readlines(self) -> list[bytes]: ...
 
-    # Attributes added by commonly-used middleware
-    user: AbstractBaseUser | AnonymousUser
+    # Attributes added by optional parts of Django
+    # django.contrib.admin views:
+    current_app: str
+    # django.contrib.auth.middleware.AuthenticationMiddleware:
+    user: _AnyUser
+    # django.contrib.sites.middleware.CurrentSiteMiddleware
     site: Site
+    # django.contrib.sessions.middleware.SessionMiddleware
     session: SessionBase
 
 class QueryDict(MultiValueDict[str, str]):

@@ -70,7 +70,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def post(
         self,
@@ -81,7 +81,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def head(
         self,
@@ -91,7 +91,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def trace(
         self,
@@ -100,7 +100,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def options(
         self,
@@ -111,7 +111,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def put(
         self,
@@ -122,7 +122,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def patch(
         self,
@@ -133,7 +133,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def delete(
         self,
@@ -144,7 +144,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
     def generic(
         self,
@@ -156,7 +156,7 @@ class RequestFactory:
         *,
         QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
+        **extra: object,
     ) -> WSGIRequest: ...
 
 class Client(RequestFactory):

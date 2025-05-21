@@ -1,7 +1,20 @@
 from collections.abc import Callable, Sequence
-from typing import Any
+from typing import Any, Mapping, TypeAlias
 
+from django.http.request import QueryDict
 from django.urls.resolvers import ResolverMatch
+
+# The values are passed through `str()` (unless they are bytes), so anything is valid.
+_QueryType: TypeAlias = (
+    Mapping[str, object]
+    | Mapping[bytes, object]
+    | Mapping[str | bytes, object]
+    | Mapping[str, Sequence[object]]
+    | Mapping[bytes, Sequence[object]]
+    | Mapping[str | bytes, Sequence[object]]
+    | Sequence[tuple[str | bytes, object]]
+    | Sequence[tuple[str | bytes, Sequence[object]]]
+)
 
 def resolve(path: str, urlconf: str | None = ...) -> ResolverMatch: ...
 def reverse(
@@ -10,6 +23,9 @@ def reverse(
     args: Sequence[Any] | None = ...,
     kwargs: dict[str, Any] | None = ...,
     current_app: str | None = ...,
+    *,
+    query: QueryDict | _QueryType | None = ...,
+    fragment: str | None = ...,
 ) -> str: ...
 
 reverse_lazy: Any

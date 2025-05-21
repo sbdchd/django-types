@@ -1,6 +1,7 @@
 from collections.abc import Callable, Sequence
-from typing import Any
+from typing import Any, Mapping
 
+from django.http.request import QueryDict
 from django.urls.resolvers import ResolverMatch
 
 def resolve(path: str, urlconf: str | None = ...) -> ResolverMatch: ...
@@ -10,6 +11,14 @@ def reverse(
     args: Sequence[Any] | None = ...,
     kwargs: dict[str, Any] | None = ...,
     current_app: str | None = ...,
+    *,
+    query: QueryDict
+    | Mapping
+    | Mapping[Any, Sequence]
+    | Sequence[tuple[Any, Any]]
+    | Sequence[tuple[Any, Sequence]]
+    | None = ...,
+    fragment: str | None = ...,
 ) -> str: ...
 
 reverse_lazy: Any

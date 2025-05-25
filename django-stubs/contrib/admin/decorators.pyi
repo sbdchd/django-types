@@ -8,6 +8,7 @@ from django.db.models.expressions import BaseExpression
 from django.http import HttpRequest, HttpResponse
 
 _M = TypeVar("_M", bound=Model)
+_T = TypeVar("_T", bound=object)
 
 def action(
     function: (
@@ -17,7 +18,7 @@ def action(
     *,
     permissions: Sequence[str] | None = ...,
     description: str | None = ...,
-) -> Callable[..., Any]: ...
+) -> Callable[[_T], _T]: ...
 def display(
     function: Callable[[_M], Any] | None = ...,
     *,
@@ -25,5 +26,5 @@ def display(
     ordering: str | Combinable | BaseExpression | None = ...,
     description: str | None = ...,
     empty_value: str | None = ...,
-) -> Callable[..., Any]: ...
-def register(*models: type[Model], site: Any | None = ...) -> Callable[..., Any]: ...
+) -> Callable[[_T], _T]: ...
+def register(*models: type[Model], site: Any | None = ...) -> Callable[[_T], _T]: ...

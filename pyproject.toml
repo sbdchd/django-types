@@ -11,7 +11,7 @@ keywords = ["django", "types", "mypy", "stubs"]
 packages = [{ include = "django-stubs" }]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 types-psycopg2 = ">=2.9.21.13"
 
 [tool.poetry.group.dev.dependencies]
@@ -42,7 +42,7 @@ extra_standard_library = [
 
 [tool.ruff]
 line-length = 88
-target-version = "py37"
+target-version = "py310"
 exclude = ["*.py"]  # only autofix stubs
 select = [
     "F401",   # Remove unused imports

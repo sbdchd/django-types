@@ -14,7 +14,6 @@ from django.forms.formsets import BaseFormSet
 from django.forms.models import ModelForm
 from django.http.request import HttpRequest
 
-
 ALL_VAR: str
 ORDER_VAR: str
 ORDER_TYPE_VAR: str

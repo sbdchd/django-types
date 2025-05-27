@@ -1,6 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing import Any, Generic, TypeVar
-from typing import Literal
+from typing import Any, Generic, Literal, TypeVar
 
 from django.forms.forms import BaseForm
 from django.forms.models import BaseModelForm

@@ -7,8 +7,7 @@ from collections.abc import (
     Sequence,
 )
 from datetime import datetime
-from typing import Any, ClassVar, Protocol, TypeVar
-from typing import Literal
+from typing import Any, ClassVar, Literal, Protocol, TypeVar
 from unittest.mock import MagicMock
 from uuid import UUID
 

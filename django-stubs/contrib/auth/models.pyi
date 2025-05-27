@@ -1,7 +1,6 @@
 from collections.abc import Iterable
-from typing import Any, ClassVar, TypeVar
+from typing import Any, ClassVar, Literal, TypeVar
 from typing_extensions import Never, Self
-from typing import Literal
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser as AbstractBaseUser

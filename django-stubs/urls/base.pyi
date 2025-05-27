@@ -1,6 +1,5 @@
 from collections.abc import Callable, Mapping, Sequence
-from typing import Any
-from typing import TypeAlias
+from typing import Any, TypeAlias
 
 from django.http.request import QueryDict
 from django.urls.resolvers import ResolverMatch

@@ -1,6 +1,5 @@
-from collections.abc import Iterable, MutableMapping
+from collections.abc import Callable, Iterable, MutableMapping
 from typing import Any, Generic, TypeVar
-from collections.abc import Callable
 from typing_extensions import Self
 
 from django.db.models.base import Model

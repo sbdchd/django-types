@@ -1,6 +1,5 @@
 from collections.abc import Callable, Iterable
-from typing import Any, TypeVar, overload
-from typing import Literal
+from typing import Any, Literal, TypeVar, overload
 
 from django.db.models.fields import CharField, EmailField, TextField
 

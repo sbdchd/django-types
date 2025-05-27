@@ -1,5 +1,4 @@
-from typing import Any, TypeVar
-from typing import Literal
+from typing import Any, Literal, TypeVar
 
 from django.db import models
 from django.db.models.base import Model

@@ -7,7 +7,6 @@ from django.http.response import HttpResponse
 from django.utils.feedgenerator import Enclosure, SyndicationFeed
 from django.utils.safestring import SafeText
 
-
 def add_domain(domain: str, url: str, secure: bool = ...) -> str: ...
 
 class FeedDoesNotExist(ObjectDoesNotExist): ...

@@ -6,9 +6,8 @@ from collections.abc import (
     MutableMapping,
     MutableSet,
 )
-from typing import Any, TypeVar, overload
+from typing import Any, Literal, TypeVar, overload
 from typing_extensions import Self
-from typing import Literal
 
 _K = TypeVar("_K")
 _V = TypeVar("_V")

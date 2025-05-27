@@ -1,12 +1,10 @@
 import decimal
 import ipaddress
 import uuid
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any, Generic, TypeVar, overload
-from collections.abc import Mapping
+from typing import Any, Generic, Literal, TypeVar, overload
 from typing_extensions import Self
-from typing import Literal
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist

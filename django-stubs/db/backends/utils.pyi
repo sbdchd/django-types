@@ -2,8 +2,7 @@ import types
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from datetime import date, datetime, time
 from decimal import Decimal
-from typing import IO, Any
-from typing import Literal
+from typing import IO, Any, Literal
 from uuid import UUID
 
 import psycopg2.extensions

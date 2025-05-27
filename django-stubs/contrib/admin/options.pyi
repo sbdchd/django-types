@@ -17,7 +17,8 @@ from django.db.models.fields import Field
 from django.db.models.fields.related import ForeignKey, ManyToManyField, RelatedField
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
-from django.forms.fields import Field as FormField, TypedChoiceField
+from django.forms.fields import Field as FormField
+from django.forms.fields import TypedChoiceField
 from django.forms.forms import BaseForm
 from django.forms.models import (
     BaseInlineFormSet,

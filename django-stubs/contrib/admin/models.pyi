@@ -1,10 +1,11 @@
-import datetime as dt
+from collections.abc import Iterable
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Self
-from uuid import UUID
 
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.utils import timezone as timezone
 
 ADDITION: int
 CHANGE: int
@@ -14,26 +15,37 @@ ACTION_FLAG_CHOICES: list[tuple[int, str]]
 _LogEntryT = TypeVar("_LogEntryT", bound=LogEntry)
 
 class LogEntryManager(models.Manager[_LogEntryT]):
+    use_in_migrations: bool
+    # Deprecated in favor of log_actions
     def log_action(
         self,
         user_id: int,
         content_type_id: int,
-        object_id: int | str | UUID,
+        object_id: Any,
         object_repr: str,
         action_flag: int,
         change_message: str | list[Any] = ...,
     ) -> _LogEntryT: ...
+    def log_actions(
+        self,
+        user_id: int,
+        queryset: Iterable[models.Model],
+        action_flag: int,
+        change_message: str | list[Any] = ...,
+        *,
+        single_object: bool = ...,
+    ) -> _LogEntryT | list[_LogEntryT]: ...
 
 class LogEntry(models.Model):
-    objects: ClassVar[LogEntryManager[Self]]  # type: ignore[assignment]
+    action_time = models.DateTimeField()
+    user = models.ForeignKey[User]
+    content_type = models.ForeignKey[ContentType]
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField()
+    action_flag = models.PositiveSmallIntegerField()
+    change_message = models.TextField(blank=True)
 
-    action_time: models.DateTimeField[dt.datetime]
-    user: models.ForeignKey[Any]
-    content_type: models.ForeignKey[ContentType | None]
-    object_id: models.TextField[str | None]
-    object_repr: models.CharField[str]
-    action_flag: models.PositiveSmallIntegerField[int]
-    change_message: models.TextField[str]
+    objects: ClassVar[LogEntryManager[Self]]  # type: ignore[assignment]
 
     def is_addition(self) -> bool: ...
     def is_change(self) -> bool: ...

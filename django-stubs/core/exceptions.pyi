@@ -26,14 +26,12 @@ class FieldError(Exception): ...
 
 NON_FIELD_ERRORS: str
 
-
 ValidationErrorMessageArg = (
     str
     | ValidationError
     | dict[str, ValidationErrorMessageArg]
     | list[ValidationErrorMessageArg]
 )
-
 
 class ValidationError(Exception):
     error_dict: dict[str, list[ValidationError]] | None

@@ -1,7 +1,9 @@
 from collections import OrderedDict
 from collections.abc import Callable, Iterator, Mapping, Sequence
-from typing import Any, Generic, Iterable, TypeVar
-from typing_extensions import Literal, TypedDict
+from typing import Any, Generic, TypeVar
+from collections.abc import Iterable
+from typing_extensions import TypedDict
+from typing import Literal
 
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.helpers import ActionForm
@@ -17,7 +19,8 @@ from django.db.models.fields import Field
 from django.db.models.fields.related import ForeignKey, ManyToManyField, RelatedField
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
-from django.forms.fields import Field as FormField, TypedChoiceField
+from django.forms.fields import Field as FormField
+from django.forms.fields import TypedChoiceField
 from django.forms.forms import BaseForm
 from django.forms.models import (
     BaseInlineFormSet,

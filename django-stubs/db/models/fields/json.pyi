@@ -1,7 +1,8 @@
 import json
 from collections.abc import Callable, Iterable
 from typing import Any, TypeVar, overload
-from typing_extensions import Literal, Self
+from typing_extensions import Self
+from typing import Literal
 
 from django.db.models import lookups
 from django.db.models.expressions import Combinable

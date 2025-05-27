@@ -8,7 +8,7 @@ from collections.abc import (
 )
 from datetime import datetime
 from typing import Any, ClassVar, Protocol, TypeVar
-from typing_extensions import Literal
+from typing import Literal
 from unittest.mock import MagicMock
 from uuid import UUID
 

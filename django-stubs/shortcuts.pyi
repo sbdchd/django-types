@@ -1,6 +1,5 @@
 from collections.abc import Callable, Mapping, Sequence
-from typing import Any, Protocol, TypeVar, overload
-from typing_extensions import Literal
+from typing import Any, Literal, Protocol, TypeVar, overload
 
 from django.db.models import Manager, QuerySet
 from django.db.models.base import Model

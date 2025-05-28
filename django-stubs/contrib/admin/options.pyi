@@ -1,7 +1,7 @@
 from collections import OrderedDict
-from collections.abc import Callable, Iterator, Mapping, Sequence
-from typing import Any, Generic, Iterable, TypeVar
-from typing_extensions import Literal, TypedDict
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
+from typing import Any, Generic, Literal, TypeVar
+from typing_extensions import TypedDict
 
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.helpers import ActionForm

@@ -1,6 +1,6 @@
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, Generic, Protocol, TypeVar, overload
-from typing_extensions import Literal, Self
+from typing import Any, Generic, Literal, Protocol, TypeVar, overload
+from typing_extensions import Self
 from uuid import UUID
 
 from django.db import models

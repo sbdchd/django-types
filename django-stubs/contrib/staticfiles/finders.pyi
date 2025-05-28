@@ -1,6 +1,5 @@
 from collections.abc import Iterable, Iterator, Mapping
-from typing import Any, overload
-from typing_extensions import Literal
+from typing import Any, Literal, overload
 
 from django.core.checks.messages import CheckMessage
 from django.core.files.storage import Storage

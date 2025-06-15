@@ -41,7 +41,7 @@ class DatabaseErrorWrapper:
 def load_backend(backend_name: str) -> Any: ...
 
 class ConnectionHandler(BaseConnectionHandler):
-    settings_name: str
+    settings_name: str  # pyright: ignore[reportIncompatibleVariableOverride]
     def configure_settings(
         self, databases: dict[str, dict[str, Any]] | None
     ) -> dict[str, dict[str, Any]]: ...

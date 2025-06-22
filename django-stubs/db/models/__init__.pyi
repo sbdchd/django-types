@@ -92,6 +92,7 @@ from .fields.related import ManyToManyRel as ManyToManyRel
 from .fields.related import ManyToOneRel as ManyToOneRel
 from .fields.related import OneToOneField as OneToOneField
 from .fields.related import OneToOneRel as OneToOneRel
+from .fields.composite import CompositePrimaryKey as CompositePrimaryKey
 from .indexes import Index as Index
 from .lookups import Lookup as Lookup
 from .lookups import Transform as Transform

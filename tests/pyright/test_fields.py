@@ -141,3 +141,28 @@ f.char_with_choices_nullable = "b"
             column=13,
         ),
     ]
+def test_composite_primary_key_field() -> None:
+    results = run_pyright(
+        """\
+from django.db import models
+
+class Foo(models.Model):
+    a = models.IntegerField()
+    b = models.IntegerField()
+    composite = models.CompositePrimaryKey("a", "b")
+
+f = Foo()
+reveal_type(f.composite)
+res = f.composite == (1, 2)
+f.composite = (3, 4)
+f.composite = None
+"""
+    )
+    assert results == [
+        Result(
+            type="information",
+            message='Type of "f.composite" is "tuple[Any, ...] | None"',
+            line=9,
+            column=13,
+        )
+    ]

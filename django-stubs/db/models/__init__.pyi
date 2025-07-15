@@ -78,6 +78,7 @@ from .fields import TextField as TextField
 from .fields import TimeField as TimeField
 from .fields import URLField as URLField
 from .fields import UUIDField as UUIDField
+from .fields.composite import CompositePrimaryKey as CompositePrimaryKey
 from .fields.files import FieldFile as FieldFile
 from .fields.files import FileDescriptor as FileDescriptor
 from .fields.files import FileField as FileField
@@ -92,7 +93,6 @@ from .fields.related import ManyToManyRel as ManyToManyRel
 from .fields.related import ManyToOneRel as ManyToOneRel
 from .fields.related import OneToOneField as OneToOneField
 from .fields.related import OneToOneRel as OneToOneRel
-from .fields.composite import CompositePrimaryKey as CompositePrimaryKey
 from .indexes import Index as Index
 from .lookups import Lookup as Lookup
 from .lookups import Transform as Transform

@@ -141,6 +141,8 @@ f.char_with_choices_nullable = "b"
             column=13,
         ),
     ]
+
+
 def test_composite_primary_key_field() -> None:
     results = run_pyright(
         """\

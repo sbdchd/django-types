@@ -1,17 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
 export PATH="$(pwd)/.venv/bin:$(pwd)/node_modules/.bin:$PATH"
 set -ex
 
 # format code
 if [[ $CI ]]; then
-  black --check tests typings
-  isort --check-only tests typings
-  ruff check typings/*
+  ruff format --check tests typings
+  ruff check typings
 else
-  black tests typings
-  isort tests typings
-  ruff check --fix --exit-non-zero-on-fix typings/*
+  ruff format tests typings
+  ruff check --fix --exit-non-zero-on-fix typings
 fi
 
 # type check code
@@ -20,6 +18,3 @@ mypy tests typings
 # pyright tests
 pyright tests typings
 pytest tests typings -p no:warnings -v
-
-# lint
-flake8 tests typings

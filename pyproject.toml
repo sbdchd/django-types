@@ -1,75 +1,69 @@
-[tool.poetry]
+[project]
 name = "django-types"
 version = "0.22.0"
 description = "Type stubs for Django"
-repository = "https://github.com/sbdchd/django-types"
 readme = "README.md"
-authors = ["Steve Dignam <steve@dignam.xyz>"]
+authors = [{ name = "django-types team & contributors" }]
 license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
+requires-python = ">=3.10"
+dependencies = ["types-psycopg2>=2.9.21.13"]
 
-packages = [{ include = "django-stubs" }]
+[project.urls]
+Repository = "https://github.com/sbdchd/django-types"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-types-psycopg2 = ">=2.9.21.13"
-
-[tool.poetry.group.dev.dependencies]
-black = "22.3.0"
-pytest = "7.1.1"
-wheel = "0.35.1"
-mypy = "1.2.0"
-isort = "5.10.1"
-Django = "5.2.1"
-flake8 = "4.0.1"
-flake8-pyi = "^20.10.0"
-types-PyYAML = "^6.0.1"
-types-pytz = "^2021.3.0"
-psycopg2-binary = "^2.9.3"
-ruff = "^0.0.286"
-tomlkit = "^0.12.1"
-
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
-
-[tool.isort]
-profile = "black"
-extra_standard_library = [
-    "typing_extensions",
-    "_typeshed",
+[dependency-groups]
+dev = [
+    "pytest==7.1.1",
+    "wheel==0.35.1",
+    "mypy==1.2.0",
+    "Django==5.2.1",
+    "flake8==4.0.1",
+    "flake8-pyi>=20.10.0",
+    "types-PyYAML>=6.0.1",
+    "types-pytz>=2021.3.0",
+    "psycopg2-binary>=2.9.3",
+    "ruff>=0.1.0",
+    "tomlkit>=0.12.1",
 ]
+
+
 
 [tool.ruff]
 line-length = 88
 target-version = "py310"
-exclude = ["*.py"]  # only autofix stubs
+exclude = ["*.py"] # only autofix stubs
+
+[tool.ruff.lint]
 select = [
-    "F401",   # Remove unused imports
-    "UP004",  # Remove explicit `object` inheritance
-    "UP006",  # PEP-585 autofixes
-    "UP007",  # PEP-604 autofixes
-    "UP013",  # Class-based syntax for TypedDicts
-    "UP014",  # Class-based syntax for NamedTuples
-    "UP019",  # Use str over typing.Text
-    "UP035",  # import from typing, not typing_extensions, wherever possible
-    "UP039",  # don't use parens after a class definition with no bases
-    "PYI009",  # use `...`, not `pass`, in empty class bodies
-    "PYI010",  # function bodies must be empty
-    "PYI012",  # class bodies must not contain `pass`
-    "PYI013",  # non-empty class bodies must not contain `...`
-    "PYI020",  # quoted annotations are always unnecessary in stubs
-    "PYI025",  # always alias `collections.abc.Set` as `AbstractSet` when importing it
-    "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
+    "F401",  # Remove unused imports
+    "UP004", # Remove explicit `object` inheritance
+    "UP006", # PEP-585 autofixes
+    "UP007", # PEP-604 autofixes
+    "UP013", # Class-based syntax for TypedDicts
+    "UP014", # Class-based syntax for NamedTuples
+    "UP019", # Use str over typing.Text
+    "UP035", # import from typing, not typing_extensions, wherever possible
+    # "UP039",  # don't use parens after a class definition with no bases
+    "PYI009", # use `...`, not `pass`, in empty class bodies
+    "PYI010", # function bodies must be empty
+    "PYI012", # class bodies must not contain `pass`
+    # "PYI013", # non-empty class bodies must not contain `...`
+    # "PYI020", # quoted annotations are always unnecessary in stubs
+    # "PYI025", # always alias `collections.abc.Set` as `AbstractSet` when importing it
+    # "PYI032", # use `object`, not `Any`, as the second parameter to `__eq__`
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--tb=native -s -v --cache-clear"
 filterwarnings = [
-    "error",  # all warnings that are not ignored should raise an error
+    "error", # all warnings that are not ignored should raise an error
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = ["django-stubs"]
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

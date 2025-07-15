@@ -2,14 +2,13 @@ from collections.abc import Iterable, Iterator, Mapping
 from typing import Any, Literal
 
 from django.contrib.contenttypes.fields import GenericForeignKey
-
-from django.db.models.fields import NOT_PROVIDED, Field
 from django.db.models.base import Model
+from django.db.models.fields import NOT_PROVIDED, Field
 from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.utils.functional import cached_property
 
 StrOrPromise = str
-from django.db.models.fields import Field, _ValidatorCallable, _LiteralFieldChoices
+from django.db.models.fields import Field, _LiteralFieldChoices, _ValidatorCallable
 
 class AttributeSetter:
     def __init__(self, name: str, value: Any) -> None: ...

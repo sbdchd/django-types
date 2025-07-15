@@ -5,21 +5,21 @@ set -ex
 
 # format code
 if [[ $CI ]]; then
-  black --check tests typings
-  isort --check-only tests typings
-  ruff check typings/*
+  uv run black --check tests typings
+  uv run isort --check-only tests typings
+  uv run ruff check typings/*
 else
-  black tests typings
-  isort tests typings
-  ruff check --fix --exit-non-zero-on-fix typings/*
+  uv run black tests typings
+  uv run isort tests typings
+  uv run ruff check --fix --exit-non-zero-on-fix typings/*
 fi
 
 # type check code
-mypy tests typings
+uv run mypy tests typings
 
 # pyright tests
 pyright tests typings
-pytest tests typings -p no:warnings -v
+uv run pytest tests typings -p no:warnings -v
 
 # lint
-flake8 tests typings
+uv run flake8 tests typings

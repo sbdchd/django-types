@@ -6,7 +6,7 @@ from typing import Any, TypeVar
 if sys.version_info < (3, 12):
     from typing import TypeAlias
 
-    ChoicesType: TypeAlias = ChoicesMeta
+    ChoicesType: TypeAlias = "ChoicesMeta"
 
 else:
     type ChoicesType = ChoicesMeta

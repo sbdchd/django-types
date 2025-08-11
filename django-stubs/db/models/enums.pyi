@@ -1,6 +1,15 @@
 import enum
+import sys
 from collections.abc import Sequence
 from typing import Any, TypeVar
+
+if sys.version_info < (3, 12):
+    from typing import TypeAlias
+
+    ChoicesType: TypeAlias = ChoicesMeta
+
+else:
+    type ChoicesType = ChoicesMeta
 
 _EnumMemberT = TypeVar("_EnumMemberT")
 

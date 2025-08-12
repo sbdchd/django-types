@@ -6,7 +6,6 @@ from uuid import UUID
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
-from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.db.models.base import Model
 from django.db.models.deletion import Collector
 from django.db.models.fields import Field, reverse_related
@@ -74,5 +73,5 @@ def get_model_from_relation(
 def reverse_field_path(model: type[Model], path: str) -> tuple[type[Model], str]: ...
 def get_fields_from_path(model: type[Model], path: str) -> list[Field[Any, Any]]: ...
 def construct_change_message(
-    form: AdminPasswordChangeForm, formsets: None, add: bool
+    form: BaseForm, formsets: None, add: bool
 ) -> list[dict[str, dict[str, list[str]]]]: ...

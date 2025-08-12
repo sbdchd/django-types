@@ -8,7 +8,6 @@ from django.contrib.admin.helpers import ActionForm
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.views.main import ChangeList
-from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.contenttypes.models import ContentType
 from django.core.checks.messages import CheckMessage
 from django.core.paginator import Paginator
@@ -255,7 +254,7 @@ class ModelAdmin(BaseModelAdmin[_ModelT]):
     def construct_change_message(
         self,
         request: HttpRequest,
-        form: AdminPasswordChangeForm,
+        form: BaseForm,
         formsets: None,
         add: bool = ...,
     ) -> list[dict[str, dict[str, list[str]]]]: ...

@@ -1,6 +1,6 @@
 import enum
 from collections.abc import Sequence
-from typing import Any, TypeVar
+from typing import Any, TypeAlias, TypeVar
 
 _EnumMemberT = TypeVar("_EnumMemberT")
 
@@ -12,6 +12,8 @@ class ChoicesMeta(enum.EnumMeta):
     def values(self: type[_EnumMemberT]) -> Sequence[_EnumMemberT]: ...
     @property
     def choices(self: type[_EnumMemberT]) -> Sequence[tuple[_EnumMemberT, str]]: ...
+
+ChoicesType: TypeAlias = ChoicesMeta
 
 class Choices(enum.Enum, metaclass=ChoicesMeta):
     def __str__(self) -> Any: ...

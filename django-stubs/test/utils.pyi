@@ -61,8 +61,8 @@ class TestContextDecorator:
     def __enter__(self) -> Any | None: ...
     def __exit__(
         self,
-        exc_type: type[Exception] | None,
-        exc_value: Exception | None,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
         traceback: TracebackType | None,
     ) -> None: ...
     def decorate_class(self, cls: _TestClassGeneric) -> _TestClassGeneric: ...

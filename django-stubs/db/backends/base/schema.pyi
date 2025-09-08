@@ -1,3 +1,4 @@
+from types import TracebackType
 from collections.abc import Sequence
 from contextlib import AbstractContextManager
 from typing import Any
@@ -46,7 +47,12 @@ class BaseDatabaseSchemaEditor(AbstractContextManager[Any]):
     deferred_sql: Any = ...
     atomic: Any = ...
     def __enter__(self) -> BaseDatabaseSchemaEditor: ...
-    def __exit__(self, exc_type: Any, exc_value: Any, traceback: Any) -> None: ...
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None: ...
     def execute(
         self,
         sql: Statement | str,

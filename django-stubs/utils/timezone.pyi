@@ -55,9 +55,10 @@ class override(ContextDecorator):
     def __enter__(self) -> None: ...
     def __exit__(
         self,
-        exc_type: type[BaseException],
-        exc_value: BaseException,
-        traceback: types.TracebackType,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: types.TracebackType | None,
+        /,
     ) -> None: ...
 
 def localtime(

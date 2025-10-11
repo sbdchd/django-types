@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin.filters import EmptyFieldListFilter
 
 from .models import IndexModel
 
@@ -13,6 +14,6 @@ class IndexModelAdmin(admin.ModelAdmin[IndexModel]):
         "weight",
     ]
     list_filter = [
-        ("author", admin.filters.EmptyFieldListFilter),
+        ("author", EmptyFieldListFilter),
         "pub_date",
     ]

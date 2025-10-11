@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export PATH="$(pwd)/.venv/bin:$(pwd)/node_modules/.bin:$PATH"
 set -ex
 
 # format code

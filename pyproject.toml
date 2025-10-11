@@ -26,6 +26,7 @@ dev = [
     "types-PyYAML>=6.0.1",
     "types-pytz>=2021.3.0",
     "psycopg2-binary>=2.9.3",
+    "pyright>=1.1.406",
     "ruff>=0.1.0",
     "tomlkit>=0.12.1",
 ]

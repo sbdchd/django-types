@@ -8,7 +8,7 @@ from typing import List, cast
 from typing_extensions import Literal
 
 _cwd = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_bin = os.path.join(_cwd, "node_modules", ".bin", "pyright")
+_bin = "pyright"
 
 
 @dataclass

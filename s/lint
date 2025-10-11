@@ -18,3 +18,6 @@ mypy tests typings
 # pyright tests
 pyright tests typings
 pytest tests typings -p no:warnings -v
+
+# ty tests
+ty check tests

@@ -43,7 +43,7 @@ from django.views.decorators.http import (
 from psycopg2.extras import execute_values
 
 
-class CustomChoices(models.enums.Choices):
+class CustomChoices(models.Choices):
     A = "B", "A"
 
     def go(self) -> None:
@@ -54,7 +54,7 @@ CustomChoices.values[0].go()
 CustomChoices.choices[0][0].go()
 
 
-class CustomIntegerChoices(models.enums.IntegerChoices):
+class CustomIntegerChoices(models.IntegerChoices):
     A = 1, "A"
 
     def go(self) -> None:
@@ -785,73 +785,73 @@ def get_data_view(request: HttpRequest, id: str) -> None:
 
 
 @cache_page(3600)
-def cached_page_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
-    ...
+def cached_page_view(request: HttpRequest) -> HttpResponse:
+    raise NotImplementedError
 
 
 @cache_control(private=True)
-def cache_control_view(  # type: ignore[empty-body]
+def cache_control_view(
     request: HttpRequest,
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
 cache_page_2 = decorator_from_middleware_with_args(CacheMiddleware)
 
 
 @cache_page_2(3600)
-def cached_view_take_2(  # type: ignore[empty-body]
+def cached_view_take_2(
     request: HttpRequest,
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
 cache_page_3_no_args = decorator_from_middleware(CacheMiddleware)
 
 
 @cache_page_3_no_args
-def cached_view_take_3(  # type: ignore[empty-body]
+def cached_view_take_3(
     request: HttpRequest,
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
 @never_cache
 @gzip_page
-def compressed_view(  # type: ignore[empty-body]
+def compressed_view(
     request: HttpRequest, id: str
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
-def latest_entry(  # type: ignore[empty-body]
+def latest_entry(
     request: HttpRequest, blog_id: str
 ) -> bool:
-    ...
+    raise NotImplementedError
 
 
 @condition(last_modified_func=latest_entry)
-def front_page(  # type: ignore[empty-body]
+def front_page(
     request: HttpRequest, blog_id: str
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
 @last_modified(latest_entry)
-def front_page_2(  # type: ignore[empty-body]
+def front_page_2(
     request: HttpRequest, blog_id: str
 ) -> HttpResponse:
-    ...
+    raise NotImplementedError
 
 
 @sensitive_post_parameters("password")
-def login_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
-    ...
+def login_view(request: HttpRequest) -> HttpResponse:
+    raise NotImplementedError
 
 
 @sensitive_variables("password")
-def signup_view(request: HttpRequest) -> HttpResponse:  # type: ignore[empty-body]
-    ...
+def signup_view(request: HttpRequest) -> HttpResponse:
+    raise NotImplementedError
 
 
 def namedtuplefetchall(cursor: CursorWrapper) -> List[Tuple[Any, ...]]:

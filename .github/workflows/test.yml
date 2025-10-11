@@ -19,17 +19,8 @@ jobs:
         with:
           python-version-file: "pyproject.toml"
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: "package.json"
-          cache: "yarn"
-
       - name: Install python dependencies
-        run: uv sync
-
-      - name: Install node dependencies
-        run: yarn install --frozen-lockfile --non-interactive
+        run: uv sync --locked
 
       - name: lint
-        run: ./s/lint
+        run: uv run ./s/lint

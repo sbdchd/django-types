@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from enum import Enum
-from typing import Any
+from typing import Any, cast
 from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
@@ -9,8 +9,8 @@ from django.db.models.expressions import BaseExpression, Combinable
 from django.db.models.query_utils import Q
 
 class Deferrable(Enum):
-    DEFERRED: str
-    IMMEDIATE: str
+    DEFERRED = cast(str, ...)
+    IMMEDIATE = cast(str, ...)
 
 class BaseConstraint:
     name: str

@@ -1,6 +1,6 @@
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from enum import Enum
-from typing import Any
+from typing import Any, cast
 
 from django.http.request import HttpRequest
 from django.template.context import Context as Context
@@ -26,10 +26,10 @@ tag_re: Any
 logger: Any
 
 class TokenType(Enum):
-    TEXT: int
-    VAR: int
-    BLOCK: int
-    COMMENT: int
+    TEXT = cast(int, ...)
+    VAR = cast(int, ...)
+    BLOCK = cast(int, ...)
+    COMMENT = cast(int, ...)
 
 class VariableDoesNotExist(Exception):
     msg: str = ...

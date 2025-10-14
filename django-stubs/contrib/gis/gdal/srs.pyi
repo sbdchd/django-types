@@ -1,11 +1,11 @@
 from enum import IntEnum
-from typing import Any
+from typing import Any, cast
 
-from django.contrib.gis.gdal.base import GDALBase as GDALBase
+from django.contrib.gis.gdal.base import GDALBase
 
 class AxisOrder(IntEnum):
-    TRADITIONAL: int
-    AUTHORITY: int
+    TRADITIONAL = cast(int, ...)
+    AUTHORITY = cast(int, ...)
 
 class SpatialReference(GDALBase):
     destructor: Any = ...

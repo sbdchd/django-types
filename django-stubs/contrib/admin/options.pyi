@@ -1,6 +1,7 @@
+import enum
 from collections import OrderedDict
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-from typing import Any, Generic, Literal, TypeVar
+from typing import Any, Generic, Literal, TypeVar, cast
 from typing_extensions import TypedDict
 
 from django.contrib.admin.filters import ListFilter
@@ -44,6 +45,11 @@ HORIZONTAL: Literal[1] = ...
 VERTICAL: Literal[2] = ...
 
 _Direction = Literal[1, 2]
+
+class ShowFacets(enum.Enum):
+    NEVER = cast(str, ...)
+    ALLOW = cast(str, ...)
+    ALWAYS = cast(str, ...)
 
 def get_content_type_for_model(obj: type[Model] | Model) -> ContentType: ...
 def get_ul_class(radio_style: int) -> str: ...
@@ -106,7 +112,7 @@ class BaseModelAdmin(Generic[_ModelT]):
         self,
         db_field: ManyToManyField[Any, Any],
         request: HttpRequest | None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> ModelMultipleChoiceField: ...
     def get_autocomplete_fields(self, request: HttpRequest) -> Sequence[str]: ...
     def get_view_on_site_url(self, obj: _ModelT | None = ...) -> str | None: ...
@@ -171,10 +177,13 @@ class ModelAdmin(BaseModelAdmin[_ModelT]):
     delete_selected_confirmation_template: str = ...
     object_history_template: str = ...
     popup_response_template: str = ...
-    actions: Sequence[
-        Callable[[ModelAdmin[Any], HttpRequest, QuerySet[Any]], HttpResponse | None]
-        | str
-    ] | None = ...
+    actions: (
+        Sequence[
+            Callable[[ModelAdmin[Any], HttpRequest, QuerySet[Any]], HttpResponse | None]
+            | str
+        ]
+        | None
+    ) = ...
     action_form: type[ActionForm] = ...
     actions_on_top: bool = ...
     actions_on_bottom: bool = ...
@@ -197,7 +206,7 @@ class ModelAdmin(BaseModelAdmin[_ModelT]):
         request: HttpRequest,
         obj: _ModelT | None = ...,
         change: bool = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> type[ModelForm]: ...
     def get_changelist(
         self, request: HttpRequest, **kwargs: Any

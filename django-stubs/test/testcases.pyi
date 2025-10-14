@@ -80,8 +80,8 @@ class SimpleTestCase(unittest.TestCase):
     ) -> None: ...
     def assertNotContains(
         self,
-        response: HttpResponse,
-        text: bytes | str,
+        response: HttpResponseBase,
+        text: bytes | int | str,
         status_code: int = ...,
         msg_prefix: str = ...,
         html: bool = ...,

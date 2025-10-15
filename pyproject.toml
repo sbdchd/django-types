@@ -7,9 +7,7 @@ authors = [{ name = "django-types team & contributors" }]
 license = "MIT"
 keywords = ["django", "types", "mypy", "stubs"]
 requires-python = ">=3.10"
-dependencies = [
-    "types-psycopg2>=2.9.21.13",
-]
+dependencies = ["types-psycopg2>=2.9.21.13"]
 
 [project.urls]
 Repository = "https://github.com/sbdchd/django-types"
@@ -32,31 +30,63 @@ dev = [
 ]
 
 
-
 [tool.ruff]
-line-length = 88
+line-length = 120
 target-version = "py310"
-exclude = ["*.py"] # only autofix stubs
+exclude = ["*.py"]       # only autofix stubs
 
 [tool.ruff.lint]
+# See Rules in Ruff documentation: https://docs.astral.sh/ruff/rules/
 select = [
-    "F401",  # Remove unused imports
-    "UP004", # Remove explicit `object` inheritance
-    "UP006", # PEP-585 autofixes
-    "UP007", # PEP-604 autofixes
-    "UP013", # Class-based syntax for TypedDicts
-    "UP014", # Class-based syntax for NamedTuples
-    "UP019", # Use str over typing.Text
-    "UP035", # import from typing, not typing_extensions, wherever possible
-    # "UP039",  # don't use parens after a class definition with no bases
-    "PYI009", # use `...`, not `pass`, in empty class bodies
-    "PYI010", # function bodies must be empty
-    "PYI012", # class bodies must not contain `pass`
-    # "PYI013", # non-empty class bodies must not contain `...`
-    # "PYI020", # quoted annotations are always unnecessary in stubs
-    # "PYI025", # always alias `collections.abc.Set` as `AbstractSet` when importing it
-    # "PYI032", # use `object`, not `Any`, as the second parameter to `__eq__`
+    "B",      # bugbear
+    "E",      # pycodestyle
+    "F",      # pyflakes
+    "FURB",   # refurb
+    "INP",    # flake8-tidy-imports
+    "W",      # pycodestyle
+    "I",      # isort
+    "ISC001", # Implicitly concatenated string literals on one line
+    "ISC002", # Implicitly concatenated string literals over multiple lines
+    "UP",     # pyupgrade
+    "TID251", # Disallowed imports (flake8-tidy-imports.banned-api)
+    "PYI",    # flake8-pyi
+    "RUF100", # Equivalent to flake8-noqa NQA103
+    "PGH004", # Equivalent to flake8-noqa NQA104
+    "PGH003", # Disallowed blanket `type: ignore` annotations.
+    "RET504", # Unnecessary assignment to {name} before return statement
+    "RET505", # Unnecessary {branch} after return statement
+    "RET506", # Unnecessary {branch} after raise statement
+    "RET507", # Unnecessary {branch} after continue statement
+    "RET508", # Unnecessary {branch} after break statement
+    "RUF",    # Ruff specific rules
+    "TC",     # flake8-type-checking
 ]
+ignore = [
+    "PYI021", # We have a few meaningful docstrings for stubs only constructs/utilities.
+    "PYI041", # This might not be obvious that `float | int` is mostly equivalent to `float` typing wise | int | str
+    "PYI043",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"*.pyi" = [
+    "B",
+    "E501",
+    "E741",
+    "E743",
+    "F403", # Use wildcard import
+    "F405",
+    "F822",
+    "F821",
+]
+"tests/*.py" = ["INP001", "PGH003", "RUF012"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"_typeshed.Self".msg = "Use typing_extensions.Self (PEP 673) instead. If you type a metaclass, add a noqa"
+"typing.assert_type".msg = "Only available in Python 3.11 and above. Use `typing_extensions.assert_type` instead."
+"typing.Self".msg = "Only available in Python 3.11 and above. Use `typing_extensions.Self` instead."
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

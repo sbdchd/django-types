@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from enum import Enum
-from typing import Any, cast
-from typing_extensions import Self
+from typing import Any, cast, overload
+from typing_extensions import Self, deprecated
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.models.base import Model
@@ -39,27 +39,65 @@ class BaseConstraint:
     def clone(self) -> Self: ...
 
 class CheckConstraint(BaseConstraint):
-    check: Q
+    check: Q | BaseExpression
+    condition: Q | BaseExpression
+
+    @overload
+    @deprecated(
+        "check keyword argument is deprecated in favor of condition and will be removed in Django 6.0"
+    )
     def __init__(
         self,
         *,
-        check: Q,
         name: str,
-        violation_error_message: str | None = ...,
+        condition: None = None,
+        check: Q | BaseExpression,
+        violation_error_code: str | None = None,
+        violation_error_message: str | None = None,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self,
+        *,
+        name: str,
+        condition: Q | BaseExpression,
+        check: None = None,
+        violation_error_code: str | None = None,
+        violation_error_message: str | None = None,
     ) -> None: ...
 
 class UniqueConstraint(BaseConstraint):
-    fields: tuple[str]
+    expressions: Sequence[BaseExpression | Combinable]
+    fields: Sequence[str]
     condition: Q | None
+    deferrable: Deferrable | None
+    nulls_distinct: bool | None
+
+    @overload
     def __init__(
         self,
-        *expressions: BaseExpression | Combinable | str,
-        fields: Sequence[str] = ...,
-        name: str | None = ...,
-        condition: Q | None = ...,
-        deferrable: Deferrable | None = ...,
-        include: str | Sequence[str] | None = ...,
-        opclasses: Sequence[str] = ...,
-        violation_error_message: str | None = ...,
-        nulls_distinct: bool | None = ...,
+        *expressions: str | BaseExpression | Combinable,
+        fields: None = None,
+        name: str | None = None,
+        condition: Q | None = None,
+        deferrable: Deferrable | None = None,
+        include: Sequence[str] | None = None,
+        opclasses: Sequence[Any] = (),
+        nulls_distinct: bool | None = None,
+        violation_error_code: str | None = None,
+        violation_error_message: str | None = None,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self,
+        *,
+        fields: Sequence[str],
+        name: str | None = None,
+        condition: Q | None = None,
+        deferrable: Deferrable | None = None,
+        include: Sequence[str] | None = None,
+        opclasses: Sequence[Any] = (),
+        nulls_distinct: bool | None = None,
+        violation_error_code: str | None = None,
+        violation_error_message: str | None = None,
     ) -> None: ...

@@ -1,8 +1,7 @@
 from collections.abc import Callable, Iterable
 from types import TracebackType
-from typing import Any
+from typing import Any, ParamSpec, TypeVar
 from typing import Any as Incomplete
-from typing import ParamSpec, TypeVar
 
 from django.apps import AppConfig
 from django.db.backends.base.base import BaseDatabaseWrapper

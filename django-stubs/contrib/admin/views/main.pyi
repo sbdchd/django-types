@@ -3,7 +3,7 @@ from collections.abc import Callable
 from typing import Any
 
 from django.contrib.admin.filters import ListFilter, SimpleListFilter
-from django.contrib.admin.options import IS_POPUP_VAR as IS_POPUP_VAR  # noqa: F401
+from django.contrib.admin.options import IS_POPUP_VAR as IS_POPUP_VAR
 from django.contrib.admin.options import TO_FIELD_VAR as TO_FIELD_VAR
 from django.contrib.admin.options import ModelAdmin
 from django.db.models.base import Model

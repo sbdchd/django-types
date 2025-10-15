@@ -1,11 +1,11 @@
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.apps.config import AppConfig
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.checks.messages import CheckMessage, Error
 
-_CheckError = str | Error
+_CheckError: TypeAlias = str | Error
 
 def check_admin_app(
     app_configs: Sequence[AppConfig] | None = ..., **kwargs: Any

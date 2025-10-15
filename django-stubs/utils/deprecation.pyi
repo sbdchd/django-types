@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -32,7 +32,7 @@ class DeprecationInstanceCheck(type):
     deprecation_warning: type[Warning]
     def __instancecheck__(self, instance: Any) -> Any: ...
 
-GetResponseCallable = Callable[[HttpRequest], HttpResponse]
+GetResponseCallable: TypeAlias = Callable[[HttpRequest], HttpResponse]
 
 class MiddlewareMixin:
     get_response: GetResponseCallable | None = ...

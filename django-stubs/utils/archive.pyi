@@ -1,5 +1,5 @@
-from types import TracebackType
 from collections.abc import Iterable, Sequence
+from types import TracebackType
 from typing import Any
 
 class ArchiveException(Exception): ...

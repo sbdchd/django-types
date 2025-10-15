@@ -1,9 +1,9 @@
 import types
 from collections.abc import Iterable
 from typing import Any
-from typing_extensions import Self
 
 from django.core.mail.message import EmailMessage
+from typing_extensions import Self
 
 class BaseEmailBackend:
     fail_silently: bool

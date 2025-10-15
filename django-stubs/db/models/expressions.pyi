@@ -1,23 +1,23 @@
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from datetime import datetime, timedelta
 from decimal import Decimal
-from typing import Any
-from typing_extensions import Self
+from typing import Any, TypeAlias
 
 from django.db.models import Q, QuerySet
 from django.db.models.fields import Field
 from django.db.models.lookups import Lookup
 from django.db.models.query import _BaseQuerySet
 from django.db.models.sql.compiler import SQLCompiler
+from typing_extensions import Self
 
-_OutputField = Field[Any, Any] | str
+_OutputField: TypeAlias = Field[Any, Any] | str
 
 class SQLiteNumericMixin:
     def as_sqlite(
         self, compiler: SQLCompiler, connection: Any, **extra_context: Any
     ) -> tuple[str, list[float]]: ...
 
-_Numeric = float | Decimal
+_Numeric: TypeAlias = float | Decimal
 
 class Combinable:
     ADD: str = ...

@@ -1,10 +1,10 @@
 from collections.abc import Callable
 from typing import Any, TypeVar, overload
-from typing_extensions import ParamSpec
 
 from django.template.base import FilterExpression, Origin, Parser, Token
 from django.template.context import Context
 from django.utils.safestring import SafeText
+from typing_extensions import ParamSpec
 
 from .base import Node, Template
 

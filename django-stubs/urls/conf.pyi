@@ -1,11 +1,11 @@
 from collections.abc import Callable, Coroutine
-from typing import Any, overload
+from typing import Any, TypeAlias, overload
 
 from ..conf.urls import IncludedURLConf
 from ..http.response import HttpResponseBase
 from .resolvers import URLPattern, URLResolver
 
-_ResponseType = (
+_ResponseType: TypeAlias = (
     HttpResponseBase | Coroutine[Any, Any, HttpResponseBase] | Coroutine[Any, Any, None]
 )
 

@@ -8,7 +8,7 @@ from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.utils.functional import cached_property
 
 StrOrPromise = str
-from django.db.models.fields import Field, _LiteralFieldChoices, _ValidatorCallable
+from django.db.models.fields import _LiteralFieldChoices, _ValidatorCallable
 
 class AttributeSetter:
     def __init__(self, name: str, value: Any) -> None: ...

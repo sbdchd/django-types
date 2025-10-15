@@ -1,12 +1,12 @@
 from collections.abc import Mapping
 from typing import Any
-from typing_extensions import override
 
 from django.http.request import HttpRequest
 from django.template.backends.base import BaseEngine, _BaseTemplate
 from django.template.backends.django import Template as DjangoTemplate
 from django.template.backends.jinja2 import Template as Jinja2Template
 from django.utils.safestring import SafeText
+from typing_extensions import override
 
 def get_default_renderer() -> BaseRenderer: ...
 

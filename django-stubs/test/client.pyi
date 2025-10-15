@@ -3,7 +3,7 @@ from io import BytesIO
 from json import JSONEncoder
 from re import Pattern
 from types import TracebackType
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.sessions.backends.base import SessionBase
@@ -47,7 +47,7 @@ class AsyncClientHandler(BaseHandler):
 def encode_multipart(boundary: str, data: dict[str, Any]) -> bytes: ...
 def encode_file(boundary: str, key: str, file: Any) -> list[bytes]: ...
 
-_RequestData = Any | None
+_RequestData: TypeAlias = Any | None
 
 class RequestFactory:
     json_encoder: type[JSONEncoder]

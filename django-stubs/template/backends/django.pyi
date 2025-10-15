@@ -1,12 +1,12 @@
 from collections.abc import Iterator, Mapping
 from typing import Any, NoReturn
-from typing_extensions import override
 
 from django.http.request import HttpRequest
 from django.template import base
 from django.template.engine import Engine
 from django.template.exceptions import TemplateDoesNotExist
 from django.utils.safestring import SafeText
+from typing_extensions import override
 
 from .base import BaseEngine
 

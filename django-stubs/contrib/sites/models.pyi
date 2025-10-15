@@ -1,8 +1,8 @@
 from typing import Any, ClassVar, TypeVar
-from typing_extensions import Self
 
 from django.db import models
 from django.http.request import HttpRequest
+from typing_extensions import Self
 
 SITE_CACHE: dict[Any, Site]
 

@@ -2,7 +2,7 @@ import types
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from datetime import date, datetime, time
 from decimal import Decimal
-from typing import IO, Any, Literal
+from typing import IO, Any, Literal, TypeAlias
 from uuid import UUID
 
 import psycopg2.extensions
@@ -12,8 +12,8 @@ from psycopg2.extensions import Column
 logger: Any
 
 # Python types that can be adapted to SQL.
-_Mixed = None | bool | int | float | Decimal | str | bytes | datetime | UUID
-_SQLType = _Mixed | Sequence[_Mixed] | Mapping[str, _Mixed]
+_Mixed: TypeAlias = None | bool | int | float | Decimal | str | bytes | datetime | UUID
+_SQLType: TypeAlias = _Mixed | Sequence[_Mixed] | Mapping[str, _Mixed]
 
 class CursorWrapper:
     cursor: psycopg2.extensions.cursor = ...

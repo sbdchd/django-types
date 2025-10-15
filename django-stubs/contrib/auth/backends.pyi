@@ -1,11 +1,11 @@
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser, Permission, User
 from django.db.models.base import Model
 from django.http.request import HttpRequest
 
-_AnyUser = Model | AnonymousUser
+_AnyUser: TypeAlias = Model | AnonymousUser
 
 UserModel: Any
 

@@ -1,11 +1,11 @@
 from collections.abc import Iterable
-from typing import Any, ClassVar, TypeVar
-from typing_extensions import Self
+from typing import Any, ClassVar, TypeAlias, TypeVar
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone as timezone
+from typing_extensions import Self
 
 ADDITION: int
 CHANGE: int
@@ -38,8 +38,8 @@ class LogEntryManager(models.Manager[_LogEntryT]):
 
 class LogEntry(models.Model):
     action_time = models.DateTimeField()
-    user = models.ForeignKey[User]
-    content_type = models.ForeignKey[ContentType]
+    user: TypeAlias = models.ForeignKey[User]
+    content_type: TypeAlias = models.ForeignKey[ContentType]
     object_id = models.TextField(blank=True, null=True)
     object_repr = models.CharField()
     action_flag = models.PositiveSmallIntegerField()

@@ -1,13 +1,13 @@
-from types import TracebackType
 import threading
 import unittest
 from collections.abc import Callable, Iterable
+from types import TracebackType
 from typing import Any, ClassVar, TypeVar, overload
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
-from django.db import connections as connections  # noqa: F401
+from django.db import connections as connections
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models import Model
 from django.db.models.query import ValuesQuerySet, _BaseQuerySet

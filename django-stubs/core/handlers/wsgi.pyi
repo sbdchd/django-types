@@ -1,14 +1,14 @@
 from collections.abc import Callable
 from io import BytesIO
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.contrib.sessions.backends.base import SessionBase
 from django.core.handlers import base
 from django.http import HttpRequest
 from django.http.response import HttpResponse
 
-_Stream = BytesIO | str
-_WSGIEnviron = dict[str, Any]
+_Stream: TypeAlias = BytesIO | str
+_WSGIEnviron: TypeAlias = dict[str, Any]
 
 class LimitedStream:
     stream: _Stream = ...

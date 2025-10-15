@@ -4,7 +4,7 @@ from datetime import datetime
 from datetime import time as _time
 from typing import Any
 
-from django.utils.html import escape as escape  # noqa: F401
+from django.utils.html import escape as escape
 from django.utils.safestring import SafeText
 
 register: Any

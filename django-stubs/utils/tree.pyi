@@ -1,9 +1,9 @@
 from collections.abc import Iterable, Sequence
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.db.models.sql.where import NothingNode
 
-_NodeChildren = Iterable[Node | NothingNode | Sequence[Any]]
+_NodeChildren: TypeAlias = Iterable[Node | NothingNode | Sequence[Any]]
 
 class Node:
     children: list[Any]

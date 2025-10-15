@@ -1,6 +1,5 @@
 from collections.abc import Callable, Iterable
 from typing import Any, overload
-from typing_extensions import Self
 
 from django.core.files.base import File
 from django.core.files.images import ImageFile
@@ -12,6 +11,7 @@ from django.db.models.fields import (
     _ErrorMessagesToOverride,
     _ValidatorCallable,
 )
+from typing_extensions import Self
 
 class FieldFile(File):
     instance: Model = ...

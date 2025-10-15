@@ -3,26 +3,26 @@ import ipaddress
 import uuid
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any, Generic, Literal, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
-from django.db.models import Model, TextChoices, IntegerChoices
+from django.db.models import IntegerChoices, Model, TextChoices
 from django.db.models.expressions import Col, Combinable, Func
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Widget
+from typing_extensions import Self
 
 BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 
-_Choice = tuple[Any, str]
-_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_ChoicesMapping = Mapping[Any, str | Mapping[Any, str]]
-_LiteralFieldChoices = Iterable[_Choice | _ChoiceNamedGroup] | _ChoicesMapping
-_FieldChoices = _LiteralFieldChoices | Callable[[], _LiteralFieldChoices]
+_Choice: TypeAlias = tuple[Any, str]
+_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
+_ChoicesMapping: TypeAlias = Mapping[Any, str | Mapping[Any, str]]
+_LiteralFieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup] | _ChoicesMapping
+_FieldChoices: TypeAlias = _LiteralFieldChoices | Callable[[], _LiteralFieldChoices]
 
-_ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = dict[str, Any]
+_ValidatorCallable: TypeAlias = Callable[..., None]
+_ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 # __set__ value type
 _ST = TypeVar("_ST")

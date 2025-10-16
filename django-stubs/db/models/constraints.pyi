@@ -7,6 +7,7 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.models.base import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.db.models.query_utils import Q
+from typing_extensions import Self
 
 class Deferrable(Enum):
     DEFERRED = cast(str, ...)

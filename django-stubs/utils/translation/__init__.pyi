@@ -1,7 +1,7 @@
-from types import TracebackType
 import functools
 from collections.abc import Callable
 from contextlib import ContextDecorator
+from types import TracebackType
 from typing import Any
 
 from django.http.request import HttpRequest

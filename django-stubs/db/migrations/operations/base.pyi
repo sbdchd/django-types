@@ -1,11 +1,11 @@
 import enum
 from collections.abc import Sequence
 from typing import Any
-from typing_extensions import Self
 
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.migrations.state import ProjectState
 from django.db.models import Model
+from typing_extensions import Self
 
 class OperationCategory(str, enum.Enum):
     ADDITION = "+"

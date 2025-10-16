@@ -1,6 +1,5 @@
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, Generic, Literal, Protocol, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Generic, Literal, Protocol, TypeAlias, TypeVar, overload
 from uuid import UUID
 
 from django.db import models
@@ -11,7 +10,7 @@ from django.db.models.fields.mixins import FieldCacheMixin
 from django.db.models.fields.related_descriptors import (
     ForwardManyToOneDescriptor as ForwardManyToOneDescriptor,
 )
-from django.db.models.fields.related_descriptors import (  # noqa: F401
+from django.db.models.fields.related_descriptors import (
     ForwardOneToOneDescriptor as ForwardOneToOneDescriptor,
 )
 from django.db.models.fields.related_descriptors import (
@@ -23,14 +22,13 @@ from django.db.models.fields.related_descriptors import (
 from django.db.models.fields.related_descriptors import (
     ReverseOneToOneDescriptor as ReverseOneToOneDescriptor,
 )
-from django.db.models.fields.reverse_related import (  # noqa: F401
-    ForeignObjectRel as ForeignObjectRel,
-)
+from django.db.models.fields.reverse_related import ForeignObjectRel as ForeignObjectRel
 from django.db.models.fields.reverse_related import ManyToManyRel as ManyToManyRel
 from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
 from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
 from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
+from typing_extensions import Self
 
 class _DeleteProtocol(Protocol):
     def __call__(
@@ -42,14 +40,14 @@ class _DeleteProtocol(Protocol):
     ) -> None: ...
 
 _F = TypeVar("_F", bound=models.Field[Any, Any])
-_Choice = tuple[Any, str]
-_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
-_ChoicesLimit = dict[str, Any] | Q | Callable[[], Q]
-_OnDeleteOptions = _DeleteProtocol | Callable[[Any], _DeleteProtocol]
+_Choice: TypeAlias = tuple[Any, str]
+_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
+_FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
+_ChoicesLimit: TypeAlias = dict[str, Any] | Q | Callable[[], Q]
+_OnDeleteOptions: TypeAlias = _DeleteProtocol | Callable[[Any], _DeleteProtocol]
 
-_ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = dict[str, Any]
+_ValidatorCallable: TypeAlias = Callable[..., None]
+_ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 RECURSIVE_RELATIONSHIP_CONSTANT: str = ...
 

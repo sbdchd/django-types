@@ -7,7 +7,7 @@ from collections.abc import (
     Sequence,
 )
 from datetime import datetime
-from typing import Any, ClassVar, Literal, Protocol, TypeVar
+from typing import Any, ClassVar, Literal, Protocol, TypeAlias, TypeVar
 from unittest.mock import MagicMock
 from uuid import UUID
 
@@ -26,9 +26,9 @@ from django.forms.widgets import Input, Widget
 
 ALL_FIELDS: str
 
-_Fields = list[Callable[..., Any] | str] | Sequence[str] | Literal["__all__"]
-_Labels = dict[str, str]
-_ErrorMessages = dict[str, dict[str, str]]
+_Fields: TypeAlias = list[Callable[..., Any] | str] | Sequence[str] | Literal["__all__"]
+_Labels: TypeAlias = dict[str, str]
+_ErrorMessages: TypeAlias = dict[str, dict[str, str]]
 
 _M = TypeVar("_M", bound=Model)
 

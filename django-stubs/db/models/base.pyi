@@ -1,6 +1,5 @@
 from collections.abc import Callable, Collection, Iterable
 from typing import Any, ClassVar
-from typing_extensions import Self
 
 from django.core.checks.messages import CheckMessage
 from django.core.exceptions import (
@@ -10,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
+from typing_extensions import Self
 
 class ModelStateFieldsCacheDescriptor: ...
 

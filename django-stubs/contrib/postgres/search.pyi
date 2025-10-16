@@ -1,6 +1,5 @@
 from collections.abc import Iterable
-from typing import Any
-from typing_extensions import Self
+from typing import Any, TypeAlias
 
 from django.db.models import Field
 from django.db.models.expressions import (
@@ -16,8 +15,9 @@ from django.db.models.fields import (
     _ValidatorCallable,
 )
 from django.db.models.lookups import Lookup
+from typing_extensions import Self
 
-_Expression = str | Combinable | SearchQueryCombinable
+_Expression: TypeAlias = str | Combinable | SearchQueryCombinable
 
 class SearchVectorExact(Lookup[Any]): ...
 

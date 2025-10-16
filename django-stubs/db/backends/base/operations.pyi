@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.core.management.color import Style
 from django.db import DefaultConnectionProxy
@@ -12,7 +12,7 @@ from django.db.models.expressions import Case, Expression
 from django.db.models.fields import Field
 from django.db.models.sql.compiler import SQLCompiler
 
-_Connection = DefaultConnectionProxy | BaseDatabaseWrapper
+_Connection: TypeAlias = DefaultConnectionProxy | BaseDatabaseWrapper
 
 class BaseDatabaseOperations:
     compiler_module: str = ...

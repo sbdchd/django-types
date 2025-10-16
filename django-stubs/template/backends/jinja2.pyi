@@ -1,11 +1,11 @@
 from collections.abc import Callable, Mapping
 from typing import Any
-from typing_extensions import override
 
 from django.http.request import HttpRequest
 from django.template import base
 from django.template.exceptions import TemplateSyntaxError
 from django.utils.safestring import SafeText
+from typing_extensions import override
 
 from .base import BaseEngine
 

@@ -1,13 +1,13 @@
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from decimal import Decimal
 from itertools import chain
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.core.files.base import File
 from django.forms.renderers import BaseRenderer
 from django.utils.safestring import SafeText
 
-_OptAttrs = dict[str, Any]
+_OptAttrs: TypeAlias = dict[str, Any]
 
 class MediaOrderConflictWarning(RuntimeWarning): ...
 

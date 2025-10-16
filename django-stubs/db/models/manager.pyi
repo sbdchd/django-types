@@ -1,9 +1,9 @@
 from collections.abc import Callable, Iterable, MutableMapping
 from typing import Any, Generic, TypeVar
-from typing_extensions import Self
 
 from django.db.models.base import Model
 from django.db.models.query import QuerySet
+from typing_extensions import Self
 
 _T = TypeVar("_T", bound=Model)
 _V = TypeVar("_V", bound=Model)

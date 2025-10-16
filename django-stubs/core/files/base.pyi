@@ -2,9 +2,9 @@ import types
 from collections.abc import Iterator
 from io import StringIO
 from typing import IO, Any
-from typing_extensions import Self
 
 from django.core.files.utils import FileProxyMixin
+from typing_extensions import Self
 
 class File(FileProxyMixin, IO[Any]):
     DEFAULT_CHUNK_SIZE: Any = ...

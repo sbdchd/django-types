@@ -1,6 +1,5 @@
 from collections.abc import Callable
 from typing import Any
-from typing_extensions import Self
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.checks.messages import CheckMessage
@@ -14,6 +13,7 @@ from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.db.models.query import QuerySet
 from django.db.models.query_utils import FilteredRelation, PathInfo
 from django.db.models.sql.where import WhereNode
+from typing_extensions import Self
 
 class GenericForeignKey(FieldCacheMixin):
     # django-stubs implementation only fields

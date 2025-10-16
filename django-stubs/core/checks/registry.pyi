@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.apps.config import AppConfig
 from django.core.checks.messages import CheckMessage
@@ -16,7 +16,7 @@ class Tags:
     translation: str = ...
     urls: str = ...
 
-_CheckCallable = Callable[..., list[CheckMessage]]
+_CheckCallable: TypeAlias = Callable[..., list[CheckMessage]]
 
 class CheckRegistry:
     registered_checks: set[Callable[..., Any]] = ...

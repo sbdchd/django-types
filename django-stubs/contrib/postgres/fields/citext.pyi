@@ -1,14 +1,14 @@
 from collections.abc import Callable, Iterable
-from typing import Any, Literal, TypeVar, overload
+from typing import Any, Literal, TypeAlias, TypeVar, overload
 
 from django.db.models.fields import CharField, EmailField, TextField
 
-_Choice = tuple[Any, Any]
-_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
+_Choice: TypeAlias = tuple[Any, Any]
+_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
+_FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
 
-_ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = dict[str, Any]
+_ValidatorCallable: TypeAlias = Callable[..., None]
+_ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 _C = TypeVar("_C", bound=str | None)
 

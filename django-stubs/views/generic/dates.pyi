@@ -1,6 +1,6 @@
 import datetime
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.db import models
 from django.http import HttpRequest, HttpResponse
@@ -53,7 +53,9 @@ class DateMixin:
     def get_allow_future(self) -> bool: ...
     def uses_datetime_field(self) -> bool: ...
 
-DatedItems = tuple[Sequence[datetime.date] | None, Sequence[object], dict[str, Any]]
+DatedItems: TypeAlias = tuple[
+    Sequence[datetime.date] | None, Sequence[object], dict[str, Any]
+]
 
 class BaseDateListView(MultipleObjectMixin, DateMixin, View):
     date_list_period: str = ...

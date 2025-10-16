@@ -1,14 +1,14 @@
 from collections.abc import Callable, Collection
 from decimal import Decimal
 from re import Pattern, RegexFlag
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.core.files.base import File
 
 EMPTY_VALUES: Any
 
-_Regex = str | Pattern[str]
-_ErrorMessage = str | Any
+_Regex: TypeAlias = str | Pattern[str]
+_ErrorMessage: TypeAlias = str | Any
 
 def _lazy_re_compile(regex: _Regex, flags: int = ...) -> Any: ...
 
@@ -71,7 +71,7 @@ def validate_ipv4_address(value: str) -> None: ...
 def validate_ipv6_address(value: str) -> None: ...
 def validate_ipv46_address(value: str) -> None: ...
 
-_IPValidator = tuple[Callable[[Any], None], str]
+_IPValidator: TypeAlias = tuple[Callable[[Any], None], str]
 ip_address_validator_map: dict[str, _IPValidator]
 
 def ip_address_validators(protocol: str, unpack_ipv4: bool) -> _IPValidator: ...

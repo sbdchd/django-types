@@ -1,11 +1,11 @@
 import json
 from collections.abc import Callable, Iterable
 from typing import Any, Literal, TypeVar, overload
-from typing_extensions import Self
 
 from django.db.models import lookups
 from django.db.models.expressions import Combinable
 from django.db.models.lookups import PostgresOperatorLookup, Transform
+from typing_extensions import Self
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin

@@ -7,6 +7,7 @@ from django.db.backends.ddl_references import Statement
 from django.db.models.base import Model
 from django.db.models.fields import Field
 from django.db.models.indexes import Index
+from typing_extensions import Self
 
 logger: Any
 
@@ -44,7 +45,7 @@ class BaseDatabaseSchemaEditor(AbstractContextManager[Any]):
     def __init__(self, connection: Any, collect_sql: bool = ..., atomic: bool = ...) -> None: ...
     deferred_sql: Any = ...
     atomic: Any = ...
-    def __enter__(self) -> BaseDatabaseSchemaEditor: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: type[BaseException] | None,

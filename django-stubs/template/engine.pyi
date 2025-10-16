@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.template.base import Origin
 from django.template.library import Library
@@ -8,7 +8,7 @@ from django.utils.safestring import SafeText
 
 from .base import Template
 
-_Loader = Any
+_Loader: TypeAlias = Any
 
 class Engine:
     template_context_processors: tuple[Callable[..., Any]]

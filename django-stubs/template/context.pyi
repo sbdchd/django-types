@@ -1,13 +1,13 @@
-from types import TracebackType
 from collections.abc import Callable, Iterable, Iterator
-from typing import Any
+from types import TracebackType
+from typing import Any, TypeAlias
 
 from django.http.request import HttpRequest
 from django.template.base import Node, Origin, Template
 from django.template.defaulttags import IfChangedNode
 from django.template.loader_tags import IncludeNode
 
-_ContextValues = dict[str, Any] | Context
+_ContextValues: TypeAlias = dict[str, Any] | Context
 
 class ContextPopException(Exception): ...
 

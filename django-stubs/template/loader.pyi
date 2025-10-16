@@ -2,12 +2,10 @@ from typing import Any
 
 from django.http.request import HttpRequest
 from django.template.backends.base import _BaseTemplate
-from django.template.exceptions import (  # noqa: F401
-    TemplateDoesNotExist as TemplateDoesNotExist,
-)
+from django.template.exceptions import TemplateDoesNotExist as TemplateDoesNotExist
 from django.utils.safestring import SafeText
 
-from . import engines as engines  # noqa: F401
+from . import engines as engines
 
 def get_template(template_name: str, using: str | None = ...) -> _BaseTemplate: ...
 def select_template(

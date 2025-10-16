@@ -1,5 +1,5 @@
 from collections.abc import Iterator, Mapping
-from typing import Any
+from typing import Any, TypeAlias
 
 class FieldDoesNotExist(Exception): ...
 class AppRegistryNotReady(Exception): ...
@@ -26,7 +26,7 @@ class FieldError(Exception): ...
 
 NON_FIELD_ERRORS: str
 
-ValidationErrorMessageArg = (
+ValidationErrorMessageArg: TypeAlias = (
     str
     | ValidationError
     | dict[str, ValidationErrorMessageArg]

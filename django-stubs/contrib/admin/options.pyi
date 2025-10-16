@@ -1,8 +1,7 @@
 import enum
 from collections import OrderedDict
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-from typing import Any, Generic, Literal, TypeVar, cast
-from typing_extensions import TypedDict
+from typing import Any, Generic, Literal, TypeAlias, TypeVar, cast
 
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.helpers import ActionForm
@@ -38,13 +37,14 @@ from django.http.response import (
 from django.template.response import TemplateResponse
 from django.urls.resolvers import URLPattern
 from django.utils.safestring import SafeText
+from typing_extensions import TypedDict
 
 IS_POPUP_VAR: str
 TO_FIELD_VAR: str
 HORIZONTAL: Literal[1] = ...
 VERTICAL: Literal[2] = ...
 
-_Direction = Literal[1, 2]
+_Direction: TypeAlias = Literal[1, 2]
 
 class ShowFacets(enum.Enum):
     NEVER = cast(str, ...)
@@ -70,8 +70,8 @@ class _FieldOpts(_OptionalFieldOpts, total=True):
 # https://github.com/python/mypy/issues/8921
 # _FieldsetSpec = Sequence[tuple[str | None, _FieldOpts]]
 _T = TypeVar("_T")
-_ListOrTuple = tuple[_T, ...] | list[_T]
-_FieldsetSpec = _ListOrTuple[tuple[str | None, _FieldOpts]]
+_ListOrTuple: TypeAlias = tuple[_T, ...] | list[_T]
+_FieldsetSpec: TypeAlias = _ListOrTuple[tuple[str | None, _FieldOpts]]
 
 # Generic type specifically for models, for use in BaseModelAdmin and subclasses
 # https://github.com/typeddjango/django-stubs/issues/482

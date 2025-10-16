@@ -1,7 +1,6 @@
 from collections.abc import Iterable, Mapping
 from datetime import datetime
 from typing import Any, Generic, TypeVar
-from typing_extensions import Self
 
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models.expressions import Expression, Func
@@ -10,6 +9,7 @@ from django.db.models.query_utils import RegisterLookupMixin
 from django.db.models.sql.compiler import SQLCompiler
 from django.utils.datastructures import OrderedSet
 from django.utils.safestring import SafeText
+from typing_extensions import Self
 
 _T = TypeVar("_T")
 

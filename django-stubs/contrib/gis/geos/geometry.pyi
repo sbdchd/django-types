@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.contrib.gis.geometry import hex_regex as hex_regex  # noqa: F401
+from django.contrib.gis.geometry import hex_regex as hex_regex
 from django.contrib.gis.geometry import json_regex as json_regex
 from django.contrib.gis.geometry import wkt_regex as wkt_regex
 from django.contrib.gis.geos.base import GEOSBase as GEOSBase

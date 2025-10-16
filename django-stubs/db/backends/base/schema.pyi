@@ -1,6 +1,6 @@
-from types import TracebackType
 from collections.abc import Sequence
 from contextlib import AbstractContextManager
+from types import TracebackType
 from typing import Any
 
 from django.db.backends.ddl_references import Statement

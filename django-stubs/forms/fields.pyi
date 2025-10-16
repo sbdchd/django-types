@@ -1,16 +1,16 @@
 from collections.abc import Callable, Iterable, Sequence
 from datetime import datetime, timedelta
 from re import Pattern
-from typing import Any
+from typing import Any, TypeAlias
 
 from django.core.validators import BaseValidator
 from django.forms.boundfield import BoundField
 from django.forms.forms import BaseForm
 from django.forms.widgets import Widget
 
-_Choice = tuple[Any, str]
-_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
+_Choice: TypeAlias = tuple[Any, str]
+_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
+_FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
 
 class Field:
     initial: Any

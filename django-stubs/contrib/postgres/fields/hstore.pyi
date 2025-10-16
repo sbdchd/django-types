@@ -1,15 +1,15 @@
 from collections.abc import Callable, Iterable
-from typing import Any, Generic, Literal, TypeVar, overload
+from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
 
 from django.db.models import Field, Transform
 
 from .mixins import CheckFieldDefaultMixin
 
-_Choice = tuple[Any, Any]
-_ChoiceNamedGroup = tuple[str, Iterable[_Choice]]
-_FieldChoices = Iterable[_Choice | _ChoiceNamedGroup]
-_ValidatorCallable = Callable[..., None]
-_ErrorMessagesToOverride = dict[str, Any]
+_Choice: TypeAlias = tuple[Any, Any]
+_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
+_FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
+_ValidatorCallable: TypeAlias = Callable[..., None]
+_ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 _T = TypeVar("_T", bound=dict[str, str | None] | None)
 

@@ -1,7 +1,6 @@
 from collections.abc import Iterable, Mapping
 from re import Pattern
-from typing import Any, BinaryIO, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, BinaryIO, TypeAlias, TypeVar, overload
 
 from django.contrib.auth.models import _AnyUser
 from django.contrib.sessions.backends.base import SessionBase
@@ -13,6 +12,7 @@ from django.utils.datastructures import (
     ImmutableList,
     MultiValueDict,
 )
+from typing_extensions import Self
 
 RAISE_ERROR: object = ...
 host_validation_re: Pattern[str] = ...
@@ -20,7 +20,7 @@ host_validation_re: Pattern[str] = ...
 class UnreadablePostError(OSError): ...
 class RawPostDataException(Exception): ...
 
-UploadHandlerList = (
+UploadHandlerList: TypeAlias = (
     list[uploadhandler.FileUploadHandler]
     | ImmutableList[uploadhandler.FileUploadHandler]
 )

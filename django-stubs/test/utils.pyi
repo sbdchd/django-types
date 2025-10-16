@@ -3,8 +3,7 @@ from collections.abc import Callable, Iterable, Iterator, Mapping
 from contextlib import AbstractContextManager
 from decimal import Decimal
 from types import TracebackType
-from typing import Any, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, TypeAlias, TypeVar, overload
 
 from django.apps.registry import Apps
 from django.conf import LazySettings, Settings
@@ -12,9 +11,10 @@ from django.core.checks.registry import CheckRegistry
 from django.db import DefaultConnectionProxy
 from django.test.runner import DiscoverRunner
 from django.test.testcases import SimpleTestCase
+from typing_extensions import Self
 
-_TestClass = type[SimpleTestCase]
-_DecoratedTest = Callable[..., Any] | _TestClass
+_TestClass: TypeAlias = type[SimpleTestCase]
+_DecoratedTest: TypeAlias = Callable[..., Any] | _TestClass
 _C = TypeVar("_C", bound=Callable[..., Any])
 _T = TypeVar("_T")
 _U = TypeVar("_U")

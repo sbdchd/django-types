@@ -1,4 +1,3 @@
-from __future__ import print_function
 
 import types
 import typing
@@ -19,9 +18,9 @@ PY2 = False
 PY3 = True
 PY34: bool = ...
 
-string_types = (str,)
-integer_types = (int,)
-class_types = (type,)
+string_types = ...
+integer_types = ...
+class_types = ...
 text_type = str
 binary_type = bytes
 

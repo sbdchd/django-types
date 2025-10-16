@@ -8,7 +8,7 @@ from re import Pattern
 
 # This is defined here as a do-nothing function because we can't import
 # django.utils.translation -- that module depends on the settings.
-from typing import Any, Protocol
+from typing import Any, Protocol, TypeAlias
 
 ####################
 # CORE             #
@@ -139,7 +139,7 @@ APPEND_SLASH: bool = ...
 PREPEND_WWW: bool = ...
 
 # Override the server-derived value of SCRIPT_NAME
-FORCE_SCRIPT_NAME = None
+FORCE_SCRIPT_NAME: TypeAlias = None
 
 # List of compiled regular expression objects representing User-Agent strings
 # that are not allowed to visit any page, systemwide. Use this for bad
@@ -213,12 +213,12 @@ FILE_UPLOAD_TEMP_DIR: str | None = ...
 
 # The numeric mode to set newly-uploaded files to. The value should be a mode
 # you'd pass directly to os.chmod; see https://docs.python.org/library/os.html#files-and-directories.
-FILE_UPLOAD_PERMISSIONS = None
+FILE_UPLOAD_PERMISSIONS: TypeAlias = None
 
 # The numeric mode to assign to newly-created directories, when uploading files.
 # The value should be a mode as you'd pass to os.chmod;
 # see https://docs.python.org/library/os.html#files-and-directories.
-FILE_UPLOAD_DIRECTORY_PERMISSIONS = None
+FILE_UPLOAD_DIRECTORY_PERMISSIONS: TypeAlias = None
 
 # Python module path where user will place custom format definition.
 # The directory where this setting is pointing should contain subdirectories
@@ -337,7 +337,7 @@ SESSION_CACHE_ALIAS = "default"
 # Cookie name. This can be whatever you want.
 SESSION_COOKIE_NAME = "sessionid"
 # Age of cookie, in seconds (default: 2 weeks).
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+SESSION_COOKIE_AGE = ...
 # A string like "example.com", or None for standard domain cookie.
 SESSION_COOKIE_DOMAIN: str | None = ...
 # Whether the session cookie should be secure (https:// only).
@@ -411,8 +411,8 @@ CSRF_FAILURE_VIEW = "django.views.csrf.csrf_failure"
 
 # Settings for CSRF cookie.
 CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_AGE = 60 * 60 * 24 * 7 * 52
-CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_AGE = ...
+CSRF_COOKIE_DOMAIN: TypeAlias = None
 CSRF_COOKIE_PATH = "/"
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
@@ -426,7 +426,7 @@ CSRF_USE_SESSIONS = False
 ############
 
 # Class to use as messages backend
-MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
+MESSAGE_STORAGE = ...
 
 # Default values of MESSAGE_LEVEL and MESSAGE_TAGS are defined within
 # django.contrib.messages to avoid imports in this settings file.
@@ -503,5 +503,5 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
 SECURE_HSTS_SECONDS = 0
 SECURE_REDIRECT_EXEMPT: list[str] = ...
-SECURE_SSL_HOST = None
+SECURE_SSL_HOST: TypeAlias = None
 SECURE_SSL_REDIRECT = False

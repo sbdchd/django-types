@@ -13,8 +13,8 @@ _V = TypeVar("_V")
 
 # TODO make constant, then move this stub to 2and3
 # https://github.com/python/typeshed/issues/17
-PY2 = False
-PY3 = True
+PY2: bool = False
+PY3: bool = True
 PY34: bool = ...
 
 string_types = ...

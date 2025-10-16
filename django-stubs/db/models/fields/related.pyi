@@ -2,7 +2,6 @@ from collections.abc import Callable, Iterable, Sequence
 from typing import Any, Generic, Literal, Protocol, TypeAlias, TypeVar, overload
 from uuid import UUID
 
-from django.db import models
 from django.db.models.base import Model
 from django.db.models.deletion import Collector
 from django.db.models.fields import _GT, _ST, Field
@@ -29,7 +28,6 @@ class _DeleteProtocol(Protocol):
         using: str,
     ) -> None: ...
 
-_F = TypeVar("_F", bound=models.Field[Any, Any])
 _Choice: TypeAlias = tuple[Any, str]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
 _FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]

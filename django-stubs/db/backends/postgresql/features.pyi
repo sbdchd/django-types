@@ -1,8 +1,6 @@
 from typing import Any
 
-from django.db.backends.base.features import (
-    BaseDatabaseFeatures as BaseDatabaseFeatures,
-)
+from django.db.backends.base.features import BaseDatabaseFeatures as BaseDatabaseFeatures
 
 class DatabaseFeatures(BaseDatabaseFeatures):
     allows_group_by_selected_pks: bool = ...

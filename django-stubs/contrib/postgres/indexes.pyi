@@ -16,7 +16,7 @@ class BrinIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class BTreeIndex(PostgresIndex):
@@ -28,7 +28,7 @@ class BTreeIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class GinIndex(PostgresIndex):
@@ -41,7 +41,7 @@ class GinIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class GistIndex(PostgresIndex):
@@ -54,7 +54,7 @@ class GistIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class HashIndex(PostgresIndex):
@@ -66,7 +66,7 @@ class HashIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class SpGistIndex(PostgresIndex):
@@ -78,7 +78,7 @@ class SpGistIndex(PostgresIndex):
         name: str | None = ...,
         db_tablespace: str | None = ...,
         opclasses: Sequence[str] = ...,
-        condition: Q | None = ...
+        condition: Q | None = ...,
     ) -> None: ...
 
 class OpClass(Func):

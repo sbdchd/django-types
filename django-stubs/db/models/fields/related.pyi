@@ -7,21 +7,11 @@ from django.db.models.base import Model
 from django.db.models.deletion import Collector
 from django.db.models.fields import _GT, _ST, Field
 from django.db.models.fields.mixins import FieldCacheMixin
-from django.db.models.fields.related_descriptors import (
-    ForwardManyToOneDescriptor as ForwardManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ForwardOneToOneDescriptor as ForwardOneToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ManyToManyDescriptor as ManyToManyDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseManyToOneDescriptor as ReverseManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseOneToOneDescriptor as ReverseOneToOneDescriptor,
-)
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor as ForwardManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ForwardOneToOneDescriptor as ForwardOneToOneDescriptor
+from django.db.models.fields.related_descriptors import ManyToManyDescriptor as ManyToManyDescriptor
+from django.db.models.fields.related_descriptors import ReverseManyToOneDescriptor as ReverseManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor as ReverseOneToOneDescriptor
 from django.db.models.fields.reverse_related import ForeignObjectRel as ForeignObjectRel
 from django.db.models.fields.reverse_related import ManyToManyRel as ManyToManyRel
 from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
@@ -335,9 +325,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
 _MM = TypeVar("_MM", bound=Model)
 _MN = TypeVar("_MN", bound=Model)
 
-class ManyToManyField(
-    Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]
-):
+class ManyToManyField(Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...
@@ -392,12 +380,8 @@ class ManyToManyField(
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> Self: ...
     def get_path_info(self, filtered_relation: None = ...) -> list[PathInfo]: ...
-    def get_reverse_path_info(
-        self, filtered_relation: None = ...
-    ) -> list[PathInfo]: ...
-    def contribute_to_related_class(
-        self, cls: type[Model], related: RelatedField[Any, Any]
-    ) -> None: ...
+    def get_reverse_path_info(self, filtered_relation: None = ...) -> list[PathInfo]: ...
+    def contribute_to_related_class(self, cls: type[Model], related: RelatedField[Any, Any]) -> None: ...
     def m2m_db_table(self) -> str: ...
     def m2m_column_name(self) -> str: ...
     def m2m_reverse_name(self) -> str: ...
@@ -405,6 +389,4 @@ class ManyToManyField(
     def m2m_target_field_name(self) -> str: ...
     def m2m_reverse_target_field_name(self) -> str: ...
 
-def create_many_to_many_intermediary_model(
-    field: type[Field[Any, Any]], klass: type[Model]
-) -> type[Model]: ...
+def create_many_to_many_intermediary_model(field: type[Field[Any, Any]], klass: type[Model]) -> type[Model]: ...

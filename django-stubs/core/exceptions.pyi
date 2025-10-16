@@ -27,10 +27,7 @@ class FieldError(Exception): ...
 NON_FIELD_ERRORS: str
 
 ValidationErrorMessageArg: TypeAlias = (
-    str
-    | ValidationError
-    | dict[str, ValidationErrorMessageArg]
-    | list[ValidationErrorMessageArg]
+    str | ValidationError | dict[str, ValidationErrorMessageArg] | list[ValidationErrorMessageArg]
 )
 
 class ValidationError(Exception):

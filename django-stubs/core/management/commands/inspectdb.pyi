@@ -14,9 +14,7 @@ class Command(BaseCommand):
     def normalize_col_name(
         self, col_name: str, used_column_names: list[str], is_relation: bool
     ) -> tuple[str, dict[str, str], list[str]]: ...
-    def get_field_type(
-        self, connection: Any, table_name: Any, row: Any
-    ) -> tuple[str, dict[str, str], list[str]]: ...
+    def get_field_type(self, connection: Any, table_name: Any, row: Any) -> tuple[str, dict[str, str], list[str]]: ...
     def get_meta(
         self,
         table_name: str,

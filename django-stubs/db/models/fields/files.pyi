@@ -5,12 +5,7 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 from django.core.files.storage import FileSystemStorage, Storage
 from django.db.models.base import Model
-from django.db.models.fields import (
-    _GT,
-    Field,
-    _ErrorMessagesToOverride,
-    _ValidatorCallable,
-)
+from django.db.models.fields import _GT, Field, _ErrorMessagesToOverride, _ValidatorCallable
 from typing_extensions import Self
 
 class FieldFile(File):
@@ -34,9 +29,7 @@ class FileDescriptor:
     field: FileField = ...
     def __init__(self, field: FileField) -> None: ...
     def __set__(self, instance: Model, value: Any | None) -> None: ...
-    def __get__(
-        self, instance: Model | None, cls: type[Model] = ...
-    ) -> FieldFile | FileDescriptor: ...
+    def __get__(self, instance: Model | None, cls: type[Model] = ...) -> FieldFile | FileDescriptor: ...
 
 class FileField(Field[FileDescriptor, FileDescriptor]):
     storage: Any = ...
@@ -60,9 +53,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]] = ...,
         help_text: str = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
@@ -110,9 +101,7 @@ class ImageField(FileField):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]] = ...,
         help_text: str = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
@@ -128,6 +117,4 @@ class ImageField(FileField):
     # non-Model instances
     @overload
     def __get__(self, instance: Any, owner: Any) -> Self: ...
-    def update_dimension_fields(
-        self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any
-    ) -> None: ...
+    def update_dimension_fields(self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any) -> None: ...

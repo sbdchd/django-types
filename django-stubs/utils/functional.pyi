@@ -1,14 +1,8 @@
-import sys
 from collections.abc import Callable
 from functools import wraps as wraps
-from typing import Any, Generic, TypeVar, overload
+from typing import Any, Generic, Protocol, TypeVar, overload
 
 from django.db.models.base import Model
-
-if sys.version_info < (3, 8):
-    from typing_extensions import Protocol
-else:
-    from typing import Protocol
 
 _T = TypeVar("_T")
 

@@ -8,6 +8,7 @@ from uuid import UUID
 import psycopg2.extensions
 from django.db.backends.postgresql.base import DatabaseWrapper
 from psycopg2.extensions import Column
+from typing_extensions import Self
 
 logger: Any
 
@@ -22,7 +23,7 @@ class CursorWrapper:
     WRAP_ERROR_ATTRS: Any = ...
     def __iter__(self) -> Iterator[tuple[Any, ...]]: ...
     def __next__(self) -> tuple[Any, ...]: ...
-    def __enter__(self) -> CursorWrapper: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: type[BaseException] | None,

@@ -6,6 +6,7 @@ from django.http.request import HttpRequest
 from django.template.base import Node, Origin, Template
 from django.template.defaulttags import IfChangedNode
 from django.template.loader_tags import IncludeNode
+from typing_extensions import Self
 
 _ContextValues: TypeAlias = dict[str, Any] | Context
 
@@ -14,7 +15,7 @@ class ContextPopException(Exception): ...
 class ContextDict(dict[Any, Any]):
     context: BaseContext = ...
     def __init__(self, context: BaseContext, *args: Any, **kwargs: Any) -> None: ...
-    def __enter__(self) -> ContextDict: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: type[BaseException] | None,

@@ -42,6 +42,8 @@ from django.views.decorators.http import (
 )
 from psycopg2.extras import execute_values
 
+from django.db.models.fields.generated import GeneratedField
+
 
 class CustomChoices(models.Choices):
     A = "B", "A"
@@ -267,6 +269,18 @@ class Comment(models.Model):
         "Post",
         content_type_field="generic_ct",
         object_id_field="generic_id",
+    )
+
+    generated_field = GeneratedField(
+        expression=models.F("integer") + 1,
+        output_field=models.IntegerField(),
+        db_persist=True,
+    )
+    nullable_generated_field = GeneratedField(
+        expression=models.F("integer_nullable") + 1,
+        output_field=models.IntegerField(null=True),
+        db_persist=True,
+        null=True,
     )
 
 
@@ -667,6 +681,12 @@ def main() -> None:
     if isinstance(comment.other_metadata_nullable, type(None)):
         print()
     if not isinstance(comment.other_metadata, dict):
+        print()  # type: ignore [unreachable]
+
+    process_non_nullable(comment.generated_field)
+    if isinstance(comment.nullable_generated_field, type(None)):
+        print(comment.nullable_generated_field)
+    if not isinstance(comment.generated_field, int):
         print()  # type: ignore [unreachable]
 
 

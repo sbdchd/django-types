@@ -27,6 +27,7 @@ dev = [
     "pyright>=1.1.406",
     "ruff>=0.1.0",
     "tomlkit>=0.12.1",
+    "pre-commit>=4.3.0",
 ]
 
 

@@ -197,18 +197,18 @@ class ValuesQuerySet(_BaseQuerySet[_T], Collection[_Row], Sized):
     def __getitem__(self, i: int) -> _Row: ...
     @overload
     def __getitem__(self, s: slice) -> Self: ...
-    def iterator(self, chunk_size: int = ...) -> Iterator[_Row]: ...  # type: ignore
-    async def aiterator(self, chunk_size: int = ...) -> Iterator[_Row]: ...  # type: ignore
-    def get(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore
-    async def aget(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore
-    def earliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
-    async def aearliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
-    def latest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
-    async def alatest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore
-    def first(self) -> _Row | None: ...  # type: ignore
-    async def afirst(self) -> _Row | None: ...  # type: ignore
-    def last(self) -> _Row | None: ...  # type: ignore
-    async def alast(self) -> _Row | None: ...  # type: ignore
+    def iterator(self, chunk_size: int = ...) -> Iterator[_Row]: ...  # type: ignore[override]
+    async def aiterator(self, chunk_size: int = ...) -> Iterator[_Row]: ...  # type: ignore[override]
+    def get(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore[override]
+    async def aget(self, *args: Any, **kwargs: Any) -> _Row: ...  # type: ignore[override]
+    def earliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore[override]
+    async def aearliest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore[override]
+    def latest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore[override]
+    async def alatest(self, *fields: Any, field_name: Any | None = ...) -> _Row: ...  # type: ignore[override]
+    def first(self) -> _Row | None: ...  # type: ignore[override]
+    async def afirst(self) -> _Row | None: ...  # type: ignore[override]
+    def last(self) -> _Row | None: ...  # type: ignore[override]
+    async def alast(self) -> _Row | None: ...  # type: ignore[override]
 
 class RawQuerySet(Iterable[_T], Sized):
     query: RawQuery

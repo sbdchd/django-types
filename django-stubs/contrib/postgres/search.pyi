@@ -88,7 +88,7 @@ class SearchQueryCombinable:
     def __and__(self, other: SearchQueryCombinable) -> Self: ...
     def __rand__(self, other: SearchQueryCombinable) -> Self: ...
 
-class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
+class SearchQuery(SearchQueryCombinable, Value):  # type: ignore[misc]
     SEARCH_TYPES: dict[str, str] = ...
     def __init__(
         self,
@@ -101,7 +101,7 @@ class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
     ) -> None: ...
     def __invert__(self) -> Self: ...
 
-class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: ignore
+class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: ignore[misc]
     def __init__(
         self,
         lhs: Any,

@@ -5,9 +5,7 @@ from django.contrib.gis.db.backends.utils import SpatialOperator as SpatialOpera
 from django.db.backends.sqlite3.operations import DatabaseOperations
 
 class SpatialiteNullCheckOperator(SpatialOperator):
-    def as_sql(
-        self, connection: Any, lookup: Any, template_params: Any, sql_params: Any
-    ) -> Any: ...
+    def as_sql(self, connection: Any, lookup: Any, template_params: Any, sql_params: Any) -> Any: ...
 
 class SpatiaLiteOperations(BaseSpatialOperations, DatabaseOperations):
     name: str = ...

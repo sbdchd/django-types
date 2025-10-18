@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from email._policybase import Policy  # type: ignore
+from email._policybase import Policy  # type: ignore[import]
 from email.message import Message
 from email.mime.base import MIMEBase
 from email.mime.message import MIMEMessage
@@ -16,9 +16,7 @@ class BadHeaderError(ValueError): ...
 
 ADDRESS_HEADERS: Any
 
-def forbid_multi_line_headers(
-    name: str, val: str, encoding: str
-) -> tuple[str, str]: ...
+def forbid_multi_line_headers(name: str, val: str, encoding: str) -> tuple[str, str]: ...
 def split_addr(addr: str, encoding: str) -> tuple[str, str]: ...
 def sanitize_address(addr: tuple[str, str] | str, encoding: str) -> str: ...
 
@@ -36,9 +34,7 @@ class SafeMIMEText(MIMEMixin, MIMEText):
     policy: Policy  # type: ignore [no-any-unimported]
     preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
-    def __init__(
-        self, _text: str, _subtype: str = ..., _charset: str = ...
-    ) -> None: ...
+    def __init__(self, _text: str, _subtype: str = ..., _charset: str = ...) -> None: ...
 
 class SafeMIMEMultipart(MIMEMixin, MIMEMultipart):
     defects: list[Any]
@@ -47,19 +43,12 @@ class SafeMIMEMultipart(MIMEMixin, MIMEMultipart):
     preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
     def __init__(
-        self,
-        _subtype: str = ...,
-        boundary: None = ...,
-        _subparts: None = ...,
-        encoding: str = ...,
-        **_params: Any
+        self, _subtype: str = ..., boundary: None = ..., _subparts: None = ..., encoding: str = ..., **_params: Any
     ) -> None: ...
 
 _AttachmentContent: TypeAlias = bytes | EmailMessage | Message | SafeMIMEText | str
 _AttachmentTuple: TypeAlias = (
-    tuple[str, _AttachmentContent]
-    | tuple[str | None, _AttachmentContent, str]
-    | tuple[str, _AttachmentContent, None]
+    tuple[str, _AttachmentContent] | tuple[str | None, _AttachmentContent, str] | tuple[str, _AttachmentContent, None]
 )
 
 class EmailMessage:
@@ -129,6 +118,4 @@ class EmailMultiAlternatives(EmailMessage):
         cc: Sequence[str] | None = ...,
         reply_to: Sequence[str] | None = ...,
     ) -> None: ...
-    def attach_alternative(
-        self, content: _AttachmentContent, mimetype: str
-    ) -> None: ...
+    def attach_alternative(self, content: _AttachmentContent, mimetype: str) -> None: ...

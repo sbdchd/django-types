@@ -36,9 +36,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]
-        ] = ...,
+        choices: Iterable[tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]] = ...,
         help_text: str = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
@@ -66,9 +64,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]
-        ] = ...,
+        choices: Iterable[tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]] = ...,
         help_text: str = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,

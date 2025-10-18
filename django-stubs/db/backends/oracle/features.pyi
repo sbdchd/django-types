@@ -1,8 +1,6 @@
 from typing import Any
 
-from django.db.backends.base.features import (
-    BaseDatabaseFeatures as BaseDatabaseFeatures,
-)
+from django.db.backends.base.features import BaseDatabaseFeatures as BaseDatabaseFeatures
 
 class DatabaseFeatures(BaseDatabaseFeatures):
     interprets_empty_strings_as_nulls: bool = ...

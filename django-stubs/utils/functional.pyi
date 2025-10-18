@@ -1,14 +1,9 @@
-import sys
 from collections.abc import Callable
 from functools import wraps as wraps
-from typing import Any, Generic, TypeVar, overload
+from typing import Any, Generic, Protocol, TypeVar, overload, type_check_only
 
 from django.db.models.base import Model
-
-if sys.version_info < (3, 8):
-    from typing_extensions import Protocol
-else:
-    from typing import Protocol
+from typing_extensions import Self
 
 _T = TypeVar("_T")
 
@@ -87,14 +82,16 @@ class classproperty(Generic[_Get]):
     def __get__(self, instance: _Self | None, cls: type[_Self] = ...) -> _Get: ...
     def getter(self, method: Callable[[_Self], _Get]) -> classproperty[_Get]: ...
 
-class _Getter(Protocol[_Get]):
-    """Type fake to declare some read-only properties (until `property` builtin is generic)
+@type_check_only
+class _Getter(Protocol[_Get]):  # noqa: PYI046
+    """
+    Type fake to declare some read-only properties (until `property` builtin is generic).
 
     We can use something like `Union[_Getter[str], str]` in base class to avoid errors
     when redefining attribute with property or property with attribute.
     """
 
     @overload
-    def __get__(self: _Self, __instance: None, __typeobj: type[Any] | None) -> _Self: ...
+    def __get__(self, instance: None, typeobj: type[Any] | None, /) -> Self: ...
     @overload
-    def __get__(self, __instance: Any, __typeobj: type[Any] | None) -> _Get: ...
+    def __get__(self, instance: Any, typeobj: type[Any] | None, /) -> _Get: ...

@@ -3,12 +3,11 @@ from typing import Any, Literal
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models.base import Model
-from django.db.models.fields import NOT_PROVIDED, Field
+from django.db.models.fields import NOT_PROVIDED, Field, _LiteralFieldChoices, _ValidatorCallable
 from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.utils.functional import cached_property
 
 StrOrPromise = str
-from django.db.models.fields import _LiteralFieldChoices, _ValidatorCallable
 
 class AttributeSetter:
     def __init__(self, name: str, value: Any) -> None: ...
@@ -18,12 +17,8 @@ class CompositeAttribute:
     def __init__(self, field: CompositePrimaryKey) -> None: ...
     @property
     def attnames(self) -> list[str]: ...
-    def __get__(
-        self, instance: Model, cls: type[Model] | None = None
-    ) -> tuple[Any, ...]: ...
-    def __set__(
-        self, instance: Model, values: list[Any] | tuple[Any] | None
-    ) -> None: ...
+    def __get__(self, instance: Model, cls: type[Model] | None = None) -> tuple[Any, ...]: ...
+    def __set__(self, instance: Model, values: list[Any] | tuple[Any] | None) -> None: ...
 
 class CompositePrimaryKey(Field[tuple[Any, ...] | None, tuple[Any, ...] | None]):
     field_names: tuple[str]

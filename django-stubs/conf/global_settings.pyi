@@ -333,33 +333,33 @@ MIDDLEWARE: list[str] = ...
 ############
 
 # Cache to store session data if using the cache session backend.
-SESSION_CACHE_ALIAS = "default"
+SESSION_CACHE_ALIAS: str = "default"
 # Cookie name. This can be whatever you want.
-SESSION_COOKIE_NAME = "sessionid"
+SESSION_COOKIE_NAME: str = "sessionid"
 # Age of cookie, in seconds (default: 2 weeks).
-SESSION_COOKIE_AGE = ...
+SESSION_COOKIE_AGE: int = ...
 # A string like "example.com", or None for standard domain cookie.
 SESSION_COOKIE_DOMAIN: str | None = ...
 # Whether the session cookie should be secure (https:// only).
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE: bool = False
 # The path of the session cookie.
-SESSION_COOKIE_PATH = "/"
+SESSION_COOKIE_PATH: str = "/"
 # Whether to use the non-RFC standard httpOnly flag (IE, FF3+, others)
-SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY: bool = True
 # Whether to set the flag restricting cookie leaks on cross-site requests.
 # This can be 'Lax', 'Strict', or None to disable the flag.
 SESSION_COOKIE_SAMESITE: str | None = ...
 # Whether to save the session data on every request.
-SESSION_SAVE_EVERY_REQUEST = False
+SESSION_SAVE_EVERY_REQUEST: bool = False
 # Whether a user's session cookie expires when the Web browser is closed.
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE: bool = False
 # The module to store session data
-SESSION_ENGINE = "django.contrib.sessions.backends.db"
+SESSION_ENGINE: str = "django.contrib.sessions.backends.db"
 # Directory to store session files if using the file session module. If None,
 # the backend will use a sensible default.
 SESSION_FILE_PATH: str | None = ...
 # class to serialize session data
-SESSION_SERIALIZER = "django.contrib.sessions.serializers.JSONSerializer"
+SESSION_SERIALIZER: str = "django.contrib.sessions.serializers.JSONSerializer"
 
 #########
 # CACHE #
@@ -367,9 +367,9 @@ SESSION_SERIALIZER = "django.contrib.sessions.serializers.JSONSerializer"
 
 # The cache backends to use.
 CACHES: dict[str, dict[str, Any]] = ...
-CACHE_MIDDLEWARE_KEY_PREFIX = ""
-CACHE_MIDDLEWARE_SECONDS = 600
-CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_KEY_PREFIX: str = ""
+CACHE_MIDDLEWARE_SECONDS: int = 600
+CACHE_MIDDLEWARE_ALIAS: str = "default"
 
 ##################
 # AUTHENTICATION #
@@ -379,14 +379,14 @@ AUTH_USER_MODEL: str = ...
 
 AUTHENTICATION_BACKENDS: Sequence[str] = ...
 
-LOGIN_URL = "/accounts/login/"
+LOGIN_URL: str = "/accounts/login/"
 
 LOGIN_REDIRECT_URL: str = ...
 
 LOGOUT_REDIRECT_URL: str | None = ...
 
 # The number of days a password reset link is valid for
-PASSWORD_RESET_TIMEOUT_DAYS = 3
+PASSWORD_RESET_TIMEOUT_DAYS: int = 3
 
 # the first hasher in this list is the preferred algorithm.  any
 # password using different algorithms will be converted automatically
@@ -399,7 +399,7 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = ...
 # SIGNING #
 ###########
 
-SIGNING_BACKEND = "django.core.signing.TimestampSigner"
+SIGNING_BACKEND: str = "django.core.signing.TimestampSigner"
 
 ########
 # CSRF #
@@ -407,19 +407,19 @@ SIGNING_BACKEND = "django.core.signing.TimestampSigner"
 
 # Dotted path to callable to be used as view when a request is
 # rejected by the CSRF middleware.
-CSRF_FAILURE_VIEW = "django.views.csrf.csrf_failure"
+CSRF_FAILURE_VIEW: str = "django.views.csrf.csrf_failure"
 
 # Settings for CSRF cookie.
-CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_AGE = ...
+CSRF_COOKIE_NAME: str = "csrftoken"
+CSRF_COOKIE_AGE: int = ...
 CSRF_COOKIE_DOMAIN: TypeAlias = None
-CSRF_COOKIE_PATH = "/"
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_PATH: str = "/"
+CSRF_COOKIE_SECURE: bool = False
+CSRF_COOKIE_HTTPONLY: bool = False
 CSRF_COOKIE_SAMESITE: str | None = ...
-CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
+CSRF_HEADER_NAME: str = "HTTP_X_CSRFTOKEN"
 CSRF_TRUSTED_ORIGINS: list[str] = ...
-CSRF_USE_SESSIONS = False
+CSRF_USE_SESSIONS: bool = False
 
 ############
 # MESSAGES #
@@ -436,21 +436,21 @@ MESSAGE_STORAGE = ...
 ###########
 
 # The callable to use to configure logging
-LOGGING_CONFIG = "logging.config.dictConfig"
+LOGGING_CONFIG: str = "logging.config.dictConfig"
 
 # Custom logging configuration.
 LOGGING: dict[str, Any] = ...
 
 # Default exception reporter filter class used in case none has been
 # specifically assigned to the HttpRequest instance.
-DEFAULT_EXCEPTION_REPORTER_FILTER = "django.views.debug.SafeExceptionReporterFilter"
+DEFAULT_EXCEPTION_REPORTER_FILTER: str = "django.views.debug.SafeExceptionReporterFilter"
 
 ###########
 # TESTING #
 ###########
 
 # The name of the class to use to run the test suite
-TEST_RUNNER = "django.test.runner.DiscoverRunner"
+TEST_RUNNER: str = "django.test.runner.DiscoverRunner"
 
 # Apps that don't need to be serialized at test database creation time
 # (only apps with migrations are to start with)
@@ -497,11 +497,11 @@ SILENCED_SYSTEM_CHECKS: list[str] = ...
 #######################
 # SECURITY MIDDLEWARE #
 #######################
-SECURE_BROWSER_XSS_FILTER = False
-SECURE_CONTENT_TYPE_NOSNIFF = False
-SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-SECURE_HSTS_PRELOAD = False
-SECURE_HSTS_SECONDS = 0
+SECURE_BROWSER_XSS_FILTER: bool = False
+SECURE_CONTENT_TYPE_NOSNIFF: bool = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS: bool = False
+SECURE_HSTS_PRELOAD: bool = False
+SECURE_HSTS_SECONDS: int = 0
 SECURE_REDIRECT_EXEMPT: list[str] = ...
 SECURE_SSL_HOST: TypeAlias = None
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT: bool = False

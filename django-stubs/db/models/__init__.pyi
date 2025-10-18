@@ -83,6 +83,7 @@ from .fields.files import FieldFile as FieldFile
 from .fields.files import FileDescriptor as FileDescriptor
 from .fields.files import FileField as FileField
 from .fields.files import ImageField as ImageField
+from .fields.generated import GeneratedField as GeneratedField
 from .fields.json import JSONField as JSONField
 from .fields.proxy import OrderWrt as OrderWrt
 from .fields.related import ForeignKey as ForeignKey

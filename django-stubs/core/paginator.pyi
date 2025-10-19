@@ -48,9 +48,7 @@ class Page(Sequence[Any]):
     paginator: Paginator = ...
     def __init__(
         self,
-        object_list: (
-            list[dict[str, str]] | list[Model] | list[int] | QuerySet[Any] | str
-        ),
+        object_list: (list[dict[str, str]] | list[Model] | list[int] | QuerySet[Any] | str),
         number: int,
         paginator: Paginator,
     ) -> None: ...

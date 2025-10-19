@@ -1,11 +1,4 @@
-from collections.abc import (
-    Callable,
-    Container,
-    Iterator,
-    Mapping,
-    MutableMapping,
-    Sequence,
-)
+from collections.abc import Callable, Container, Iterator, Mapping, MutableMapping, Sequence
 from datetime import datetime
 from typing import Any, ClassVar, Literal, Protocol, TypeAlias, TypeVar
 from unittest.mock import MagicMock
@@ -43,9 +36,7 @@ def construct_instance(
     fields: Container[str] | None = ...,
     exclude: Container[str] | None = ...,
 ) -> _M: ...
-def model_to_dict(
-    instance: Model, fields: _Fields | None = ..., exclude: _Fields | None = ...
-) -> dict[str, Any]: ...
+def model_to_dict(instance: Model, fields: _Fields | None = ..., exclude: _Fields | None = ...) -> dict[str, Any]: ...
 def apply_limit_choices_to_to_formfield(formfield: Field) -> None: ...
 def fields_for_model(
     model: type[Model],
@@ -59,7 +50,7 @@ def fields_for_model(
     error_messages: _ErrorMessages | None = ...,
     field_classes: dict[str, type[CharField]] | None = ...,
     *,
-    apply_limit_choices_to: bool = ...
+    apply_limit_choices_to: bool = ...,
 ) -> dict[str, Any]: ...
 
 class ModelFormOptions:
@@ -128,7 +119,7 @@ class BaseModelFormSet(BaseFormSet[ModelForm]):
         queryset: Any | None = ...,
         *,
         initial: Any | None = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     def initial_form_count(self) -> Any: ...
     def get_queryset(self) -> Any: ...
@@ -184,7 +175,7 @@ class BaseInlineFormSet(BaseModelFormSet):
         save_as_new: bool = ...,
         prefix: Any | None = ...,
         queryset: Any | None = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     def initial_form_count(self) -> Any: ...
     @classmethod
@@ -228,12 +219,7 @@ class InlineForeignKeyField(Field):
     pk_field: bool = ...
     to_field: str | None = ...
     def __init__(
-        self,
-        parent_instance: Model,
-        *args: Any,
-        pk_field: bool = ...,
-        to_field: Any | None = ...,
-        **kwargs: Any
+        self, parent_instance: Model, *args: Any, pk_field: bool = ..., to_field: Any | None = ..., **kwargs: Any
     ) -> None: ...
 
 class ModelChoiceIterator:
@@ -270,7 +256,7 @@ class ModelChoiceField(ChoiceField):
         help_text: str = ...,
         to_field_name: str | None = ...,
         limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     def get_limit_choices_to(
         self,

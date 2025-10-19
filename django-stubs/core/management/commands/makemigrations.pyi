@@ -10,21 +10,13 @@ from django.db import OperationalError as OperationalError
 from django.db import connections as connections
 from django.db import router as router
 from django.db.migrations import Migration as Migration
-from django.db.migrations.autodetector import (
-    MigrationAutodetector as MigrationAutodetector,
-)
+from django.db.migrations.autodetector import MigrationAutodetector as MigrationAutodetector
 from django.db.migrations.loader import MigrationLoader as MigrationLoader
-from django.db.migrations.questioner import (
-    InteractiveMigrationQuestioner as InteractiveMigrationQuestioner,
-)
+from django.db.migrations.questioner import InteractiveMigrationQuestioner as InteractiveMigrationQuestioner
 from django.db.migrations.questioner import MigrationQuestioner as MigrationQuestioner
-from django.db.migrations.questioner import (
-    NonInteractiveMigrationQuestioner as NonInteractiveMigrationQuestioner,
-)
+from django.db.migrations.questioner import NonInteractiveMigrationQuestioner as NonInteractiveMigrationQuestioner
 from django.db.migrations.state import ProjectState as ProjectState
-from django.db.migrations.utils import (
-    get_migration_name_timestamp as get_migration_name_timestamp,
-)
+from django.db.migrations.utils import get_migration_name_timestamp as get_migration_name_timestamp
 from django.db.migrations.writer import MigrationWriter as MigrationWriter
 
 class Command(BaseCommand):
@@ -36,6 +28,4 @@ class Command(BaseCommand):
     migration_name: str = ...
     include_header: bool = ...
     def write_migration_files(self, changes: dict[str, Any]) -> None: ...
-    def handle_merge(
-        self, loader: MigrationLoader, conflicts: dict[str, Any]
-    ) -> None: ...
+    def handle_merge(self, loader: MigrationLoader, conflicts: dict[str, Any]) -> None: ...

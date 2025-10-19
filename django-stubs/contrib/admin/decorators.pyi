@@ -11,10 +11,7 @@ _M = TypeVar("_M", bound=Model)
 _T = TypeVar("_T", bound=object)
 
 def action(
-    function: (
-        Callable[[ModelAdmin[_M], HttpRequest, QuerySet[_M]], HttpResponse | None]
-        | None
-    ) = ...,
+    function: (Callable[[ModelAdmin[_M], HttpRequest, QuerySet[_M]], HttpResponse | None] | None) = ...,
     *,
     permissions: Sequence[str] | None = ...,
     description: str | None = ...,

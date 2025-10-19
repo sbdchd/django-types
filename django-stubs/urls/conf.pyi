@@ -5,13 +5,9 @@ from ..conf.urls import IncludedURLConf
 from ..http.response import HttpResponseBase
 from .resolvers import URLPattern, URLResolver
 
-_ResponseType: TypeAlias = (
-    HttpResponseBase | Coroutine[Any, Any, HttpResponseBase] | Coroutine[Any, Any, None]
-)
+_ResponseType: TypeAlias = HttpResponseBase | Coroutine[Any, Any, HttpResponseBase] | Coroutine[Any, Any, None]
 
-def include(
-    arg: Any, namespace: str | None = ...
-) -> tuple[list[URLResolver], str | None, str | None]: ...
+def include(arg: Any, namespace: str | None = ...) -> tuple[list[URLResolver], str | None, str | None]: ...
 
 # path()
 @overload
@@ -22,9 +18,7 @@ def path(
     name: str = ...,
 ) -> URLPattern: ...
 @overload
-def path(
-    route: str, view: IncludedURLConf, kwargs: dict[str, Any] = ..., name: str = ...
-) -> URLResolver: ...
+def path(route: str, view: IncludedURLConf, kwargs: dict[str, Any] = ..., name: str = ...) -> URLResolver: ...
 @overload
 def path(
     route: str,
@@ -49,9 +43,7 @@ def re_path(
     name: str = ...,
 ) -> URLPattern: ...
 @overload
-def re_path(
-    route: str, view: IncludedURLConf, kwargs: dict[str, Any] = ..., name: str = ...
-) -> URLResolver: ...
+def re_path(route: str, view: IncludedURLConf, kwargs: dict[str, Any] = ..., name: str = ...) -> URLResolver: ...
 @overload
 def re_path(
     route: str,

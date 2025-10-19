@@ -7,9 +7,7 @@ background: Any
 RESET: str
 opt_dict: Any
 
-def colorize(
-    text: str | None = ..., opts: Sequence[str] = ..., **kwargs: Any
-) -> str: ...
+def colorize(text: str | None = ..., opts: Sequence[str] = ..., **kwargs: Any) -> str: ...
 def make_style(opts: tuple[Any, ...] = ..., **kwargs: Any) -> Callable[..., Any]: ...
 
 NOCOLOR_PALETTE: str

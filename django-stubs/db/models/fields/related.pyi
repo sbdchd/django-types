@@ -241,7 +241,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> ForeignKey[_M | None]: ...
     # class access
-    @overload
+    @overload  # type: ignore[override]
     def __get__(self, instance: None, owner: Any) -> ForwardManyToOneDescriptor: ...
     # Model instance access
     @overload
@@ -329,7 +329,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> OneToOneField[_M | None]: ...
     # class access
-    @overload
+    @overload  # type: ignore[override]
     def __get__(self, instance: None, owner: Any) -> ForwardOneToOneDescriptor: ...
     # Model instance access
     @overload

@@ -67,7 +67,7 @@ class CICharField(CIText, CharField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...
+    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore[override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
 class CIEmailField(CIText, EmailField[_C]):
@@ -123,7 +123,7 @@ class CIEmailField(CIText, EmailField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...
+    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore[override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]
 
 class CITextField(CIText, TextField[_C]):
@@ -179,5 +179,5 @@ class CITextField(CIText, TextField[_C]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> None: ...
-    def __get__(self, instance: Any, owner: Any) -> _C: ...
+    def __get__(self, instance: Any, owner: Any) -> _C: ...  # type: ignore[override]
     def __set__(self, instance: Any, value: _C) -> None: ...  # type: ignore [override]

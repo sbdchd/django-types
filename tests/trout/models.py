@@ -665,8 +665,8 @@ def main() -> None:
     if comment.nullable_user_str is not None:
         print(comment.nullable_user_str)
 
-    if isinstance(comment.not_nullable_user_str, type(None)):
-        print(comment.not_nullable_user_str)  # type: ignore [unreachable]
+    if isinstance(comment.not_nullable_user_str, type(None)):  # type: ignore[unreachable]
+        print(comment.not_nullable_user_str)  # type: ignore[unreachable]
     if comment.not_nullable_user_str is not None:
         print(comment.not_nullable_user_str)
 
@@ -787,8 +787,7 @@ def get_data() -> Dict[str, Dict[str, str]]:
             select id, json_object_agg("name", "value") from table
             """
         )
-        # Argument 1 to "dict" has incompatible type "List[Tuple[Any, ...]]"; expected "Iterable[Tuple[str, Dict[str, str]]]"
-        return dict(cursor.fetchall())  # type: ignore [arg-type]
+        return dict(cursor.fetchall())
 
 
 # test decorators

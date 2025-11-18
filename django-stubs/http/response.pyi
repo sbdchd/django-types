@@ -19,7 +19,7 @@ class ResponseHeaders(CaseInsensitiveMapping[str]):
 class BadHeaderError(ValueError): ...
 
 class HttpResponseBase:
-    cookies: SimpleCookie  # type: ignore [type-arg]
+    cookies: SimpleCookie
     headers: ResponseHeaders
     status_code: int
     closed: bool

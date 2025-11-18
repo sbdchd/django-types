@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from email._policybase import Policy  # type: ignore
+from email._policybase import Policy
 from email.message import Message
 from email.mime.base import MIMEBase
 from email.mime.message import MIMEMessage
@@ -27,13 +27,13 @@ class MIMEMixin: ...
 class SafeMIMEMessage(MIMEMixin, MIMEMessage):
     defects: list[Any]
     epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
-    policy: Policy  # type: ignore [no-any-unimported]
+    policy: Policy
     preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
 
 class SafeMIMEText(MIMEMixin, MIMEText):
     defects: list[Any]
     epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
-    policy: Policy  # type: ignore [no-any-unimported]
+    policy: Policy
     preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
     def __init__(
@@ -43,7 +43,7 @@ class SafeMIMEText(MIMEMixin, MIMEText):
 class SafeMIMEMultipart(MIMEMixin, MIMEMultipart):
     defects: list[Any]
     epilogue: None  # pyright: ignore[reportIncompatibleVariableOverride]
-    policy: Policy  # type: ignore [no-any-unimported]
+    policy: Policy
     preamble: None  # pyright: ignore[reportIncompatibleVariableOverride]
     encoding: str = ...
     def __init__(

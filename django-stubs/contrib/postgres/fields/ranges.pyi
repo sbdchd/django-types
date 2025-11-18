@@ -12,22 +12,22 @@ class RangeField(models.Field[Any, Any]):
     def value_to_string(self, obj: Any) -> Any: ...
 
 class IntegerRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
 
 class BigIntegerRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
 
 class DecimalRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
 
 class FloatRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
 
 class DateTimeRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> DateTimeTZRange: ...
+    def __get__(self, instance: Any, owner: Any) -> DateTimeTZRange: ...  # type: ignore[override]
 
 class DateRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> DateRange: ...
+    def __get__(self, instance: Any, owner: Any) -> DateRange: ...  # type: ignore[override]
 
 class RangeOperators:
     EQUAL: str

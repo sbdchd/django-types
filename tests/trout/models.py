@@ -943,4 +943,8 @@ class IndexModel(models.Model):
                 Round("weight"),
                 name="calc_idx",
             ),
+            models.Index(
+                models.Q(author__isnull=False),
+                name="author_not_null_idx",
+            ),
         ]

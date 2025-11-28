@@ -21,7 +21,7 @@ class Index:
 
     def __init__(
         self,
-        *expressions: BaseExpression | Combinable | str,
+        *expressions: BaseExpression | Combinable | Q | str,
         fields: Sequence[str] = ...,
         name: str | None = ...,
         db_tablespace: str | None = ...,

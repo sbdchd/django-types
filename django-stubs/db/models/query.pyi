@@ -112,10 +112,10 @@ class _BaseQuerySet(Generic[_T], Sized):
     def raw(
         self,
         raw_query: str,
-        params: Any = ...,
+        params: tuple[Any] | list[Any] | dict[str, Any] = ...,
         translations: dict[str, str] | None = ...,
         using: str | None = ...,
-    ) -> RawQuerySet[Any]: ...
+    ) -> RawQuerySet[_T]: ...
     # The type of values may be overridden to be more specific in the mypy plugin, depending on the fields param
     def values(
         self, *fields: str | Combinable, **expressions: Any

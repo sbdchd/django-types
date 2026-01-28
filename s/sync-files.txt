@@ -1,0 +1,14 @@
+django-stubs/views/__init__.pyi
+django-stubs/views/debug.pyi
+django-stubs/views/csrf.pyi
+django-stubs/views/defaults.pyi
+django-stubs/views/i18n.pyi
+django-stubs/views/static.pyi
+django-stubs/views/decorators/__init__.pyi
+django-stubs/views/decorators/cache.pyi
+django-stubs/views/decorators/clickjacking.pyi
+#django-stubs/views/decorators/csrf.pyi
+django-stubs/views/decorators/debug.pyi
+#django-stubs/views/decorators/gzip.pyi
+#django-stubs/views/decorators/http.pyi
+django-stubs/views/decorators/vary.pyi

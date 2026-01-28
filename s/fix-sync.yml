@@ -1,0 +1,22 @@
+# ast-grep rules to fix bare Callable -> Callable[..., Any]
+id: fix-callable-simple
+language: python
+rule:
+  pattern: "$NAME: Callable"
+fix: "$NAME: Callable[..., Any]"
+---
+id: fix-callable-union-before
+language: python
+rule:
+  pattern: Callable
+  precedes:
+    pattern: "|"
+fix: Callable[..., Any]
+---
+id: fix-callable-union-after
+language: python
+rule:
+  pattern: Callable
+  follows:
+    pattern: "|"
+fix: Callable[..., Any]

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+# Sync script to update django-stubs files from upstream django-stubs repository
+# Reads files to sync from s/sync-files.txt (one file per line)
+# Usage: uv run s/sync
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SYNC_FILES="$SCRIPT_DIR/sync-files.txt"
+UPSTREAM_BASE_URL="https://raw.githubusercontent.com/typeddjango/django-stubs/master"
+
+if [ ! -f "$SYNC_FILES" ]; then
+    echo "Error: $SYNC_FILES not found"
+    exit 1
+fi
+
+while IFS= read -r file || [ -n "$file" ]; do
+    # Skip empty lines and comments
+    [[ -z "$file" || "$file" == \#* ]] && continue
+    # Normalize path (remove leading ./ if present)
+    file="${file#./}"
+
+    # Check if file path starts with django-stubs/
+    if [[ ! "$file" == django-stubs/* ]]; then
+        echo "Error: File path must start with 'django-stubs/': $file"
+        exit 1
+    fi
+
+    url="${UPSTREAM_BASE_URL}/${file}"
+
+    echo "Fetching: $url"
+
+    # Create directory if it doesn't exist
+    mkdir -p "$(dirname "$file")"
+
+    # Download the file
+    if curl -fsSL "$url" -o "$file"; then
+        echo "Updated: $file"
+    else
+        echo "Error: Failed to fetch $file from upstream"
+        exit 1
+    fi
+
+    # Fix bare Callable -> Callable[..., Any] using ast-grep
+    ast-grep scan --rule "$SCRIPT_DIR/fix-sync.yml" --update-all "$file"
+done < "$SYNC_FILES"
+
+echo "Sync complete!"

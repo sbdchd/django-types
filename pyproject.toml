@@ -90,6 +90,10 @@ ignore = [
 [tool.ruff.lint.isort]
 split-on-trailing-comma = false
 
+[tool.ty.rules]
+unused-ignore-comment = "ignore"
+invalid-method-override = "ignore"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--tb=native -s -v --cache-clear"

@@ -1,6 +1,6 @@
 [project]
 name = "django-types"
-version = "0.22.0"
+version = "0.23.0"
 description = "Type stubs for Django"
 readme = "README.md"
 authors = [{ name = "django-types team & contributors" }]

@@ -34,7 +34,7 @@ jobs:
         run: uv sync
 
       - name: Update version
-        run: uv version ${{ inputs.version }}
+        run: uv version --bump ${{ inputs.version }}
 
       - name: Build
         run: uv build

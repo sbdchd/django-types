@@ -16,6 +16,11 @@ class BaseSessionManager(models.Manager[_SessionT]):
 class AbstractBaseSession(models.Model):
     objects: ClassVar[BaseSessionManager[Self]]  # type: ignore[assignment]
 
+    class Meta:
+        abstract: ClassVar[bool]
+        verbose_name: ClassVar[str]
+        verbose_name_plural: ClassVar[str]
+
     session_key: models.CharField[str]
     session_data: models.TextField[str]
     expire_date: models.DateTimeField[datetime]

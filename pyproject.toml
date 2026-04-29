@@ -104,6 +104,9 @@ filterwarnings = [
 [tool.hatch.build.targets.wheel]
 packages = ["django-stubs"]
 
+[tool.uv]
+exclude-newer = "7 days"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

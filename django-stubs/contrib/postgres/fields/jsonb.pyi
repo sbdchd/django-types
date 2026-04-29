@@ -5,6 +5,7 @@ from django.db.models import Field
 from django.db.models.lookups import Transform
 
 from .mixins import CheckFieldDefaultMixin
+from django.utils.functional import _StrOrPromise
 
 class JsonAdapter:
     encoder: Any = ...
@@ -20,7 +21,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Any, Any]):
     encoder: Any = ...
     def __init__(
         self,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         encoder: type[JSONEncoder] | None = ...,
         **kwargs: Any

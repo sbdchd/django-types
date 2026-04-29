@@ -9,6 +9,7 @@ from typing_extensions import Self
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin
+from django.utils.functional import _StrOrPromise
 
 _A = TypeVar("_A", bound=Any | None)
 
@@ -22,7 +23,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
     @overload
     def __new__(
         cls,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         *,
         name: str | None = ...,
         encoder: type[json.JSONEncoder] = ...,
@@ -41,9 +42,9 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: Iterable[
-            tuple[Any, str] | tuple[str, Iterable[tuple[Any, str]]]
+            tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
@@ -53,7 +54,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
     @overload
     def __new__(
         cls,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         *,
         name: str | None = ...,
         encoder: type[json.JSONEncoder] = ...,
@@ -72,9 +73,9 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: Iterable[
-            tuple[Any, str] | tuple[str, Iterable[tuple[Any, str]]]
+            tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,

@@ -16,6 +16,7 @@ from django.http.response import HttpResponse, HttpResponseBase
 from django.template.base import Template
 from django.test.client import Client
 from django.test.utils import CaptureQueriesContext, ContextList
+from django.utils.functional import _StrOrPromise
 from django.utils.safestring import SafeText
 
 class _AssertNumQueriesContext(CaptureQueriesContext):
@@ -63,7 +64,7 @@ class SimpleTestCase(unittest.TestCase):
     def assertRedirects(
         self,
         response: HttpResponse,
-        expected_url: str,
+        expected_url: _StrOrPromise,
         status_code: int = ...,
         target_status_code: int = ...,
         msg_prefix: str = ...,
@@ -72,7 +73,7 @@ class SimpleTestCase(unittest.TestCase):
     def assertContains(
         self,
         response: HttpResponseBase,
-        text: bytes | int | str,
+        text: bytes | int | _StrOrPromise,
         count: int | None = ...,
         status_code: int = ...,
         msg_prefix: str = ...,
@@ -81,7 +82,7 @@ class SimpleTestCase(unittest.TestCase):
     def assertNotContains(
         self,
         response: HttpResponseBase,
-        text: bytes | int | str,
+        text: bytes | int | _StrOrPromise,
         status_code: int = ...,
         msg_prefix: str = ...,
         html: bool = ...,

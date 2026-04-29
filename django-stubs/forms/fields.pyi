@@ -7,14 +7,15 @@ from django.core.validators import BaseValidator
 from django.forms.boundfield import BoundField
 from django.forms.forms import BaseForm
 from django.forms.widgets import Widget
+from django.utils.functional import _StrOrPromise
 
-_Choice: TypeAlias = tuple[Any, str]
+_Choice: TypeAlias = tuple[Any, Any]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
 _FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
 
 class Field:
     initial: Any
-    label: str | None
+    label: _StrOrPromise | None
     required: bool
     widget: type[Widget] | Widget = ...
     hidden_widget: Any = ...
@@ -22,7 +23,7 @@ class Field:
     default_error_messages: Any = ...
     empty_values: Any = ...
     show_hidden_initial: bool = ...
-    help_text: str = ...
+    help_text: _StrOrPromise = ...
     disabled: bool = ...
     label_suffix: Any | None = ...
     localize: bool = ...
@@ -36,9 +37,9 @@ class Field:
         *,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -69,9 +70,9 @@ class CharField(Field):
         empty_value: str | None = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -90,9 +91,9 @@ class IntegerField(Field):
         min_value: Any | None = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -115,9 +116,9 @@ class DecimalField(IntegerField):
         decimal_places: Any | None = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -133,9 +134,9 @@ class BaseTemporalField(Field):
         input_formats: Any | None = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -163,9 +164,9 @@ class RegexField(CharField):
         empty_value: str | None = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -184,9 +185,9 @@ class FileField(Field):
         allow_empty_file: bool = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -212,9 +213,9 @@ class ChoiceField(Field):
         choices: _FieldChoices | Callable[[], _FieldChoices] = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -234,9 +235,9 @@ class TypedChoiceField(ChoiceField):
         choices: Any = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -257,9 +258,9 @@ class TypedMultipleChoiceField(MultipleChoiceField):
         choices: Any = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -275,9 +276,9 @@ class ComboField(Field):
         fields: Sequence[Field],
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -295,9 +296,9 @@ class MultiValueField(Field):
         require_all_fields: bool = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -324,9 +325,9 @@ class FilePathField(ChoiceField):
         choices: Any = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -344,9 +345,9 @@ class SplitDateTimeField(MultiValueField):
         require_all_fields: bool = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -364,9 +365,9 @@ class GenericIPAddressField(CharField):
         unpack_ipv4: bool = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -382,9 +383,9 @@ class SlugField(CharField):
         allow_unicode: bool = ...,
         required: bool = ...,
         widget: Widget | type[Widget] | None = ...,
-        label: Any | None = ...,
+        label: _StrOrPromise | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         error_messages: Any | None = ...,
         show_hidden_initial: bool = ...,
         validators: Sequence[Any] = ...,
@@ -402,9 +403,7 @@ class JSONField(CharField):
     widget: Any = ...
     encoder: Any = ...
     decoder: Any = ...
-    def __init__(
-        self, encoder: Any | None = ..., decoder: Any | None = ..., **kwargs: Any
-    ) -> None: ...
+    def __init__(self, encoder: Any | None = ..., decoder: Any | None = ..., **kwargs: Any) -> None: ...
     def to_python(self, value: Any) -> Any: ...
     def bound_data(self, data: Any, initial: Any) -> Any: ...
     def prepare_value(self, value: Any) -> Any: ...

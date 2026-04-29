@@ -23,6 +23,7 @@ from django.forms.forms import BaseForm, DeclarativeFieldsMetaclass
 from django.forms.formsets import BaseFormSet
 from django.forms.utils import ErrorList
 from django.forms.widgets import Input, Widget
+from django.utils.functional import _StrOrPromise
 
 ALL_FIELDS: str
 
@@ -219,7 +220,7 @@ def inlineformset_factory(
 
 class InlineForeignKeyField(Field):
     disabled: bool
-    help_text: str
+    help_text: _StrOrPromise
     required: bool
     show_hidden_initial: bool
     widget: Any = ...
@@ -248,7 +249,7 @@ class ModelChoiceIterator:
 class ModelChoiceField(ChoiceField):
     disabled: bool
     error_messages: dict[str, str]
-    help_text: str
+    help_text: _StrOrPromise
     required: bool
     show_hidden_initial: bool
     validators: list[Any]
@@ -267,7 +268,7 @@ class ModelChoiceField(ChoiceField):
         widget: Any | None = ...,
         label: Any | None = ...,
         initial: Any | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         to_field_name: str | None = ...,
         limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...,
         **kwargs: Any
@@ -286,7 +287,7 @@ class ModelChoiceField(ChoiceField):
 
 class ModelMultipleChoiceField(ModelChoiceField):
     disabled: bool
-    help_text: str
+    help_text: _StrOrPromise
     required: bool
     show_hidden_initial: bool
     widget: Any = ...

@@ -7,6 +7,7 @@ from typing_extensions import Never
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin
+from django.utils.functional import _StrOrPromise
 
 _GT = TypeVar("_GT", bound=Any | None)
 
@@ -23,7 +24,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         output_field: Field[Any, _GT],
         db_persist: bool,
         #
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
@@ -37,8 +38,8 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, str] | tuple[str, Iterable[tuple[Any, str]]]] = ...,
-        help_text: str = ...,
+        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         auto_created: bool = ...,
@@ -54,7 +55,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         output_field: Field[Any, _GT],
         db_persist: bool,
         #
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
@@ -68,8 +69,8 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, str] | tuple[str, Iterable[tuple[Any, str]]]] = ...,
-        help_text: str = ...,
+        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         auto_created: bool = ...,

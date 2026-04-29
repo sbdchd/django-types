@@ -5,6 +5,7 @@ from typing import Any
 
 from django.core.exceptions import ValidationError
 from django.forms.renderers import BaseRenderer
+from django.utils.functional import _StrOrPromise
 from django.utils.safestring import SafeText
 
 def pretty_name(name: str) -> str: ...
@@ -35,17 +36,15 @@ class ErrorDict(dict[str, ErrorList], RenderableErrorMixin):
     template_name_text: str
     template_name_ul: str
     renderer: BaseRenderer
-    def __init__(
-        self, *args: Any, renderer: BaseRenderer | None = ..., **kwargs: Any
-    ): ...
+    def __init__(self, *args: Any, renderer: BaseRenderer | None = ..., **kwargs: Any): ...
     def as_data(self) -> dict[str, list[ValidationError]]: ...
     def get_json_data(self, escape_html: bool = ...) -> dict[str, Any]: ...
 
-class ErrorList(UserList[ValidationError | str], RenderableErrorMixin):
+class ErrorList(UserList[ValidationError | _StrOrPromise], RenderableErrorMixin):
     template_name: str
     template_name_text: str
     template_name_ul: str
-    data: list[ValidationError | str]
+    data: list[ValidationError | _StrOrPromise]
     error_class: str
     renderer: BaseRenderer
     def __init__(

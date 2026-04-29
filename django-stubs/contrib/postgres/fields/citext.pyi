@@ -2,6 +2,7 @@ from collections.abc import Callable, Iterable
 from typing import Any, Literal, TypeAlias, TypeVar, overload
 
 from django.db.models.fields import CharField, EmailField, TextField
+from django.utils.functional import _StrOrPromise
 
 _Choice: TypeAlias = tuple[Any, Any]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
@@ -18,7 +19,7 @@ class CICharField(CIText, CharField[_C]):
     @overload
     def __init__(
         self: CICharField[str],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -35,7 +36,7 @@ class CICharField(CIText, CharField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -44,7 +45,7 @@ class CICharField(CIText, CharField[_C]):
     @overload
     def __init__(
         self: CICharField[str | None],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -61,7 +62,7 @@ class CICharField(CIText, CharField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -74,7 +75,7 @@ class CIEmailField(CIText, EmailField[_C]):
     @overload
     def __init__(
         self: CIEmailField[str],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -91,7 +92,7 @@ class CIEmailField(CIText, EmailField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -100,7 +101,7 @@ class CIEmailField(CIText, EmailField[_C]):
     @overload
     def __init__(
         self: CIEmailField[str | None],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -117,7 +118,7 @@ class CIEmailField(CIText, EmailField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -130,7 +131,7 @@ class CITextField(CIText, TextField[_C]):
     @overload
     def __init__(
         self: CITextField[str],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -147,7 +148,7 @@ class CITextField(CIText, TextField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -156,7 +157,7 @@ class CITextField(CIText, TextField[_C]):
     @overload
     def __init__(
         self: CITextField[str | None],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -173,7 +174,7 @@ class CITextField(CIText, TextField[_C]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,

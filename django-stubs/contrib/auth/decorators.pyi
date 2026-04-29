@@ -4,26 +4,27 @@ from typing import TypeVar, overload
 from django.contrib.auth import REDIRECT_FIELD_NAME as REDIRECT_FIELD_NAME
 from django.contrib.auth.models import AbstractUser
 from django.http.response import HttpResponseBase
+from django.utils.functional import _StrOrPromise
 
 _VIEW = TypeVar("_VIEW", bound=Callable[..., HttpResponseBase])
 
 def user_passes_test(
     test_func: Callable[[AbstractUser], bool],
-    login_url: str | None = ...,
+    login_url: _StrOrPromise | None = ...,
     redirect_field_name: str = ...,
 ) -> Callable[[_VIEW], _VIEW]: ...
 
 # There are two ways of calling @login_required: @with(arguments) and @bare
 @overload
 def login_required(
-    redirect_field_name: str = ..., login_url: str | None = ...
+    redirect_field_name: str = ..., login_url: _StrOrPromise | None = ...
 ) -> Callable[[_VIEW], _VIEW]: ...
 @overload
 def login_required(
-    function: _VIEW, redirect_field_name: str = ..., login_url: str | None = ...
+    function: _VIEW, redirect_field_name: str = ..., login_url: _StrOrPromise | None = ...
 ) -> _VIEW: ...
 def permission_required(
     perm: list[str] | set[str] | str,
-    login_url: None = ...,
+    login_url: _StrOrPromise | None = ...,
     raise_exception: bool = ...,
 ) -> Callable[[_VIEW], _VIEW]: ...

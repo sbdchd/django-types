@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
+from django.utils.functional import _StrOrPromise
 from typing_extensions import Never, Self
 
 _AnyUser: TypeAlias = AbstractUser | AnonymousUser
@@ -123,7 +124,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self) -> str: ...
     def get_short_name(self) -> str: ...
     def email_user(
-        self, subject: str, message: str, from_email: str | None = ..., **kwargs: Any
+        self, subject: _StrOrPromise, message: _StrOrPromise, from_email: str | None = ..., **kwargs: Any
     ) -> None: ...
 
     objects: ClassVar[UserManager[Self]]  # type: ignore[assignment]

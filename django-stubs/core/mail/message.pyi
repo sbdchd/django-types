@@ -7,6 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Any, TypeAlias, overload
 
+from django.utils.functional import _StrOrPromise
+
 utf8_charset: Any
 utf8_charset_qp: Any
 DEFAULT_ATTACHMENT_MIME_TYPE: str
@@ -71,15 +73,15 @@ class EmailMessage:
     bcc: list[Any] = ...
     reply_to: list[Any] = ...
     from_email: str = ...
-    subject: str = ...
-    body: str = ...
+    subject: _StrOrPromise = ...
+    body: _StrOrPromise = ...
     attachments: list[Any] = ...
     extra_headers: dict[Any, Any] = ...
     connection: Any = ...
     def __init__(
         self,
-        subject: str = ...,
-        body: str | None = ...,
+        subject: _StrOrPromise = ...,
+        body: _StrOrPromise | None = ...,
         from_email: str | None = ...,
         to: Sequence[str] | None = ...,
         bcc: Sequence[str] | None = ...,
@@ -117,8 +119,8 @@ class EmailMultiAlternatives(EmailMessage):
     alternatives: Sequence[tuple[_AttachmentContent, str]] = ...
     def __init__(
         self,
-        subject: str = ...,
-        body: str = ...,
+        subject: _StrOrPromise = ...,
+        body: _StrOrPromise | None = ...,
         from_email: str | None = ...,
         to: Sequence[str] | None = ...,
         bcc: Sequence[str] | None = ...,

@@ -1,6 +1,8 @@
 from collections.abc import Sequence
 from typing import Any
 
+from django.utils.functional import _StrOrPromise
+
 from .message import DEFAULT_ATTACHMENT_MIME_TYPE as DEFAULT_ATTACHMENT_MIME_TYPE
 from .message import BadHeaderError as BadHeaderError
 from .message import EmailMessage as EmailMessage
@@ -15,8 +17,8 @@ def get_connection(
     backend: str | None = ..., fail_silently: bool = ..., **kwds: Any
 ) -> Any: ...
 def send_mail(
-    subject: str,
-    message: str,
+    subject: _StrOrPromise,
+    message: _StrOrPromise,
     from_email: str | None,
     recipient_list: list[str],
     fail_silently: bool = ...,
@@ -33,15 +35,15 @@ def send_mass_mail(
     connection: Any | None = ...,
 ) -> int: ...
 def mail_admins(
-    subject: str,
-    message: str,
+    subject: _StrOrPromise,
+    message: _StrOrPromise,
     fail_silently: bool = ...,
     connection: Any | None = ...,
     html_message: str | None = ...,
 ) -> None: ...
 def mail_managers(
-    subject: str,
-    message: str,
+    subject: _StrOrPromise,
+    message: _StrOrPromise,
     fail_silently: bool = ...,
     connection: Any | None = ...,
     html_message: str | None = ...,

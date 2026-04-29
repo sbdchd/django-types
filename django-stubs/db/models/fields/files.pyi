@@ -12,6 +12,7 @@ from django.db.models.fields import (
     _ValidatorCallable,
 )
 from typing_extensions import Self
+from django.utils.functional import _StrOrPromise
 
 class FieldFile(File):
     instance: Model = ...
@@ -43,7 +44,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
     upload_to: str | Callable[[Any, str], str] = ...
     def __new__(
         cls,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         upload_to: str | Callable[[Any, str], str] = ...,
         storage: Storage | Callable[[], Storage] | None = ...,
@@ -61,9 +62,9 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: Iterable[
-            tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]
+            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
@@ -92,7 +93,7 @@ class ImageFieldFile(ImageFile, FieldFile):
 class ImageField(FileField):
     def __new__(
         cls,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         width_field: str = ...,
         height_field: str = ...,
@@ -112,9 +113,9 @@ class ImageField(FileField):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: Iterable[
-            tuple[_GT, str] | tuple[str, Iterable[tuple[_GT, str]]]
+            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,

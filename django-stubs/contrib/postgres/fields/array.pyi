@@ -5,6 +5,7 @@ from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
 
 from .mixins import CheckFieldDefaultMixin
+from django.utils.functional import _StrOrPromise
 
 _V = TypeVar("_V", bound=Any | None)
 
@@ -20,7 +21,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         cls,
         base_field: Field[Any, _V],
         size: int | None = ...,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -39,7 +40,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         choices: Iterable[
             tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -50,7 +51,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         cls,
         base_field: Field[Any, _V],
         size: int | None = ...,
-        verbose_name: str | None = ...,
+        verbose_name: _StrOrPromise | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -69,7 +70,7 @@ class ArrayField(CheckFieldDefaultMixin, Generic[_V], Field[_V | Combinable, _V]
         choices: Iterable[
             tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]
         ] = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,

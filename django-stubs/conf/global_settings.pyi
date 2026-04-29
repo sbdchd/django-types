@@ -10,6 +10,8 @@ from re import Pattern
 # django.utils.translation -- that module depends on the settings.
 from typing import Any, Protocol, TypeAlias
 
+from django.utils.functional import _StrOrPromise
+
 ####################
 # CORE             #
 ####################
@@ -379,11 +381,11 @@ AUTH_USER_MODEL: str = ...
 
 AUTHENTICATION_BACKENDS: Sequence[str] = ...
 
-LOGIN_URL = "/accounts/login/"
+LOGIN_URL: _StrOrPromise = ...
 
-LOGIN_REDIRECT_URL: str = ...
+LOGIN_REDIRECT_URL: _StrOrPromise = ...
 
-LOGOUT_REDIRECT_URL: str | None = ...
+LOGOUT_REDIRECT_URL: _StrOrPromise | None = ...
 
 # The number of days a password reset link is valid for
 PASSWORD_RESET_TIMEOUT_DAYS = 3

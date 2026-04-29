@@ -10,6 +10,7 @@ from django.template import Context, Template
 from django.test.client import Client
 from django.urls import ResolverMatch
 from django.utils.datastructures import CaseInsensitiveMapping
+from django.utils.functional import _StrOrPromise
 from typing_extensions import Never
 
 class ResponseHeaders(CaseInsensitiveMapping[str]):
@@ -130,7 +131,7 @@ class FileResponse(StreamingHttpResponse):
 class HttpResponseRedirectBase(HttpResponse):
     allowed_schemes: list[str] = ...
     def __init__(
-        self, redirect_to: str, preserve_request: bool = ..., *args: Any, **kwargs: Any
+        self, redirect_to: _StrOrPromise, preserve_request: bool = ..., *args: Any, **kwargs: Any
     ) -> None: ...
     @property
     def url(self) -> str: ...

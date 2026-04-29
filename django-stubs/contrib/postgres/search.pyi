@@ -16,6 +16,7 @@ from django.db.models.fields import (
 )
 from django.db.models.lookups import Lookup
 from typing_extensions import Self
+from django.utils.functional import _StrOrPromise
 
 _Expression: TypeAlias = str | Combinable | SearchQueryCombinable
 
@@ -24,7 +25,7 @@ class SearchVectorExact(Lookup[Any]): ...
 class SearchVectorField(Field[Any, Any]):
     def __init__(
         self,
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
@@ -40,7 +41,7 @@ class SearchVectorField(Field[Any, Any]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -50,7 +51,7 @@ class SearchVectorField(Field[Any, Any]):
 class SearchQueryField(Field[Any, Any]):
     def __init__(
         self,
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         name: str | None = ...,
         primary_key: bool = ...,
         max_length: int | None = ...,
@@ -66,7 +67,7 @@ class SearchQueryField(Field[Any, Any]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,

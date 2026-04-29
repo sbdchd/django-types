@@ -6,15 +6,16 @@ from django.contrib.admin.sites import AdminSite
 from django.db.models.fields.reverse_related import ForeignObjectRel, ManyToOneRel
 from django.forms.models import ModelChoiceIterator
 from django.forms.widgets import Media
+from django.utils.functional import _StrOrPromise
 
 class FilteredSelectMultiple(forms.SelectMultiple):
     @property
     def media(self) -> Media: ...
-    verbose_name: Any = ...
+    verbose_name: _StrOrPromise = ...
     is_stacked: Any = ...
     def __init__(
         self,
-        verbose_name: str,
+        verbose_name: _StrOrPromise,
         is_stacked: bool,
         attrs: None = ...,
         choices: tuple[Any, ...] = ...,

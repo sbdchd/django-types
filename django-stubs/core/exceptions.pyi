@@ -1,6 +1,8 @@
 from collections.abc import Iterator, Mapping
 from typing import Any, TypeAlias
 
+from django.utils.functional import _StrOrPromise
+
 class FieldDoesNotExist(Exception): ...
 class AppRegistryNotReady(Exception): ...
 
@@ -27,7 +29,7 @@ class FieldError(Exception): ...
 NON_FIELD_ERRORS: str
 
 ValidationErrorMessageArg: TypeAlias = (
-    str
+    _StrOrPromise
     | ValidationError
     | dict[str, ValidationErrorMessageArg]
     | list[ValidationErrorMessageArg]
@@ -36,7 +38,7 @@ ValidationErrorMessageArg: TypeAlias = (
 class ValidationError(Exception):
     error_dict: dict[str, list[ValidationError]] | None
     error_list: list[ValidationError] | None
-    message: str | None
+    message: _StrOrPromise | None
     code: str | None
     params: Mapping[str, Any] | None
     def __init__(

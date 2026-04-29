@@ -1,3 +1,4 @@
+django-stubs/utils/translation/__init__.pyi
 django-stubs/views/__init__.pyi
 django-stubs/views/debug.pyi
 django-stubs/views/csrf.pyi

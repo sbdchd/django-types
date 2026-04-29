@@ -7,6 +7,7 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.models.base import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.db.models.query_utils import Q
+from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
 
 class Deferrable(Enum):
@@ -19,7 +20,7 @@ class BaseConstraint:
         self,
         *args: BaseExpression | Combinable | str,
         name: str | None = ...,
-        violation_error_message: str | None = ...,
+        violation_error_message: _StrOrPromise | None = ...,
     ) -> None: ...
     def constraint_sql(
         self,
@@ -54,7 +55,7 @@ class CheckConstraint(BaseConstraint):
         condition: None = None,
         check: Q | BaseExpression,
         violation_error_code: str | None = None,
-        violation_error_message: str | None = None,
+        violation_error_message: _StrOrPromise | None = None,
     ) -> None: ...
     @overload
     def __init__(
@@ -64,7 +65,7 @@ class CheckConstraint(BaseConstraint):
         condition: Q | BaseExpression,
         check: None = None,
         violation_error_code: str | None = None,
-        violation_error_message: str | None = None,
+        violation_error_message: _StrOrPromise | None = None,
     ) -> None: ...
 
 class UniqueConstraint(BaseConstraint):
@@ -86,7 +87,7 @@ class UniqueConstraint(BaseConstraint):
         opclasses: Sequence[Any] = (),
         nulls_distinct: bool | None = None,
         violation_error_code: str | None = None,
-        violation_error_message: str | None = None,
+        violation_error_message: _StrOrPromise | None = None,
     ) -> None: ...
     @overload
     def __init__(
@@ -100,5 +101,5 @@ class UniqueConstraint(BaseConstraint):
         opclasses: Sequence[Any] = (),
         nulls_distinct: bool | None = None,
         violation_error_code: str | None = None,
-        violation_error_message: str | None = None,
+        violation_error_message: _StrOrPromise | None = None,
     ) -> None: ...

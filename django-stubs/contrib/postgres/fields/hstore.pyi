@@ -4,6 +4,7 @@ from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
 from django.db.models import Field, Transform
 
 from .mixins import CheckFieldDefaultMixin
+from django.utils.functional import _StrOrPromise
 
 _Choice: TypeAlias = tuple[Any, Any]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
@@ -17,7 +18,7 @@ class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
     @overload
     def __init__(
         self: HStoreField[dict[str, str | None]],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -34,7 +35,7 @@ class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
@@ -43,7 +44,7 @@ class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
     @overload
     def __init__(
         self: HStoreField[dict[str, str | None] | None],
-        verbose_name: str | bytes | None = ...,
+        verbose_name: _StrOrPromise | bytes | None = ...,
         *,
         name: str | None = ...,
         primary_key: bool = ...,
@@ -60,7 +61,7 @@ class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
         choices: _FieldChoices | None = ...,
-        help_text: str = ...,
+        help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,

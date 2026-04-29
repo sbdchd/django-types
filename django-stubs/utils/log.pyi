@@ -4,6 +4,7 @@ from logging import LogRecord
 from typing import Any
 
 from django.core.management.color import Style
+from django.utils.functional import _StrOrPromise
 
 request_logger: Any
 DEFAULT_LOGGING: Any
@@ -19,7 +20,7 @@ class AdminEmailHandler(logging.Handler):
         self, include_html: bool = ..., email_backend: str | None = ...
     ) -> None: ...
     def send_mail(
-        self, subject: str, message: str, *args: Any, **kwargs: Any
+        self, subject: _StrOrPromise, message: _StrOrPromise, *args: Any, **kwargs: Any
     ) -> None: ...
     def connection(self) -> Any: ...
     def format_subject(self, subject: str) -> str: ...

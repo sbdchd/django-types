@@ -12,6 +12,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http.cookie import SimpleCookie
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseBase
+from django.utils.functional import _StrOrPromise
 
 BOUNDARY: str = ...
 MULTIPART_CONTENT: str = ...
@@ -64,7 +65,7 @@ class RequestFactory:
     def request(self, **request: Any) -> WSGIRequest: ...
     def get(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         secure: bool = ...,
         *,
@@ -74,7 +75,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def post(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
@@ -85,7 +86,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def head(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         secure: bool = ...,
         *,
@@ -95,7 +96,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def trace(
         self,
-        path: str,
+        path: _StrOrPromise,
         secure: bool = ...,
         *,
         QUERY_STRING: str = ...,
@@ -104,7 +105,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def options(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
@@ -115,7 +116,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def put(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
@@ -126,7 +127,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def patch(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
@@ -137,7 +138,7 @@ class RequestFactory:
     ) -> WSGIRequest: ...
     def delete(
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
@@ -149,7 +150,7 @@ class RequestFactory:
     def generic(
         self,
         method: str,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str | None = ...,
         secure: bool = ...,
@@ -177,7 +178,7 @@ class Client(RequestFactory):
     def request(self, **request: Any) -> HttpResponse: ...  # type: ignore [override]
     def get(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -188,7 +189,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def post(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -200,7 +201,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def head(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -211,7 +212,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def trace(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -222,7 +223,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def options(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -234,7 +235,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def put(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -246,7 +247,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def patch(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -258,7 +259,7 @@ class Client(RequestFactory):
     ) -> HttpResponse: ...
     def delete(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -297,7 +298,7 @@ class AsyncClient(AsyncRequestFactory):
     async def request(self, **request: Any) -> HttpResponse: ...  # type: ignore [override]
     async def get(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -308,7 +309,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def post(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -320,7 +321,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def head(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -331,7 +332,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def trace(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         follow: bool = ...,
         secure: bool = ...,
@@ -342,7 +343,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def options(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -354,7 +355,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def put(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -366,7 +367,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def patch(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,
@@ -378,7 +379,7 @@ class AsyncClient(AsyncRequestFactory):
     ) -> HttpResponse: ...
     async def delete(  # type: ignore [override]
         self,
-        path: str,
+        path: _StrOrPromise,
         data: _RequestData = ...,
         content_type: str = ...,
         follow: bool = ...,

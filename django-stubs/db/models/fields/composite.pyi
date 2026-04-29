@@ -7,7 +7,7 @@ from django.db.models.fields import NOT_PROVIDED, Field
 from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.utils.functional import cached_property
 
-StrOrPromise = str
+_StrOrPromise = str
 from django.db.models.fields import _LiteralFieldChoices, _ValidatorCallable
 
 class AttributeSetter:
@@ -31,7 +31,7 @@ class CompositePrimaryKey(Field[tuple[Any, ...] | None, tuple[Any, ...] | None])
     def __init__(
         self,
         *args: str,
-        verbose_name: StrOrPromise | None = None,
+        verbose_name: _StrOrPromise | None = None,
         name: str | None = None,
         primary_key: Literal[True] = True,
         max_length: int | None = None,
@@ -47,12 +47,12 @@ class CompositePrimaryKey(Field[tuple[Any, ...] | None, tuple[Any, ...] | None])
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
         choices: _LiteralFieldChoices | None = None,
-        help_text: StrOrPromise = "",
+        help_text: _StrOrPromise = "",
         db_column: None = None,
         db_tablespace: str | None = None,
         auto_created: bool = False,
         validators: Iterable[_ValidatorCallable] = (),
-        error_messages: Mapping[str, StrOrPromise] | None = None,
+        error_messages: Mapping[str, _StrOrPromise] | None = None,
         db_comment: str | None = None,
         db_default: type[NOT_PROVIDED] = ...,
     ) -> None: ...

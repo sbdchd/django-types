@@ -12,3 +12,4 @@ django-stubs/views/decorators/debug.pyi
 #django-stubs/views/decorators/gzip.pyi
 #django-stubs/views/decorators/http.pyi
 django-stubs/views/decorators/vary.pyi
+#django-stubs/http/request.pyi

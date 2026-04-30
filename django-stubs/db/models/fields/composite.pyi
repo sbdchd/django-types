@@ -3,12 +3,9 @@ from typing import Any, Literal
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models.base import Model
-from django.db.models.fields import NOT_PROVIDED, Field
+from django.db.models.fields import NOT_PROVIDED, Field, _LiteralFieldChoices, _ValidatorCallable
 from django.db.models.fields.reverse_related import ForeignObjectRel
-from django.utils.functional import cached_property
-
-_StrOrPromise = str
-from django.db.models.fields import _LiteralFieldChoices, _ValidatorCallable
+from django.utils.functional import _StrOrPromise, cached_property
 
 class AttributeSetter:
     def __init__(self, name: str, value: Any) -> None: ...

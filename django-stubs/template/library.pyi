@@ -118,9 +118,7 @@ class TagHelperNode(Node):
         args: list[FilterExpression],
         kwargs: dict[str, FilterExpression],
     ) -> None: ...
-    def get_resolved_arguments(
-        self, context: Context
-    ) -> tuple[list[int], dict[str, SafeText | int]]: ...
+    def get_resolved_arguments(self, context: Context) -> tuple[list[int], dict[str, SafeText | int]]: ...
 
 class SimpleNode(TagHelperNode):
     args: list[FilterExpression]

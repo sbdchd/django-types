@@ -30,9 +30,7 @@ class FileDescriptor:
     field: FileField = ...
     def __init__(self, field: FileField) -> None: ...
     def __set__(self, instance: Model, value: Any | None) -> None: ...
-    def __get__(
-        self, instance: Model | None, cls: type[Model] = ...
-    ) -> FieldFile | FileDescriptor: ...
+    def __get__(self, instance: Model | None, cls: type[Model] = ...) -> FieldFile | FileDescriptor: ...
 
 class FileField(Field[FileDescriptor, FileDescriptor]):
     storage: Any = ...
@@ -56,9 +54,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -107,9 +103,7 @@ class ImageField(FileField):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -126,6 +120,4 @@ class ImageField(FileField):
     # non-Model instances
     @overload
     def __get__(self, instance: Any, owner: Any) -> Self: ...
-    def update_dimension_fields(
-        self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any
-    ) -> None: ...
+    def update_dimension_fields(self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any) -> None: ...

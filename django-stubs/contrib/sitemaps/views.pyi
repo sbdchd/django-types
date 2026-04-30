@@ -16,9 +16,7 @@ def index(
 ) -> TemplateResponse: ...
 def sitemap(
     request: HttpRequest,
-    sitemaps: (
-        dict[str, type[Sitemap]] | dict[str, GenericSitemap] | OrderedDict[Any, Any]
-    ),
+    sitemaps: (dict[str, type[Sitemap]] | dict[str, GenericSitemap] | OrderedDict[Any, Any]),
     section: str | None = ...,
     template_name: str = ...,
     content_type: str = ...,

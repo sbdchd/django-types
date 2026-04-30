@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Any, TypeVar
 
-from django.contrib import admin
+import django.contrib.admin as admin
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 

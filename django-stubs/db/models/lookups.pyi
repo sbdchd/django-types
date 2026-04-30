@@ -2,9 +2,10 @@ from collections.abc import Iterable, Mapping
 from datetime import datetime
 from typing import Any, Generic, TypeVar
 
+import django.db.models.fields.related_lookups as related_lookups
 from django.db.backends.sqlite3.base import DatabaseWrapper
 from django.db.models.expressions import Expression, Func
-from django.db.models.fields import TextField, related_lookups
+from django.db.models.fields import TextField
 from django.db.models.query_utils import RegisterLookupMixin
 from django.db.models.sql.compiler import SQLCompiler
 from django.utils.datastructures import OrderedSet

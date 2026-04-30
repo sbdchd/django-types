@@ -1,6 +1,6 @@
 from typing import Any
 
-from django import forms as forms
+import django.forms as forms
 
 class GeometryField(forms.Field):
     widget: Any = ...

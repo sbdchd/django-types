@@ -1,9 +1,9 @@
 from typing import Any
 
+import django.db.migrations as migrations
 from django.apps.config import AppConfig
 from django.apps.registry import Apps
 from django.contrib.contenttypes.models import ContentType
-from django.db import migrations
 from django.db.backends.sqlite3.schema import DatabaseSchemaEditor
 from django.db.migrations.migration import Migration
 from django.db.migrations.state import StateApps

@@ -1,13 +1,13 @@
 from collections.abc import Collection, Iterator, Mapping, Sequence
 from typing import Any, NamedTuple
 
+import django.utils.tree as tree
 from django.db.models.base import Model
 from django.db.models.fields import Field
 from django.db.models.fields.mixins import FieldCacheMixin
 from django.db.models.sql.compiler import SQLCompiler
 from django.db.models.sql.query import Query
 from django.db.models.sql.where import WhereNode
-from django.utils import tree
 
 class PathInfo(NamedTuple):
     from_opts: Any

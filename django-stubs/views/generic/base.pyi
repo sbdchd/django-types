@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Any
 
-from django import http
+import django.http as http
 
 class ContextMixin:
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]: ...

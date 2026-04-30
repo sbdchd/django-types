@@ -3,10 +3,11 @@ from collections.abc import Awaitable, Callable, Iterable, Iterator, Mapping, Se
 from re import Pattern
 from typing import Any, BinaryIO, Protocol, TypeAlias, overload, type_check_only
 
+import django.core.files.uploadedfile as uploadedfile
+import django.core.files.uploadhandler as uploadhandler
 from django.contrib.auth.models import _AnyUser
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.sites.models import Site
-from django.core.files import uploadedfile, uploadhandler
 from django.urls import ResolverMatch
 from django.utils.datastructures import CaseInsensitiveMapping, ImmutableList, MultiValueDict
 from django.utils.functional import cached_property

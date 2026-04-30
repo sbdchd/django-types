@@ -1,6 +1,6 @@
 from typing import Any
 
-from django import forms
+import django.forms as forms
 
 class FlatpageForm(forms.ModelForm):
     url: Any = ...

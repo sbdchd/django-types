@@ -1,10 +1,10 @@
 from collections import OrderedDict
 from typing import Any
 
+import django.utils.tree as tree
 from django.db.models.expressions import Expression
 from django.db.models.sql.compiler import SQLCompiler
 from django.db.models.sql.query import Query
-from django.utils import tree
 
 AND: str
 OR: str

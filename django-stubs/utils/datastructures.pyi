@@ -1,11 +1,4 @@
-from collections.abc import (
-    Callable,
-    Iterable,
-    Iterator,
-    Mapping,
-    MutableMapping,
-    MutableSet,
-)
+from collections.abc import Callable, Iterable, Iterator, Mapping, MutableMapping, MutableSet
 from typing import Any, Literal, TypeVar, overload
 
 from typing_extensions import Self

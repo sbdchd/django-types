@@ -2,9 +2,7 @@ from collections.abc import Callable, Collection, Iterable
 from typing import Any, ClassVar
 
 from django.core.checks.messages import CheckMessage
-from django.core.exceptions import (
-    MultipleObjectsReturned as BaseMultipleObjectsReturned,
-)
+from django.core.exceptions import MultipleObjectsReturned as BaseMultipleObjectsReturned
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.manager import BaseManager
 from django.db.models.options import Options

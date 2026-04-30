@@ -5,14 +5,9 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 from django.core.files.storage import FileSystemStorage, Storage
 from django.db.models.base import Model
-from django.db.models.fields import (
-    _GT,
-    Field,
-    _ErrorMessagesToOverride,
-    _ValidatorCallable,
-)
-from typing_extensions import Self
+from django.db.models.fields import _GT, Field, _ErrorMessagesToOverride, _ValidatorCallable
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 class FieldFile(File):
     instance: Model = ...

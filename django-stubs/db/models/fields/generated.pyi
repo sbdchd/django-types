@@ -3,11 +3,11 @@ from typing import Any, Literal, TypeVar, overload
 
 from django.db.models import Combinable, Expression, ForeignObjectRel
 from django.db.models.expressions import Col
+from django.utils.functional import _StrOrPromise
 from typing_extensions import Never
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 _GT = TypeVar("_GT", bound=Any | None)
 

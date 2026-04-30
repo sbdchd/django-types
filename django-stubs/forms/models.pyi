@@ -1,11 +1,4 @@
-from collections.abc import (
-    Callable,
-    Container,
-    Iterator,
-    Mapping,
-    MutableMapping,
-    Sequence,
-)
+from collections.abc import Callable, Container, Iterator, Mapping, MutableMapping, Sequence
 from datetime import datetime
 from typing import Any, ClassVar, Literal, Protocol, TypeAlias, TypeVar
 from unittest.mock import MagicMock

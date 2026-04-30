@@ -1,8 +1,6 @@
 from typing import Any, NamedTuple
 
-from django.db.backends.base.introspection import (
-    BaseDatabaseIntrospection as BaseDatabaseIntrospection,
-)
+from django.db.backends.base.introspection import BaseDatabaseIntrospection as BaseDatabaseIntrospection
 
 FieldInfo: Any
 

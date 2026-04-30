@@ -6,11 +6,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.utils.functional import _StrOrPromise
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
-from django.views.generic.detail import (
-    BaseDetailView,
-    SingleObjectMixin,
-    SingleObjectTemplateResponseMixin,
-)
+from django.views.generic.detail import BaseDetailView, SingleObjectMixin, SingleObjectTemplateResponseMixin
 
 _FormT = TypeVar("_FormT", bound=BaseForm)
 

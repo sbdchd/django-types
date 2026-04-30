@@ -7,29 +7,19 @@ from django.db.models.base import Model
 from django.db.models.deletion import Collector
 from django.db.models.fields import _GT, _ST, Field
 from django.db.models.fields.mixins import FieldCacheMixin
-from django.db.models.fields.related_descriptors import (
-    ForwardManyToOneDescriptor as ForwardManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ForwardOneToOneDescriptor as ForwardOneToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ManyToManyDescriptor as ManyToManyDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseManyToOneDescriptor as ReverseManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseOneToOneDescriptor as ReverseOneToOneDescriptor,
-)
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor as ForwardManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ForwardOneToOneDescriptor as ForwardOneToOneDescriptor
+from django.db.models.fields.related_descriptors import ManyToManyDescriptor as ManyToManyDescriptor
+from django.db.models.fields.related_descriptors import ReverseManyToOneDescriptor as ReverseManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor as ReverseOneToOneDescriptor
 from django.db.models.fields.reverse_related import ForeignObjectRel as ForeignObjectRel
 from django.db.models.fields.reverse_related import ManyToManyRel as ManyToManyRel
 from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
 from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
 from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
-from typing_extensions import Self
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 class _DeleteProtocol(Protocol):
     def __call__(

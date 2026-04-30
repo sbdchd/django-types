@@ -1,8 +1,6 @@
 from typing import Any
 
-from django.db.backends.base.operations import (
-    BaseDatabaseOperations as BaseDatabaseOperations,
-)
+from django.db.backends.base.operations import BaseDatabaseOperations as BaseDatabaseOperations
 
 class DatabaseOperations(BaseDatabaseOperations):
     integer_field_ranges: Any = ...

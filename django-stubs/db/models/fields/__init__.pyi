@@ -11,8 +11,8 @@ from django.db.models import IntegerChoices, Model, TextChoices
 from django.db.models.expressions import Col, Combinable, Func
 from django.db.models.query_utils import RegisterLookupMixin
 from django.forms import Widget
-from typing_extensions import Self
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 

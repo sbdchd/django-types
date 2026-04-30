@@ -3,9 +3,9 @@ from typing import Any, Generic, Literal, TypeVar, overload
 
 from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
+from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 _V = TypeVar("_V", bound=Any | None)
 

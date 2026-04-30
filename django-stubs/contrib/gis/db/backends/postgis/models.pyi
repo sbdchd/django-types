@@ -1,8 +1,6 @@
 from typing import Any
 
-from django.contrib.gis.db.backends.base.models import (
-    SpatialRefSysMixin as SpatialRefSysMixin,
-)
+from django.contrib.gis.db.backends.base.models import SpatialRefSysMixin as SpatialRefSysMixin
 from django.db import models as models
 
 class PostGISGeometryColumns(models.Model):

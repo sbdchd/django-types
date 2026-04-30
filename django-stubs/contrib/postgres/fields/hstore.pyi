@@ -2,9 +2,9 @@ from collections.abc import Callable, Iterable
 from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
 
 from django.db.models import Field, Transform
+from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 _Choice: TypeAlias = tuple[Any, Any]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]

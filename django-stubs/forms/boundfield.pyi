@@ -6,8 +6,8 @@ from django.forms.forms import BaseForm
 from django.forms.renderers import DjangoTemplates
 from django.forms.utils import ErrorList
 from django.forms.widgets import Widget
-from django.utils.safestring import SafeText
 from django.utils.functional import _StrOrPromise
+from django.utils.safestring import SafeText
 
 class BoundField:
     initial: Any

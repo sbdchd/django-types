@@ -5,11 +5,11 @@ from typing import Any, Literal, TypeVar, overload
 from django.db.models import lookups
 from django.db.models.expressions import Combinable
 from django.db.models.lookups import PostgresOperatorLookup, Transform
+from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
 
 from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 _A = TypeVar("_A", bound=Any | None)
 

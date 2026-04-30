@@ -1,12 +1,7 @@
 from collections.abc import Iterable
 from typing import Any, NamedTuple, TypeVar
 
-from django.db.models.fields import (
-    Field,
-    _ErrorMessagesToOverride,
-    _FieldChoices,
-    _ValidatorCallable,
-)
+from django.db.models.fields import Field, _ErrorMessagesToOverride, _FieldChoices, _ValidatorCallable
 from django.utils.functional import _StrOrPromise
 
 # __set__ value type

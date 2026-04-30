@@ -2,21 +2,11 @@ from collections.abc import Iterable
 from typing import Any, TypeAlias
 
 from django.db.models import Field
-from django.db.models.expressions import (
-    Combinable,
-    CombinedExpression,
-    Func,
-    Value,
-    _OutputField,
-)
-from django.db.models.fields import (
-    _ErrorMessagesToOverride,
-    _FieldChoices,
-    _ValidatorCallable,
-)
+from django.db.models.expressions import Combinable, CombinedExpression, Func, Value, _OutputField
+from django.db.models.fields import _ErrorMessagesToOverride, _FieldChoices, _ValidatorCallable
 from django.db.models.lookups import Lookup
-from typing_extensions import Self
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 _Expression: TypeAlias = str | Combinable | SearchQueryCombinable
 

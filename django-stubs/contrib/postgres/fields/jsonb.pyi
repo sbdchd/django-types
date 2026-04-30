@@ -3,9 +3,9 @@ from typing import Any
 
 from django.db.models import Field
 from django.db.models.lookups import Transform
+from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 class JsonAdapter:
     encoder: Any = ...

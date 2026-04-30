@@ -13,7 +13,7 @@ from typing_extensions import Self
 
 _T = TypeVar("_T", bound=models.Model)
 
-class _BaseQuerySet(Generic[_T], Sized):
+class _BaseQuerySet(Sized, Generic[_T]):
     model: type[_T]
     query: Query
     def __init__(

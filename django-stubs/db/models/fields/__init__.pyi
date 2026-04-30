@@ -111,7 +111,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
 
 _I = TypeVar("_I", bound=int | None)
 
-class IntegerField(Generic[_I], Field[_I | Combinable, _I]):
+class IntegerField(Field[_I | Combinable, _I], Generic[_I]):
     @overload
     def __new__(
         cls,
@@ -476,7 +476,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
 
 _F = TypeVar("_F", bound=float | None)
 
-class FloatField(Generic[_F], Field[_F | Combinable, _F]):
+class FloatField(Field[_F | Combinable, _F], Generic[_F]):
     @overload
     def __new__(
         cls,
@@ -536,7 +536,7 @@ class FloatField(Generic[_F], Field[_F | Combinable, _F]):
 
 _DEC = TypeVar("_DEC", bound=decimal.Decimal | None)
 
-class DecimalField(Generic[_DEC], Field[_DEC | Combinable, _DEC]):
+class DecimalField(Field[_DEC | Combinable, _DEC], Generic[_DEC]):
     # attributes
     max_digits: int = ...
     decimal_places: int = ...
@@ -699,7 +699,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
 
 _C = TypeVar("_C", bound=str | None)
 
-class CharField(Generic[_C], Field[_C | Combinable, _C]):
+class CharField(Field[_C | Combinable, _C], Generic[_C]):
     @overload
     def __new__(
         cls,
@@ -943,7 +943,7 @@ class URLField(CharField[_C]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> URLField[str | None]: ...
 
-class TextField(Generic[_C], Field[_C | Combinable, _C]):
+class TextField(Field[_C | Combinable, _C], Generic[_C]):
     @overload
     def __new__(
         cls,
@@ -1005,7 +1005,7 @@ class TextField(Generic[_C], Field[_C | Combinable, _C]):
 
 _B = TypeVar("_B", bound=bool | None)
 
-class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
+class BooleanField(Field[_B | Combinable, _B], Generic[_B]):
     @overload
     def __new__(
         cls,
@@ -1065,7 +1065,7 @@ class BooleanField(Generic[_B], Field[_B | Combinable, _B]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> BooleanField[bool | None]: ...
 
-class IPAddressField(Generic[_C], Field[_C | Combinable, _C]):
+class IPAddressField(Field[_C | Combinable, _C], Generic[_C]):
     @overload
     def __new__(
         cls,
@@ -1124,8 +1124,8 @@ class IPAddressField(Generic[_C], Field[_C | Combinable, _C]):
     ) -> IPAddressField[str | None]: ...
 
 class GenericIPAddressField(
-    Generic[_C],
     Field[_C | ipaddress.IPv4Address | ipaddress.IPv6Address | Combinable, _C],
+    Generic[_C],
 ):
     @overload
     def __new__(
@@ -1259,7 +1259,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
 
 _TM = TypeVar("_TM", bound=time | None)
 
-class TimeField(Generic[_TM], DateTimeCheckMixin, Field[_TM | Combinable, _TM]):
+class TimeField(DateTimeCheckMixin, Field[_TM | Combinable, _TM], Generic[_TM]):
     # attributes
     auto_now: bool = ...
     auto_now_add: bool = ...
@@ -1393,7 +1393,7 @@ class DateTimeField(DateField[_DT]):
 
 _U = TypeVar("_U", bound=uuid.UUID | None)
 
-class UUIDField(Generic[_U], Field[str | _U, _U]):
+class UUIDField(Field[str | _U, _U], Generic[_U]):
     @overload
     def __new__(
         cls,
@@ -1451,7 +1451,7 @@ class UUIDField(Generic[_U], Field[str | _U, _U]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> UUIDField[uuid.UUID | None]: ...
 
-class FilePathField(Generic[_C], Field[_C, _C]):
+class FilePathField(Field[_C, _C], Generic[_C]):
     path: str | Callable[..., str] = ...
     match: str | None = ...
     recursive: bool = ...
@@ -1526,7 +1526,7 @@ class FilePathField(Generic[_C], Field[_C, _C]):
 
 _BIN = TypeVar("_BIN", bound=bytes | None)
 
-class BinaryField(Generic[_BIN], Field[_BIN | bytearray | memoryview, _BIN]):
+class BinaryField(Field[_BIN | bytearray | memoryview, _BIN], Generic[_BIN]):
     @overload
     def __new__(
         cls,
@@ -1586,7 +1586,7 @@ class BinaryField(Generic[_BIN], Field[_BIN | bytearray | memoryview, _BIN]):
 
 _TD = TypeVar("_TD", bound=timedelta | None)
 
-class DurationField(Generic[_TD], Field[_TD, _TD]):
+class DurationField(Field[_TD, _TD], Generic[_TD]):
     @overload
     def __new__(
         cls,

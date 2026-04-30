@@ -44,7 +44,7 @@ class _StrPromise(Promise):
     # Mypy requires this for the attribute hook to take effect
     def __getattribute__(self, name: str, /) -> Any: ...  # type: ignore[explicit-override]
 
-_StrOrPromise: TypeAlias = str | _StrPromise
+_StrOrPromise: TypeAlias = str | _StrPromise  # noqa: PYI047
 
 _C = TypeVar("_C", bound=Callable[..., Any])
 _CS = TypeVar("_CS", bound=Callable[..., str])
@@ -102,7 +102,7 @@ class classproperty(Generic[_Get]):
     def __get__(self, instance: _Self | None, cls: type[_Self] = ...) -> _Get: ...
     def getter(self, method: Callable[[_Self], _Get]) -> classproperty[_Get]: ...
 
-class _Getter(Protocol[_Get]):
+class _Getter(Protocol[_Get]):  # noqa: PYI046
     """Type fake to declare some read-only properties (until `property` builtin is generic)
 
     We can use something like `Union[_Getter[str], str]` in base class to avoid errors

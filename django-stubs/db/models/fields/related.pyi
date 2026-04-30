@@ -40,7 +40,7 @@ _ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 RECURSIVE_RELATIONSHIP_CONSTANT: str = ...
 
-class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
+class RelatedField(FieldCacheMixin, Field[_ST, _GT], Generic[_ST, _GT]):
     one_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_one: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     many_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
@@ -60,7 +60,7 @@ class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
 
 _M = TypeVar("_M", bound=Model | None)
 
-class ForeignObject(Generic[_M], RelatedField[_M, _M]):
+class ForeignObject(RelatedField[_M, _M], Generic[_M]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...
@@ -151,7 +151,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> ForeignObject[_M | None]: ...
 
-class ForeignKey(Generic[_M], ForeignObject[_M]):
+class ForeignKey(ForeignObject[_M], Generic[_M]):
     one_to_many: Literal[False] = ...
     one_to_one: Literal[False] = ...
     many_to_many: Literal[False] = ...
@@ -239,7 +239,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     @overload
     def __get__(self, instance: Any, owner: Any) -> Self: ...
 
-class OneToOneField(Generic[_M], ForeignKey[_M]):
+class OneToOneField(ForeignKey[_M], Generic[_M]):
     one_to_many: Literal[False] = ...
     one_to_one: Literal[True] = ...  # type: ignore [assignment]
     many_to_many: Literal[False] = ...
@@ -330,7 +330,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
 _MM = TypeVar("_MM", bound=Model)
 _MN = TypeVar("_MN", bound=Model)
 
-class ManyToManyField(Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]):
+class ManyToManyField(RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]], Generic[_MM, _MN]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...

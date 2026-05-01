@@ -4,19 +4,19 @@ set -ex
 
 # format code
 if [[ $CI ]]; then
-  ruff format --check tests typings
-  ruff check typings
+  ruff format --check tests django-stubs
+  ruff check django-stubs
 else
-  ruff format tests typings
-  ruff check --fix --exit-non-zero-on-fix typings
+  ruff format tests django-stubs
+  ruff check --fix --exit-non-zero-on-fix django-stubs
 fi
 
 # type check code
-mypy tests typings
+mypy tests django-stubs
 
 # pyright tests
-pyright tests typings
-pytest tests typings -p no:warnings -v
+pyright tests django-stubs
+pytest tests django-stubs -p no:warnings -v
 
 # ty tests
-ty check tests
+ty check tests django-stubs

@@ -1,13 +1,13 @@
 from collections.abc import Collection, Iterator, Mapping, Sequence
 from typing import Any, NamedTuple
 
+import django.utils.tree as tree
 from django.db.models.base import Model
 from django.db.models.fields import Field
 from django.db.models.fields.mixins import FieldCacheMixin
 from django.db.models.sql.compiler import SQLCompiler
 from django.db.models.sql.query import Query
 from django.db.models.sql.where import WhereNode
-from django.utils import tree
 
 class PathInfo(NamedTuple):
     from_opts: Any
@@ -63,9 +63,7 @@ class RegisterLookupMixin:
     @staticmethod
     def merge_dicts(dicts: list[dict[str, Any]]) -> dict[str, Any]: ...
     @classmethod
-    def register_lookup(
-        cls, lookup: Any, lookup_name: str | None = ...
-    ) -> type[Any]: ...
+    def register_lookup(cls, lookup: Any, lookup_name: str | None = ...) -> type[Any]: ...
     @classmethod
     def _unregister_lookup(cls, lookup: Any, lookup_name: str | None = ...) -> Any: ...
 
@@ -76,12 +74,8 @@ def select_related_descend(
     load_fields: Collection[str] | None,
     reverse: bool = ...,
 ) -> bool: ...
-def refs_expression(
-    lookup_parts: Sequence[str], annotations: Mapping[str, bool]
-) -> tuple[bool, Sequence[str]]: ...
-def check_rel_lookup_compatibility(
-    model: type[Model], target_opts: Any, field: FieldCacheMixin
-) -> bool: ...
+def refs_expression(lookup_parts: Sequence[str], annotations: Mapping[str, bool]) -> tuple[bool, Sequence[str]]: ...
+def check_rel_lookup_compatibility(model: type[Model], target_opts: Any, field: FieldCacheMixin) -> bool: ...
 
 class FilteredRelation:
     relation_name: str = ...

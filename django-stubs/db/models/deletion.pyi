@@ -42,9 +42,7 @@ def RESTRICT(
     sub_objs: Sequence[Model],
     using: str,
 ) -> None: ...
-def SET(
-    value: Any | Callable[[], Any]
-) -> Callable[[Collector, Field[Any, Any], Sequence[Model], str], None]: ...
+def SET(value: Any | Callable[[], Any]) -> Callable[[Collector, Field[Any, Any], Sequence[Model], str], None]: ...
 def get_candidate_relations_to_delete(
     opts: Options[Any],
 ) -> Iterable[Field[Any, Any]]: ...
@@ -64,7 +62,7 @@ class Collector:
         objs: Collection[Model | None],
         source: type[Model] | None = ...,
         source_attr: str | None = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     def can_fast_delete(
         self,

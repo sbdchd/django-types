@@ -324,7 +324,7 @@ def main() -> None:
 
     post = Post()
 
-    print(post.id)  # type: ignore [attr-defined]
+    print(post.id)  # type: ignore [attr-defined]  # ty: ignore[unresolved-attribute]
 
     comment = Comment()
     comment.auth_token = User()
@@ -629,7 +629,7 @@ def main() -> None:
     if not comment.hstore and not isinstance(comment.hstore, dict):
         print()  # type: ignore [unreachable]
 
-    process_non_nullable(comment.array)
+    process_non_nullable(comment.array)  # ty: ignore [invalid-argument-type]
     if isinstance(comment.array_nullable, type(None)):
         print(comment.array_nullable)
     if comment.array_nullable is not None:
@@ -877,7 +877,7 @@ def namedtuplefetchall(cursor: CursorWrapper) -> List[Tuple[Any, ...]]:
     "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
     assert desc is not None
-    nt_result = namedtuple("Result", [col[0] for col in desc])  # type: ignore [misc]
+    nt_result = namedtuple("Result", [col[0] for col in desc])  # type: ignore [misc]  # ty: ignore[mismatched-type-name]
     return [nt_result(*row) for row in cursor.fetchall()]
 
 

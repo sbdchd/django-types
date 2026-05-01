@@ -2,9 +2,9 @@ from collections.abc import Callable, Iterable
 from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
 
 from django.db.models import Field, Transform
+from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 _Choice: TypeAlias = tuple[Any, Any]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
@@ -14,7 +14,7 @@ _ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 _T = TypeVar("_T", bound=dict[str, str | None] | None)
 
-class HStoreField(Generic[_T], CheckFieldDefaultMixin, Field[Any, Any]):
+class HStoreField(CheckFieldDefaultMixin, Field[Any, Any], Generic[_T]):
     @overload
     def __init__(
         self: HStoreField[dict[str, str | None]],

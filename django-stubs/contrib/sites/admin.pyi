@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.contrib import admin as admin
+import django.contrib.admin as admin
 
 class SiteAdmin(admin.ModelAdmin[Any]):
     list_display: Any = ...

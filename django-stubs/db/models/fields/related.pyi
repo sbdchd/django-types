@@ -2,34 +2,23 @@ from collections.abc import Callable, Iterable, Sequence
 from typing import Any, Generic, Literal, Protocol, TypeAlias, TypeVar, overload
 from uuid import UUID
 
-from django.db import models
 from django.db.models.base import Model
 from django.db.models.deletion import Collector
 from django.db.models.fields import _GT, _ST, Field
 from django.db.models.fields.mixins import FieldCacheMixin
-from django.db.models.fields.related_descriptors import (
-    ForwardManyToOneDescriptor as ForwardManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ForwardOneToOneDescriptor as ForwardOneToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ManyToManyDescriptor as ManyToManyDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseManyToOneDescriptor as ReverseManyToOneDescriptor,
-)
-from django.db.models.fields.related_descriptors import (
-    ReverseOneToOneDescriptor as ReverseOneToOneDescriptor,
-)
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor as ForwardManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ForwardOneToOneDescriptor as ForwardOneToOneDescriptor
+from django.db.models.fields.related_descriptors import ManyToManyDescriptor as ManyToManyDescriptor
+from django.db.models.fields.related_descriptors import ReverseManyToOneDescriptor as ReverseManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ReverseOneToOneDescriptor as ReverseOneToOneDescriptor
 from django.db.models.fields.reverse_related import ForeignObjectRel as ForeignObjectRel
 from django.db.models.fields.reverse_related import ManyToManyRel as ManyToManyRel
 from django.db.models.fields.reverse_related import ManyToOneRel as ManyToOneRel
 from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
 from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
-from typing_extensions import Self
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 class _DeleteProtocol(Protocol):
     def __call__(
@@ -40,7 +29,6 @@ class _DeleteProtocol(Protocol):
         using: str,
     ) -> None: ...
 
-_F = TypeVar("_F", bound=models.Field[Any, Any])
 _Choice: TypeAlias = tuple[Any, str]
 _ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
 _FieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup]
@@ -52,7 +40,7 @@ _ErrorMessagesToOverride: TypeAlias = dict[str, Any]
 
 RECURSIVE_RELATIONSHIP_CONSTANT: str = ...
 
-class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
+class RelatedField(FieldCacheMixin, Field[_ST, _GT], Generic[_ST, _GT]):
     one_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_one: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     many_to_many: bool = ...  # pyright: ignore[reportIncompatibleVariableOverride]
@@ -72,7 +60,7 @@ class RelatedField(FieldCacheMixin, Generic[_ST, _GT], Field[_ST, _GT]):
 
 _M = TypeVar("_M", bound=Model | None)
 
-class ForeignObject(Generic[_M], RelatedField[_M, _M]):
+class ForeignObject(RelatedField[_M, _M], Generic[_M]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...
@@ -163,7 +151,7 @@ class ForeignObject(Generic[_M], RelatedField[_M, _M]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> ForeignObject[_M | None]: ...
 
-class ForeignKey(Generic[_M], ForeignObject[_M]):
+class ForeignKey(ForeignObject[_M], Generic[_M]):
     one_to_many: Literal[False] = ...
     one_to_one: Literal[False] = ...
     many_to_many: Literal[False] = ...
@@ -251,7 +239,7 @@ class ForeignKey(Generic[_M], ForeignObject[_M]):
     @overload
     def __get__(self, instance: Any, owner: Any) -> Self: ...
 
-class OneToOneField(Generic[_M], ForeignKey[_M]):
+class OneToOneField(ForeignKey[_M], Generic[_M]):
     one_to_many: Literal[False] = ...
     one_to_one: Literal[True] = ...  # type: ignore [assignment]
     many_to_many: Literal[False] = ...
@@ -342,9 +330,7 @@ class OneToOneField(Generic[_M], ForeignKey[_M]):
 _MM = TypeVar("_MM", bound=Model)
 _MN = TypeVar("_MN", bound=Model)
 
-class ManyToManyField(
-    Generic[_MM, _MN], RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]]
-):
+class ManyToManyField(RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]], Generic[_MM, _MN]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...
@@ -400,12 +386,8 @@ class ManyToManyField(
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> Self: ...
     def get_path_info(self, filtered_relation: None = ...) -> list[PathInfo]: ...
-    def get_reverse_path_info(
-        self, filtered_relation: None = ...
-    ) -> list[PathInfo]: ...
-    def contribute_to_related_class(
-        self, cls: type[Model], related: RelatedField[Any, Any]
-    ) -> None: ...
+    def get_reverse_path_info(self, filtered_relation: None = ...) -> list[PathInfo]: ...
+    def contribute_to_related_class(self, cls: type[Model], related: RelatedField[Any, Any]) -> None: ...
     def m2m_db_table(self) -> str: ...
     def m2m_column_name(self) -> str: ...
     def m2m_reverse_name(self) -> str: ...
@@ -413,6 +395,4 @@ class ManyToManyField(
     def m2m_target_field_name(self) -> str: ...
     def m2m_reverse_target_field_name(self) -> str: ...
 
-def create_many_to_many_intermediary_model(
-    field: type[Field[Any, Any]], klass: type[Model]
-) -> type[Model]: ...
+def create_many_to_many_intermediary_model(field: type[Field[Any, Any]], klass: type[Model]) -> type[Model]: ...

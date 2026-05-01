@@ -1,12 +1,8 @@
 from typing import Any
 
-from django.contrib.gis.db.backends.base.operations import (
-    BaseSpatialOperations as BaseSpatialOperations,
-)
+from django.contrib.gis.db.backends.base.operations import BaseSpatialOperations as BaseSpatialOperations
 from django.contrib.gis.db.backends.utils import SpatialOperator as SpatialOperator
-from django.db.backends.oracle.operations import (
-    DatabaseOperations as DatabaseOperations,
-)
+from django.db.backends.oracle.operations import DatabaseOperations as DatabaseOperations
 
 DEFAULT_TOLERANCE: str
 
@@ -22,9 +18,7 @@ class SDODisjoint(SpatialOperator):
 class SDORelate(SpatialOperator):
     sql_template: str = ...
     def check_relate_argument(self, arg: Any) -> None: ...
-    def as_sql(
-        self, connection: Any, lookup: Any, template_params: Any, sql_params: Any
-    ) -> Any: ...
+    def as_sql(self, connection: Any, lookup: Any, template_params: Any, sql_params: Any) -> Any: ...
 
 class OracleOperations(BaseSpatialOperations, DatabaseOperations):
     name: str = ...

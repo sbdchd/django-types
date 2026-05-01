@@ -1,8 +1,6 @@
 from typing import Any
 
-from django.db.backends.oracle.introspection import (
-    DatabaseIntrospection as DatabaseIntrospection,
-)
+from django.db.backends.oracle.introspection import DatabaseIntrospection as DatabaseIntrospection
 
 class OracleIntrospection(DatabaseIntrospection):
     def data_types_reverse(self) -> Any: ...

@@ -3,15 +3,13 @@ from typing import Any
 
 from django.db.models import Field
 from django.db.models.lookups import Transform
+from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
-from django.utils.functional import _StrOrPromise
 
 class JsonAdapter:
     encoder: Any = ...
-    def __init__(
-        self, adapted: Any, dumps: Any | None = ..., encoder: Any | None = ...
-    ) -> None: ...
+    def __init__(self, adapted: Any, dumps: Any | None = ..., encoder: Any | None = ...) -> None: ...
     def dumps(self, obj: Any) -> Any: ...
 
 class JSONField(CheckFieldDefaultMixin, Field[Any, Any]):
@@ -24,7 +22,7 @@ class JSONField(CheckFieldDefaultMixin, Field[Any, Any]):
         verbose_name: _StrOrPromise | None = ...,
         name: str | None = ...,
         encoder: type[JSONEncoder] | None = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     def value_to_string(self, obj: Any) -> Any: ...
 

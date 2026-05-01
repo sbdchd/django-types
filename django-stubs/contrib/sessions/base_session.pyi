@@ -9,9 +9,7 @@ _SessionT = TypeVar("_SessionT", bound=AbstractBaseSession)
 
 class BaseSessionManager(models.Manager[_SessionT]):
     def encode(self, session_dict: dict[str, int]) -> str: ...
-    def save(
-        self, session_key: str, session_dict: dict[str, int], expire_date: datetime
-    ) -> _SessionT: ...
+    def save(self, session_key: str, session_dict: dict[str, int], expire_date: datetime) -> _SessionT: ...
 
 class AbstractBaseSession(models.Model):
     objects: ClassVar[BaseSessionManager[Self]]  # type: ignore[assignment]

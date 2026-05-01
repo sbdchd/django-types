@@ -3,7 +3,7 @@ from datetime import date
 from datetime import datetime as datetime
 from typing import Any, SupportsInt
 
-from django import template
+import django.template as template
 
 register: template.Library
 

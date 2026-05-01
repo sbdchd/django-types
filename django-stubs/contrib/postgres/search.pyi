@@ -2,21 +2,11 @@ from collections.abc import Iterable
 from typing import Any, TypeAlias
 
 from django.db.models import Field
-from django.db.models.expressions import (
-    Combinable,
-    CombinedExpression,
-    Func,
-    Value,
-    _OutputField,
-)
-from django.db.models.fields import (
-    _ErrorMessagesToOverride,
-    _FieldChoices,
-    _ValidatorCallable,
-)
+from django.db.models.expressions import Combinable, CombinedExpression, Func, Value, _OutputField
+from django.db.models.fields import _ErrorMessagesToOverride, _FieldChoices, _ValidatorCallable
 from django.db.models.lookups import Lookup
-from typing_extensions import Self
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 _Expression: TypeAlias = str | Combinable | SearchQueryCombinable
 
@@ -99,7 +89,7 @@ class SearchQueryCombinable:
     def __and__(self, other: SearchQueryCombinable) -> Self: ...
     def __rand__(self, other: SearchQueryCombinable) -> Self: ...
 
-class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
+class SearchQuery(SearchQueryCombinable, Value):  # type: ignore[misc]
     SEARCH_TYPES: dict[str, str] = ...
     def __init__(
         self,
@@ -108,11 +98,11 @@ class SearchQuery(SearchQueryCombinable, Value):  # type: ignore
         *,
         config: _Expression | None = ...,
         invert: bool = ...,
-        search_type: str = ...
+        search_type: str = ...,
     ) -> None: ...
     def __invert__(self) -> Self: ...
 
-class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: ignore
+class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: ignore[misc]
     def __init__(
         self,
         lhs: Any,
@@ -123,12 +113,7 @@ class CombinedSearchQuery(SearchQueryCombinable, CombinedExpression):  # type: i
     ) -> None: ...
 
 class SearchRank(Func):
-    def __init__(
-        self,
-        vector: SearchVector | _Expression,
-        query: SearchQuery | _Expression,
-        **extra: Any
-    ) -> None: ...
+    def __init__(self, vector: SearchVector | _Expression, query: SearchQuery | _Expression, **extra: Any) -> None: ...
 
 class TrigramBase(Func):
     def __init__(self, expression: _Expression, string: str, **extra: Any) -> None: ...

@@ -5,14 +5,9 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 from django.core.files.storage import FileSystemStorage, Storage
 from django.db.models.base import Model
-from django.db.models.fields import (
-    _GT,
-    Field,
-    _ErrorMessagesToOverride,
-    _ValidatorCallable,
-)
-from typing_extensions import Self
+from django.db.models.fields import _GT, Field, _ErrorMessagesToOverride, _ValidatorCallable
 from django.utils.functional import _StrOrPromise
+from typing_extensions import Self
 
 class FieldFile(File):
     instance: Model = ...
@@ -35,9 +30,7 @@ class FileDescriptor:
     field: FileField = ...
     def __init__(self, field: FileField) -> None: ...
     def __set__(self, instance: Model, value: Any | None) -> None: ...
-    def __get__(
-        self, instance: Model | None, cls: type[Model] = ...
-    ) -> FieldFile | FileDescriptor: ...
+    def __get__(self, instance: Model | None, cls: type[Model] = ...) -> FieldFile | FileDescriptor: ...
 
 class FileField(Field[FileDescriptor, FileDescriptor]):
     storage: Any = ...
@@ -61,9 +54,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -72,7 +63,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> Self: ...
     # class access
-    @overload  # type: ignore
+    @overload  # type: ignore[override]
     def __get__(self, instance: None, owner: Any) -> FileDescriptor: ...
     # Model instance access
     @overload
@@ -112,9 +103,7 @@ class ImageField(FileField):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[
-            tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]
-        ] = ...,
+        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -123,7 +112,7 @@ class ImageField(FileField):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> Self: ...
     # class access
-    @overload  # type: ignore
+    @overload  # type: ignore[override]
     def __get__(self, instance: None, owner: Any) -> ImageFileDescriptor: ...
     # Model instance access
     @overload
@@ -131,6 +120,4 @@ class ImageField(FileField):
     # non-Model instances
     @overload
     def __get__(self, instance: Any, owner: Any) -> Self: ...
-    def update_dimension_fields(
-        self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any
-    ) -> None: ...
+    def update_dimension_fields(self, instance: Model, force: bool = ..., *args: Any, **kwargs: Any) -> None: ...

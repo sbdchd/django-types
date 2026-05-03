@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import ForeignKey
 from django.db.models.base import Model
 from django.db.models.manager import Manager
-from django.db.models.query import QuerySet, _BaseQuerySet
+from django.db.models.query import QuerySet
 from django.db.models.query_utils import Q
 from django.forms.fields import CharField, ChoiceField, Field
 from django.forms.forms import BaseForm, DeclarativeFieldsMetaclass
@@ -279,7 +279,7 @@ class ModelMultipleChoiceField(ModelChoiceField):
     widget: Any = ...
     hidden_widget: Any = ...
     default_error_messages: Any = ...
-    def __init__(self, queryset: _BaseQuerySet[Any], **kwargs: Any) -> None: ...
+    def __init__(self, queryset: QuerySet[Any], **kwargs: Any) -> None: ...
 
 def _get_foreign_key(
     parent_model: type[Model],

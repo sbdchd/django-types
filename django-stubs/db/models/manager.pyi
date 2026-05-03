@@ -1,4 +1,4 @@
-from collections.abc import Callable, Iterable, MutableMapping
+from collections.abc import Callable, Iterable, Mapping
 from typing import Any, Generic, TypeVar
 
 from django.db.models.base import Model
@@ -62,12 +62,12 @@ class ManyToManyRelatedManager(Manager[_T], Generic[_T, _V]):
     def add(
         self,
         *objs: QuerySet[_T] | _T | _V,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     async def aadd(
         self,
         *objs: QuerySet[_T] | _T | _V,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     def remove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
     async def aremove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
@@ -76,55 +76,53 @@ class ManyToManyRelatedManager(Manager[_T], Generic[_T, _V]):
         objs: QuerySet[_T] | Iterable[_T],
         *,
         clear: bool = ...,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     async def aset(
         self,
         objs: QuerySet[_T] | Iterable[_T],
         *,
         clear: bool = ...,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     def clear(self) -> None: ...
     async def aclear(self) -> None: ...
     def create(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
-        through_defaults: MutableMapping[str, Any] | None = ...,
+        defaults: Mapping[str, Any] | None = ...,
+        through_defaults: Mapping[str, Any] | None = ...,
         **kwargs: Any,
     ) -> _T: ...
     async def acreate(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
-        through_defaults: MutableMapping[str, Any] | None = ...,
+        defaults: Mapping[str, Any] | None = ...,
+        through_defaults: Mapping[str, Any] | None = ...,
         **kwargs: Any,
     ) -> _T: ...
     def get_or_create(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
+        defaults: Mapping[str, Any] | None = ...,
         *,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     async def aget_or_create(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
+        defaults: Mapping[str, Any] | None = ...,
         *,
-        through_defaults: MutableMapping[str, Any] = ...,
+        through_defaults: Mapping[str, Any] = ...,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     def update_or_create(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
-        *,
-        through_defaults: MutableMapping[str, Any] = ...,
+        defaults: Mapping[str, Any] | None = None,
+        create_defaults: Mapping[str, Any] | None = None,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
     async def aupdate_or_create(
         self,
-        defaults: MutableMapping[str, Any] | None = ...,
-        *,
-        through_defaults: MutableMapping[str, Any] = ...,
+        defaults: Mapping[str, Any] | None = None,
+        create_defaults: Mapping[str, Any] | None = None,
         **kwargs: Any,
     ) -> tuple[_T, bool]: ...
 

@@ -46,4 +46,6 @@ while IFS= read -r file || [ -n "$file" ]; do
     ast-grep scan --rule "$SCRIPT_DIR/fix-sync.yml" --update-all "$file"
 done < "$SYNC_FILES"
 
+uv run ruff check --fix
+
 echo "Sync complete!"

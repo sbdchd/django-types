@@ -20,3 +20,9 @@ rule:
   follows:
     pattern: "|"
 fix: Callable[..., Any]
+---
+id: fix-typevar-import
+language: python
+rule:
+  pattern: from typing_extensions import TypeVar
+fix: from typing import TypeVar

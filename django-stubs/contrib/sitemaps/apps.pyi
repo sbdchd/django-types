@@ -1,7 +1,7 @@
 from typing import Any
 
-from django.apps import AppConfig as AppConfig
+from django.apps import AppConfig
 
 class SiteMapsConfig(AppConfig):
-    name: str = ...
-    verbose_name: Any = ...
+    name: str
+    verbose_name: Any

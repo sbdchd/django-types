@@ -14,3 +14,8 @@ django-stubs/views/decorators/debug.pyi
 #django-stubs/views/decorators/http.pyi
 django-stubs/views/decorators/vary.pyi
 #django-stubs/http/request.pyi
+#django-stubs/contrib/sitemaps/views.pyi
+#django-stubs/contrib/sitemaps/__init__.pyi
+django-stubs/contrib/sitemaps/apps.pyi
+#django-stubs/contrib/gis/sitemaps/kml.pyi
+#django-stubs/contrib/flatpages/sitemaps.pyi

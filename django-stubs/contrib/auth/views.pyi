@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, _UserType
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -15,7 +15,7 @@ class SuccessURLAllowedHostsMixin:
     success_url_allowed_hosts: Any = ...
     def get_success_url_allowed_hosts(self) -> set[str]: ...
 
-class LoginView(SuccessURLAllowedHostsMixin, FormView[AuthenticationForm]):
+class LoginView(SuccessURLAllowedHostsMixin, FormView[AuthenticationForm[_UserType]]):
     authentication_form: Any = ...
     redirect_field_name: Any = ...
     redirect_authenticated_user: bool = ...

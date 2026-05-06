@@ -24,6 +24,7 @@ _FieldChoices: TypeAlias = _LiteralFieldChoices | Callable[[], _LiteralFieldChoi
 
 _ValidatorCallable: TypeAlias = Callable[..., None]
 _ErrorMessagesToOverride: TypeAlias = dict[str, Any]
+_ErrorMessagesDict: TypeAlias = dict[str, _StrOrPromise]  # noqa: PYI047
 
 # __set__ value type
 _ST = TypeVar("_ST")

@@ -22,3 +22,6 @@ django-stubs/contrib/sitemaps/apps.pyi
 #django-stubs/contrib/auth/forms.pyi
 django-stubs/core/validators.pyi
 #django-stubs/utils/deconstruct.pyi
+django-stubs/utils/decorators.pyi
+#django-stubs/db/models/__init__.pyi
+django-stubs/contrib/admin/decorators.pyi

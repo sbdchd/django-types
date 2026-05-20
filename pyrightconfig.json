@@ -5,7 +5,6 @@
   "reportUnnecessaryIsInstance": false,
   "reportUnnecessaryComparison": false,
   "reportIncompatibleMethodOverride": false,
-  "_comment": "To enable unknown we need to change all ... to the correct types",
   "reportUnknownArgumentType": "none",
   "reportUnknownLambdaType": "none",
   "reportUnknownMemberType": "none",

@@ -14,7 +14,7 @@ class SiteManager(models.Manager[_SiteT]):
     def get_by_natural_key(self, domain: str) -> _SiteT: ...
 
 class Site(models.Model):
-    objects: ClassVar[SiteManager[Self]]  # type: ignore[assignment]
+    objects: ClassVar[SiteManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
 
     domain = models.CharField(max_length=100)
     name = models.CharField(max_length=50)

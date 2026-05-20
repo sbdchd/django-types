@@ -17,17 +17,17 @@ class ChoicesMeta(enum.EnumMeta):
 
 ChoicesType: TypeAlias = ChoicesMeta
 
-class Choices(enum.Enum, metaclass=ChoicesMeta):
+class Choices(enum.Enum, metaclass=ChoicesMeta):  # type: ignore[misc]
     def __str__(self) -> Any: ...
     @property
     def label(self) -> _StrOrPromise: ...
     @property
     def value(self) -> Any: ...
 
-class IntegerChoices(int, Choices):
+class IntegerChoices(int, Choices):  # type: ignore[misc]
     @property
     def value(self) -> int: ...
 
-class TextChoices(str, Choices):
+class TextChoices(str, Choices):  # type: ignore[misc]
     @property
     def value(self) -> str: ...

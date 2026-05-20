@@ -9,7 +9,7 @@ _T = TypeVar("_T", bound=AbstractBaseSession)
 class SessionManager(BaseSessionManager[_T]): ...
 
 class Session(AbstractBaseSession):
-    objects: ClassVar[SessionManager[Self]]  # type: ignore[assignment]
+    objects: ClassVar[SessionManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @classmethod
     def get_session_store_class(cls) -> type[SessionStore]: ...

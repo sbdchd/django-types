@@ -278,7 +278,7 @@ class Comment(models.Model):
     )
     nullable_generated_field = GeneratedField(
         expression=models.F("integer_nullable") + 1,
-        output_field=models.IntegerField(null=True),
+        output_field=models.IntegerField(),
         db_persist=True,
         null=True,
     )

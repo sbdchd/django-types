@@ -1,4 +1,5 @@
 # ast-grep rules to fix bare Callable -> Callable[..., Any]
+# and bare tuple -> tuple[Any, ...]
 id: fix-callable-simple
 language: python
 rule:
@@ -20,6 +21,30 @@ rule:
   follows:
     pattern: "|"
 fix: Callable[..., Any]
+---
+id: fix-tuple-type
+language: python
+rule:
+  pattern: tuple
+  inside:
+    kind: type
+fix: tuple[Any, ...]
+---
+id: fix-tuple-union-before
+language: python
+rule:
+  pattern: tuple
+  precedes:
+    pattern: "|"
+fix: tuple[Any, ...]
+---
+id: fix-tuple-union-after
+language: python
+rule:
+  pattern: tuple
+  follows:
+    pattern: "|"
+fix: tuple[Any, ...]
 ---
 id: fix-typevar-import
 language: python

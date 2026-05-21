@@ -1,134 +1,187 @@
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from datetime import date, datetime
 from decimal import Decimal
-from itertools import chain
-from typing import Any
+from typing import Any, Literal, TypeAlias, overload
 from uuid import UUID
 
+from django.db.backends.base.base import BaseDatabaseWrapper
+from django.db.backends.utils import CursorWrapper
+from django.db.models import Field
 from django.db.models.base import Model
-from django.db.models.expressions import BaseExpression, Expression
-from django.db.models.sql.query import Query, RawQuery
+from django.db.models.expressions import BaseExpression, Expression, Ref
+from django.db.models.sql.query import Query
+from django.db.models.sql.subqueries import AggregateQuery, DeleteQuery, InsertQuery, UpdateQuery
+from django.utils.functional import cached_property
+from typing_extensions import override
 
-FORCE: Any
+_ParamT: TypeAlias = str | int
+_ParamsT: TypeAlias = list[_ParamT] | tuple[_ParamT, ...] | tuple[()]
+_AsSqlType: TypeAlias = tuple[str, _ParamsT]
+
+class PositionRef(Ref):
+    def __init__(self, ordinal: str, refs: str, source: Expression) -> None: ...
 
 class SQLCompiler:
-    query: Any = ...
-    connection: Any = ...
-    using: Any = ...
-    quote_cache: Any = ...
-    select: Any = ...
-    annotation_col_map: Any = ...
-    klass_info: Any = ...
-    ordering_parts: Any = ...
-    def __init__(self, query: Query | RawQuery, connection: Any, using: str | None) -> None: ...
-    col_count: Any = ...
-    def setup_query(self) -> None: ...
-    has_extra_select: Any = ...
+    query: Any
+    connection: BaseDatabaseWrapper
+    using: str | None
+    quote_cache: Any
+    select: Any
+    annotation_col_map: Any
+    klass_info: Any
+    ordering_parts: Any
+    def __init__(
+        self, query: Query, connection: BaseDatabaseWrapper, using: str | None, elide_empty: bool = True
+    ) -> None: ...
+    col_count: Any
+    def setup_query(self, with_col_aliases: bool = False) -> None: ...
+    has_extra_select: Any
     def pre_sql_setup(
         self,
+        with_col_aliases: bool = False,
     ) -> tuple[
-        list[tuple[Expression, tuple[str, list[Any] | tuple[str, str]], None]],
-        list[tuple[Expression, tuple[str, list[int | str], bool]]],
-        list[tuple[str, list[float]]],
+        list[tuple[Expression, _AsSqlType, None]],
+        list[tuple[Expression, tuple[str, _ParamsT, bool]]],
+        list[_AsSqlType],
     ]: ...
     def get_group_by(
         self,
-        select: list[tuple[BaseExpression, tuple[str, list[float]], str | None]],
-        order_by: list[tuple[Expression, tuple[str, list[int | str], bool]]],
-    ) -> list[tuple[str, list[float]]]: ...
+        select: list[tuple[BaseExpression, _AsSqlType, str | None]],
+        order_by: list[tuple[Expression, tuple[str, _ParamsT, bool]]],
+    ) -> list[_AsSqlType]: ...
     def collapse_group_by(
-        self,
-        expressions: list[Expression],
-        having: list[Expression] | tuple[Any, ...],
+        self, expressions: list[Expression], having: list[Expression] | tuple[Expression, ...]
     ) -> list[Expression]: ...
     def get_select(
         self,
-    ) -> tuple[
-        list[tuple[Expression, tuple[str, list[int | str]], str | None]],
-        dict[str, Any] | None,
-        dict[str, int],
-    ]: ...
-    def get_order_by(self) -> list[tuple[Expression, tuple[str, list[Any], bool]]]: ...
+        with_col_aliases: bool = False,
+    ) -> tuple[list[tuple[Expression, _AsSqlType, str | None]], dict[str, Any] | None, dict[str, int]]: ...
+    def _order_by_pairs(self) -> None: ...
+    def get_order_by(self) -> list[tuple[Expression, tuple[str, _ParamsT, bool]]]: ...
     def get_extra_select(
         self,
-        order_by: list[tuple[Expression, tuple[str, list[Any], bool]]],
-        select: list[tuple[Expression, tuple[str, list[float]], str | None]],
-    ) -> list[tuple[Expression, tuple[str, list[Any]], None]]: ...
+        order_by: list[tuple[Expression, tuple[str, _ParamsT, bool]]],
+        select: list[tuple[Expression, _AsSqlType, str | None]],
+    ) -> list[tuple[Expression, _AsSqlType, None]]: ...
     def quote_name_unless_alias(self, name: str) -> str: ...
-    def compile(self, node: Any, select_format: Any = ...) -> tuple[str, list[int | None] | tuple[int, int]]: ...
+    def compile(self, node: BaseExpression) -> _AsSqlType: ...
     def get_combinator_sql(self, combinator: str, all: bool) -> tuple[list[str], list[int] | list[str]]: ...
-    def as_sql(self, with_limits: bool = ..., with_col_aliases: bool = ...) -> Any: ...
+    def get_qualify_sql(self) -> tuple[list[str], list[Any]]: ...
+    def as_sql(self, with_limits: bool = True, with_col_aliases: bool = False) -> _AsSqlType: ...
     def get_default_columns(
         self,
-        start_alias: str | None = ...,
-        opts: Any | None = ...,
-        from_parent: type[Model] | None = ...,
+        select_mask: dict[str, Any],
+        start_alias: str | None = None,
+        opts: Any | None = None,
+        from_parent: type[Model] | None = None,
     ) -> list[Expression]: ...
     def get_distinct(self) -> tuple[list[Any], list[Any]]: ...
     def find_ordering_name(
         self,
         name: str,
         opts: Any,
-        alias: str | None = ...,
-        default_order: str = ...,
-        already_seen: (set[tuple[tuple[tuple[str, str]] | None, tuple[tuple[str, str]]]] | None) = ...,
+        alias: str | None = None,
+        default_order: str = "ASC",
+        already_seen: set[tuple[tuple[tuple[str, str]] | None, tuple[tuple[str, str]]]] | None = None,
     ) -> list[tuple[Expression, bool]]: ...
-    def get_from_clause(self) -> tuple[list[str], list[int | str]]: ...
+    def get_from_clause(self) -> tuple[list[str], _ParamsT]: ...
     def get_related_selections(
         self,
         select: list[tuple[Expression, str | None]],
-        opts: Any | None = ...,
-        root_alias: str | None = ...,
-        cur_depth: int = ...,
-        requested: dict[str, dict[str, dict[str, dict[Any, Any]]]] | bool | None = ...,
-        restricted: bool | None = ...,
+        select_mask: dict[str, Any],
+        opts: Any | None = None,
+        root_alias: str | None = None,
+        cur_depth: int = 1,
+        requested: dict[str, dict[str, dict[str, dict[Any, Any]]]] | None = None,
+        restricted: bool | None = None,
     ) -> list[dict[str, Any]]: ...
-    def get_select_for_update_of_arguments(self) -> Any: ...
-    def deferred_to_columns(self) -> dict[type[Model], set[str]]: ...
+    def get_select_for_update_of_arguments(self) -> list[Any]: ...
     def get_converters(
         self, expressions: list[Expression]
     ) -> dict[int, tuple[list[Callable[..., Any]], Expression]]: ...
     def apply_converters(
-        self,
-        rows: chain[Any],
-        converters: dict[int, tuple[list[Callable[..., Any]], Expression]],
-    ) -> Iterator[
-        list[bytes | datetime | int | str | None]
-        | list[date | Decimal | float | str | None]
-        | list[datetime | float | str | UUID | None]
-    ]: ...
+        self, rows: Iterable[Iterable[Any]], converters: dict[int, tuple[list[Callable[..., Any]], Expression]]
+    ) -> Iterator[list[None | date | datetime | float | Decimal | UUID | bytes | str]]: ...
+    def has_composite_fields(self, expressions: Iterable[Expression]) -> bool: ...
+    def composite_fields_to_tuples(
+        self, rows: Iterable[Any], expressions: Iterable[Expression]
+    ) -> Iterator[list[tuple[Any, ...]]]: ...
     def results_iter(
         self,
-        results: Iterator[Any] | list[list[tuple[int | str]]] | None = ...,
-        tuple_expected: bool = ...,
-        chunked_fetch: bool = ...,
-        chunk_size: int = ...,
-    ) -> Iterator[Any]: ...
+        results: Iterable[list[Sequence[Any]]] | None = None,
+        tuple_expected: bool = False,
+        chunked_fetch: bool = False,
+        chunk_size: int = 100,
+    ) -> Iterator[Sequence[Any]]: ...
     def has_results(self) -> bool: ...
-    def execute_sql(self, result_type: str = ..., chunked_fetch: bool = ..., chunk_size: int = ...) -> Any | None: ...
-    def as_subquery_condition(
-        self, alias: str, columns: list[str], compiler: SQLCompiler
-    ) -> tuple[str, tuple[Any, ...]]: ...
+    @overload
+    def execute_sql(  # pyright: ignore[reportOverlappingOverload]
+        self, result_type: Literal["cursor"] = "cursor", chunked_fetch: bool = False, chunk_size: int = 100
+    ) -> CursorWrapper: ...
+    @overload
+    def execute_sql(
+        self,
+        result_type: Literal["no results"] | None = "no results",
+        chunked_fetch: bool = False,
+        chunk_size: int = 100,
+    ) -> None: ...
+    @overload
+    def execute_sql(
+        self, result_type: Literal["single"] = "single", chunked_fetch: bool = False, chunk_size: int = 100
+    ) -> Iterable[Sequence[Any]] | None: ...
+    @overload
+    def execute_sql(
+        self, result_type: Literal["multi"] = "multi", chunked_fetch: bool = False, chunk_size: int = 100
+    ) -> Iterable[list[Sequence[Any]]] | None: ...
     def explain_query(self) -> Iterator[str]: ...
 
 class SQLInsertCompiler(SQLCompiler):
-    returning_fields: Any = ...
-    returning_params: Any = ...
-    def field_as_sql(self, field: Any, val: Any) -> Any: ...
+    query: InsertQuery
+    returning_fields: Sequence[Any] | None
+    returning_params: Sequence[Any]
+    def field_as_sql(
+        self,
+        field: Field[Any, Any] | None,
+        get_placeholder: Callable[[Any, SQLInsertCompiler, BaseDatabaseWrapper], str],
+        val: Any,
+    ) -> _AsSqlType: ...
     def prepare_value(self, field: Any, value: Any) -> Any: ...
     def pre_save_val(self, field: Any, obj: Any) -> Any: ...
-    def assemble_as_sql(self, fields: Any, value_rows: Any) -> Any: ...
-    def as_sql(self) -> Any: ...  # type: ignore [override]
+    def assemble_as_sql(self, fields: Any, value_rows: Any) -> tuple[list[list[str]], list[list[Any]]]: ...
+    @override
+    def as_sql(self) -> list[_AsSqlType]: ...  # type: ignore[override]
+    @override
+    def execute_sql(  # type: ignore[override]
+        self, returning_fields: Sequence[str] | None = None
+    ) -> list[tuple[Any]]: ...  # 1-tuple
 
 class SQLDeleteCompiler(SQLCompiler):
-    def single_alias(self) -> Any: ...
-    def as_sql(self) -> Any: ...  # type: ignore [override]
+    query: DeleteQuery
+    @cached_property
+    def single_alias(self) -> bool: ...
+    @cached_property
+    def contains_self_reference_subquery(self) -> bool: ...
+    @override
+    def as_sql(self) -> _AsSqlType: ...  # type: ignore[override]
 
 class SQLUpdateCompiler(SQLCompiler):
-    def as_sql(self) -> Any: ...  # type: ignore [override]
+    query: UpdateQuery
+    returning_fields: Sequence[Any] | None
+    returning_params: Sequence[Any]
+    @override
+    def as_sql(self) -> _AsSqlType: ...  # type: ignore[override]
+    @override
+    def execute_sql(self, result_type: Literal["cursor", "no results"]) -> int: ...  # type: ignore[override]
+    def execute_returning_sql(self, returning_fields: Sequence[Any] | None) -> list[Sequence[Any]]: ...
+    @override
+    def pre_sql_setup(self) -> None: ...  # type: ignore[override]
 
 class SQLAggregateCompiler(SQLCompiler):
-    col_count: Any = ...
-    def as_sql(self) -> Any: ...  # type: ignore [override]
+    query: AggregateQuery
+    col_count: int
+    @override
+    def as_sql(self) -> _AsSqlType: ...  # type: ignore[override]
 
-def cursor_iter(cursor: Any, sentinel: Any, col_count: int | None, itersize: int) -> Iterator[Any]: ...
+def cursor_iter(
+    cursor: CursorWrapper, sentinel: Any, col_count: int | None, itersize: int
+) -> Iterator[list[Sequence[Any]]]: ...

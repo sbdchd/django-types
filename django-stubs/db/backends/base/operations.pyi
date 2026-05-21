@@ -4,7 +4,6 @@ from decimal import Decimal
 from typing import Any, TypeAlias
 
 from django.core.management.color import Style
-from django.db import DefaultConnectionProxy
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.backends.utils import CursorWrapper
 from django.db.models.base import Model
@@ -12,7 +11,7 @@ from django.db.models.expressions import Case, Expression
 from django.db.models.fields import Field
 from django.db.models.sql.compiler import SQLCompiler
 
-_Connection: TypeAlias = DefaultConnectionProxy | BaseDatabaseWrapper
+_Connection: TypeAlias = BaseDatabaseWrapper
 
 class BaseDatabaseOperations:
     compiler_module: str = ...

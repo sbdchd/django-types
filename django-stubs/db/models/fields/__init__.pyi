@@ -30,6 +30,7 @@ _ST = TypeVar("_ST")
 # __get__ return type
 _GT = TypeVar("_GT")
 
+class Empty: ...
 class NOT_PROVIDED: ...
 
 class Field(RegisterLookupMixin, Generic[_ST, _GT]):
@@ -761,6 +762,8 @@ class CharField(Field[_C | Combinable, _C], Generic[_C]):
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> CharField[str | None]: ...
 
+class CommaSeparatedIntegerField(CharField[_C]): ...
+
 class SlugField(CharField[_C]):
     @overload
     def __new__(
@@ -1064,6 +1067,8 @@ class BooleanField(Field[_B | Combinable, _B], Generic[_B]):
         validators: Iterable[_ValidatorCallable] = ...,
         error_messages: _ErrorMessagesToOverride | None = ...,
     ) -> BooleanField[bool | None]: ...
+
+NullBooleanField: TypeAlias = BooleanField[bool | None]
 
 class IPAddressField(Field[_C | Combinable, _C], Generic[_C]):
     @overload

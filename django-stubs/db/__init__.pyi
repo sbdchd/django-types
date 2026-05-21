@@ -1,12 +1,9 @@
 from typing import Any
 
-from django.db.backends.utils import CursorWrapper
-
-from . import migrations as migrations
-from .utils import DEFAULT_DB_ALIAS as DEFAULT_DB_ALIAS
+from .backends.base.base import BaseDatabaseWrapper
+from .utils import DEFAULT_DB_ALIAS as DEFAULT_DB_ALIAS  # Not exported in __all__
 from .utils import DJANGO_VERSION_PICKLE_KEY as DJANGO_VERSION_PICKLE_KEY
-from .utils import ConnectionDoesNotExist as ConnectionDoesNotExist
-from .utils import ConnectionHandler as ConnectionHandler
+from .utils import ConnectionHandler, ConnectionRouter
 from .utils import DatabaseError as DatabaseError
 from .utils import DataError as DataError
 from .utils import Error as Error
@@ -18,14 +15,28 @@ from .utils import OperationalError as OperationalError
 from .utils import ProgrammingError as ProgrammingError
 
 connections: ConnectionHandler
-router: Any
-connection: DefaultConnectionProxy
-
-class DefaultConnectionProxy:
-    def cursor(self) -> CursorWrapper: ...
-    def __getattr__(self, item: str) -> Any: ...
-    def __setattr__(self, name: str, value: Any) -> None: ...
-    def __delattr__(self, name: str) -> None: ...
+router: ConnectionRouter
+# Actually ConnectionProxy, but quacks exactly like BaseDatabaseWrapper, it's not worth distinguishing the two.
+connection: BaseDatabaseWrapper
 
 def close_old_connections(**kwargs: Any) -> None: ...
 def reset_queries(**kwargs: Any) -> None: ...
+
+__all__ = [
+    "DEFAULT_DB_ALIAS",
+    "DJANGO_VERSION_PICKLE_KEY",
+    "DataError",
+    "DatabaseError",
+    "Error",
+    "IntegrityError",
+    "InterfaceError",
+    "InternalError",
+    "NotSupportedError",
+    "OperationalError",
+    "ProgrammingError",
+    "close_old_connections",
+    "connection",
+    "connections",
+    "reset_queries",
+    "router",
+]

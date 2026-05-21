@@ -8,7 +8,7 @@ from typing import Any, TypeAlias, TypeVar, overload
 from django.apps.registry import Apps
 from django.conf import LazySettings, Settings
 from django.core.checks.registry import CheckRegistry
-from django.db import DefaultConnectionProxy
+from django.db.backends.base.base import BaseDatabaseWrapper
 from django.test.runner import DiscoverRunner
 from django.test.testcases import SimpleTestCase
 from typing_extensions import Self
@@ -45,7 +45,7 @@ def setup_databases(
     parallel: int = ...,
     aliases: Iterable[str] | None = ...,
     **kwargs: Any,
-) -> list[tuple[DefaultConnectionProxy, str, bool]]: ...
+) -> list[tuple[BaseDatabaseWrapper, str, bool]]: ...
 def get_runner(settings: LazySettings, test_runner_class: str | None = ...) -> type[DiscoverRunner]: ...
 
 class TestContextDecorator:

@@ -40,7 +40,7 @@ from django.views.decorators.http import (
     require_GET,
     require_POST,
 )
-from psycopg2.extras import execute_values
+from psycopg2.extras import execute_values  # type: ignore[import-untyped] # ty: ignore[unresolved-import]
 
 from django.db.models.fields.generated import GeneratedField
 

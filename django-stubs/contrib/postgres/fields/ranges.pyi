@@ -1,7 +1,11 @@
 from typing import Any
 
 from django.db import models
-from psycopg2.extras import DateRange, DateTimeTZRange, NumericRange
+from psycopg2.extras import (  # type: ignore[import-untyped]  # ty: ignore[unresolved-import]
+    DateRange,
+    DateTimeTZRange,
+    NumericRange,
+)
 
 class RangeField(models.Field[Any, Any]):
     empty_strings_allowed: bool = ...
@@ -12,22 +16,22 @@ class RangeField(models.Field[Any, Any]):
     def value_to_string(self, obj: Any) -> Any: ...
 
 class IntegerRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[no-any-unimported]
 
 class BigIntegerRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[no-any-unimported]
 
 class DecimalRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[no-any-unimported]
 
 class FloatRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> NumericRange: ...  # type: ignore[no-any-unimported]
 
 class DateTimeRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> DateTimeTZRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> DateTimeTZRange: ...  # type: ignore[no-any-unimported]
 
 class DateRangeField(RangeField):
-    def __get__(self, instance: Any, owner: Any) -> DateRange: ...  # type: ignore[override]
+    def __get__(self, instance: Any, owner: Any) -> DateRange: ...  # type: ignore[no-any-unimported]
 
 class RangeOperators:
     EQUAL: str

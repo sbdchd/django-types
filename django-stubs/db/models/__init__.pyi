@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist as ObjectDoesNotExist
 from . import lookups as lookups
 from . import signals as signals
 from .aggregates import Aggregate as Aggregate
+from .aggregates import AnyValue as AnyValue
 from .aggregates import Avg as Avg
 from .aggregates import Count as Count
 from .aggregates import Max as Max
@@ -11,6 +12,7 @@ from .aggregates import StdDev as StdDev
 from .aggregates import StringAgg as StringAgg
 from .aggregates import Sum as Sum
 from .aggregates import Variance as Variance
+from .base import DEFERRED as DEFERRED
 from .base import Model as Model
 from .constraints import BaseConstraint as BaseConstraint
 from .constraints import CheckConstraint as CheckConstraint
@@ -44,6 +46,7 @@ from .expressions import ValueRange as ValueRange
 from .expressions import When as When
 from .expressions import Window as Window
 from .expressions import WindowFrame as WindowFrame
+from .expressions import WindowFrameExclusion as WindowFrameExclusion
 from .fields import BLANK_CHOICE_DASH as BLANK_CHOICE_DASH
 from .fields import NOT_PROVIDED as NOT_PROVIDED
 from .fields import AutoField as AutoField
@@ -52,17 +55,20 @@ from .fields import BigIntegerField as BigIntegerField
 from .fields import BinaryField as BinaryField
 from .fields import BooleanField as BooleanField
 from .fields import CharField as CharField
+from .fields import CommaSeparatedIntegerField as CommaSeparatedIntegerField
 from .fields import DateField as DateField
 from .fields import DateTimeField as DateTimeField
 from .fields import DecimalField as DecimalField
 from .fields import DurationField as DurationField
 from .fields import EmailField as EmailField
+from .fields import Empty as Empty
 from .fields import Field as Field
 from .fields import FilePathField as FilePathField
 from .fields import FloatField as FloatField
 from .fields import GenericIPAddressField as GenericIPAddressField
 from .fields import IntegerField as IntegerField
 from .fields import IPAddressField as IPAddressField
+from .fields import NullBooleanField as NullBooleanField
 from .fields import PositiveBigIntegerField as PositiveBigIntegerField
 from .fields import PositiveIntegerField as PositiveIntegerField
 from .fields import PositiveSmallIntegerField as PositiveSmallIntegerField
@@ -101,6 +107,7 @@ from .query_utils import Q as Q
 __all__ = [
     "BLANK_CHOICE_DASH",
     "CASCADE",
+    "DEFERRED",
     "DO_NOTHING",
     "NOT_PROVIDED",
     "PROTECT",
@@ -109,6 +116,7 @@ __all__ = [
     "SET_DEFAULT",
     "SET_NULL",
     "Aggregate",
+    "AnyValue",
     "AutoField",
     "Avg",
     "BaseConstraint",
@@ -120,6 +128,7 @@ __all__ = [
     "CharField",
     "CheckConstraint",
     "Choices",
+    "CommaSeparatedIntegerField",
     "CompositePrimaryKey",
     "Count",
     "DateField",
@@ -128,6 +137,7 @@ __all__ = [
     "Deferrable",
     "DurationField",
     "EmailField",
+    "Empty",
     "Exists",
     "Expression",
     "ExpressionList",
@@ -158,6 +168,7 @@ __all__ = [
     "Max",
     "Min",
     "Model",
+    "NullBooleanField",
     "ObjectDoesNotExist",
     "OneToOneField",
     "OneToOneRel",
@@ -193,6 +204,7 @@ __all__ = [
     "When",
     "Window",
     "WindowFrame",
+    "WindowFrameExclusion",
     "aprefetch_related_objects",
     "prefetch_related_objects",
     "signals",

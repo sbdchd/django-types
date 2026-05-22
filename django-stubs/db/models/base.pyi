@@ -9,6 +9,10 @@ from django.db.models.options import Options
 from django.db.models.query import QuerySet
 from typing_extensions import Self
 
+class Deferred: ...
+
+DEFERRED: Deferred
+
 class ModelStateFieldsCacheDescriptor: ...
 
 class ModelState:

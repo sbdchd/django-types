@@ -1,6 +1,7 @@
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from datetime import datetime, timedelta
 from decimal import Decimal
+from enum import Enum
 from typing import Any, TypeAlias
 
 from django.db.models import Q, QuerySet
@@ -224,6 +225,12 @@ class Window(Expression):
         frame: WindowFrame | None = ...,
         output_field: _OutputField | None = ...,
     ) -> None: ...
+
+class WindowFrameExclusion(Enum):
+    CURRENT_ROW = "CURRENT ROW"
+    GROUP = "GROUP"
+    TIES = "TIES"
+    NO_OTHERS = "NO OTHERS"
 
 class WindowFrame(Expression):
     template: str = ...

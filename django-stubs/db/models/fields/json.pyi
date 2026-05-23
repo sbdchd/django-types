@@ -3,7 +3,7 @@ from collections.abc import Callable, Iterable
 from typing import Any, Literal, TypeVar, overload
 
 from django.db.models import lookups
-from django.db.models.expressions import Combinable
+from django.db.models.expressions import Combinable, Func
 from django.db.models.lookups import PostgresOperatorLookup, Transform
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
@@ -35,6 +35,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         null: Literal[False] = False,
         db_index: bool = ...,
         default: Any | Callable[[], Any] | None = ...,
+        db_default: Any | Func | None = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,
@@ -64,6 +65,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         null: Literal[True],
         db_index: bool = ...,
         default: Any | Callable[[], Any] = ...,
+        db_default: Any | Func = ...,
         editable: bool = ...,
         auto_created: bool = ...,
         serialize: bool = ...,

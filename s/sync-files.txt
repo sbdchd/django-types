@@ -42,3 +42,6 @@ django-stubs/db/models/functions/math.pyi
 #django-stubs/db/models/functions/text.pyi
 django-stubs/db/__init__.pyi
 django-stubs/db/migrations/executor.pyi
+django-stubs/core/exceptions.pyi
+django-stubs/test/runner.pyi
+django-stubs/test/utils.pyi

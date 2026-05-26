@@ -23,21 +23,6 @@ wheels = [
 ]
 
 [[package]]
-name = "ast-grep-cli"
-version = "0.42.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/43/c9/7787f03166a7b929f80cab49e3c1bb2a8937a757a019fb5331a8dee038d2/ast_grep_cli-0.42.2.tar.gz", hash = "sha256:ce778a10286c23b403b0611b63d97e03f9f98d238a56198e821711229226823a", size = 232340, upload-time = "2026-05-10T22:09:11.907Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/df/e82bb88929c449c7b94d6d7012c8cff782d7649ad2aa624a9cc8363a0aab/ast_grep_cli-0.42.2-py3-none-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl", hash = "sha256:f158078525a770c5ec8298c3f0405bddd6d8a47ff0e22e893648a3422630595b", size = 15226223, upload-time = "2026-05-10T22:09:20.458Z" },
-    { url = "https://files.pythonhosted.org/packages/2a/90/cd7e7a2bf2661b78f10fccf23efd6181d859b2a7708936a0b0e7af4c5a9a/ast_grep_cli-0.42.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:683dc491a072164a031b8e0800561229eef8ae0c7c3e90cb5bc9f4c34ffbd494", size = 7614498, upload-time = "2026-05-10T22:09:17.934Z" },
-    { url = "https://files.pythonhosted.org/packages/42/db/04d26b1d89cc1a59cded67a564a1f6afa9de56fa3528ced1ca0cb5e359df/ast_grep_cli-0.42.2-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:26adbb32aed0093a37128cc7fa0230b13dc5f1b806e3b526479f55bef65946d2", size = 7461039, upload-time = "2026-05-10T22:09:04.743Z" },
-    { url = "https://files.pythonhosted.org/packages/45/7b/73a0b1537f90cd56a3dc563dcf6c8857d8e37e472b27c3d1dfbc57545648/ast_grep_cli-0.42.2-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:a2f4728d6cc75a67265afa0801dade15649eb9a5188333d1b0c51b4833f975d3", size = 7758664, upload-time = "2026-05-10T22:09:13.55Z" },
-    { url = "https://files.pythonhosted.org/packages/4b/f1/82b5568035bba69b9244e4f37732ca46248f7be43812b939b1cb9c7f6545/ast_grep_cli-0.42.2-py3-none-win32.whl", hash = "sha256:c31ff738565039bd84b498e4cc1a4f887bc34e214e3459e32b920e9251e9587a", size = 7340932, upload-time = "2026-05-10T22:09:06.987Z" },
-    { url = "https://files.pythonhosted.org/packages/d0/b2/4c83ca5eb017134ac7958d0c55bd85cfd16b9b4b5f5c16e91327d644a710/ast_grep_cli-0.42.2-py3-none-win_amd64.whl", hash = "sha256:1192fb01359f5685310cce5adff62f31cee9e98315c0577821c9b49ebb830c9e", size = 7800725, upload-time = "2026-05-10T22:09:10.064Z" },
-    { url = "https://files.pythonhosted.org/packages/af/77/7f5ab54535b7ca4f92a20b7f6628d25d9248dce28fd78040935504bb77bd/ast_grep_cli-0.42.2-py3-none-win_arm64.whl", hash = "sha256:04af685e244a974654a1e6d1c73a65dd624eb46495351e4eeb06f06bb099ac9a", size = 7504352, upload-time = "2026-05-10T22:09:15.868Z" },
-]
-
-[[package]]
 name = "ast-serialize"
 version = "0.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -123,7 +108,6 @@ source = { editable = "." }
 
 [package.dev-dependencies]
 dev = [
-    { name = "ast-grep-cli" },
     { name = "django" },
     { name = "mypy" },
     { name = "pre-commit" },
@@ -141,7 +125,6 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "ast-grep-cli", specifier = ">=0.40.5" },
     { name = "django", specifier = ">=5.2,<6.0" },
     { name = "mypy", specifier = ">=2.1.0" },
     { name = "pre-commit", specifier = ">=4.3.0" },

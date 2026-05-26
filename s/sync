@@ -41,9 +41,6 @@ while IFS= read -r file || [ -n "$file" ]; do
         echo "Error: Failed to fetch $file from upstream"
         exit 1
     fi
-
-    # Fix bare Callable -> Callable[..., Any] using ast-grep
-    ast-grep scan --rule "$SCRIPT_DIR/fix-sync.yml" --update-all "$file"
 done < "$SYNC_FILES"
 
 uv run ruff format tests django-stubs

@@ -5,6 +5,7 @@
   "reportUnnecessaryIsInstance": false,
   "reportUnnecessaryComparison": false,
   "reportIncompatibleMethodOverride": false,
+  "reportMissingTypeArgument": false,
   "reportUnknownArgumentType": "none",
   "reportUnknownLambdaType": "none",
   "reportUnknownMemberType": "none",

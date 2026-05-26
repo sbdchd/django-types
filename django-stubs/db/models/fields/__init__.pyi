@@ -3,27 +3,30 @@ import ipaddress
 import uuid
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any, Generic, Literal, TypeAlias, TypeVar, overload
+from typing import Any, ClassVar, Generic, Literal, TypeAlias, TypeVar, overload
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
+from django.core.validators import _ValidatorCallable
 from django.db.models import IntegerChoices, Model, TextChoices
 from django.db.models.expressions import Col, Combinable, Func
-from django.db.models.query_utils import RegisterLookupMixin
+from django.db.models.query_utils import Q, RegisterLookupMixin
 from django.forms import Widget
-from django.utils.functional import _StrOrPromise
+from django.utils.choices import _Choice, _ChoiceNamedGroup, _ChoicesCallable
+from django.utils.functional import _StrOrPromise, cached_property
 from typing_extensions import Self
 
 BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 
-_Choice: TypeAlias = tuple[Any, _StrOrPromise]
-_ChoiceNamedGroup: TypeAlias = tuple[str, Iterable[_Choice]]
 _ChoicesMapping: TypeAlias = Mapping[Any, _StrOrPromise | Mapping[Any, _StrOrPromise]]
 _LiteralFieldChoices: TypeAlias = Iterable[_Choice | _ChoiceNamedGroup] | _ChoicesMapping
 _FieldChoices: TypeAlias = _LiteralFieldChoices | Callable[[], _LiteralFieldChoices]
 
-_ValidatorCallable: TypeAlias = Callable[..., None]
-_ErrorMessagesToOverride: TypeAlias = dict[str, Any]
+_LimitChoicesTo: TypeAlias = Q | dict[str, Any]
+_LimitChoicesToCallable: TypeAlias = Callable[[], _LimitChoicesTo]
+_AllLimitChoicesTo: TypeAlias = _LimitChoicesTo | _LimitChoicesToCallable | _ChoicesCallable  # noqa: PYI047
+_ErrorMessagesMapping: TypeAlias = Mapping[str, _StrOrPromise]
+_ErrorMessagesDict: TypeAlias = dict[str, _StrOrPromise]
 
 # __set__ value type
 _ST = TypeVar("_ST")
@@ -63,7 +66,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     column: str
     default: Any
     db_default: Any
-    error_messages: _ErrorMessagesToOverride
+    default_error_messages: ClassVar[_ErrorMessagesDict]
     def __set__(self, instance: Any, value: _ST) -> None: ...
     # class access
     @overload
@@ -99,7 +102,9 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def has_default(self) -> bool: ...
     def get_default(self) -> Any: ...
     def check(self, **kwargs: Any) -> list[CheckMessage]: ...
-    @property
+    @cached_property
+    def error_messages(self) -> _ErrorMessagesDict: ...
+    @cached_property
     def validators(self) -> list[_ValidatorCallable]: ...
     def validate(self, value: Any, model_instance: Model) -> None: ...
     def run_validators(self, value: Any) -> None: ...
@@ -140,7 +145,7 @@ class IntegerField(Field[_I | Combinable, _I], Generic[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> IntegerField[int]: ...
     @overload
     def __new__(
@@ -169,7 +174,7 @@ class IntegerField(Field[_I | Combinable, _I], Generic[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> IntegerField[int | None]: ...
 
 class PositiveIntegerRelDbTypeMixin:
@@ -203,7 +208,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveIntegerField[int]: ...
     @overload
     def __new__(
@@ -232,7 +237,7 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveIntegerField[int | None]: ...
 
 class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I]):
@@ -263,7 +268,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveSmallIntegerField[int]: ...
     @overload
     def __new__(
@@ -292,7 +297,7 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField[_I])
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveSmallIntegerField[int | None]: ...
 
 class SmallIntegerField(IntegerField[_I]):
@@ -323,7 +328,7 @@ class SmallIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> SmallIntegerField[int]: ...
     @overload
     def __new__(
@@ -352,7 +357,7 @@ class SmallIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> SmallIntegerField[int | None]: ...
 
 class BigIntegerField(IntegerField[_I]):
@@ -383,7 +388,7 @@ class BigIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BigIntegerField[int]: ...
     @overload
     def __new__(
@@ -412,7 +417,7 @@ class BigIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BigIntegerField[int | None]: ...
 
 class PositiveBigIntegerField(IntegerField[_I]):
@@ -443,7 +448,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveBigIntegerField[int]: ...
     @overload
     def __new__(
@@ -472,7 +477,7 @@ class PositiveBigIntegerField(IntegerField[_I]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> PositiveBigIntegerField[int | None]: ...
 
 _F = TypeVar("_F", bound=float | None)
@@ -504,7 +509,7 @@ class FloatField(Field[_F | Combinable, _F], Generic[_F]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> FloatField[float]: ...
     @overload
     def __new__(
@@ -532,7 +537,7 @@ class FloatField(Field[_F | Combinable, _F], Generic[_F]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> FloatField[float | None]: ...
 
 _DEC = TypeVar("_DEC", bound=decimal.Decimal | None)
@@ -569,7 +574,7 @@ class DecimalField(Field[_DEC | Combinable, _DEC], Generic[_DEC]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DecimalField[decimal.Decimal]: ...
     @overload
     def __new__(
@@ -599,7 +604,7 @@ class DecimalField(Field[_DEC | Combinable, _DEC], Generic[_DEC]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DecimalField[decimal.Decimal | None]: ...
 
 class AutoFieldMeta(type): ...
@@ -633,7 +638,7 @@ class AutoField(AutoFieldMixin, IntegerField[int], metaclass=AutoFieldMeta):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
 
 class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
@@ -664,7 +669,7 @@ class BigAutoField(AutoFieldMixin, BigIntegerField[int]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
 
 class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
@@ -695,7 +700,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
 
 _C = TypeVar("_C", bound=str | None)
@@ -729,7 +734,7 @@ class CharField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> CharField[str]: ...
     @overload
     def __new__(
@@ -759,7 +764,7 @@ class CharField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> CharField[str | None]: ...
 
 class CommaSeparatedIntegerField(CharField[_C]): ...
@@ -792,7 +797,7 @@ class SlugField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
         allow_unicode: bool = ...,
     ) -> SlugField[str]: ...
     @overload
@@ -822,7 +827,7 @@ class SlugField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
         allow_unicode: bool = ...,
     ) -> SlugField[str | None]: ...
 
@@ -854,7 +859,7 @@ class EmailField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> EmailField[str]: ...
     @overload
     def __new__(
@@ -883,7 +888,7 @@ class EmailField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> EmailField[str | None]: ...
 
 class URLField(CharField[_C]):
@@ -914,7 +919,7 @@ class URLField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> URLField[str]: ...
     @overload
     def __new__(
@@ -943,7 +948,7 @@ class URLField(CharField[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> URLField[str | None]: ...
 
 class TextField(Field[_C | Combinable, _C], Generic[_C]):
@@ -974,7 +979,7 @@ class TextField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> TextField[str]: ...
     @overload
     def __new__(
@@ -1003,7 +1008,7 @@ class TextField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> TextField[str | None]: ...
 
 _B = TypeVar("_B", bound=bool | None)
@@ -1036,7 +1041,7 @@ class BooleanField(Field[_B | Combinable, _B], Generic[_B]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BooleanField[bool]: ...
     @overload
     def __new__(
@@ -1065,7 +1070,7 @@ class BooleanField(Field[_B | Combinable, _B], Generic[_B]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BooleanField[bool | None]: ...
 
 NullBooleanField: TypeAlias = BooleanField[bool | None]
@@ -1097,7 +1102,7 @@ class IPAddressField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> IPAddressField[str]: ...
     @overload
     def __new__(
@@ -1125,7 +1130,7 @@ class IPAddressField(Field[_C | Combinable, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> IPAddressField[str | None]: ...
 
 class GenericIPAddressField(
@@ -1160,7 +1165,7 @@ class GenericIPAddressField(
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> GenericIPAddressField[str]: ...
     @overload
     def __new__(
@@ -1190,7 +1195,7 @@ class GenericIPAddressField(
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> GenericIPAddressField[str | None]: ...
 
 _DD = TypeVar("_DD", bound=date | None)
@@ -1229,7 +1234,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DateField[date]: ...
     @overload
     def __new__(
@@ -1259,7 +1264,7 @@ class DateField(DateTimeCheckMixin, Field[_DD | Combinable, _DD]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DateField[date | None]: ...
 
 _TM = TypeVar("_TM", bound=time | None)
@@ -1296,7 +1301,7 @@ class TimeField(DateTimeCheckMixin, Field[_TM | Combinable, _TM], Generic[_TM]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> TimeField[time]: ...
     @overload
     def __new__(
@@ -1326,7 +1331,7 @@ class TimeField(DateTimeCheckMixin, Field[_TM | Combinable, _TM], Generic[_TM]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> TimeField[time | None]: ...
 
 _DT = TypeVar("_DT", bound=datetime | None)
@@ -1363,7 +1368,7 @@ class DateTimeField(DateField[_DT]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DateTimeField[datetime]: ...
     @overload
     def __new__(
@@ -1393,7 +1398,7 @@ class DateTimeField(DateField[_DT]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DateTimeField[datetime | None]: ...
 
 _U = TypeVar("_U", bound=uuid.UUID | None)
@@ -1425,7 +1430,7 @@ class UUIDField(Field[str | _U, _U], Generic[_U]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> UUIDField[uuid.UUID]: ...
     @overload
     def __new__(
@@ -1453,7 +1458,7 @@ class UUIDField(Field[str | _U, _U], Generic[_U]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> UUIDField[uuid.UUID | None]: ...
 
 class FilePathField(Field[_C, _C], Generic[_C]):
@@ -1493,7 +1498,7 @@ class FilePathField(Field[_C, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> FilePathField[str]: ...
     @overload
     def __new__(
@@ -1526,7 +1531,7 @@ class FilePathField(Field[_C, _C], Generic[_C]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> FilePathField[str | None]: ...
 
 _BIN = TypeVar("_BIN", bound=bytes | None)
@@ -1558,7 +1563,7 @@ class BinaryField(Field[_BIN | bytearray | memoryview, _BIN], Generic[_BIN]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BinaryField[bytes]: ...
     @overload
     def __new__(
@@ -1586,7 +1591,7 @@ class BinaryField(Field[_BIN | bytearray | memoryview, _BIN], Generic[_BIN]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> BinaryField[bytes | None]: ...
 
 _TD = TypeVar("_TD", bound=timedelta | None)
@@ -1618,7 +1623,7 @@ class DurationField(Field[_TD, _TD], Generic[_TD]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DurationField[timedelta]: ...
     @overload
     def __new__(
@@ -1646,5 +1651,5 @@ class DurationField(Field[_TD, _TD], Generic[_TD]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> DurationField[timedelta | None]: ...

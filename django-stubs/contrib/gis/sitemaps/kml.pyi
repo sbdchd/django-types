@@ -3,7 +3,7 @@ from typing import Any
 from django.contrib.sitemaps import Sitemap
 from typing_extensions import override
 
-class KMLSitemap(Sitemap[Any]):
+class KMLSitemap(Sitemap):
     geo_format: str
     locations: Any
     def __init__(self, locations: Any | None = ...) -> None: ...

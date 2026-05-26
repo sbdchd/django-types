@@ -1,9 +1,10 @@
 from collections.abc import Iterable
 from typing import Any, TypeAlias
 
+from django.core.validators import _ValidatorCallable
 from django.db.models import Field
 from django.db.models.expressions import Combinable, CombinedExpression, Func, Value, _OutputField
-from django.db.models.fields import _ErrorMessagesToOverride, _FieldChoices, _ValidatorCallable
+from django.db.models.fields import _ErrorMessagesMapping, _FieldChoices
 from django.db.models.lookups import Lookup
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
@@ -35,7 +36,7 @@ class SearchVectorField(Field[Any, Any]):
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> None: ...
 
 class SearchQueryField(Field[Any, Any]):
@@ -61,7 +62,7 @@ class SearchQueryField(Field[Any, Any]):
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> None: ...
 
 class SearchVectorCombinable:

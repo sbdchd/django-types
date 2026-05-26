@@ -1,12 +1,13 @@
 from collections.abc import Iterable
 from typing import Any, Literal, TypeVar, overload
 
+from django.core.validators import _ValidatorCallable
 from django.db.models import Expression, ForeignObjectRel
 from django.db.models.expressions import Col, Combinable
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Never
 
-from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
+from . import Field, _ErrorMessagesMapping
 from .mixins import CheckFieldDefaultMixin
 
 _GT = TypeVar("_GT", bound=Any | None)
@@ -44,7 +45,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         db_tablespace: str | None = ...,
         auto_created: bool = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
         db_comment: str | None = ...,
     ) -> GeneratedField[_GT]: ...
     @overload
@@ -75,7 +76,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         db_tablespace: str | None = ...,
         auto_created: bool = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
         db_comment: str | None = ...,
     ) -> GeneratedField[_GT | None]: ...
     @property

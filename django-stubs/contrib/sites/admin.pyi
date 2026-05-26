@@ -1,7 +1,7 @@
-from typing import Any
+from typing import Any, ClassVar
 
-import django.contrib.admin as admin
+from django.contrib import admin
 
-class SiteAdmin(admin.ModelAdmin[Any]):
-    list_display: Any = ...
-    search_fields: Any = ...
+class SiteAdmin(admin.ModelAdmin):
+    list_display: Any
+    search_fields: ClassVar[Any]

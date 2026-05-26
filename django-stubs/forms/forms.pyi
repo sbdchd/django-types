@@ -1,28 +1,27 @@
-from collections.abc import Iterator, Mapping
-from typing import Any, ClassVar
+from collections.abc import Iterable, Iterator, Mapping, MutableMapping, Sequence
+from typing import Any, ClassVar, overload
 
-from django.core.exceptions import ValidationError as ValidationError
-from django.core.files import uploadedfile
+from django.core.exceptions import ValidationError
+from django.db.models.query import _SupportsContains
 from django.forms.boundfield import BoundField
 from django.forms.fields import Field
 from django.forms.renderers import BaseRenderer
-from django.forms.utils import ErrorDict, ErrorList, RenderableFormMixin
+from django.forms.utils import ErrorDict, ErrorList, RenderableFormMixin, _DataT, _FilesT
 from django.forms.widgets import Media, MediaDefiningClass
-from django.utils.datastructures import MultiValueDict
-from django.utils.functional import _StrOrPromise
-from django.utils.safestring import SafeText
+from django.utils.functional import _StrOrPromise, cached_property
+from typing_extensions import override
 
 class DeclarativeFieldsMetaclass(MediaDefiningClass): ...
 
-class BaseForm(RenderableFormMixin):
-    default_renderer: type[BaseRenderer]
-    field_order: list[str] | None
+class BaseForm(_SupportsContains[str], RenderableFormMixin):
+    default_renderer: BaseRenderer | type[BaseRenderer] | None
+    field_order: Iterable[str] | None
     use_required_attribute: bool
     is_bound: bool
-    data: dict[str, Any]
-    files: MultiValueDict[str, uploadedfile.UploadedFile]
+    data: _DataT
+    files: _FilesT
     auto_id: bool | str
-    initial: dict[str, Any]
+    initial: MutableMapping[str, Any]
     error_class: type[ErrorList]
     prefix: str | None
     label_suffix: str
@@ -30,21 +29,28 @@ class BaseForm(RenderableFormMixin):
     fields: dict[str, Field]
     renderer: BaseRenderer
     cleaned_data: dict[str, Any]
+    template_name_div: str
+    template_name_p: str
+    template_name_table: str
+    template_name_ul: str
+    template_name_label: str
+    bound_field_class: type[BoundField] | None
     def __init__(
         self,
-        data: Mapping[str, Any] | None = ...,
-        files: Mapping[str, Any] | None = ...,
-        auto_id: bool | str | None = ...,
-        prefix: str | None = ...,
-        initial: Mapping[str, Any] | None = ...,
+        data: _DataT | None = None,
+        files: _FilesT | None = None,
+        auto_id: bool | str = "id_%s",
+        prefix: str | None = None,
+        initial: MutableMapping[str, Any] | None = None,
         error_class: type[ErrorList] = ...,
-        label_suffix: str | None = ...,
-        empty_permitted: bool = ...,
-        field_order: list[str] | None = ...,
-        use_required_attribute: bool | None = ...,
-        renderer: type[BaseRenderer] | None = ...,
+        label_suffix: str | None = None,
+        empty_permitted: bool = False,
+        field_order: Iterable[str] | None = None,
+        use_required_attribute: bool | None = None,
+        renderer: BaseRenderer | None = None,
+        bound_field_class: type[BoundField] | None = None,
     ) -> None: ...
-    def order_fields(self, field_order: list[str] | None) -> None: ...
+    def order_fields(self, field_order: Iterable[str] | None) -> None: ...
     def __iter__(self) -> Iterator[BoundField]: ...
     def __getitem__(self, name: str) -> BoundField: ...
     @property
@@ -52,13 +58,26 @@ class BaseForm(RenderableFormMixin):
     def is_valid(self) -> bool: ...
     def add_prefix(self, field_name: str) -> str: ...
     def add_initial_prefix(self, field_name: str) -> str: ...
+    @property
+    def template_name(self) -> str: ...
+    @override
+    def get_context(self) -> dict[str, Any]: ...
     def non_field_errors(self) -> ErrorList: ...
-    def add_error(self, field: str | None, error: ValidationError | _StrOrPromise) -> None: ...
-    def has_error(self, field: str, code: str | None = ...) -> bool: ...
+    @overload
+    def add_error(
+        self,
+        field: None,
+        error: Mapping[str, ValidationError | _StrOrPromise | Sequence[ValidationError | _StrOrPromise]],
+    ) -> None: ...
+    @overload
+    def add_error(
+        self, field: str | None, error: ValidationError | _StrOrPromise | Sequence[ValidationError | _StrOrPromise]
+    ) -> None: ...
+    def has_error(self, field: str | None, code: str | None = None) -> bool: ...
     def full_clean(self) -> None: ...
     def clean(self) -> dict[str, Any]: ...
     def has_changed(self) -> bool: ...
-    @property
+    @cached_property
     def changed_data(self) -> list[str]: ...
     @property
     def media(self) -> Media: ...
@@ -66,15 +85,9 @@ class BaseForm(RenderableFormMixin):
     def hidden_fields(self) -> list[BoundField]: ...
     def visible_fields(self) -> list[BoundField]: ...
     def get_initial_for_field(self, field: Field, field_name: str) -> Any: ...
-    def _html_output(
-        self,
-        normal_row: str,
-        error_row: str,
-        row_ender: str,
-        help_text_html: str,
-        errors_on_separate_row: bool,
-    ) -> SafeText: ...
 
 class Form(BaseForm, metaclass=DeclarativeFieldsMetaclass):
     base_fields: ClassVar[dict[str, Field]]
     declared_fields: ClassVar[dict[str, Field]]
+
+__all__ = ("BaseForm", "Form")

@@ -1,289 +1,339 @@
-from collections.abc import Callable, Container, Iterator, Mapping, MutableMapping, Sequence
-from datetime import datetime
-from typing import Any, ClassVar, Literal, Protocol, TypeAlias, TypeVar
-from unittest.mock import MagicMock
+from collections.abc import Callable, Collection, Container, Iterator, Mapping, MutableMapping, Sequence
+from typing import Any, ClassVar, Generic, Literal, TypeAlias, overload
 from uuid import UUID
 
-from django.core.files.base import File
 from django.db import models
 from django.db.models import ForeignKey
 from django.db.models.base import Model
+from django.db.models.fields import _AllLimitChoicesTo, _LimitChoicesTo
 from django.db.models.manager import Manager
 from django.db.models.query import QuerySet
-from django.db.models.query_utils import Q
-from django.forms.fields import CharField, ChoiceField, Field
+from django.db.models.utils import AltersData
+from django.forms.fields import ChoiceField, Field, _ClassLevelWidgetT
 from django.forms.forms import BaseForm, DeclarativeFieldsMetaclass
 from django.forms.formsets import BaseFormSet
-from django.forms.utils import ErrorList
-from django.forms.widgets import Input, Widget
+from django.forms.renderers import BaseRenderer
+from django.forms.utils import ErrorList, _DataT, _FilesT
+from django.forms.widgets import Widget
+from django.utils.choices import BaseChoiceIterator, CallableChoiceIterator, _ChoicesCallable, _ChoicesInput
+from django.utils.datastructures import _PropertyDescriptor
 from django.utils.functional import _StrOrPromise
+from typing_extensions import TypeVar, override
 
-ALL_FIELDS: str
+ALL_FIELDS: Literal["__all__"]
 
-_Fields: TypeAlias = list[Callable[..., Any] | str] | Sequence[str] | Literal["__all__"]
+_Fields: TypeAlias = Collection[str] | Literal["__all__"]
+_Widgets: TypeAlias = dict[str, type[Widget] | Widget]
+
 _Labels: TypeAlias = dict[str, str]
+_HelpTexts: TypeAlias = dict[str, str]
 _ErrorMessages: TypeAlias = dict[str, dict[str, str]]
+_FormFieldCallback: TypeAlias = Callable[[models.Field], Field | None]
 
 _M = TypeVar("_M", bound=Model)
-
-# Modeled from example:
-# https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/#overriding-the-default-fields
-class FormFieldCallback(Protocol):
-    def __call__(self, db_field: models.Field[Any, Any], **kwargs: Any) -> Field: ...
+_ParentM = TypeVar("_ParentM", bound=Model)
 
 def construct_instance(
-    form: BaseForm,
-    instance: _M,
-    fields: Container[str] | None = ...,
-    exclude: Container[str] | None = ...,
+    form: BaseForm, instance: _M, fields: Container[str] | None = None, exclude: Container[str] | None = None
 ) -> _M: ...
-def model_to_dict(instance: Model, fields: _Fields | None = ..., exclude: _Fields | None = ...) -> dict[str, Any]: ...
+def model_to_dict(instance: Model, fields: _Fields | None = None, exclude: _Fields | None = None) -> dict[str, Any]: ...
 def apply_limit_choices_to_to_formfield(formfield: Field) -> None: ...
 def fields_for_model(
     model: type[Model],
-    fields: _Fields | None = ...,
-    exclude: _Fields | None = ...,
-    widgets: dict[str, type[Input]] | dict[str, Widget] | None = ...,
-    formfield_callback: FormFieldCallback | None = ...,
-    localized_fields: tuple[str] | str | None = ...,
-    labels: _Labels | None = ...,
-    help_texts: dict[str, str] | None = ...,
-    error_messages: _ErrorMessages | None = ...,
-    field_classes: dict[str, type[CharField]] | None = ...,
+    fields: _Fields | None = None,
+    exclude: _Fields | None = None,
+    widgets: _Widgets | None = None,
+    formfield_callback: _FormFieldCallback | None = None,
+    localized_fields: _Fields | None = None,
+    labels: _Labels | None = None,
+    help_texts: _HelpTexts | None = None,
+    error_messages: _ErrorMessages | None = None,
+    field_classes: Mapping[str, type[Field]] | None = None,
     *,
-    apply_limit_choices_to: bool = ...,
+    apply_limit_choices_to: bool = True,
+    form_declared_fields: _Fields | None = None,
 ) -> dict[str, Any]: ...
 
-class ModelFormOptions:
-    model: type[Model] | None
+class ModelFormOptions(Generic[_M]):
+    model: type[_M]
     fields: _Fields | None
     exclude: _Fields | None
-    widgets: dict[str, Widget | Input] | None
-    localized_fields: tuple[str] | str | None
+    widgets: _Widgets | None
+    localized_fields: _Fields | None
     labels: _Labels | None
-    help_texts: dict[str, str] | None
+    help_texts: _HelpTexts | None
     error_messages: _ErrorMessages | None
     field_classes: dict[str, type[Field]] | None
-    formfield_callback: FormFieldCallback | None
-    def __init__(self, options: type | None = ...) -> None: ...
+    formfield_callback: _FormFieldCallback | None
+    def __init__(self, options: type | None = None) -> None: ...
 
 class ModelFormMetaclass(DeclarativeFieldsMetaclass): ...
 
-class BaseModelForm(BaseForm):
-    instance: Any = ...
+class BaseModelForm(BaseForm, AltersData, Generic[_M]):
+    instance: _M
+    _meta: ModelFormOptions[_M]
     def __init__(
         self,
-        data: Mapping[str, Any] | None = ...,
-        files: Mapping[str, File] | None = ...,
-        auto_id: bool | str = ...,
-        prefix: str | None = ...,
-        initial: dict[str, Any] | None = ...,
+        data: _DataT | None = None,
+        files: _FilesT | None = None,
+        auto_id: bool | str = "id_%s",
+        prefix: str | None = None,
+        initial: MutableMapping[str, Any] | None = None,
         error_class: type[ErrorList] = ...,
-        label_suffix: str | None = ...,
-        empty_permitted: bool = ...,
-        instance: Model | None = ...,
-        use_required_attribute: bool | None = ...,
-        renderer: Any = ...,
+        label_suffix: str | None = None,
+        empty_permitted: bool = False,
+        instance: _M | None = None,
+        use_required_attribute: bool | None = None,
+        renderer: BaseRenderer | None = None,
     ) -> None: ...
     def validate_unique(self) -> None: ...
-    save_m2m: Any = ...
-    def save(self, commit: bool = ...) -> Any: ...
+    def validate_constraints(self) -> None: ...
+    def save(self, commit: bool = True) -> _M: ...
+    def save_m2m(self) -> None: ...
 
-class ModelForm(BaseModelForm, metaclass=ModelFormMetaclass):
-    _meta: ClassVar[ModelFormOptions]
+class ModelForm(BaseModelForm[_M], metaclass=ModelFormMetaclass):
+    base_fields: ClassVar[dict[str, Field]]
+    declared_fields: ClassVar[dict[str, Field]]
 
 def modelform_factory(
-    model: type[Model],
-    form: type[ModelForm] = ...,
-    fields: _Fields | None = ...,
-    exclude: _Fields | None = ...,
-    formfield_callback: str | Callable[[models.Field[Any, Any]], Field] | None = ...,
-    widgets: MutableMapping[str, Widget] | None = ...,
-    localized_fields: Sequence[str] | None = ...,
-    labels: MutableMapping[str, str] | None = ...,
-    help_texts: MutableMapping[str, str] | None = ...,
-    error_messages: MutableMapping[str, dict[str, Any]] | None = ...,
-    field_classes: MutableMapping[str, type[Field]] | None = ...,
-) -> type[ModelForm]: ...
+    model: type[_M],
+    form: type[ModelForm[_M]] = ...,
+    fields: _Fields | None = None,
+    exclude: _Fields | None = None,
+    formfield_callback: _FormFieldCallback | None = None,
+    widgets: _Widgets | None = None,
+    localized_fields: _Fields | None = None,
+    labels: _Labels | None = None,
+    help_texts: _HelpTexts | None = None,
+    error_messages: _ErrorMessages | None = None,
+    field_classes: Mapping[str, type[Field]] | None = None,
+) -> type[ModelForm[_M]]: ...
 
-class BaseModelFormSet(BaseFormSet[ModelForm]):
-    model: Any = ...
-    unique_fields: Any = ...
-    queryset: Any = ...
-    initial_extra: Any = ...
+_ModelFormT = TypeVar("_ModelFormT", bound=ModelForm)
+
+class BaseModelFormSet(BaseFormSet[_ModelFormT], AltersData, Generic[_M, _ModelFormT]):
+    model: type[_M] | None
+    edit_only: bool
+    unique_fields: Collection[str]
+    queryset: QuerySet[_M] | None
+    initial_extra: Sequence[dict[str, Any]] | None
     def __init__(
         self,
-        data: Any | None = ...,
-        files: Any | None = ...,
-        auto_id: str = ...,
-        prefix: Any | None = ...,
-        queryset: Any | None = ...,
+        data: _DataT | None = None,
+        files: _FilesT | None = None,
+        auto_id: str = "id_%s",
+        prefix: str | None = None,
+        queryset: QuerySet[_M] | None = None,
         *,
-        initial: Any | None = ...,
+        initial: Sequence[dict[str, Any]] | None = None,
         **kwargs: Any,
     ) -> None: ...
-    def initial_form_count(self) -> Any: ...
-    def get_queryset(self) -> Any: ...
-    def save_new(self, form: Any, commit: bool = ...) -> Any: ...
-    def save_existing(self, form: Any, instance: Any, commit: bool = ...) -> Any: ...
-    def delete_existing(self, obj: Any, commit: bool = ...) -> None: ...
-    saved_forms: Any = ...
-    save_m2m: Any = ...
-    def save(self, commit: bool = ...) -> Any: ...
+    @override
+    def initial_form_count(self) -> int: ...
+    def get_queryset(self) -> QuerySet[_M]: ...
+    def save_new(self, form: _ModelFormT, commit: bool = True) -> _M: ...
+    def save_existing(self, form: _ModelFormT, obj: _M, commit: bool = True) -> _M: ...
+    def delete_existing(self, obj: _M, commit: bool = True) -> None: ...
+    saved_forms: list[_ModelFormT]
+    def save_m2m(self) -> None: ...
+    def save(self, commit: bool = True) -> list[_M]: ...
+    @override
     def clean(self) -> None: ...
     def validate_unique(self) -> None: ...
-    def get_unique_error_message(self, unique_check: Any) -> Any: ...
-    def get_date_error_message(self, date_check: Any) -> Any: ...
-    def get_form_error(self) -> Any: ...
-    changed_objects: Any = ...
-    deleted_objects: Any = ...
-    def save_existing_objects(self, commit: bool = ...) -> Any: ...
-    new_objects: Any = ...
-    def save_new_objects(self, commit: bool = ...) -> Any: ...
-    def add_fields(self, form: Any, index: Any) -> Any: ...
+    def get_unique_error_message(self, unique_check: Sequence[str]) -> str: ...
+    def get_date_error_message(self, date_check: tuple[str, Literal["date", "year", "month"], str, str]) -> str: ...
+    def get_form_error(self) -> str: ...
+    changed_objects: list[tuple[_M, list[str]]]
+    deleted_objects: list[_M]
+    def save_existing_objects(self, commit: bool = True) -> list[_M]: ...
+    new_objects: list[_M]
+    def save_new_objects(self, commit: bool = True) -> list[_M]: ...
+    @override
+    def add_fields(self, form: _ModelFormT, index: int | None) -> None: ...
 
 def modelformset_factory(
-    model: type[Model],
-    form: type[ModelForm] = ...,
-    formfield_callback: Callable[..., Any] | None = ...,
+    model: type[_M],
+    form: type[_ModelFormT] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
+    formfield_callback: _FormFieldCallback | None = None,
     formset: type[BaseModelFormSet] = ...,
-    extra: int = ...,
-    can_delete: bool = ...,
-    can_order: bool = ...,
-    min_num: int | None = ...,
-    max_num: int | None = ...,
-    fields: _Fields | None = ...,
-    exclude: _Fields | None = ...,
-    widgets: dict[str, Any] | None = ...,
-    validate_max: bool = ...,
-    localized_fields: Sequence[str] | None = ...,
-    labels: dict[str, str] | None = ...,
-    help_texts: dict[str, str] | None = ...,
-    error_messages: dict[str, dict[str, str]] | None = ...,
-    validate_min: bool = ...,
-    field_classes: dict[str, type[Field]] | None = ...,
-) -> type[BaseModelFormSet]: ...
+    extra: int = 1,
+    can_delete: bool = False,
+    can_order: bool = False,
+    max_num: int | None = None,
+    fields: _Fields | None = None,
+    exclude: _Fields | None = None,
+    widgets: _Widgets | None = None,
+    validate_max: bool = False,
+    localized_fields: _Fields | None = None,
+    labels: _Labels | None = None,
+    help_texts: _HelpTexts | None = None,
+    error_messages: _ErrorMessages | None = None,
+    min_num: int | None = None,
+    validate_min: bool = False,
+    field_classes: Mapping[str, type[Field]] | None = None,
+    absolute_max: int | None = None,
+    can_delete_extra: bool = True,
+    renderer: BaseRenderer | None = None,
+    edit_only: bool = False,
+) -> type[BaseModelFormSet[_M, _ModelFormT]]: ...
 
-class BaseInlineFormSet(BaseModelFormSet):
-    instance: Any = ...
-    save_as_new: Any = ...
-    unique_fields: Any = ...
+class BaseInlineFormSet(BaseModelFormSet[_M, _ModelFormT], Generic[_M, _ParentM, _ModelFormT]):
+    instance: _ParentM
+    save_as_new: bool
+    unique_fields: Collection[str]
+    fk: ForeignKey  # set by inlineformset_set
     def __init__(
         self,
-        data: Any | None = ...,
-        files: Any | None = ...,
-        instance: Any | None = ...,
-        save_as_new: bool = ...,
-        prefix: Any | None = ...,
-        queryset: Any | None = ...,
+        data: _DataT | None = None,
+        files: _FilesT | None = None,
+        instance: _ParentM | None = None,
+        save_as_new: bool = False,
+        prefix: str | None = None,
+        queryset: QuerySet[_M] | None = None,
         **kwargs: Any,
     ) -> None: ...
-    def initial_form_count(self) -> Any: ...
+    @override
+    def initial_form_count(self) -> int: ...
     @classmethod
-    def get_default_prefix(cls) -> Any: ...
-    def save_new(self, form: Any, commit: bool = ...) -> Any: ...
-    def add_fields(self, form: Any, index: Any) -> None: ...
-    def get_unique_error_message(self, unique_check: Any) -> Any: ...
+    @override
+    def get_default_prefix(cls) -> str: ...
+    @override
+    def save_new(self, form: _ModelFormT, commit: bool = True) -> _M: ...
+    @override
+    def add_fields(self, form: _ModelFormT, index: int | None) -> None: ...
+    @override
+    def get_unique_error_message(self, unique_check: Sequence[str]) -> str: ...
 
+@overload
+def _get_foreign_key(
+    parent_model: type[Model], model: type[Model], fk_name: str | None = None, can_fail: Literal[False] = ...
+) -> ForeignKey: ...
+@overload
+def _get_foreign_key(
+    parent_model: type[Model], model: type[Model], fk_name: str | None = None, can_fail: Literal[True] = ...
+) -> ForeignKey | None: ...
 def inlineformset_factory(
-    parent_model: type[Model],
-    model: type[Model],
-    form: type[ModelForm] = ...,
+    parent_model: type[_ParentM],
+    model: type[_M],
+    form: type[_ModelFormT] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     formset: type[BaseInlineFormSet] = ...,
-    fk_name: str | None = ...,
-    fields: _Fields | None = ...,
-    exclude: _Fields | None = ...,
-    extra: int = ...,
-    can_order: bool = ...,
-    can_delete: bool = ...,
-    max_num: int | None = ...,
-    formfield_callback: Callable[..., Any] | None = ...,
-    widgets: dict[str, Any] | None = ...,
-    validate_max: bool = ...,
-    localized_fields: Sequence[str] | None = ...,
-    labels: dict[str, str] | None = ...,
-    help_texts: dict[str, str] | None = ...,
-    error_messages: dict[str, dict[str, str]] | None = ...,
-    min_num: int | None = ...,
-    validate_min: bool = ...,
-    field_classes: dict[str, Any] | None = ...,
-) -> type[BaseInlineFormSet]: ...
+    fk_name: str | None = None,
+    fields: _Fields | None = None,
+    exclude: _Fields | None = None,
+    extra: int = 3,
+    can_order: bool = False,
+    can_delete: bool = True,
+    max_num: int | None = None,
+    formfield_callback: _FormFieldCallback | None = None,
+    widgets: _Widgets | None = None,
+    validate_max: bool = False,
+    localized_fields: Sequence[str] | None = None,
+    labels: _Labels | None = None,
+    help_texts: _HelpTexts | None = None,
+    error_messages: _ErrorMessages | None = None,
+    min_num: int | None = None,
+    validate_min: bool = False,
+    field_classes: Mapping[str, type[Field]] | None = None,
+    absolute_max: int | None = None,
+    can_delete_extra: bool = True,
+    renderer: BaseRenderer | None = None,
+    edit_only: bool = False,
+) -> type[BaseInlineFormSet[_M, _ParentM, _ModelFormT]]: ...
 
 class InlineForeignKeyField(Field):
-    disabled: bool
-    help_text: _StrOrPromise
-    required: bool
-    show_hidden_initial: bool
-    widget: Any = ...
-    default_error_messages: Any = ...
-    parent_instance: Model = ...
-    pk_field: bool = ...
-    to_field: str | None = ...
-    def __init__(
-        self, parent_instance: Model, *args: Any, pk_field: bool = ..., to_field: Any | None = ..., **kwargs: Any
-    ) -> None: ...
-
-class ModelChoiceIterator:
-    field: ModelChoiceField = ...
-    queryset: QuerySet[Any] | None = ...
-    def __init__(self, field: ModelChoiceField) -> None: ...
-    def __iter__(self) -> Iterator[tuple[int | str, str]]: ...
-    def __len__(self) -> int: ...
-    def __bool__(self) -> bool: ...
-    def choice(self, obj: Model) -> tuple[int, str]: ...
-
-class ModelChoiceField(ChoiceField):
-    disabled: bool
-    error_messages: dict[str, str]
-    help_text: _StrOrPromise
-    required: bool
-    show_hidden_initial: bool
-    validators: list[Any]
-    default_error_messages: Any = ...
-    iterator: Any = ...
-    empty_label: _StrOrPromise | None = ...
-    queryset: Any = ...
-    limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...
-    to_field_name: str | None = ...
+    widget: _ClassLevelWidgetT
+    parent_instance: Model
+    pk_field: bool
+    to_field: str | None
     def __init__(
         self,
-        queryset: Manager[Any] | QuerySet[Any] | None,
-        *,
-        empty_label: _StrOrPromise | None = ...,
-        required: bool = ...,
-        widget: Any | None = ...,
-        label: Any | None = ...,
-        initial: Any | None = ...,
-        help_text: _StrOrPromise = ...,
-        to_field_name: str | None = ...,
-        limit_choices_to: dict[str, Any] | Callable[[], Any] | None = ...,
+        parent_instance: Model,
+        *args: Any,
+        pk_field: bool = False,
+        to_field: str | None = None,
         **kwargs: Any,
     ) -> None: ...
-    def get_limit_choices_to(
-        self,
-    ) -> dict[str, datetime] | Q | MagicMock | None: ...
-    def label_from_instance(self, obj: Model) -> str: ...
-    choices: Any = ...
-    def validate(self, value: Model | None) -> None: ...
-    def has_changed(
-        self,
-        initial: Model | int | str | UUID | None,
-        data: int | str | None,
-    ) -> bool: ...
+    @override
+    def clean(self, value: Any) -> Model: ...
+    @override
+    def has_changed(self, initial: Any, data: Any) -> bool: ...
 
-class ModelMultipleChoiceField(ModelChoiceField):
-    disabled: bool
-    help_text: _StrOrPromise
-    required: bool
-    show_hidden_initial: bool
-    widget: Any = ...
-    hidden_widget: Any = ...
-    default_error_messages: Any = ...
-    def __init__(self, queryset: QuerySet[Any], **kwargs: Any) -> None: ...
+class ModelChoiceIteratorValue:
+    def __init__(self, value: Any, instance: Model) -> None: ...
 
-def _get_foreign_key(
-    parent_model: type[Model],
-    model: type[Model],
-    fk_name: str | None = ...,
-    can_fail: bool = ...,
-) -> ForeignKey[Any]: ...
+class ModelChoiceIterator(BaseChoiceIterator):
+    field: ModelChoiceField
+    queryset: QuerySet
+    def __init__(self, field: ModelChoiceField) -> None: ...
+    @override
+    def __iter__(self) -> Iterator[tuple[ModelChoiceIteratorValue | str, str]]: ...
+    def __len__(self) -> int: ...
+    def __bool__(self) -> bool: ...
+    def choice(self, obj: Model) -> tuple[ModelChoiceIteratorValue, str]: ...
+
+class ModelChoiceField(ChoiceField, Generic[_M]):
+    iterator: type[ModelChoiceIterator]
+    empty_label: _StrOrPromise | None
+    queryset: QuerySet[_M] | None
+    limit_choices_to: _AllLimitChoicesTo | None
+    to_field_name: str | None
+    def __init__(
+        self,
+        queryset: Manager[_M] | QuerySet[_M] | None,
+        *,
+        empty_label: _StrOrPromise | None = "---------",
+        required: bool = True,
+        widget: Widget | type[Widget] | None = None,
+        label: _StrOrPromise | None = None,
+        initial: Any | None = None,
+        help_text: _StrOrPromise = "",
+        to_field_name: str | None = None,
+        limit_choices_to: _AllLimitChoicesTo | None = None,
+        blank: bool = False,
+        **kwargs: Any,
+    ) -> None: ...
+    def validate_no_null_characters(self, value: Any) -> None: ...
+    def get_limit_choices_to(self) -> _LimitChoicesTo: ...
+    def label_from_instance(self, obj: _M) -> str: ...
+    choices: _PropertyDescriptor[
+        _ChoicesInput | _ChoicesCallable | CallableChoiceIterator,
+        _ChoicesInput | CallableChoiceIterator | ModelChoiceIterator,
+    ]
+    @override
+    def prepare_value(self, value: Any) -> Any: ...
+    @override
+    def to_python(self, value: Any | None) -> _M | None: ...
+    @override
+    def validate(self, value: _M | None) -> None: ...
+    @override
+    def has_changed(self, initial: Model | int | str | UUID | None, data: int | str | None) -> bool: ...
+
+class ModelMultipleChoiceField(ModelChoiceField[_M]):
+    widget: _ClassLevelWidgetT
+    hidden_widget: type[Widget]
+    def __init__(self, queryset: Manager[_M] | QuerySet[_M] | None, **kwargs: Any) -> None: ...
+    @override
+    def to_python(self, value: Any) -> list[_M]: ...  # type: ignore[override]
+    @override
+    def clean(self, value: Any) -> QuerySet[_M]: ...
+    @override
+    def prepare_value(self, value: Any) -> Any: ...
+    @override
+    def has_changed(self, initial: Collection[Any] | None, data: Collection[Any] | None) -> bool: ...  # type: ignore[override]
+
+def modelform_defines_fields(form_class: type[ModelForm]) -> bool: ...
+
+__all__ = (
+    "ALL_FIELDS",
+    "BaseInlineFormSet",
+    "BaseModelForm",
+    "BaseModelFormSet",
+    "ModelChoiceField",
+    "ModelForm",
+    "ModelMultipleChoiceField",
+    "fields_for_model",
+    "inlineformset_factory",
+    "model_to_dict",
+    "modelform_factory",
+    "modelformset_factory",
+)

@@ -24,7 +24,7 @@ when you will try to use `QuerySet[MyModel]`, `Manager[MyModel]` or some other D
 
 This happens because these Django classes do not support [`__class_getitem__`](https://www.python.org/dev/peps/pep-0560/#class-getitem) magic method in runtime.
 
-1. You can go with [`django_stubs_ext`](https://github.com/typeddjango/django-stubs/tree/master/ext) helper, that patches all the types we use as Generic in django.
+1. You can go with our [`django_stubs_ext`](https://github.com/typeddjango/django-stubs/tree/master/ext) helper, that patches all the types we use as Generic in django.
 
    Install it:
 
@@ -42,7 +42,26 @@ This happens because these Django classes do not support [`__class_getitem__`](h
 
    You can add extra types to patch with `django_stubs_ext.monkeypatch(extra_classes=[YourDesiredType])`
 
-2. You can use strings instead: `'QuerySet[MyModel]'` and `'Manager[MyModel]'`, this way it will work as a type for type-checking and as a regular `str` in runtime.
+   **If you use generic symbols in `django.contrib.auth.forms`**, you will have to do the monkeypatching
+   manually in your first [`AppConfig.ready`](https://docs.djangoproject.com/en/stable/ref/applications/#django.apps.AppConfig.ready).
+   This is currently required because `django.contrib.auth.forms` cannot be imported until django is initialized.
+
+    ```python
+    import django_stubs_ext
+    from django.apps import AppConfig
+
+    class ClientsConfig(AppConfig):
+        name = "clients"
+
+        def ready(self) -> None:
+            from django.contrib.auth.forms import SetPasswordMixin, SetUnusablePasswordMixin
+
+            # For Django version prior to 5.1, use `extra_classes=[SetPasswordForm, AdminPasswordChangeForm]` instead.
+            django_stubs_ext.monkeypatch(extra_classes=[SetPasswordMixin, SetUnusablePasswordMixin])
+    ```
+
+
+2. You can use strings instead: `'QuerySet[MyModel]'` and `'Manager[MyModel]'`, this way it will work as a type for `mypy` and as a regular `str` in runtime.
 
 
 ## usage

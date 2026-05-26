@@ -2,19 +2,19 @@ import json
 from collections.abc import Callable, Iterable
 from typing import Any, Literal, TypeVar, overload
 
+from django.core.validators import _ValidatorCallable
 from django.db.models import lookups
 from django.db.models.expressions import Combinable, Func
 from django.db.models.lookups import PostgresOperatorLookup, Transform
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
 
-from . import Field, _ErrorMessagesToOverride, _ValidatorCallable
+from . import Field, _ErrorMessagesMapping
 from .mixins import CheckFieldDefaultMixin
 
 _A = TypeVar("_A", bound=Any | None)
 
 class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
-    default_error_messages: Any = ...
     encoder: type[json.JSONEncoder] = ...
     decoder: type[json.JSONEncoder] = ...
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any: ...
@@ -48,7 +48,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> JSONField[_A]: ...
     @overload
     def __new__(
@@ -78,7 +78,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> JSONField[_A | None]: ...
 
 class DataContains(PostgresOperatorLookup):

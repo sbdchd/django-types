@@ -1,8 +1,9 @@
 from collections.abc import Callable, Iterable
 from typing import Any, Generic, Literal, TypeVar, overload
 
+from django.core.validators import _ValidatorCallable
 from django.db.models.expressions import Combinable
-from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
+from django.db.models.fields import Field, _ErrorMessagesMapping
 from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
@@ -11,7 +12,6 @@ _V = TypeVar("_V", bound=Any | None)
 
 class ArrayField(CheckFieldDefaultMixin, Field[_V | Combinable, _V], Generic[_V]):
     empty_strings_allowed: bool = ...
-    default_error_messages: Any = ...
     size: int | None = ...
     default_validators: Any = ...
     from_db_value: Any = ...
@@ -42,7 +42,7 @@ class ArrayField(CheckFieldDefaultMixin, Field[_V | Combinable, _V], Generic[_V]
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> ArrayField[list[_V]]: ...
     @overload
     def __new__(
@@ -70,7 +70,7 @@ class ArrayField(CheckFieldDefaultMixin, Field[_V | Combinable, _V], Generic[_V]
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> ArrayField[list[_V] | None]: ...
     @property
     def description(self) -> str: ...  # type: ignore [override]

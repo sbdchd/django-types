@@ -1,7 +1,8 @@
 from collections.abc import Iterable
 from typing import Any, NamedTuple, TypeVar
 
-from django.db.models.fields import Field, _ErrorMessagesToOverride, _FieldChoices, _ValidatorCallable
+from django.core.validators import _ValidatorCallable
+from django.db.models.fields import Field, _ErrorMessagesMapping, _FieldChoices
 from django.utils.functional import _StrOrPromise
 
 # __set__ value type
@@ -42,7 +43,7 @@ class BaseSpatialField(Field[_ST, _GT]):
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> None: ...
     def deconstruct(self) -> Any: ...
     def db_type(self, connection: Any) -> Any: ...
@@ -91,7 +92,7 @@ class GeometryField(BaseSpatialField[Any, Any]):
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> None: ...
     def deconstruct(self) -> Any: ...
     def formfield(self, **kwargs: Any) -> Any: ...

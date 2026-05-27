@@ -63,4 +63,10 @@ django-stubs/contrib/redirects/admin.pyi
 django-stubs/contrib/flatpages/admin.pyi
 #django-stubs/template/response.pyi
 django-stubs/template/backends/base.pyi
+django-stubs/template/context.pyi
+django-stubs/template/exceptions.pyi
+django-stubs/template/library.pyi
 django-stubs/template/loader.pyi
+django-stubs/utils/safestring.pyi
+#django-stubs/utils/html.pyi
+django-stubs/core/signing.pyi

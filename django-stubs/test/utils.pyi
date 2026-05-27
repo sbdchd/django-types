@@ -20,9 +20,9 @@ from typing_extensions import Self, TypeVar, override
 
 _TestClass: TypeAlias = type[SimpleTestCase]
 
-_DecoratedTest: TypeAlias = Callable[..., Any] | _TestClass
+_DecoratedTest: TypeAlias = Callable | _TestClass
 _DT = TypeVar("_DT", bound=_DecoratedTest)
-_C = TypeVar("_C", bound=Callable[..., Any])  # Any callable
+_C = TypeVar("_C", bound=Callable)  # Any callable
 
 TZ_SUPPORT: bool
 
@@ -81,13 +81,11 @@ class modify_settings(override_settings):
 
 class override_system_checks(TestContextDecorator):
     registry: CheckRegistry
-    new_checks: list[Callable[..., Any]]
-    deployment_checks: list[Callable[..., Any]] | None
-    def __init__(
-        self, new_checks: list[Callable[..., Any]], deployment_checks: list[Callable[..., Any]] | None = ...
-    ) -> None: ...
-    old_checks: set[Callable[..., Any]]
-    old_deployment_checks: set[Callable[..., Any]]
+    new_checks: list[Callable]
+    deployment_checks: list[Callable] | None
+    def __init__(self, new_checks: list[Callable], deployment_checks: list[Callable] | None = ...) -> None: ...
+    old_checks: set[Callable]
+    old_deployment_checks: set[Callable]
 
 class CaptureQueriesContext(_SupportsContains[dict[str, str]]):
     connection: BaseDatabaseWrapper
@@ -110,13 +108,13 @@ class CaptureQueriesContext(_SupportsContains[dict[str, str]]):
 
 class ignore_warnings(TestContextDecorator):
     ignore_kwargs: dict[str, Any]
-    filter_func: Callable[..., Any]
+    filter_func: Callable
     def __init__(self, **kwargs: Any) -> None: ...
-    catch_warnings: AbstractContextManager[list[Any] | None]
+    catch_warnings: AbstractContextManager[list | None]
 
 requires_tz_support: Any
 
-def isolate_lru_cache(lru_cache_object: Callable[..., Any]) -> AbstractContextManager[None]: ...
+def isolate_lru_cache(lru_cache_object: Callable) -> AbstractContextManager[None]: ...
 
 class override_script_prefix(TestContextDecorator):
     prefix: str
@@ -174,7 +172,7 @@ def teardown_databases(
 ) -> None: ...
 def require_jinja2(test_func: _C) -> _C: ...
 def register_lookup(
-    field: type[RegisterLookupMixin], *lookups: type[Lookup[Any] | Transform], lookup_name: str | None = ...
+    field: type[RegisterLookupMixin], *lookups: type[Lookup | Transform], lookup_name: str | None = ...
 ) -> AbstractContextManager[None]: ...
 def garbage_collect() -> None: ...
 

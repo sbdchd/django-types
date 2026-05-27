@@ -126,7 +126,7 @@ class QueryDict(MultiValueDict[str, str]):
     def appendlist(self, key: str, value: str) -> None: ...
     def urlencode(self, safe: str | None = ...) -> str: ...
     @classmethod
-    def fromkeys(
+    def fromkeys(  # type: ignore[override]
         cls,
         iterable: Iterable[bytes | str],
         value: str | bytes = ...,

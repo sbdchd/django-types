@@ -1,17 +1,17 @@
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from django.http.request import HttpRequest
-from django.template.backends.base import _BaseTemplate
 from django.template.exceptions import TemplateDoesNotExist as TemplateDoesNotExist
-from django.utils.safestring import SafeText
+from django.utils.safestring import SafeString
 
-from . import engines as engines
+from .backends.base import _EngineTemplate
 
-def get_template(template_name: str, using: str | None = ...) -> _BaseTemplate: ...
-def select_template(template_name_list: list[str] | str, using: str | None = ...) -> _BaseTemplate: ...
+def get_template(template_name: str, using: str | None = None) -> _EngineTemplate: ...
+def select_template(template_name_list: Sequence[str] | str, using: str | None = None) -> Any: ...
 def render_to_string(
-    template_name: list[str] | str,
-    context: dict[str, Any] | None = ...,
-    request: HttpRequest | None = ...,
-    using: str | None = ...,
-) -> SafeText: ...
+    template_name: Sequence[str] | str,
+    context: Mapping[str, Any] | None = None,
+    request: HttpRequest | None = None,
+    using: str | None = None,
+) -> SafeString: ...

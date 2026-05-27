@@ -1,7 +1,7 @@
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, _UserType
 
-class AdminAuthenticationForm(AuthenticationForm):
+class AdminAuthenticationForm(AuthenticationForm[_UserType]):
     required_css_class: str = ...
 
-class AdminPasswordChangeForm(PasswordChangeForm):
+class AdminPasswordChangeForm(PasswordChangeForm[_UserType]):
     required_css_class: str = ...

@@ -5,7 +5,7 @@ from django import forms
 from django.db.models.fields import AutoField
 from django.forms.boundfield import BoundField
 from django.forms.forms import BaseForm
-from django.forms.utils import ErrorDict
+from django.forms.utils import ErrorDict, ErrorList
 from django.forms.widgets import Media, Widget
 from django.utils.safestring import SafeText
 
@@ -157,5 +157,5 @@ class InlineFieldset(Fieldset):
     formset: Any = ...
     def __init__(self, formset: Any, *args: Any, **kwargs: Any) -> None: ...
 
-class AdminErrorList(forms.utils.ErrorList):
+class AdminErrorList(ErrorList):
     def __init__(self, form: Any, inline_formsets: Any) -> None: ...

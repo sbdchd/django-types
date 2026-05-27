@@ -4,8 +4,9 @@ from typing import Any, overload
 from django.core.files.base import File
 from django.core.files.images import ImageFile
 from django.core.files.storage import FileSystemStorage, Storage
+from django.core.validators import _ValidatorCallable
 from django.db.models.base import Model
-from django.db.models.fields import _GT, Field, _ErrorMessagesToOverride, _ValidatorCallable
+from django.db.models.fields import _GT, Field, _ErrorMessagesMapping
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
 
@@ -60,7 +61,7 @@ class FileField(Field[FileDescriptor, FileDescriptor]):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
     # class access
     @overload  # type: ignore[override]
@@ -109,7 +110,7 @@ class ImageField(FileField):
         db_comment: str | None = ...,
         db_tablespace: str | None = ...,
         validators: Iterable[_ValidatorCallable] = ...,
-        error_messages: _ErrorMessagesToOverride | None = ...,
+        error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
     # class access
     @overload  # type: ignore[override]

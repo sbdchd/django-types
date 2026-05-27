@@ -2,8 +2,9 @@ from collections.abc import Iterable, Iterator, Mapping
 from typing import Any, Literal
 
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.validators import _ValidatorCallable
 from django.db.models.base import Model
-from django.db.models.fields import NOT_PROVIDED, Field, _LiteralFieldChoices, _ValidatorCallable
+from django.db.models.fields import NOT_PROVIDED, Field, _LiteralFieldChoices
 from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.utils.functional import _StrOrPromise, cached_property
 

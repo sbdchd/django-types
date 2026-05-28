@@ -25,11 +25,10 @@ django-stubs/core/validators.pyi
 django-stubs/utils/decorators.pyi
 django-stubs/db/models/__init__.pyi
 #django-stubs/db/models/query.pyi
-django-stubs/contrib/admin/decorators.pyi
+django-stubs/db/models/constraints.pyi
 #django-stubs/db/models/aggregates.pyi
 #django-stubs/db/models/sql/compiler.pyi
 #django-stubs/db/models/sql/query.pyi
-#django-stubs/contrib/admin/options.pyi
 #django-stubs/db/models/sql/subqueries.pyi
 django-stubs/db/models/sql/__init__.pyi
 #django-stubs/db/models/sql/where.pyi
@@ -57,6 +56,8 @@ django-stubs/forms/formsets.pyi
 django-stubs/forms/renderers.pyi
 #django-stubs/forms/widgets.pyi
 #django-stubs/utils/datastructures.pyi
+django-stubs/contrib/admin/decorators.pyi
+#django-stubs/contrib/admin/options.pyi
 django-stubs/contrib/contenttypes/admin.pyi
 django-stubs/contrib/sites/admin.pyi
 django-stubs/contrib/redirects/admin.pyi
@@ -68,5 +69,8 @@ django-stubs/template/exceptions.pyi
 django-stubs/template/library.pyi
 django-stubs/template/loader.pyi
 django-stubs/utils/safestring.pyi
+django-stubs/middleware/csp.pyi
+django-stubs/utils/csp.pyi
+django-stubs/contrib/admin/tests.pyi
 #django-stubs/utils/html.pyi
 django-stubs/core/signing.pyi

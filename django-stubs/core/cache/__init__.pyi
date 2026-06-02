@@ -1,23 +1,35 @@
-from collections import OrderedDict
-from collections.abc import Callable
 from typing import Any
+
+from django.utils.connection import BaseConnectionHandler
+from typing_extensions import override
 
 from .backends.base import BaseCache as BaseCache
 from .backends.base import CacheKeyWarning as CacheKeyWarning
 from .backends.base import InvalidCacheBackendError as InvalidCacheBackendError
+from .backends.base import InvalidCacheKey as InvalidCacheKey
 
 DEFAULT_CACHE_ALIAS: str
 
-class CacheHandler:
-    def __init__(self) -> None: ...
-    def __getitem__(self, alias: str) -> BaseCache: ...
-    def all(self) -> Any: ...
+class CacheHandler(BaseConnectionHandler[BaseCache]):
+    settings_name: str
+    exception_class: type[Exception]
+    @override
+    def create_connection(self, alias: str) -> BaseCache: ...
+    @override
+    def all(self, initialized_only: bool = False) -> list[BaseCache]: ...
 
-class DefaultCacheProxy:
-    def __getattr__(self, name: str) -> Callable[..., Any] | dict[str, float] | OrderedDict[Any, Any] | int: ...
-    def __setattr__(self, name: str, value: Callable[..., Any]) -> None: ...
-    def __delattr__(self, name: Any) -> Any: ...
-    def __contains__(self, key: str) -> bool: ...
+def close_caches(**kwargs: Any) -> None: ...
 
-cache: BaseCache
 caches: CacheHandler
+# Actually ConnectionProxy, but quacks exactly like BaseCache, it's not worth distinguishing the two.
+cache: BaseCache
+
+__all__ = [
+    "DEFAULT_CACHE_ALIAS",
+    "BaseCache",
+    "CacheKeyWarning",
+    "InvalidCacheBackendError",
+    "InvalidCacheKey",
+    "cache",
+    "caches",
+]

@@ -8,7 +8,7 @@ set -e
 
 DJANGO_STUBS_TARGET_TAG="6.0.5"
 git fetch https://github.com/typeddjango/django-stubs.git $DJANGO_STUBS_TARGET_TAG
-git checkout $DJANGO_STUBS_TARGET_TAG -- django-stubs/tasks/
+git checkout $DJANGO_STUBS_TARGET_TAG -- django-stubs/tasks/ django-stubs/core/cache
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SYNC_FILES="$SCRIPT_DIR/sync-files.txt"

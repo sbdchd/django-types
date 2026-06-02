@@ -21,7 +21,7 @@ class ConnectionProxy(Generic[_T]):
 class ConnectionDoesNotExist(Exception): ...
 
 class BaseConnectionHandler(_SupportsContains[str], Generic[_T]):
-    settings_name: str | None
+    settings_name: str
     exception_class: type[Exception]
     thread_critical: bool
     @cached_property

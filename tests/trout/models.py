@@ -948,3 +948,11 @@ class IndexModel(models.Model):
                 name="author_not_null_idx",
             ),
         ]
+
+# Regression: save/asave stubs were missing *, causing false positives on **kwargs overrides
+class SaveOverrideModel(models.Model):
+    def save(self, **kwargs): # type: ignore[no-untyped-def]
+        super().save(**kwargs)
+
+    async def asave(self, **kwargs): # type: ignore[no-untyped-def]
+        await super().asave(**kwargs)

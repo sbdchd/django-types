@@ -55,6 +55,7 @@ class Model(metaclass=ModelBase):
     ) -> ValidationError: ...
     def save(
         self,
+        *,
         force_insert: bool = ...,
         force_update: bool = ...,
         using: str | None = ...,
@@ -62,6 +63,7 @@ class Model(metaclass=ModelBase):
     ) -> None: ...
     async def asave(
         self,
+        *,
         force_insert: bool = ...,
         force_update: bool = ...,
         using: str | None = ...,

@@ -77,8 +77,8 @@ class RequestFactory:
         data: _RequestData = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def post(
@@ -88,8 +88,8 @@ class RequestFactory:
         content_type: str = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def head(
@@ -98,8 +98,8 @@ class RequestFactory:
         data: _RequestData = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def trace(
@@ -107,8 +107,8 @@ class RequestFactory:
         path: _StrOrPromise,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def options(
@@ -118,8 +118,8 @@ class RequestFactory:
         content_type: str = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def put(
@@ -129,8 +129,8 @@ class RequestFactory:
         content_type: str = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def patch(
@@ -140,8 +140,8 @@ class RequestFactory:
         content_type: str = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def delete(
@@ -151,8 +151,8 @@ class RequestFactory:
         content_type: str = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def generic(
@@ -163,8 +163,8 @@ class RequestFactory:
         content_type: str | None = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
 

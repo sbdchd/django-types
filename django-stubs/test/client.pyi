@@ -293,18 +293,19 @@ class Client(ClientMixin, RequestFactory):
         **extra: str,
     ) -> HttpResponse: ...
 
-class AsyncClient(AsyncRequestFactory):
+class AsyncClient(ClientMixin, AsyncRequestFactory):
     handler: AsyncClientHandler
     raise_request_exception: bool
     exc_info: tuple[type[BaseException], BaseException, TracebackType] | None
-    headers: dict[str, Any]
+    extra: dict[str, Any] | None = ...
+    headers: dict[str, Any] | None = ...
     def __init__(
         self,
         enforce_csrf_checks: bool = ...,
         raise_request_exception: bool = ...,
         *,
-        json_encoder: type[JSONEncoder] = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **defaults: Any,
     ) -> None: ...
     # Silence type warnings, since this class overrides arguments and return types in an unsafe manner.
@@ -316,8 +317,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def post(  # type: ignore [override]
@@ -328,8 +329,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def head(  # type: ignore [override]
@@ -339,19 +340,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
-        **extra: str,
-    ) -> HttpResponse: ...
-    async def trace(  # type: ignore [override]
-        self,
-        path: _StrOrPromise,
-        data: _RequestData = ...,
-        follow: bool = ...,
-        secure: bool = ...,
-        *,
-        QUERY_STRING: str = ...,
-        headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def options(  # type: ignore [override]
@@ -362,8 +352,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def put(  # type: ignore [override]
@@ -374,8 +364,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def patch(  # type: ignore [override]
@@ -386,8 +376,8 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def delete(  # type: ignore [override]
@@ -398,13 +388,18 @@ class AsyncClient(AsyncRequestFactory):
         follow: bool = ...,
         secure: bool = ...,
         *,
-        QUERY_STRING: str = ...,
         headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
-    def store_exc_info(self, **kwargs: Any) -> None: ...
-    @property
-    def session(self) -> SessionBase: ...
-    def login(self, **credentials: Any) -> bool: ...
-    def force_login(self, user: AbstractBaseUser, backend: str | None = ...) -> None: ...
-    def logout(self) -> None: ...
+    async def trace(  # type: ignore [override]
+        self,
+        path: _StrOrPromise,
+        data: _RequestData = ...,
+        follow: bool = ...,
+        secure: bool = ...,
+        *,
+        headers: Mapping[str, Any] | None = ...,
+        query_params: str | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...

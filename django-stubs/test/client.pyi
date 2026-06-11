@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+from http import HTTPStatus
 from io import BytesIO
 from json import JSONEncoder
 from re import Pattern
@@ -14,10 +15,11 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseBase
 from django.utils.functional import _StrOrPromise
 
-BOUNDARY: str = ...
-MULTIPART_CONTENT: str = ...
-CONTENT_TYPE_RE: Pattern[str] = ...
-JSON_CONTENT_TYPE_RE: Pattern[str] = ...
+BOUNDARY: str
+MULTIPART_CONTENT: str
+CONTENT_TYPE_RE: Pattern[str]
+JSON_CONTENT_TYPE_RE: Pattern[str]
+REDIRECT_STATUS_CODES: frozenset[HTTPStatus]
 
 class RedirectCycleError(Exception):
     last_response: HttpResponseBase = ...

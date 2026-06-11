@@ -22,8 +22,8 @@ JSON_CONTENT_TYPE_RE: Pattern[str]
 REDIRECT_STATUS_CODES: frozenset[HTTPStatus]
 
 class RedirectCycleError(Exception):
-    last_response: HttpResponseBase = ...
-    redirect_chain: list[tuple[str, int]] = ...
+    last_response: HttpResponseBase
+    redirect_chain: list[tuple[str, int]]
     def __init__(self, message: str, last_response: HttpResponseBase) -> None: ...
 
 class FakePayload:

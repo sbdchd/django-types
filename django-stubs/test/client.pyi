@@ -1,10 +1,10 @@
-from collections.abc import Mapping
+from collections.abc import AsyncGenerator, Callable, Generator, Iterable, Mapping
 from http import HTTPStatus
 from io import BytesIO, IOBase
 from json import JSONEncoder
 from re import Pattern
 from types import TracebackType
-from typing import Any, TypeAlias
+from typing import Any, TypeAlias, TypeVar
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.sessions.backends.base import SessionBase
@@ -14,6 +14,8 @@ from django.http.cookie import SimpleCookie
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseBase
 from django.utils.functional import _StrOrPromise
+
+_T = TypeVar("_T")
 
 BOUNDARY: str
 MULTIPART_CONTENT: str
@@ -33,6 +35,13 @@ class FakePayload(IOBase):
     def read(self, size: int = ..., /) -> bytes: ...
     def readline(self, size: int | None = ..., /) -> bytes: ...
     def write(self, b: bytes | str, /) -> None: ...
+
+def closing_iterator_wrapper(iterable: Iterable[_T], close: Callable) -> Generator[_T]: ...
+async def aclosing_iterator_wrapper(iterable: Iterable[_T], close: Callable) -> AsyncGenerator[_T]: ...
+
+_Response = TypeVar("_Response", bound=HttpResponse)
+
+def conditional_content_removal(request: HttpRequest, response: _Response) -> _Response: ...
 
 class ClientHandler(BaseHandler):
     enforce_csrf_checks: bool = ...
@@ -392,5 +401,3 @@ class AsyncClient(AsyncRequestFactory):
     def login(self, **credentials: Any) -> bool: ...
     def force_login(self, user: AbstractBaseUser, backend: str | None = ...) -> None: ...
     def logout(self) -> None: ...
-
-def conditional_content_removal(request: HttpRequest, response: HttpResponseBase) -> HttpResponse: ...

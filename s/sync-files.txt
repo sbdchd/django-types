@@ -74,3 +74,4 @@ django-stubs/utils/csp.pyi
 django-stubs/contrib/admin/tests.pyi
 #django-stubs/utils/html.pyi
 django-stubs/core/signing.pyi
+django-stubs/contrib/gis/geoip2.pyi

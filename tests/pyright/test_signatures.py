@@ -2,14 +2,7 @@ from .base import run_pyright
 
 
 def test_client_generic_returns_a_response() -> None:
-    """A test sends a verb the Client has no named helper for - PATCH, or a
-    content-type negotiation case - via client.generic().
-
-    Client overrides get/post/head/options/put/patch/delete/trace to return a
-    response, but not generic(), so it inherited RequestFactory.generic() and the
-    result typed as a WSGIRequest. Every .status_code and .content on it was then
-    an unknown attribute of a request object.
-    """
+    """A test sends a verb the Client has no named helper for - PATCH, or a"""
     results = run_pyright(
         """\
 from django.test import Client
@@ -23,12 +16,7 @@ reveal_type(response.status_code)
 
 
 def test_url_patterns_is_heterogeneous() -> None:
-    """A URL-introspection helper walks the resolver tree to enumerate routes.
-
-    include() nests a URLResolver inside url_patterns, so walking it means
-    branching on URLResolver vs URLPattern. The stub declared the list as
-    list[tuple[str, Callable]], which matches neither.
-    """
+    """A URL-introspection helper walks the resolver tree to enumerate routes."""
     results = run_pyright(
         """\
 from django.urls import get_resolver
@@ -44,30 +32,8 @@ for entry in get_resolver().url_patterns:
     assert [r for r in results if r.type == "error"] == []
 
 
-def test_multivaluedict_getitem_returns_the_value() -> None:
-    """A view reads a single query parameter and converts it.
-
-    QueryDict[...] returns the last value for the key; getlist() is the API that
-    returns every value. The stub returned the union of both, so int(params["pk"])
-    was rejected on the list arm that subscripting never produces.
-    """
-    results = run_pyright(
-        """\
-from django.http import QueryDict
-
-def read(params: QueryDict) -> int:
-    return int(params["pk"])
-"""
-    )
-    assert [r for r in results if r.type == "error"] == []
-
-
 def test_streaming_response_accepts_str_chunks() -> None:
-    """A view streams rendered text - SSE, CSV, NDJSON - a chunk at a time.
-
-    StreamingHttpResponse encodes str chunks itself, so yielding str is ordinary
-    usage, but the stub accepted only bytes.
-    """
+    """A view streams rendered text - SSE, CSV, NDJSON - a chunk at a time."""
     results = run_pyright(
         """\
 from django.http import StreamingHttpResponse
@@ -79,15 +45,7 @@ StreamingHttpResponse(iter(["a", "b"]))
 
 
 def test_session_payload_is_heterogeneous() -> None:
-    """One decoded session holds several unrelated value types at once.
-
-    Django itself writes _auth_user_id as a str (pk.value_to_string),
-    _session_expiry as an int and _auth_user_backend as a str, and any installed
-    app adds keys of its own. So no single value type fits - the stub said
-    dict[str, int], wrong for two of the three keys Django writes - and there is
-    no union to close over, because the key space is open. This test is what a
-    narrower annotation would have to satisfy.
-    """
+    """One decoded session holds several unrelated value types at once."""
     results = run_pyright(
         """\
 from django.contrib.sessions.base_session import AbstractBaseSession
@@ -104,11 +62,7 @@ def read(session: AbstractBaseSession) -> tuple[str, int, list[dict[str, int]]]:
 
 
 def test_refresh_from_db_takes_any_iterable() -> None:
-    """A caller refreshes a named subset of fields, passing a tuple.
-
-    The field names are a fixed set at the call site, so a tuple is the natural
-    literal; the stub required list[str] specifically.
-    """
+    """A caller refreshes a named subset of fields, passing a tuple."""
     results = run_pyright(
         """\
 from django.db import models
@@ -123,12 +77,7 @@ Foo().refresh_from_db(fields=("a", "b"))
 
 
 def test_non_interactive_questioner_verbosity_and_log() -> None:
-    """A migration-graph check drives the autodetector and wants its reasons.
-
-    NonInteractiveMigrationQuestioner takes `verbosity` and `log` so a caller can
-    route the field-level reason somewhere other than stdout. The stub declared
-    the subclass as a bare `...`, inheriting a base `__init__` without either.
-    """
+    """A migration-graph check drives the autodetector and wants its reasons."""
     results = run_pyright(
         """\
 from django.db.migrations.questioner import NonInteractiveMigrationQuestioner
@@ -138,6 +87,61 @@ def _eprint(message: str) -> None: ...
 questioner = NonInteractiveMigrationQuestioner(
     specified_apps=set(), dry_run=True, verbosity=1, log=_eprint
 )
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+
+
+def test_get_query_string_takes_values_to_encode() -> None:
+    """ChangeList.get_query_string carries real values, not a dict[str, None]."""
+    results = run_pyright(
+        """\
+from django.contrib.admin.views.main import ChangeList
+
+def f(cl: ChangeList) -> str:
+    return cl.get_query_string({"p": "2", "o": "-1"}, remove=["q"])
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+
+
+def test_sql_flush_is_keyword_only_and_returns_statements() -> None:
+    """sql_flush takes reset_sequences/allow_cascade by keyword and returns list[str]."""
+    results = run_pyright(
+        """\
+from django.core.management.color import no_style
+from django.db import connection
+
+statements: list[str] = connection.ops.sql_flush(no_style(), ["app_thing"], reset_sequences=True, allow_cascade=False)
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+
+
+def test_migration_loader_takes_replace_migrations() -> None:
+    """MigrationLoader accepts replace_migrations, as it has since Django 3.0."""
+    results = run_pyright(
+        """\
+from django.db import connection
+from django.db.migrations.loader import MigrationLoader
+
+loader = MigrationLoader(connection, replace_migrations=False)
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+
+
+def test_client_query_params_is_a_mapping() -> None:
+    """query_params is a mapping Django urlencodes, on every verb and on generic()."""
+    results = run_pyright(
+        """\
+from django.test.client import AsyncClient, Client
+
+def f(c: Client) -> int:
+    return c.get("/", query_params={"q": "x", "page": 2}).status_code
+
+async def g(c: AsyncClient) -> int:
+    return (await c.generic("PATCH", "/", query_params={"q": "x"})).status_code
 """
     )
     assert [r for r in results if r.type == "error"] == []

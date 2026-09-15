@@ -48,7 +48,7 @@ count: int = f.data["items"][0]["qty"]
 
 
 def test_file_field_accepts_a_file_on_assignment() -> None:
-    """Code assigns an in-memory file to a FileField - a test fixture, or a"""
+    """Assigning an in-memory File or a path str to a FileField is accepted; reads return the descriptor."""
     results = run_pyright(
         """\
 from django.core.files.base import ContentFile
@@ -123,3 +123,20 @@ reveal_type(Foo().ok)
     errors = [r for r in results if r.type == "error"]
     assert [r.line for r in errors] == [5]
     assert [r.message for r in results if r.type == "information"] == ['Type of "Foo().ok" is "Any | None"']
+
+
+def test_lazy_foreign_key_overload_matches_the_real_signature() -> None:
+    """The string-reference overload takes ForeignKey's keywords, not ForeignObject's positional from_fields/to_fields."""
+    results = run_pyright(
+        """\
+from django.db import models
+
+class Foo(models.Model):
+    ok = models.ForeignKey("app.Thing", on_delete=models.CASCADE, to_field="slug", related_name="foos")
+    bad = models.ForeignKey("app.Thing", models.CASCADE, ["a"], ["b"])
+
+reveal_type(Foo().ok)
+"""
+    )
+    assert [r.line for r in results if r.type == "error"] == [5]
+    assert [r.message for r in results if r.type == "information"] == ['Type of "Foo().ok" is "Any"']

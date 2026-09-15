@@ -2,19 +2,7 @@ from .base import Result, run_pyright
 
 
 def test_foreign_key_lazy_string_reference() -> None:
-    """A model points at another app's model by name to avoid an import cycle.
-
-    ForeignKey("other.Thing", ...) is the documented way to do that, but the
-    string carries no type to solve the model var from. Left unsolved on the
-    null=True overload it collapsed the whole field to None - so every read of
-    it errored, and the field read as *absent* rather than *unknown*, which
-    looks exactly like an unguarded nullable FK in the application.
-
-    Any, rather than a narrower base like Model: the target is only knowable at
-    runtime, and Model would reject every field access the related model
-    actually has - `f.lazy_required.title` below is the ordinary use, and it is
-    what a base-class annotation could not support.
-    """
+    """A model points at another app's model by name to avoid an import cycle."""
     results = run_pyright(
         """\
 from django.db import models
@@ -30,23 +18,13 @@ name: str = f.lazy_required.title
 """
     )
     assert results == [
-        Result(type="information", message='Type of "f.lazy_nullable" is "Any"', line=8, column=13),
+        Result(type="information", message='Type of "f.lazy_nullable" is "Any | None"', line=8, column=13),
         Result(type="information", message='Type of "f.lazy_required" is "Any"', line=9, column=13),
     ]
 
 
 def test_unparameterized_json_field() -> None:
-    """A model stores a free-form JSON blob and does not parameterise the field.
-
-    models.JSONField() with no type argument is the common case. Without a
-    default on the field's type var it was left unsolved, so every read and
-    every assignment through the descriptor errored.
-
-    Any, rather than a JSON union: one JSONField column legitimately holds an
-    object, an array, a scalar or null - all four are assigned below - and
-    reads index arbitrarily deep into whatever shape was stored. A dict-shaped
-    default would reject three of the four assignments.
-    """
+    """A model stores a free-form JSON blob and does not parameterise the field."""
     results = run_pyright(
         """\
 from django.db import models
@@ -70,13 +48,7 @@ count: int = f.data["items"][0]["qty"]
 
 
 def test_file_field_accepts_a_file_on_assignment() -> None:
-    """Code assigns an in-memory file to a FileField - a test fixture, or a
-    document generated at runtime.
-
-    The descriptor is asymmetric: assignment takes a File or a path str, reads
-    give back the FieldFile descriptor. The stub used the descriptor type on
-    both sides, so assigning a ContentFile or SimpleUploadedFile was rejected.
-    """
+    """Code assigns an in-memory file to a FileField - a test fixture, or a"""
     results = run_pyright(
         """\
 from django.core.files.base import ContentFile
@@ -94,13 +66,7 @@ f.doc = "docs/x.txt"
 
 
 def test_field_max_length_reads_as_optional() -> None:
-    """Introspection code reads max_length off a field and guards for None.
-
-    Fields that set no max_length - TextField, and CharField itself wherever the
-    backend reports supports_unlimited_charfield - leave it None, and Django's
-    own cast_db_type and description branch on that. The stub declared the
-    attribute as int, which makes the guard look like dead code.
-    """
+    """Introspection code reads max_length off a field and guards for None."""
     results = run_pyright(
         """\
 from django.db.models import Field
@@ -115,13 +81,7 @@ def check(field: Field) -> None:
 
 
 def test_foreign_key_lazy_reference_can_be_parameterised() -> None:
-    """A codebase that wants precision annotates the lazy reference explicitly.
-
-    Any is the fallback, not a ceiling: ForeignKey[Thing]("app.Thing", ...) -
-    with Thing imported under TYPE_CHECKING, which is what avoids the cycle the
-    string reference existed for - still resolves to Thing, and composes with
-    null=True. The default only applies when the call site says nothing.
-    """
+    """A codebase that wants precision annotates the lazy reference explicitly."""
     results = run_pyright(
         """\
 from django.db import models
@@ -145,3 +105,21 @@ reveal_type(f.typed_null)
         Result(type="information", message='Type of "f.typed" is "Thing"', line=13, column=13),
         Result(type="information", message='Type of "f.typed_null" is "Thing | None"', line=14, column=13),
     ]
+
+
+def test_lazy_reference_keywords_are_still_checked() -> None:
+    """A typo in a keyword on a string-referenced FK is still an error; valid keywords still pass."""
+    results = run_pyright(
+        """\
+from django.db import models
+
+class Foo(models.Model):
+    ok = models.ForeignKey("app.Thing", on_delete=models.CASCADE, related_name="foos", null=True, db_index=False)
+    bad = models.ForeignKey("app.Thing", on_delete=models.CASCADE, related_nme="foos")
+
+reveal_type(Foo().ok)
+"""
+    )
+    errors = [r for r in results if r.type == "error"]
+    assert [r.line for r in errors] == [5]
+    assert [r.message for r in results if r.type == "information"] == ['Type of "Foo().ok" is "Any | None"']

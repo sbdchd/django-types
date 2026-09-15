@@ -158,7 +158,43 @@ class ForeignKey(ForeignObject[_M], Generic[_M]):
     many_to_one: Literal[True] = ...
     related_model: type[_M] = ...
     @overload
-    def __new__(cls, to: str, on_delete: _OnDeleteOptions, **kwargs: Any) -> ForeignKey[_M]: ...
+    def __new__(
+        cls,
+        to: str,
+        on_delete: _OnDeleteOptions,
+        from_fields: Sequence[str],
+        to_fields: Sequence[str],
+        *,
+        rel: ForeignObjectRel | None = ...,
+        related_name: str | None = ...,
+        related_query_name: str | None = ...,
+        limit_choices_to: _ChoicesLimit | None = ...,
+        parent_link: bool = ...,
+        db_constraint: bool = ...,
+        swappable: bool = ...,
+        verbose_name: _StrOrPromise | None = ...,
+        name: str | None = ...,
+        primary_key: bool = ...,
+        max_length: int | None = ...,
+        unique: bool = ...,
+        blank: bool = ...,
+        null: bool = ...,
+        db_index: bool = ...,
+        default: _M | Callable[[], _M | None] | None = ...,
+        editable: bool = ...,
+        auto_created: bool = ...,
+        serialize: bool = ...,
+        unique_for_date: str | None = ...,
+        unique_for_month: str | None = ...,
+        unique_for_year: str | None = ...,
+        choices: Iterable[tuple[_M, _StrOrPromise] | tuple[str, Iterable[tuple[_M, _StrOrPromise]]]] = ...,
+        help_text: _StrOrPromise = ...,
+        db_column: str | None = ...,
+        db_comment: str | None = ...,
+        db_tablespace: str | None = ...,
+        validators: Iterable[_ValidatorCallable] = ...,
+        error_messages: _ErrorMessagesToOverride | None = ...,
+    ) -> ForeignKey[_M]: ...
     @overload
     def __new__(
         cls,
@@ -248,7 +284,41 @@ class OneToOneField(ForeignKey[_M], Generic[_M]):
     many_to_one: Literal[False] = ...  # type: ignore [assignment]
     related_model: type[_M] = ...
     @overload
-    def __new__(cls, to: str, on_delete: _OnDeleteOptions, **kwargs: Any) -> OneToOneField[_M]: ...
+    def __new__(
+        cls,
+        to: str,
+        on_delete: _OnDeleteOptions,
+        *,
+        to_field: str | None = ...,
+        related_name: str | None = ...,
+        related_query_name: str | None = ...,
+        limit_choices_to: _ChoicesLimit | None = ...,
+        parent_link: bool = ...,
+        db_constraint: bool = ...,
+        swappable: bool = ...,
+        verbose_name: _StrOrPromise | None = ...,
+        name: str | None = ...,
+        primary_key: bool = ...,
+        max_length: int | None = ...,
+        unique: bool = ...,
+        blank: bool = ...,
+        null: bool = ...,
+        db_index: bool = ...,
+        default: _M | Callable[[], _M | None] | None = ...,
+        editable: bool = ...,
+        auto_created: bool = ...,
+        serialize: bool = ...,
+        unique_for_date: str | None = ...,
+        unique_for_month: str | None = ...,
+        unique_for_year: str | None = ...,
+        choices: Iterable[tuple[_M, _StrOrPromise] | tuple[str, Iterable[tuple[_M, _StrOrPromise]]]] = ...,
+        help_text: _StrOrPromise = ...,
+        db_column: str | None = ...,
+        db_comment: str | None = ...,
+        db_tablespace: str | None = ...,
+        validators: Iterable[_ValidatorCallable] = ...,
+        error_messages: _ErrorMessagesToOverride | None = ...,
+    ) -> OneToOneField[_M]: ...
     @overload
     def __new__(
         cls,

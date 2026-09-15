@@ -29,6 +29,7 @@ class MigrationQuestioner:
     def ask_auto_now_add_addition(self, field_name: str, model_name: str) -> None: ...
 
 class InteractiveMigrationQuestioner(MigrationQuestioner): ...
+
 class NonInteractiveMigrationQuestioner(MigrationQuestioner):
     verbosity: int
     log: Callable[[str], None] | None

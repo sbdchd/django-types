@@ -1,4 +1,4 @@
-from .base import Result, run_pyright
+from .base import run_pyright
 
 
 def test_client_generic_returns_a_response() -> None:

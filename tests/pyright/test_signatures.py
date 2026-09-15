@@ -120,3 +120,46 @@ Foo().refresh_from_db(fields=("a", "b"))
 """
     )
     assert [r for r in results if r.type == "error"] == []
+
+
+def test_callable_field_choices() -> None:
+    """A choices callable keeps a new enum member from needing a migration.
+
+    Django serializes the reference rather than the values, so a callable is the
+    documented way to avoid a migration per member. `Field.choices` already
+    admitted one; the per-field `__new__` overloads did not, so the supported
+    spelling was rejected at the only place it is ever written.
+    """
+    results = run_pyright(
+        """\
+from django.db import models
+
+def flag_choices() -> list[tuple[str, str]]:
+    return [("a", "A")]
+
+class Foo(models.Model):
+    flag = models.CharField(max_length=64, choices=flag_choices)
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+
+
+def test_non_interactive_questioner_verbosity_and_log() -> None:
+    """A migration-graph check drives the autodetector and wants its reasons.
+
+    NonInteractiveMigrationQuestioner takes `verbosity` and `log` so a caller can
+    route the field-level reason somewhere other than stdout. The stub declared
+    the subclass as a bare `...`, inheriting a base `__init__` without either.
+    """
+    results = run_pyright(
+        """\
+from django.db.migrations.questioner import NonInteractiveMigrationQuestioner
+
+def _eprint(message: str) -> None: ...
+
+questioner = NonInteractiveMigrationQuestioner(
+    specified_apps=set(), dry_run=True, verbosity=1, log=_eprint
+)
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []

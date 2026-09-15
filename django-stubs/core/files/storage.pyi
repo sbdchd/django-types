@@ -3,7 +3,7 @@ from typing import IO, Any
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import File
-from django.utils.functional import LazyObject
+from django.utils.functional import LazyObject, cached_property
 
 class Storage:
     def open(self, name: str, mode: str = ...) -> File: ...
@@ -53,7 +53,7 @@ class StorageHandler:
     def __init__(self, backends: dict[str, dict[str, Any]] | None = ...) -> None: ...
     def __getitem__(self, alias: str) -> Storage: ...
     def create_storage(self, params: dict[str, Any]) -> Storage: ...
-    @property
+    @cached_property
     def backends(self) -> dict[str, dict[str, Any]]: ...
 
 storages: StorageHandler

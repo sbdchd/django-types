@@ -67,7 +67,7 @@ class Foo(models.Model):
 
 
 def test_choices_widened_outside_fields_init() -> None:
-    """The same three spellings work on JSONField, FileField, ForeignKey and ArrayField."""
+    """The widened spellings work on JSONField, FileField, ForeignKey, ArrayField and GeneratedField."""
     results = run_pyright(
         """\
 from django.contrib.postgres.fields import ArrayField

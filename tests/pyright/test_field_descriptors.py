@@ -125,8 +125,8 @@ reveal_type(Foo().ok)
     assert [r.message for r in results if r.type == "information"] == ['Type of "Foo().ok" is "Any | None"']
 
 
-def test_lazy_foreign_key_overload_matches_the_real_signature() -> None:
-    """The string-reference overload takes ForeignKey's keywords, not ForeignObject's positional from_fields/to_fields."""
+def test_lazy_foreign_key_keywords_and_positionals_are_checked() -> None:
+    """A string reference goes through the ordinary overloads, so keywords are checked and stray positionals error."""
     results = run_pyright(
         """\
 from django.db import models
@@ -140,3 +140,23 @@ reveal_type(Foo().ok)
     )
     assert [r.line for r in results if r.type == "error"] == [5]
     assert [r.message for r in results if r.type == "information"] == ['Type of "Foo().ok" is "Any"']
+
+
+def test_lazy_one_to_one_null_reads_optional() -> None:
+    """A null=True OneToOneField named by string reads Any | None, the same shape a class reference gets."""
+    results = run_pyright(
+        """\
+from django.db import models
+
+class Foo(models.Model):
+    o2o = models.OneToOneField("app.Thing", on_delete=models.CASCADE, null=True)
+    req = models.OneToOneField("app.Thing", on_delete=models.CASCADE)
+
+reveal_type(Foo().o2o)
+reveal_type(Foo().req)
+"""
+    )
+    assert [r.message for r in results if r.type == "information"] == [
+        'Type of "Foo().o2o" is "Any | None"',
+        'Type of "Foo().req" is "Any"',
+    ]

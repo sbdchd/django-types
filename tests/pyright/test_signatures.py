@@ -2,7 +2,7 @@ from .base import run_pyright
 
 
 def test_client_generic_returns_a_response() -> None:
-    """A test sends a verb the Client has no named helper for - PATCH, or a"""
+    """Client.generic returns a response, like every other verb on Client."""
     results = run_pyright(
         """\
 from django.test import Client
@@ -110,9 +110,10 @@ def test_sql_flush_is_keyword_only_and_returns_statements() -> None:
     results = run_pyright(
         """\
 from django.core.management.color import no_style
-from django.db import connection
+from django.db.backends.base.operations import BaseDatabaseOperations
 
-statements: list[str] = connection.ops.sql_flush(no_style(), ["app_thing"], reset_sequences=True, allow_cascade=False)
+def f(ops: BaseDatabaseOperations) -> list[str]:
+    return ops.sql_flush(no_style(), ["app_thing"], reset_sequences=True, allow_cascade=False)
 """
     )
     assert [r for r in results if r.type == "error"] == []

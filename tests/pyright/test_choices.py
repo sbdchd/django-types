@@ -85,7 +85,8 @@ class Foo(models.Model):
     data = models.JSONField(choices={"a": "A"})
     doc = models.FileField(choices=Kind)
     ref = models.ForeignKey(Thing, on_delete=models.CASCADE, choices=opts)
-    tags = ArrayField(models.CharField(max_length=8), choices=[(["a", "b"], "AB")])
+    tags = ArrayField(models.CharField(max_length=8), choices=lambda: [(["a", "b"], "AB")])
+    total = models.GeneratedField(expression=models.F("a") + models.F("b"), output_field=models.IntegerField(), db_persist=True, choices={1: "one"})
 """
     )
     assert [r for r in results if r.type == "error"] == []

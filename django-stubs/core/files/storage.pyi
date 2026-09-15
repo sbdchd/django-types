@@ -1,7 +1,7 @@
-from django.core.exceptions import ImproperlyConfigured
 from datetime import datetime
 from typing import IO, Any
 
+from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import File
 from django.utils.functional import LazyObject
 

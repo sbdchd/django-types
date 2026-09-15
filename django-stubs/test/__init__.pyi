@@ -1,7 +1,7 @@
-from .client import Client as Client
-from .client import RequestFactory as RequestFactory
 from .client import AsyncClient as AsyncClient
 from .client import AsyncRequestFactory as AsyncRequestFactory
+from .client import Client as Client
+from .client import RequestFactory as RequestFactory
 from .testcases import LiveServerTestCase as LiveServerTestCase
 from .testcases import SimpleTestCase as SimpleTestCase
 from .testcases import TestCase as TestCase

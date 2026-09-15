@@ -1,4 +1,4 @@
-from .base import Result, run_pyright
+from .base import run_pyright
 
 
 def test_async_test_client_is_importable() -> None:

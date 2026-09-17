@@ -20,6 +20,7 @@ django-stubs/contrib/sitemaps/apps.pyi
 django-stubs/contrib/gis/sitemaps/kml.pyi
 django-stubs/contrib/flatpages/sitemaps.pyi
 #django-stubs/contrib/auth/forms.pyi
+django-stubs/contrib/auth/decorators.pyi
 django-stubs/core/validators.pyi
 #django-stubs/utils/deconstruct.pyi
 django-stubs/utils/decorators.pyi

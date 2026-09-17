@@ -75,3 +75,6 @@ django-stubs/contrib/admin/tests.pyi
 #django-stubs/utils/html.pyi
 django-stubs/core/signing.pyi
 django-stubs/contrib/gis/geoip2.pyi
+django-stubs/utils/timezone.pyi
+django-stubs/utils/dateformat.pyi
+django-stubs/templatetags/tz.pyi

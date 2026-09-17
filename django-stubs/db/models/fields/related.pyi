@@ -1,5 +1,5 @@
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, Generic, Literal, Protocol, TypeAlias, TypeVar, overload
+from typing import Any, Generic, Literal, Protocol, TypeAlias, overload
 from uuid import UUID
 
 from django.db.models.base import Model
@@ -18,7 +18,7 @@ from django.db.models.fields.reverse_related import OneToOneRel as OneToOneRel
 from django.db.models.manager import ManyToManyRelatedManager
 from django.db.models.query_utils import PathInfo, Q
 from django.utils.functional import _StrOrPromise
-from typing_extensions import Self
+from typing_extensions import Self, TypeVar
 
 class _DeleteProtocol(Protocol):
     def __call__(
@@ -58,7 +58,7 @@ class RelatedField(FieldCacheMixin, Field[_ST, _GT], Generic[_ST, _GT]):
     @property
     def target_field(self) -> Field[Any, Any]: ...
 
-_M = TypeVar("_M", bound=Model | None)
+_M = TypeVar("_M", bound=Model | None, default=Any)
 
 class ForeignObject(RelatedField[_M, _M], Generic[_M]):
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]

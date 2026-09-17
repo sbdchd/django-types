@@ -103,7 +103,7 @@ class StreamingHttpResponse(HttpResponseBase, Iterable[bytes], AsyncIterable[byt
     streaming: bool
     streaming_content: Iterable[bytes] | AsyncIterable[bytes]
     def __init__(
-        self, streaming_content: Iterable[bytes] | AsyncIterable[bytes] = ..., *args: Any, **kwargs: Any
+        self, streaming_content: Iterable[bytes | str] | AsyncIterable[bytes | str] = ..., *args: Any, **kwargs: Any
     ) -> None: ...
     def getvalue(self) -> bytes: ...
     @property

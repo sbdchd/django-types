@@ -78,7 +78,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def post(
@@ -89,7 +89,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def head(
@@ -99,7 +99,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def trace(
@@ -108,7 +108,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def options(
@@ -119,7 +119,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def put(
@@ -130,7 +130,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def patch(
@@ -141,7 +141,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def delete(
@@ -152,7 +152,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
     def generic(
@@ -164,7 +164,7 @@ class RequestFactory:
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: object,
     ) -> WSGIRequest: ...
 
@@ -207,7 +207,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def post(  # type: ignore [override]
@@ -219,7 +219,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def head(  # type: ignore [override]
@@ -230,7 +230,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def options(  # type: ignore [override]
@@ -242,7 +242,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def put(  # type: ignore [override]
@@ -254,7 +254,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def patch(  # type: ignore [override]
@@ -266,7 +266,7 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def delete(  # type: ignore [override]
@@ -278,7 +278,19 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
+    def generic(  # type: ignore [override]
+        self,
+        method: str,
+        path: _StrOrPromise,
+        data: _RequestData = ...,
+        content_type: str | None = ...,
+        secure: bool = ...,
+        *,
+        headers: Mapping[str, Any] | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     def trace(  # type: ignore [override]
@@ -289,11 +301,23 @@ class Client(ClientMixin, RequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
 
 class AsyncClient(ClientMixin, AsyncRequestFactory):
+    async def generic(  # type: ignore [override]
+        self,
+        method: str,
+        path: _StrOrPromise,
+        data: _RequestData = ...,
+        content_type: str | None = ...,
+        secure: bool = ...,
+        *,
+        headers: Mapping[str, Any] | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
+        **extra: str,
+    ) -> HttpResponse: ...
     handler: AsyncClientHandler
     raise_request_exception: bool
     exc_info: tuple[type[BaseException], BaseException, TracebackType] | None
@@ -318,7 +342,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def post(  # type: ignore [override]
@@ -330,7 +354,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def head(  # type: ignore [override]
@@ -341,7 +365,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def options(  # type: ignore [override]
@@ -353,7 +377,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def put(  # type: ignore [override]
@@ -365,7 +389,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def patch(  # type: ignore [override]
@@ -377,7 +401,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def delete(  # type: ignore [override]
@@ -389,7 +413,7 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...
     async def trace(  # type: ignore [override]
@@ -400,6 +424,6 @@ class AsyncClient(ClientMixin, AsyncRequestFactory):
         secure: bool = ...,
         *,
         headers: Mapping[str, Any] | None = ...,
-        query_params: str | None = ...,
+        query_params: Mapping[str, Any] | None = ...,
         **extra: str,
     ) -> HttpResponse: ...

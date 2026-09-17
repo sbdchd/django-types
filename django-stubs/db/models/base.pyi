@@ -80,13 +80,13 @@ class Model(metaclass=ModelBase):
     def refresh_from_db(
         self,
         using: str | None = ...,
-        fields: list[str] | None = ...,
+        fields: Iterable[str] | None = ...,
         from_queryset: QuerySet[Self] | None = ...,
     ) -> None: ...
     async def arefresh_from_db(
         self,
         using: str | None = ...,
-        fields: list[str] | None = ...,
+        fields: Iterable[str] | None = ...,
         from_queryset: QuerySet[Self] | None = ...,
     ) -> None: ...
     def get_deferred_fields(self) -> set[str]: ...

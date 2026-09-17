@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import ClassVar, TypeVar
+from typing import Any, ClassVar, TypeVar
 
 from django.contrib.sessions.backends.base import SessionBase
 from django.db import models
@@ -8,8 +8,8 @@ from typing_extensions import Self
 _SessionT = TypeVar("_SessionT", bound=AbstractBaseSession)
 
 class BaseSessionManager(models.Manager[_SessionT]):
-    def encode(self, session_dict: dict[str, int]) -> str: ...
-    def save(self, session_key: str, session_dict: dict[str, int], expire_date: datetime) -> _SessionT: ...
+    def encode(self, session_dict: dict[str, Any]) -> str: ...
+    def save(self, session_key: str, session_dict: dict[str, Any], expire_date: datetime) -> _SessionT: ...
 
 class AbstractBaseSession(models.Model):
     objects: ClassVar[BaseSessionManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
@@ -25,4 +25,4 @@ class AbstractBaseSession(models.Model):
 
     @classmethod
     def get_session_store_class(cls) -> type[SessionBase] | None: ...
-    def get_decoded(self) -> dict[str, int]: ...
+    def get_decoded(self) -> dict[str, Any]: ...

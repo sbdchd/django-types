@@ -1,8 +1,10 @@
-from typing import Any
+from typing import Any, Literal
 
 from django.utils.functional import LazyObject
 
-ENVIRONMENT_VARIABLE: str = ...
+ENVIRONMENT_VARIABLE: Literal["DJANGO_SETTINGS_MODULE"]
+DEFAULT_STORAGE_ALIAS: Literal["default"]
+STATICFILES_STORAGE_ALIAS: Literal["staticfiles"]
 DEFAULT_CONTENT_TYPE_DEPRECATED_MSG: str = ...
 FILE_CHARSET_DEPRECATED_MSG: str = ...
 

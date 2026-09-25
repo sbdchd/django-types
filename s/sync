@@ -2,52 +2,106 @@
 
 set -e
 
-# Sync script to update django-stubs files from upstream django-stubs repository
-# Reads files to sync from s/sync-files.txt (one file per line)
+# Sync the paths listed below from the upstream django-stubs repository
+# Comment out any paths that should not be synced.
 # Usage: uv run s/sync
 
 DJANGO_STUBS_TARGET_TAG="6.0.7"
-git fetch https://github.com/typeddjango/django-stubs.git $DJANGO_STUBS_TARGET_TAG
-git checkout $DJANGO_STUBS_TARGET_TAG -- \
-	django-stubs/tasks/ \
-	django-stubs/core/cache/
+SYNC_PATHS=(
+    django-stubs/tasks/
+    django-stubs/urls/
+    django-stubs/core/cache/
+    django-stubs/conf/locale
+    django-stubs/conf/urls
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SYNC_FILES="$SCRIPT_DIR/sync-files.txt"
-UPSTREAM_BASE_URL="https://raw.githubusercontent.com/typeddjango/django-stubs/refs/tags/${DJANGO_STUBS_TARGET_TAG}"
+    django-stubs/utils/translation/__init__.pyi
+    django-stubs/views/__init__.pyi
+    django-stubs/views/debug.pyi
+    django-stubs/views/csrf.pyi
+    django-stubs/views/defaults.pyi
+    django-stubs/views/i18n.pyi
+    django-stubs/views/static.pyi
+    django-stubs/views/decorators/__init__.pyi
+    django-stubs/views/decorators/cache.pyi
+    django-stubs/views/decorators/clickjacking.pyi
+    # django-stubs/views/decorators/csrf.pyi
+    django-stubs/views/decorators/debug.pyi
+    # django-stubs/views/decorators/gzip.pyi
+    # django-stubs/views/decorators/http.pyi
+    django-stubs/views/decorators/vary.pyi
+    # django-stubs/http/request.pyi
+    # django-stubs/contrib/sitemaps/views.pyi
+    django-stubs/contrib/sitemaps/__init__.pyi
+    django-stubs/contrib/sitemaps/apps.pyi
+    django-stubs/contrib/gis/sitemaps/kml.pyi
+    django-stubs/contrib/flatpages/sitemaps.pyi
+    # django-stubs/contrib/auth/forms.pyi
+    django-stubs/contrib/auth/decorators.pyi
+    django-stubs/core/validators.pyi
+    # django-stubs/utils/deconstruct.pyi
+    django-stubs/utils/decorators.pyi
+    django-stubs/db/models/__init__.pyi
+    # django-stubs/db/models/query.pyi
+    django-stubs/db/models/constraints.pyi
+    # django-stubs/db/models/aggregates.pyi
+    # django-stubs/db/models/sql/compiler.pyi
+    # django-stubs/db/models/sql/query.pyi
+    # django-stubs/db/models/sql/subqueries.pyi
+    django-stubs/db/models/sql/__init__.pyi
+    # django-stubs/db/models/sql/where.pyi
+    django-stubs/db/models/sql/constants.pyi
+    django-stubs/db/models/sql/datastructures.pyi
+    django-stubs/db/models/functions/__init__.pyi
+    # django-stubs/db/models/functions/json.pyi
+    # django-stubs/db/models/functions/datetime.pyi
+    django-stubs/db/models/functions/math.pyi
+    # django-stubs/db/models/functions/comparison.pyi
+    # django-stubs/db/models/functions/text.pyi
+    django-stubs/db/__init__.pyi
+    django-stubs/db/migrations/executor.pyi
+    django-stubs/core/exceptions.pyi
+    django-stubs/test/runner.pyi
+    django-stubs/test/utils.pyi
+    django-stubs/utils/choices.pyi
+    # django-stubs/forms/models.pyi
+    django-stubs/forms/utils.pyi
+    django-stubs/forms/fields.pyi
+    django-stubs/forms/__init__.pyi
+    django-stubs/forms/boundfield.pyi
+    # django-stubs/forms/forms.pyi
+    django-stubs/forms/formsets.pyi
+    django-stubs/forms/renderers.pyi
+    # django-stubs/forms/widgets.pyi
+    # django-stubs/utils/datastructures.pyi
+    django-stubs/contrib/admin/decorators.pyi
+    # django-stubs/contrib/admin/options.pyi
+    django-stubs/contrib/contenttypes/admin.pyi
+    django-stubs/contrib/sites/admin.pyi
+    django-stubs/contrib/redirects/admin.pyi
+    django-stubs/contrib/flatpages/admin.pyi
+    # django-stubs/template/response.pyi
+    django-stubs/template/backends/base.pyi
+    django-stubs/template/context.pyi
+    django-stubs/template/exceptions.pyi
+    django-stubs/template/library.pyi
+    django-stubs/template/loader.pyi
+    django-stubs/utils/safestring.pyi
+    django-stubs/middleware/csp.pyi
+    django-stubs/utils/csp.pyi
+    django-stubs/contrib/admin/tests.pyi
+    # django-stubs/utils/html.pyi
+    django-stubs/core/signing.pyi
+    django-stubs/contrib/gis/geoip2.pyi
+    django-stubs/utils/timezone.pyi
+    django-stubs/utils/dateformat.pyi
+    django-stubs/templatetags/tz.pyi
+)
 
-if [ ! -f "$SYNC_FILES" ]; then
-    echo "Error: $SYNC_FILES not found"
-    exit 1
+if [ "${#SYNC_PATHS[@]}" -gt 0 ]; then
+    git fetch https://github.com/typeddjango/django-stubs.git "$DJANGO_STUBS_TARGET_TAG"
+    # Preserve staged changes and local files absent from upstream.
+    git restore --source="$DJANGO_STUBS_TARGET_TAG" --worktree --overlay -- "${SYNC_PATHS[@]}"
 fi
-
-while IFS= read -r file || [ -n "$file" ]; do
-    # Skip empty lines and comments
-    [[ -z "$file" || "$file" == \#* ]] && continue
-    # Normalize path (remove leading ./ if present)
-    file="${file#./}"
-
-    # Check if file path starts with django-stubs/
-    if [[ ! "$file" == django-stubs/* ]]; then
-        echo "Error: File path must start with 'django-stubs/': $file"
-        exit 1
-    fi
-
-    url="${UPSTREAM_BASE_URL}/${file}"
-
-    echo "Fetching: $url"
-
-    # Create directory if it doesn't exist
-    mkdir -p "$(dirname "$file")"
-
-    # Download the file
-    if curl -fsSL "$url" -o "$file"; then
-        echo "Updated: $file"
-    else
-        echo "Error: Failed to fetch $file from upstream"
-        exit 1
-    fi
-done < "$SYNC_FILES"
 
 uv run ruff format tests django-stubs
 uv run ruff check --fix

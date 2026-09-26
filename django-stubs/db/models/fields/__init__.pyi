@@ -3,7 +3,7 @@ import ipaddress
 import uuid
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from datetime import date, datetime, time, timedelta
-from typing import Any, ClassVar, Generic, Literal, TypeAlias, TypeVar, overload
+from typing import Any, ClassVar, Generic, Literal, TypeAlias, overload
 
 from django.core.checks import CheckMessage
 from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
@@ -14,7 +14,7 @@ from django.db.models.query_utils import Q, RegisterLookupMixin
 from django.forms import Widget
 from django.utils.choices import _Choice, _ChoiceNamedGroup, _ChoicesCallable
 from django.utils.functional import _StrOrPromise, cached_property
-from typing_extensions import Self
+from typing_extensions import Self, TypeVar
 
 BLANK_CHOICE_DASH: list[tuple[str, str]] = ...
 
@@ -126,7 +126,10 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     def get_attname(self) -> str: ...
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...
 
-_I = TypeVar("_I", bound=int | None)
+# Defaults for _I and _C work around enum choices inference in ty.
+# https://github.com/astral-sh/ty/issues/4551
+# Include None so bare subclasses still accept nullable defaults.
+_I = TypeVar("_I", bound=int | None, default=int | None)
 
 class IntegerField(Field[_I | Combinable, _I], Generic[_I]):
     @overload
@@ -699,7 +702,7 @@ class SmallAutoField(AutoFieldMixin, SmallIntegerField[int]):
         error_messages: _ErrorMessagesMapping | None = ...,
     ) -> Self: ...
 
-_C = TypeVar("_C", bound=str | None)
+_C = TypeVar("_C", bound=str | None, default=str | None)
 
 class CharField(Field[_C | Combinable, _C], Generic[_C]):
     @overload

@@ -9,7 +9,7 @@ from typing_extensions import Self, TypeVar
 _T = TypeVar("_T", bound=Model)
 _V = TypeVar("_V", bound=Model)
 # Manager proxies chain calls to get_queryset(), so they return the queryset, not the manager.
-_QS = TypeVar("_QS", bound=QuerySet[Any, Any], default=QuerySet[_T])
+_QS = TypeVar("_QS", bound=QuerySet[Any, Any], default=QuerySet[_T], covariant=True)
 
 class BaseManager(QuerySet[_T], Generic[_T, _QS]):
     creation_counter: int = ...

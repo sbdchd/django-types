@@ -30,3 +30,12 @@ def chain_calls_return_the_queryset() -> None:
     assert_type(Book.books.order_by("pk").published(), BookQuerySet)
     assert_type(Book.books.select_related(None), BookQuerySet)
     assert_type(Book.books.get(pk=1), Book)
+
+
+def count_rows(manager: models.Manager[Book]) -> int:
+    return manager.count()
+
+
+def custom_queryset_manager_is_still_a_manager() -> None:
+    # The queryset parameter is covariant, so a narrower queryset still fits Manager[Book].
+    count_rows(Book.books)

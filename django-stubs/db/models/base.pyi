@@ -1,10 +1,10 @@
 from collections.abc import Callable, Collection, Iterable
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TypeVar, overload
 
 from django.core.checks.messages import CheckMessage
 from django.core.exceptions import MultipleObjectsReturned as BaseMultipleObjectsReturned
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db.models.manager import BaseManager
+from django.db.models.manager import BaseManager, Manager
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
 from typing_extensions import Self
@@ -20,14 +20,26 @@ class ModelState:
     adding: bool = ...
     fields_cache: ModelStateFieldsCacheDescriptor = ...
 
-class ModelBase(type): ...
+_M = TypeVar("_M", bound=Model)
+
+class _DefaultManager:
+    # Declared on the metaclass and without __set__, so a model's own `objects`
+    # (any manager type) shadows it with no override conflict; instance access
+    # stays an error, as Django's ManagerDescriptor raises there.
+    @overload
+    def __get__(self, instance: type[_M], owner: type[ModelBase]) -> Manager[_M]: ...
+    # mypy binds a metaclass descriptor as (None, cls).
+    @overload
+    def __get__(self, instance: None, owner: type[_M]) -> Manager[_M]: ...
+
+class ModelBase(type):
+    objects: ClassVar[_DefaultManager]
 
 class Model(metaclass=ModelBase):
     DoesNotExist: ClassVar[type[ObjectDoesNotExist]]
     MultipleObjectsReturned: ClassVar[type[BaseMultipleObjectsReturned]]
     _meta: ClassVar[Options[Self]]
     _default_manager: ClassVar[BaseManager[Self]]
-    objects: ClassVar[BaseManager[Self]]
 
     pk: Any = ...
     _state: ModelState

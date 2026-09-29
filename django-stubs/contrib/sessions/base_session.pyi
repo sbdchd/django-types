@@ -12,7 +12,7 @@ class BaseSessionManager(models.Manager[_SessionT]):
     def save(self, session_key: str, session_dict: dict[str, Any], expire_date: datetime) -> _SessionT: ...
 
 class AbstractBaseSession(models.Model):
-    objects: ClassVar[BaseSessionManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
+    objects: ClassVar[BaseSessionManager[Self]]
 
     class Meta:
         abstract: ClassVar[bool]

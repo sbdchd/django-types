@@ -44,7 +44,7 @@ class LogEntry(models.Model):
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField(blank=True)
 
-    objects: ClassVar[LogEntryManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
+    objects: ClassVar[LogEntryManager[Self]]
 
     def is_addition(self) -> bool: ...
     def is_change(self) -> bool: ...

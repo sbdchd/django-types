@@ -146,3 +146,44 @@ async def g(c: AsyncClient) -> int:
 """
     )
     assert [r for r in results if r.type == "error"] == []
+
+
+def test_check_register_keeps_the_check_callable() -> None:
+    """A registered system check is still called directly, e.g. from a test."""
+    results = run_pyright(
+        """\
+from django.core.checks import CheckMessage, Error, Tags, register
+
+@register(Tags.security)
+def tagged(app_configs: object, **kwargs: object) -> list[CheckMessage]:
+    return [Error("x")]
+
+@register
+def bare(app_configs: object, **kwargs: object) -> list[Error]:
+    return []
+
+reveal_type(tagged(None))
+reveal_type(bare(None))
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+    assert [r.message for r in results if r.type == "information"] == [
+        'Type of "tagged(None)" is "list[CheckMessage]"',
+        'Type of "bare(None)" is "list[Error]"',
+    ]
+
+
+def test_formset_factories_are_fully_typed() -> None:
+    """The formset parameter is generic, so strict mode sees no Unknown in the factories."""
+    results = run_pyright(
+        """\
+from django.forms.models import inlineformset_factory, modelformset_factory
+
+reveal_type(inlineformset_factory)
+reveal_type(modelformset_factory)
+"""
+    )
+    assert [r for r in results if r.type == "error"] == []
+    revealed = [r.message for r in results if r.type == "information"]
+    assert len(revealed) == 2
+    assert all("Unknown" not in message for message in revealed), revealed

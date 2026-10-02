@@ -12,7 +12,9 @@ from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Never, Self
 
-_AnyUser: TypeAlias = AbstractUser | AnonymousUser
+# Third-party stubs written against django-stubs (e.g. djangorestframework-stubs) import this name.
+_User: TypeAlias = AbstractUser
+_AnyUser: TypeAlias = _User | AnonymousUser
 
 _T = TypeVar("_T", bound=Model)
 

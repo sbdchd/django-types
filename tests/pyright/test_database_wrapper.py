@@ -24,3 +24,22 @@ reveal_type(connection.rollback_exc)
         Result(type="information", message='Type of "connection.health_check_enabled" is "bool"', line=10, column=13),
         Result(type="information", message='Type of "connection.rollback_exc" is "Exception | None"', line=11, column=13),
     ]
+
+
+def test_context_manager_methods_are_usable_in_with() -> None:
+    """execute_wrapper and constraint_checks_disabled are @contextmanager at runtime."""
+    results = run_pyright(
+        """\
+from django.db import connection
+
+def wrapper(*args: object) -> None: ...
+
+with connection.execute_wrapper(wrapper) as entered:
+    reveal_type(entered)
+with connection.constraint_checks_disabled():
+    pass
+"""
+    )
+    assert results == [
+        Result(type="information", message='Type of "entered" is "None"', line=6, column=17),
+    ]

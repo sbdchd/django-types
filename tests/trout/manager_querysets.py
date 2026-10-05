@@ -16,6 +16,7 @@ class Book(models.Model):
     published = models.BooleanField()
 
     books = BookManager()
+    generated_books = BookQuerySet.as_manager()
 
 
 class Author(models.Model):
@@ -39,3 +40,12 @@ def count_rows(manager: models.Manager[Book]) -> int:
 def custom_queryset_manager_is_still_a_manager() -> None:
     # The queryset parameter is covariant, so a narrower queryset still fits Manager[Book].
     count_rows(Book.books)
+
+
+def as_manager_preserves_the_queryset_type() -> None:
+    assert_type(Book.generated_books, models.Manager[Book, BookQuerySet])
+    assert_type(Book.generated_books.get_queryset(), BookQuerySet)
+    assert_type(Book.generated_books.all(), BookQuerySet)
+    assert_type(Book.generated_books.filter().published(), BookQuerySet)
+    assert_type(Book.generated_books.get(pk=1), Book)
+    count_rows(Book.generated_books)

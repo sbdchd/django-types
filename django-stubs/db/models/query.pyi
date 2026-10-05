@@ -71,7 +71,7 @@ class QuerySet(AltersData, _SupportsContains[object], Iterable[_Row], Sized, Gen
         hints: dict[str, Model] | None = None,
     ) -> None: ...
     @classmethod
-    def as_manager(cls) -> Manager[_Model]: ...  # ty: ignore[invalid-generic-class]
+    def as_manager(cls) -> Manager[_Model, Self]: ...  # ty: ignore[invalid-generic-class]
     def __deepcopy__(self, memo: dict[int, Any]) -> Self: ...
     if sys.version_info >= (3, 11):
         @override

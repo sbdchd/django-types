@@ -13,7 +13,7 @@ from django.utils.functional import _StrOrPromise
 from typing_extensions import Never, Self
 
 # Third-party stubs written against django-stubs (e.g. djangorestframework-stubs) import this name.
-_User: TypeAlias = AbstractUser
+_User: TypeAlias = AbstractBaseUser
 _AnyUser: TypeAlias = _User | AnonymousUser
 
 _T = TypeVar("_T", bound=Model)

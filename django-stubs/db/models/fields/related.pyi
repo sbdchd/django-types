@@ -64,6 +64,7 @@ class RelatedField(FieldCacheMixin, Field[_ST, _GT], Generic[_ST, _GT]):
 _M = TypeVar("_M", bound=Model | None)
 
 class ForeignObject(RelatedField[_M, _M], Generic[_M]):
+    remote_field: ForeignObjectRel  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...
@@ -155,6 +156,7 @@ class ForeignObject(RelatedField[_M, _M], Generic[_M]):
     ) -> ForeignObject[_M | None]: ...
 
 class ForeignKey(ForeignObject[_M], Generic[_M]):
+    remote_field: ManyToOneRel  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_many: Literal[False] = ...
     one_to_one: Literal[False] = ...
     many_to_many: Literal[False] = ...
@@ -243,6 +245,7 @@ class ForeignKey(ForeignObject[_M], Generic[_M]):
     def __get__(self, instance: Any, owner: Any) -> Self: ...
 
 class OneToOneField(ForeignKey[_M], Generic[_M]):
+    remote_field: OneToOneRel  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_many: Literal[False] = ...
     one_to_one: Literal[True] = ...  # type: ignore [assignment]
     many_to_many: Literal[False] = ...
@@ -334,6 +337,7 @@ _MM = TypeVar("_MM", bound=Model)
 _MN = TypeVar("_MN", bound=Model)
 
 class ManyToManyField(RelatedField[Sequence[_MN], ManyToManyRelatedManager[_MM, _MN]], Generic[_MM, _MN]):
+    remote_field: ManyToManyRel  # pyright: ignore[reportIncompatibleVariableOverride]
     one_to_many: Literal[  # pyright: ignore[reportIncompatibleVariableOverride]
         False
     ] = ...

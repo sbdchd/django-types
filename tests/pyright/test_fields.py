@@ -1,6 +1,101 @@
 from .base import Result, run_pyright
 
 
+def test_field_remote_field_is_optional_relation() -> None:
+    results = run_pyright(
+        """\
+from typing import Any
+from django.db import models
+from django.db.models.fields.reverse_related import ForeignObjectRel
+from typing_extensions import assert_type
+
+def check(field: models.Field[Any, Any]) -> None:
+    assert_type(field.remote_field, ForeignObjectRel | None)
+    if field.remote_field is None:
+        assert_type(field.remote_field, None)
+    else:
+        assert_type(field.remote_field, ForeignObjectRel)
+        field.remote_field.on_delete
+        field.remote_field.related_name
+
+check(models.CharField(max_length=10))
+"""
+    )
+    assert results == []
+
+
+def test_foreign_object_remote_field() -> None:
+    results = run_pyright(
+        """\
+from django.db import models
+from django.db.models.fields.related import ForeignObject
+from django.db.models.fields.reverse_related import ForeignObjectRel
+from typing_extensions import assert_type
+
+field = ForeignObject(models.Model, on_delete=models.CASCADE, from_fields=["target"], to_fields=["id"])
+assert_type(field.remote_field, ForeignObjectRel)
+field.remote_field.on_delete
+field.remote_field.related_name
+"""
+    )
+    assert results == []
+
+
+def test_foreign_key_remote_field_after_narrowing() -> None:
+    results = run_pyright(
+        """\
+from django.db import models
+from django.db.models.fields.reverse_related import ManyToOneRel
+from typing_extensions import assert_type
+
+def check(model: type[models.Model]) -> None:
+    field = model._meta.get_field("created_by")
+    if isinstance(field, models.ForeignKey):
+        assert_type(field.remote_field, ManyToOneRel)
+        field.remote_field.on_delete
+        field.remote_field.related_name
+
+field = models.ForeignKey(models.Model, on_delete=models.PROTECT, null=True)
+assert_type(field.remote_field, ManyToOneRel)
+field.remote_field.on_delete
+"""
+    )
+    assert results == []
+
+
+def test_one_to_one_remote_field() -> None:
+    results = run_pyright(
+        """\
+from django.db import models
+from django.db.models.fields.reverse_related import OneToOneRel
+from typing_extensions import assert_type
+
+field = models.OneToOneField(models.Model, on_delete=models.CASCADE, null=True)
+assert_type(field.remote_field, OneToOneRel)
+field.remote_field.on_delete
+field.remote_field.parent_link
+"""
+    )
+    assert results == []
+
+
+def test_many_to_many_remote_field() -> None:
+    results = run_pyright(
+        """\
+from django.db import models
+from django.db.models.fields.reverse_related import ManyToManyRel
+from typing_extensions import assert_type
+
+field = models.ManyToManyField(models.Model, through=models.Model)
+assert_type(field.remote_field, ManyToManyRel)
+field.remote_field.through
+field.remote_field.through_fields
+field.remote_field.related_name
+"""
+    )
+    assert results == []
+
+
 def test_integer_with_choices() -> None:
     results = run_pyright(
         """\

@@ -61,7 +61,7 @@ class BaseManager(QuerySet[_T], Generic[_T, _QS]):
     def using(self, alias: str | None) -> _QS: ...  # type: ignore[override]
 
 class Manager(BaseManager[_T, _QS]):
-    _queryset_class: type[QuerySet[_T]]
+    _queryset_class: type[QuerySet[Any, Any]]
 
 class RelatedManager(Manager[_T]):
     related_val: tuple[int, ...]

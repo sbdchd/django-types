@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from typing import Any
 
 from django.db.migrations.state import ModelState
@@ -28,4 +29,15 @@ class MigrationQuestioner:
     def ask_auto_now_add_addition(self, field_name: str, model_name: str) -> None: ...
 
 class InteractiveMigrationQuestioner(MigrationQuestioner): ...
-class NonInteractiveMigrationQuestioner(MigrationQuestioner): ...
+
+class NonInteractiveMigrationQuestioner(MigrationQuestioner):
+    verbosity: int
+    log: Callable[[str], None] | None
+    def __init__(
+        self,
+        defaults: dict[str, bool] | None = ...,
+        specified_apps: set[str] | None = ...,
+        dry_run: bool | None = ...,
+        verbosity: int = ...,
+        log: Callable[[str], None] | None = ...,
+    ) -> None: ...

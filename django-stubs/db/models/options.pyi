@@ -36,7 +36,7 @@ class Options(Generic[_M]):
     concrete_fields: ImmutableList[Any]
     constraints: list[BaseConstraint]
     default_manager: Manager[_M]
-    fields: ImmutableList[Any]
+    fields: ImmutableList[Field[Any, Any]]
     local_concrete_fields: ImmutableList[Any]
     related_objects: ImmutableList[Any]
     FORWARD_PROPERTIES: Any = ...

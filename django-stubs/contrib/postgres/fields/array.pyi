@@ -2,8 +2,9 @@ from collections.abc import Callable, Iterable
 from typing import Any, Generic, Literal, TypeVar, overload
 
 from django.core.validators import _ValidatorCallable
+from django.db.models import Choices
 from django.db.models.expressions import Combinable
-from django.db.models.fields import Field, _ErrorMessagesMapping
+from django.db.models.fields import Field, _ChoicesFor, _ErrorMessagesMapping
 from django.utils.functional import _StrOrPromise
 
 from .mixins import CheckFieldDefaultMixin
@@ -37,7 +38,7 @@ class ArrayField(CheckFieldDefaultMixin, Field[_V | Combinable, _V], Generic[_V]
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]] = ...,
+        choices: _ChoicesFor[list[_V], Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
@@ -65,7 +66,7 @@ class ArrayField(CheckFieldDefaultMixin, Field[_V | Combinable, _V], Generic[_V]
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[list[_V], str] | tuple[str, Iterable[tuple[list[_V], str]]]] = ...,
+        choices: _ChoicesFor[list[_V], Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,

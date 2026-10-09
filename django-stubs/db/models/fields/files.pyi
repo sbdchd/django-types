@@ -5,10 +5,13 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 from django.core.files.storage import FileSystemStorage, Storage
 from django.core.validators import _ValidatorCallable
+from django.db.models import Choices
 from django.db.models.base import Model
 from django.db.models.fields import _GT, Field, _ErrorMessagesMapping
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self
+
+from . import _ChoicesFor
 
 class FieldFile(File):
     instance: Model = ...
@@ -55,7 +58,7 @@ class FileField(Field[File | str | FileDescriptor, FileDescriptor]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[_GT, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -104,7 +107,7 @@ class ImageField(FileField):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[_GT, _StrOrPromise] | tuple[str, Iterable[tuple[_GT, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[_GT, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,

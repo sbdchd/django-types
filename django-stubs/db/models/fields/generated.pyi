@@ -2,12 +2,12 @@ from collections.abc import Iterable
 from typing import Any, Literal, TypeVar, overload
 
 from django.core.validators import _ValidatorCallable
-from django.db.models import Expression, ForeignObjectRel
+from django.db.models import Choices, Expression, ForeignObjectRel
 from django.db.models.expressions import Col, Combinable
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Never
 
-from . import Field, _ErrorMessagesMapping
+from . import Field, _ChoicesFor, _ErrorMessagesMapping
 from .mixins import CheckFieldDefaultMixin
 
 _GT = TypeVar("_GT", bound=Any | None)
@@ -39,7 +39,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[Any, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,
@@ -70,7 +70,7 @@ class GeneratedField(CheckFieldDefaultMixin, Field[Never, _GT]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[Any, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_tablespace: str | None = ...,

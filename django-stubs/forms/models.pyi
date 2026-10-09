@@ -28,7 +28,7 @@ _Widgets: TypeAlias = dict[str, type[Widget] | Widget]
 _Labels: TypeAlias = dict[str, str]
 _HelpTexts: TypeAlias = dict[str, str]
 _ErrorMessages: TypeAlias = dict[str, dict[str, str]]
-_FormFieldCallback: TypeAlias = Callable[[models.Field], Field | None]
+_FormFieldCallback: TypeAlias = Callable[[models.Field[Any, Any]], Field | None]
 
 _M = TypeVar("_M", bound=Model)
 _ParentM = TypeVar("_ParentM", bound=Model)
@@ -155,7 +155,7 @@ def modelformset_factory(
     model: type[_M],
     form: type[_ModelFormT] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     formfield_callback: _FormFieldCallback | None = None,
-    formset: type[BaseModelFormSet] = ...,
+    formset: type[BaseModelFormSet[_M, _ModelFormT]] = ...,
     extra: int = 1,
     can_delete: bool = False,
     can_order: bool = False,
@@ -216,7 +216,7 @@ def inlineformset_factory(
     parent_model: type[_ParentM],
     model: type[_M],
     form: type[_ModelFormT] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
-    formset: type[BaseInlineFormSet] = ...,
+    formset: type[BaseInlineFormSet[_M, _ParentM, _ModelFormT]] = ...,
     fk_name: str | None = None,
     fields: _Fields | None = None,
     exclude: _Fields | None = None,

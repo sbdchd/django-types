@@ -12,7 +12,9 @@ from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Never, Self
 
-_AnyUser: TypeAlias = AbstractUser | AnonymousUser
+# Third-party stubs written against django-stubs (e.g. djangorestframework-stubs) import this name.
+_User: TypeAlias = AbstractUser
+_AnyUser: TypeAlias = _User | AnonymousUser
 
 _T = TypeVar("_T", bound=Model)
 
@@ -25,7 +27,7 @@ class PermissionManager(models.Manager[_PermissionT]):
 
 class Permission(models.Model):
     content_type_id: int
-    objects: ClassVar[PermissionManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
+    objects: ClassVar[PermissionManager[Self]]
 
     name = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -39,7 +41,7 @@ class GroupManager(models.Manager[_GroupT]):
     def get_by_natural_key(self, name: str) -> _GroupT: ...
 
 class Group(models.Model):
-    objects: ClassVar[GroupManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
+    objects: ClassVar[GroupManager[Self]]
 
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
@@ -110,7 +112,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(blank=True)
     is_staff = models.BooleanField()
-    is_active = models.BooleanField()
+    is_active: models.BooleanField[bool] = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     date_joined = models.DateTimeField()
 
     EMAIL_FIELD: str = ...
@@ -121,7 +123,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         self, subject: _StrOrPromise, message: _StrOrPromise, from_email: str | None = ..., **kwargs: Any
     ) -> None: ...
 
-    objects: ClassVar[UserManager[Self]]  # pyright: ignore[reportIncompatibleVariableOverride]
+    objects: ClassVar[UserManager[Self]]
 
 class User(AbstractUser): ...
 

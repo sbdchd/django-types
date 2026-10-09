@@ -1,28 +1,31 @@
-from collections.abc import Callable
-from typing import TypeVar, overload
+from collections.abc import Awaitable, Callable, Iterable
+from typing import overload
 
-from django.contrib.auth import REDIRECT_FIELD_NAME as REDIRECT_FIELD_NAME
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import _AnyUser
 from django.http.response import HttpResponseBase
 from django.utils.functional import _StrOrPromise
+from typing_extensions import TypeVar
 
-_VIEW = TypeVar("_VIEW", bound=Callable[..., HttpResponseBase])
+_VIEW = TypeVar("_VIEW", bound=Callable[..., HttpResponseBase | Awaitable[HttpResponseBase]])
 
 def user_passes_test(
-    test_func: Callable[[AbstractUser], bool],
+    test_func: Callable[[_AnyUser], bool],
     login_url: _StrOrPromise | None = ...,
-    redirect_field_name: str = ...,
+    redirect_field_name: str | None = ...,
 ) -> Callable[[_VIEW], _VIEW]: ...
-
-# There are two ways of calling @login_required: @with(arguments) and @bare
 @overload
 def login_required(
-    redirect_field_name: str = ..., login_url: _StrOrPromise | None = ...
-) -> Callable[[_VIEW], _VIEW]: ...
-@overload
-def login_required(function: _VIEW, redirect_field_name: str = ..., login_url: _StrOrPromise | None = ...) -> _VIEW: ...
-def permission_required(
-    perm: list[str] | set[str] | str,
+    function: _VIEW,
+    redirect_field_name: str | None = ...,
     login_url: _StrOrPromise | None = ...,
-    raise_exception: bool = ...,
+) -> _VIEW: ...
+@overload
+def login_required(
+    function: None = None,
+    redirect_field_name: str | None = ...,
+    login_url: _StrOrPromise | None = ...,
+) -> Callable[[_VIEW], _VIEW]: ...
+def login_not_required(view_func: _VIEW) -> _VIEW: ...
+def permission_required(
+    perm: Iterable[str] | str, login_url: _StrOrPromise | None = ..., raise_exception: bool = ...
 ) -> Callable[[_VIEW], _VIEW]: ...

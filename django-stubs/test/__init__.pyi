@@ -1,3 +1,5 @@
+from .client import AsyncClient as AsyncClient
+from .client import AsyncRequestFactory as AsyncRequestFactory
 from .client import Client as Client
 from .client import RequestFactory as RequestFactory
 from .testcases import LiveServerTestCase as LiveServerTestCase

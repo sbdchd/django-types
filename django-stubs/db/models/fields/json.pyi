@@ -3,13 +3,13 @@ from collections.abc import Callable, Iterable
 from typing import Any, Literal, overload
 
 from django.core.validators import _ValidatorCallable
-from django.db.models import lookups
+from django.db.models import Choices, lookups
 from django.db.models.expressions import Combinable, Func
 from django.db.models.lookups import PostgresOperatorLookup, Transform
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Self, TypeVar
 
-from . import Field, _ErrorMessagesMapping
+from . import Field, _ChoicesFor, _ErrorMessagesMapping
 from .mixins import CheckFieldDefaultMixin
 
 _A = TypeVar("_A", bound=Any | None, default=Any)
@@ -42,7 +42,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[Any, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,
@@ -72,7 +72,7 @@ class JSONField(CheckFieldDefaultMixin, Field[_A | Combinable, _A]):
         unique_for_date: str | None = ...,
         unique_for_month: str | None = ...,
         unique_for_year: str | None = ...,
-        choices: Iterable[tuple[Any, _StrOrPromise] | tuple[str, Iterable[tuple[Any, _StrOrPromise]]]] = ...,
+        choices: _ChoicesFor[Any, Choices] = ...,
         help_text: _StrOrPromise = ...,
         db_column: str | None = ...,
         db_comment: str | None = ...,

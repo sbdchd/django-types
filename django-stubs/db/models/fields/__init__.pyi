@@ -10,6 +10,7 @@ from django.core.exceptions import FieldDoesNotExist as FieldDoesNotExist
 from django.core.validators import _ValidatorCallable
 from django.db.models import Choices, IntegerChoices, Model, TextChoices
 from django.db.models.expressions import Col, Combinable, Func
+from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.db.models.query_utils import Q, RegisterLookupMixin
 from django.forms import Widget
 from django.utils.choices import _Choice, _ChoiceNamedGroup, _ChoicesCallable
@@ -54,7 +55,7 @@ class Field(RegisterLookupMixin, Generic[_ST, _GT]):
     attname: str
     auto_created: bool
     primary_key: bool
-    remote_field: Field[_ST, _GT]
+    remote_field: ForeignObjectRel | None
     is_relation: bool
     hidden: bool
     related_model: Any | None = ...

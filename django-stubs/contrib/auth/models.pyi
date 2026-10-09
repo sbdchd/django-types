@@ -112,7 +112,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(blank=True)
     is_staff = models.BooleanField()
-    is_active = models.BooleanField()
+    is_active: models.BooleanField[bool] = ...  # pyright: ignore[reportIncompatibleVariableOverride]
     date_joined = models.DateTimeField()
 
     EMAIL_FIELD: str = ...

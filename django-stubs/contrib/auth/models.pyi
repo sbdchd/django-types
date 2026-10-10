@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.manager import EmptyManager, ManyToManyRelatedManager
+from django.db.models.query import QuerySet
 from django.utils.functional import _StrOrPromise
 from typing_extensions import Never, Self
 
@@ -33,7 +34,7 @@ class Permission(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     codename = models.CharField(max_length=100)
     def natural_key(self) -> tuple[str, str, str]: ...
-    group_set = ManyToManyRelatedManager["Group", "Permission"]()
+    group_set: ManyToManyRelatedManager[Group, Permission]
 
 _GroupT = TypeVar("_GroupT", bound=Group)
 
@@ -46,7 +47,7 @@ class Group(models.Model):
     name = models.CharField(max_length=150)
     permissions = models.ManyToManyField[Permission, Any](Permission)
     def natural_key(self) -> tuple[str]: ...
-    user_set = ManyToManyRelatedManager["PermissionsMixin", "Group"]()
+    user_set: ManyToManyRelatedManager[PermissionsMixin, Group]
 
 class UserManager(BaseUserManager[_T]):
     use_in_migrations: bool = ...
@@ -85,7 +86,7 @@ class UserManager(BaseUserManager[_T]):
         include_superusers: bool = ...,
         backend: type[ModelBackend] | str | None = ...,
         obj: Model | None = ...,
-    ) -> Self | UserManager[_T]: ...
+    ) -> QuerySet[_T]: ...
 
 class PermissionsMixin(models.Model):
     is_superuser = models.BooleanField()

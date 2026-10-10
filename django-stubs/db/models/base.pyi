@@ -4,7 +4,7 @@ from typing import Any, ClassVar, TypeVar, overload
 from django.core.checks.messages import CheckMessage
 from django.core.exceptions import MultipleObjectsReturned as BaseMultipleObjectsReturned
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db.models.manager import BaseManager, Manager
+from django.db.models.manager import Manager
 from django.db.models.options import Options
 from django.db.models.query import QuerySet
 from typing_extensions import Self
@@ -39,7 +39,7 @@ class Model(metaclass=ModelBase):
     DoesNotExist: ClassVar[type[ObjectDoesNotExist]]
     MultipleObjectsReturned: ClassVar[type[BaseMultipleObjectsReturned]]
     _meta: ClassVar[Options[Self]]
-    _default_manager: ClassVar[BaseManager[Self]]
+    _default_manager: ClassVar[Manager[Self]]
 
     pk: Any = ...
     _state: ModelState

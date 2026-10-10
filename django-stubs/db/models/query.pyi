@@ -18,6 +18,7 @@ _ContainsT = TypeVar("_ContainsT")
 # ignores in QuerySet preserve model-specific inputs and invariant return types
 # where the existing signatures conflict with this covariance.
 _Model = TypeVar("_Model", bound=Model, covariant=True)
+_PrefetchModel = TypeVar("_PrefetchModel", bound=Model, covariant=True, default=Any)
 _Row = TypeVar("_Row", covariant=True, default=_Model)  # ONLY use together with _Model
 _TupleT = TypeVar("_TupleT", bound=tuple[Any, ...], covariant=True)
 
@@ -94,7 +95,7 @@ class QuerySet(AltersData, _SupportsContains[object], Iterable[_Row], Sized, Gen
     def __or__(self, other: QuerySet[_Model, _Row]) -> Self: ...  # ty: ignore[invalid-generic-class]
     def __xor__(self, other: QuerySet[_Model, _Row]) -> Self: ...  # ty: ignore[invalid-generic-class]
     # IMPORTANT: When updating any of the following methods' signatures, please ALSO modify
-    # the corresponding method in BaseManager.
+    # the corresponding method in Manager.
     def iterator(self, chunk_size: int | None = None) -> Iterator[_Row]: ...
     def aiterator(self, chunk_size: int = 2000) -> AsyncIterator[_Row]: ...
     def aggregate(self, *args: Any, **kwargs: Any) -> dict[str, Any]: ...
@@ -206,7 +207,10 @@ class QuerySet(AltersData, _SupportsContains[object], Iterable[_Row], Sized, Gen
     def select_related(self, clear: None, /) -> Self: ...
     @overload
     def select_related(self, *fields: str) -> Self: ...
-    def prefetch_related(self, *lookups: Any) -> Self: ...
+    @overload
+    def prefetch_related(self, clear: None, /) -> Self: ...
+    @overload
+    def prefetch_related(self, *lookups: str | Prefetch[Any]) -> Self: ...
     def annotate(self, *args: Any, **kwargs: Any) -> Self: ...
     def alias(self, *args: Any, **kwargs: Any) -> Self: ...
     def order_by(self, *field_names: _OrderByFieldName) -> Self: ...
@@ -275,14 +279,14 @@ class RawQuerySet(_SupportsContains[object], Iterable[_Model], Sized):
     @cached_property
     def model_fields(self) -> dict[str, str]: ...
 
-class Prefetch(Generic[_Model]):
+class Prefetch(Generic[_PrefetchModel]):
     prefetch_through: str
     prefetch_to: str
-    queryset: QuerySet[_Model]
+    queryset: QuerySet[_PrefetchModel] | None
     def __init__(
         self,
         lookup: str,
-        queryset: QuerySet[Any] | None = ...,
+        queryset: QuerySet[_PrefetchModel] | None = ...,
         to_attr: str | None = ...,
     ) -> None: ...
     def __getstate__(self) -> dict[str, Any]: ...

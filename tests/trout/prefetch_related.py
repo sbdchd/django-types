@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import models
 from django.db.models import Prefetch
 from typing_extensions import assert_type
@@ -13,10 +15,14 @@ class BookQuerySet(models.QuerySet[Book]):
 
 def valid_prefetch(queryset: BookQuerySet, manager: models.Manager[Book, BookQuerySet]) -> None:
     prefetch: Prefetch[Book] = Prefetch("books", queryset=queryset)
+    assert_type(Prefetch("authors"), Prefetch[Any])
+    assert_type(Prefetch("books", queryset=queryset), Prefetch[Book])
+    assert_type(prefetch.queryset, models.QuerySet[Book] | None)
     assert_type(queryset.prefetch_related(), BookQuerySet)
     assert_type(queryset.prefetch_related("authors", prefetch), BookQuerySet)
     assert_type(queryset.prefetch_related(None), BookQuerySet)
     assert_type(manager.prefetch_related("authors", prefetch), BookQuerySet)
+    assert_type(manager.prefetch_related(Prefetch("authors")), BookQuerySet)
     assert_type(manager.prefetch_related(None).published(), BookQuerySet)
 
 

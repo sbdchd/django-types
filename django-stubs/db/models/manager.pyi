@@ -196,26 +196,26 @@ class ManyToManyRelatedManager(Manager[_T, _QS], Generic[_T, _V, _QS]):
     def __call__(self, *, manager: str) -> ManyToManyRelatedManager[_T, _V, QuerySet[_T]]: ...
     def add(
         self,
-        *objs: QuerySet[_T] | _T | _V,
+        *objs: _T | int,
         through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     async def aadd(
         self,
-        *objs: QuerySet[_T] | _T | _V,
+        *objs: _T | int,
         through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
-    def remove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
-    async def aremove(self, *objs: QuerySet[_T] | _T | _V) -> None: ...
+    def remove(self, *objs: _T | int) -> None: ...
+    async def aremove(self, *objs: _T | int) -> None: ...
     def set(
         self,
-        objs: QuerySet[_T] | Iterable[_T],
+        objs: Iterable[_T | int],
         *,
         clear: bool = ...,
         through_defaults: Mapping[str, Any] = ...,
     ) -> None: ...
     async def aset(
         self,
-        objs: QuerySet[_T] | Iterable[_T],
+        objs: Iterable[_T | int],
         *,
         clear: bool = ...,
         through_defaults: Mapping[str, Any] = ...,

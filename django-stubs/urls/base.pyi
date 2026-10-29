@@ -1,4 +1,5 @@
 from collections.abc import Callable, Mapping, Sequence
+from types import ModuleType
 from typing import Any, Literal, TypeAlias
 
 from django.http.request import QueryDict
@@ -11,7 +12,7 @@ _QueryType: TypeAlias = (
     Mapping[Any, Any] | Mapping[Any, Sequence[Any]] | Sequence[tuple[Any, Any]] | Sequence[tuple[Any, Sequence[Any]]]
 )
 
-def resolve(path: str | _StrPromise, urlconf: str | None = None) -> ResolverMatch: ...
+def resolve(path: str | _StrPromise, urlconf: str | ModuleType | None = None) -> ResolverMatch: ...
 
 # NOTE: make sure `reverse` and `reverse_lazy` objects are in sync:
 def reverse(

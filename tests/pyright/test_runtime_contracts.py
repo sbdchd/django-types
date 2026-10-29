@@ -2,8 +2,9 @@ from .base import run_pyright
 
 
 def test_supported_runtime_contracts() -> None:
-    assert run_pyright(
-        '''
+    assert (
+        run_pyright(
+            """
 from datetime import timedelta
 from typing_extensions import assert_type
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -46,13 +47,15 @@ async def supported(
     assert_type(statements, list[str])
     operations.execute_sql_flush(statements)
     assert_type(operations.sequence_reset_sql(style, [Target]), list[str])
-'''
-    ) == []
+"""
+        )
+        == []
+    )
 
 
 def test_rejects_incompatible_models_and_users() -> None:
     results = run_pyright(
-        '''
+        """
 from django.http import HttpRequest
 from django.db.models import Model
 from django.db.models.manager import ManyToManyRelatedManager
@@ -67,7 +70,35 @@ async def invalid(manager: ManyToManyRelatedManager[Target, Through], through: T
     manager.add(through)
     await manager.aset([through])
     request.user = object()
-'''
+"""
     )
     assert len(results) == 3
     assert all(result.type == "error" for result in results)
+
+
+def test_permissions_accept_backend_policy_objects() -> None:
+    assert (
+        run_pyright(
+            """
+from dataclasses import dataclass
+from typing import Protocol
+from typing_extensions import assert_type
+from django.contrib.auth.models import AbstractUser
+
+@dataclass
+class Policy:
+    project_id: int
+
+class PermissionActor(Protocol):
+    def has_perm(self, perm: str, obj: object | None = None) -> bool: ...
+
+async def check(user: AbstractUser, policy: Policy) -> None:
+    actor: PermissionActor = user
+    assert_type(actor.has_perm("project.view", policy), bool)
+    assert_type(user.has_perms(["project.view"], policy), bool)
+    assert_type(await user.ahas_perm("project.view", policy), bool)
+    assert_type(await user.ahas_perms(["project.view"], policy), bool)
+"""
+        )
+        == []
+    )

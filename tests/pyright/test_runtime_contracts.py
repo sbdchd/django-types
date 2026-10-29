@@ -102,3 +102,39 @@ async def check(user: AbstractUser, policy: Policy) -> None:
         )
         == []
     )
+
+
+def test_inline_and_staticfiles_runtime_contracts() -> None:
+    assert (
+        run_pyright(
+            """
+from types import ModuleType
+from typing_extensions import assert_type
+from asgiref.typing import ASGI3Application
+from django.contrib.admin import AdminSite, TabularInline
+from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler, StaticFilesHandler
+from django.core.handlers.wsgi import WSGIHandler
+from django.db.models import Model
+from django.forms import BaseFormSet, Form
+from django.http import HttpRequest
+from django.http.response import HttpResponseBase
+from django.urls import resolve
+
+class Parent(Model): pass
+class Child(Model): pass
+class ChildInline(TabularInline[Child, Parent]):
+    model = Child
+
+async def check(request: HttpRequest, parent: Parent, app: ASGI3Application,
+                wsgi: WSGIHandler, urls: ModuleType, forms: BaseFormSet[Form]) -> None:
+    inline = ChildInline(Parent, AdminSite())
+    formset = inline.get_formset(request, obj=parent)
+    assert "name" not in formset().form.base_fields
+    assert_type(forms.form, type[Form])
+    resolve('/example/', urlconf=urls)
+    assert_type(await ASGIStaticFilesHandler(app).get_response_async(request), HttpResponseBase)
+    assert_type(StaticFilesHandler(wsgi).serve(request), HttpResponseBase)
+"""
+        )
+        == []
+    )

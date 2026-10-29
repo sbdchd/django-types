@@ -89,6 +89,9 @@ class UserManager(BaseUserManager[_T]):
     ) -> QuerySet[_T]: ...
 
 class PermissionsMixin(models.Model):
+    class Meta:
+        abstract: ClassVar[bool] = True
+
     is_superuser = models.BooleanField()
     groups = models.ManyToManyField[Group, Any](Group)
     user_permissions = models.ManyToManyField[Permission, Any](Permission)
@@ -107,6 +110,9 @@ class PermissionsMixin(models.Model):
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
     username_validator: UnicodeUsernameValidator = ...
+
+    class Meta(AbstractBaseUser.Meta, PermissionsMixin.Meta):
+        abstract: ClassVar[bool] = True
 
     username = models.CharField(max_length=150)
     first_name = models.CharField(max_length=150, blank=True)

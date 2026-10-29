@@ -15,7 +15,7 @@ class AbstractBaseSession(models.Model):
     objects: ClassVar[BaseSessionManager[Self]]
 
     class Meta:
-        abstract: ClassVar[bool]
+        abstract: ClassVar[bool] = True
         verbose_name: ClassVar[str]
         verbose_name_plural: ClassVar[str]
 

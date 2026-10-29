@@ -1,4 +1,4 @@
-from typing import Literal, TypeVar
+from typing import ClassVar, Literal, TypeVar
 
 from django.db import models
 from django.db.models.base import Model
@@ -15,6 +15,9 @@ class BaseUserManager(models.Manager[_ModelT]):
 
 class AbstractBaseUser(models.Model):
     REQUIRED_FIELDS: list[str] = ...
+
+    class Meta:
+        abstract: ClassVar[bool] = True
 
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
